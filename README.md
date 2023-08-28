@@ -1,3 +1,3 @@
 # Chasers Fresh Juice - Orders
 
-Authenticated ordering platform
+Authenticated ordering platform.
