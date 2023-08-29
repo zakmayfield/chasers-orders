@@ -76,4 +76,5 @@ export const authOptions: NextAuthOptions = {
   },
 };
 
+// hook to retrieve nextauth session data
 export const getAuthSession = () => getServerSession(authOptions);
