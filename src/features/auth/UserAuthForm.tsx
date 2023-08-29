@@ -1,4 +1,5 @@
 'use client';
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 
 export default function UserAuthForm() {
@@ -6,6 +7,7 @@ export default function UserAuthForm() {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
+      await signIn('google');
     } catch (err) {
       console.log(err);
     } finally {
