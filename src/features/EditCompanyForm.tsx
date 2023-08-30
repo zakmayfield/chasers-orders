@@ -37,7 +37,7 @@ export default function EditCompanyForm({
       return data;
     },
     onSuccess: () => {
-      router.push('/profile');
+      router.refresh();
     },
   });
 
