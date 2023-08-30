@@ -25,27 +25,20 @@ export default async function Page() {
 
   if (!user) return notFound();
 
-  console.log('-----user-----', user);
-
   return (
     <div>
       <h1>Profile</h1>
 
       <div>
         <h2>Company Information</h2>
-        {user.company ? (
+        {user.company && (
           <div>
-            <p>Name</p>
-            <p>Address</p>
-          </div>
-        ) : (
-          <div>
-            <p>
-              Please add some information to better assist with verification
-            </p>
-            <Link href='/profile/edit'>Edit Profile</Link>
+            <p>{user.company.name}</p>
           </div>
         )}
+      </div>
+      <div>
+        <Link href='/profile/edit'>Edit Company</Link>
       </div>
     </div>
   );
