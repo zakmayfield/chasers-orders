@@ -50,7 +50,7 @@ export default function EditCompanyForm({
         id='name'
         {...register('name')}
       />
-      <button>Update Company Information</button>
+      <button disabled={isLoading}>Update Company Information</button>
     </form>
   );
 }
