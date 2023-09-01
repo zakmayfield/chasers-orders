@@ -47,6 +47,7 @@ model User {
   isApproved Boolean @default(false)
 
   company Company?
+  cart    CartItem[]
 }
 
 model VerificationToken {
@@ -63,4 +64,21 @@ model Company {
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id])
+}
+
+model CartItem {
+  id       String @id @default(cuid())
+  quantity Int
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id        String     @id @default(cuid())
+  name      String
+  price     Float?
+  cartItems CartItem[]
 }
