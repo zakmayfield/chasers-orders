@@ -20,7 +20,12 @@ export default async function Welcome() {
           </p>
         </div>
       ) : (
-        <h2>Your account is pending approval</h2>
+        <div>
+          <h2>Your account is pending approval</h2>
+          <p>
+            Visit your <Link href='/profile'>Profile</Link>
+          </p>
+        </div>
       )}
     </div>
   );
