@@ -8,6 +8,7 @@ export default async function Welcome() {
   if (!session?.user) {
     redirect('/sign-in');
   }
+
   return (
     <div>
       <h1>Welcome</h1>
