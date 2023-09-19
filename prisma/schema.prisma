@@ -77,8 +77,29 @@ model CartItem {
 }
 
 model Product {
-  id        String     @id @default(cuid())
-  name      String
-  price     Float?
+  id       String @id @default(cuid())
+  name     String // Product name, e.g., "Banana-Mango-Pineapple"
+  category String // Product category, e.g., "BLENDS"
+
+  unit1  String // e.g., "1L"
+  price1 Float // e.g., 8.25
+  code1  String // e.g., "WHS-Blends:BAN-MGO-PINE-1"
+
+  unit2  String? // Nullable since it's optional
+  price2 Float? // Nullable since it's optional
+  code2  String? // Nullable since it's optional
+
+  unit3  String? // Nullable since it's optional
+  price3 Float? // Nullable since it's optional
+  code3  String? // Nullable since it's optional
+
+  unit4  String? // Nullable since it's optional
+  price4 Float? // Nullable since it's optional
+  code4  String? // Nullable since it's optional
+
+  unit5  String? // Nullable since it's optional
+  price5 Float? // Nullable since it's optional
+  code5  String? // Nullable since it's optional
+
   cartItems CartItem[]
 }
