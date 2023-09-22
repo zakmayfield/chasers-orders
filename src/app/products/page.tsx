@@ -1,7 +1,8 @@
-import { getAuthSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
+import { getAuthSession } from '@/lib/auth';
+import Products from '@/features/Products';
 
-export default async function Products() {
+export default async function Page() {
   const session = await getAuthSession();
 
   if (!session?.user) {
@@ -12,12 +13,5 @@ export default async function Products() {
     redirect('/welcome');
   }
 
-  return (
-    <div>
-      <h1>Products</h1>
-      <p>product1</p>
-      <p>product2</p>
-      <p>product3</p>
-    </div>
-  );
+  return <Products />;
 }
