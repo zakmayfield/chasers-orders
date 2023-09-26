@@ -1,6 +1,7 @@
 'use client';
-import { Product, getProducts } from '@/store';
 import { useQuery } from '@tanstack/react-query';
+import { getProducts } from '@/store';
+import type { Product } from '@/types';
 
 export default function Products() {
   const { isLoading, isError, data, error } = useQuery<Product[], Error>({

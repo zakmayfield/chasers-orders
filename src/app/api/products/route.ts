@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
+import type { Product } from '@/types';
 
 export async function GET() {
   const session = await getAuthSession();
@@ -10,9 +11,12 @@ export async function GET() {
   }
 
   try {
-    const products = await db.product.findMany({
+    const products: Product[] = await db.product.findMany({
       take: 3,
-      include: {
+      select: {
+        id: true,
+        name: true,
+        category: true,
         units: true,
       },
     });
