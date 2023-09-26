@@ -4,6 +4,8 @@ import { Inter } from 'next/font/google';
 import Nav from '../features/nav/Nav';
 import Providers from '@/lib/Providers';
 
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -22,6 +24,7 @@ export default function RootLayout({
         <body className={inter.className}>
           <Nav />
           <div>{children}</div>
+          <ReactQueryDevtools initialIsOpen={false} />
         </body>
       </html>
     </Providers>
