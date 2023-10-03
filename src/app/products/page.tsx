@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getAuthSession } from '@/lib/auth';
-import Products from '@/features/Products';
+import Products from '@/features/products/Products';
 
 export default async function Page() {
   const session = await getAuthSession();

@@ -1,4 +1,4 @@
-import EditCompanyForm from '@/features/EditCompanyForm';
+import EditCompanyForm from '@/features/auth/EditCompanyForm';
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 
