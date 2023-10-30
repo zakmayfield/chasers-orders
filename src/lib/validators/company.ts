@@ -5,5 +5,5 @@ export const EditCompanyValidator = z.object({
     .string()
     .min(2)
     .max(32)
-    .regex(/^[a-zA-Z0-9_]+$/),
+    .regex(/^[a-zA-Z0-9_ ]+$/),
 });
