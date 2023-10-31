@@ -8,6 +8,7 @@ type TransformedItem = {
   units: Omit<Unit, 'productId' | 'id'>[];
 };
 
+// parse and write original product data to new json structure
 function parseData(dataArray: any) {
   const transformedData = [];
 
