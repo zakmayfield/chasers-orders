@@ -20,13 +20,6 @@ export default function Products() {
 
   return (
     <div>
-      <h1>Products</h1>
-      <ul>
-        {data.map(({ id, name }) => (
-          <li key={id}>{name}</li>
-        ))}
-      </ul>
-
       <ProductsTable products={data} />
     </div>
   );
