@@ -1,6 +1,5 @@
 'use client';
 import type { Product } from '@/types';
-import { Unit } from '@prisma/client';
 import {
   useReactTable,
   getCoreRowModel,
@@ -8,7 +7,7 @@ import {
   createColumnHelper,
 } from '@tanstack/react-table';
 
-type TableProduct = Omit<Product, 'id' | 'units'>;
+type TableProduct = Product;
 
 export default function ProductsTable({
   products: data,
@@ -28,7 +27,18 @@ export default function ProductsTable({
       cell: (info) => info.getValue(),
     }),
 
-    // units
+    // this is where i'm struggling
+    columnHelper.accessor('units', {
+      header: 'Units',
+      cell: (info) => {
+        const units = info.getValue().map((unitInfo, index) => (
+          <option key={index} value={unitInfo.unit}>
+            {unitInfo.unit}
+          </option>
+        ));
+        return <select>{units}</select>;
+      },
+    }),
   ];
 
   const table = useReactTable({
