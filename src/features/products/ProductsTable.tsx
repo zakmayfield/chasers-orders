@@ -26,14 +26,12 @@ export default function ProductsTable({
       header: 'Category',
       cell: (info) => info.getValue(),
     }),
-
-    // this is where i'm struggling
     columnHelper.accessor('units', {
       header: 'Units',
       cell: (info) => {
         const units = info.getValue().map((unitInfo, index) => (
-          <option key={index} value={unitInfo.unit}>
-            {unitInfo.unit}
+          <option key={index} value={unitInfo.size}>
+            {unitInfo.size}
           </option>
         ));
         return <select>{units}</select>;
