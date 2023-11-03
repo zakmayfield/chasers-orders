@@ -12,7 +12,7 @@ export async function GET() {
 
   try {
     const products: Product[] = await db.product.findMany({
-      take: 3,
+      take: 15,
       select: {
         id: true,
         name: true,
