@@ -10,7 +10,7 @@ async function main() {
         category: product.category,
         units: {
           create: product.units.map((unit: any) => ({
-            unit: unit.unit,
+            size: unit.size,
             price: unit.price,
             code: unit.code,
           })),

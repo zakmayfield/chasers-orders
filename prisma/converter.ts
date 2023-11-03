@@ -20,13 +20,17 @@ function parseData(dataArray: any) {
     };
 
     for (let i = 1; i <= 5; i++) {
-      const unitKey = `unit${i}`;
+      /**
+       * The original product data size property is called `unit`
+       * hence why `sizeKey` has a value of `unit{{ index }}`
+       */
+      const sizeKey = `unit${i}`;
       const priceKey = `price${i}`;
       const codeKey = `code${i}`;
 
-      if (item[unitKey] && item[priceKey] !== null && item[codeKey]) {
+      if (item[sizeKey] && item[priceKey] !== null && item[codeKey]) {
         transformedItem.units.push({
-          unit: item[unitKey],
+          size: item[sizeKey],
           price: item[priceKey],
           code: item[codeKey],
         });
@@ -54,4 +58,4 @@ function writeToFile(data: TransformedItem[], fileName: string) {
 }
 
 const transformedData = parseData(products_original);
-console.log(JSON.stringify(transformedData, null, 2));
+// console.log(JSON.stringify(transformedData, null, 2));
