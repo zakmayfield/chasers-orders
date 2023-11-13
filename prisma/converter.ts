@@ -21,7 +21,7 @@ function parseData(dataArray: any) {
 
     for (let i = 1; i <= 5; i++) {
       /**
-       * The original product data size property is called `unit`
+       * The original product data sizes are called `unit1`, `unit2` ect.
        * hence why `sizeKey` has a value of `unit{{ index }}`
        */
       const sizeKey = `unit${i}`;
