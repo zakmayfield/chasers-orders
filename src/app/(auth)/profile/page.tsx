@@ -1,24 +1,16 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { notFound, redirect } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
 export default async function Page() {
   const session = await getAuthSession();
 
-  if (!session?.user) {
-    redirect('/sign-in');
-  }
-
   const user = await db.user.findFirst({
     where: {
       id: session?.user.id,
     },
-    select: {
-      id: true,
-      name: true,
-      username: true,
-      isApproved: true,
+    include: {
       company: true,
     },
   });
