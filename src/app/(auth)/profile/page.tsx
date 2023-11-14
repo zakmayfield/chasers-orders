@@ -5,10 +5,11 @@ import Link from 'next/link';
 
 export default async function Page() {
   const session = await getAuthSession();
+  const id = session?.user.id;
 
-  const user = await db.user.findFirst({
+  const user = await db.user.findUnique({
     where: {
-      id: session?.user.id,
+      id,
     },
     include: {
       company: true,

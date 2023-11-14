@@ -7,7 +7,7 @@ export default async function Welcome() {
   const session = await getAuthSession();
   const { id: userId, isApproved } = session?.user || {};
 
-  const hasCart = await db.cart.findFirst({
+  const hasCart = await db.cart.findUnique({
     where: { userId },
     select: { id: true },
   });
