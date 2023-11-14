@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { nanoid } from 'nanoid';
-import { NextAuthOptions, getServerSession } from 'next-auth';
+import { NextAuthOptions, Session, getServerSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
 export const authOptions: NextAuthOptions = {
@@ -11,6 +11,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/sign-in',
+    newUser: '/welcome',
   },
   providers: [
     GoogleProvider({
@@ -20,8 +21,10 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ token, session }) {
-      // declare which values are accessible when requesting session data from next-auth
-      // via getServerSession()
+      /**
+       * declare which values are accessible when requesting session data from next-auth
+       * via getServerSession()
+       */
       if (token) {
         // next-auth is aware of this session type via `types/next-auth.d.ts`
         session.user.id = token.id;
@@ -46,7 +49,7 @@ export const authOptions: NextAuthOptions = {
         return token;
       }
 
-      // username will typeerror IF default next-auth prisma tables don't include a username column
+      // username will typeerror if default next-auth prisma tables don't include a username column
       if (!dbUser.username) {
         const generatedUsername = nanoid(10);
 

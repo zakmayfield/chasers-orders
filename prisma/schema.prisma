@@ -34,6 +34,14 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -47,14 +55,7 @@ model User {
   isApproved Boolean @default(false)
 
   company Company?
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
+  cart    Cart?
 }
 
 model Company {
@@ -62,7 +63,7 @@ model Company {
   name String
 
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Product {
@@ -81,4 +82,26 @@ model Unit {
 
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  carts UnitsOnCart[]
+}
+
+model Cart {
+  id String @id @default(cuid())
+
+  items UnitsOnCart[]
+
+  user   User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
+}
+
+model UnitsOnCart {
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  cartId String
+  unit   Unit   @relation(fields: [unitId], references: [id])
+  unitId String
+
+  quantity Int
+
+  @@id([cartId, unitId])
 }
