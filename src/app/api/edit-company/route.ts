@@ -14,7 +14,7 @@ export async function PATCH(req: Request) {
     const body = await req.json();
     const { name } = EditCompanyValidator.parse(body);
 
-    const updatedCompany = await db.company.upsert({
+    await db.company.upsert({
       where: {
         userId: id,
       },
@@ -27,11 +27,8 @@ export async function PATCH(req: Request) {
       },
     });
 
-    console.log('-----updatedCompany-----', updatedCompany);
-
     return new Response('OK');
   } catch (err) {
-    console.log('-----edit-company err-----', err);
     return new Response(
       'Could not update company at this time. Please try later',
       { status: 500 }

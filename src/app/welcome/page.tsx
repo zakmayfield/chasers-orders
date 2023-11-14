@@ -1,4 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/db';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -7,6 +8,19 @@ export default async function Welcome() {
 
   if (!session?.user) {
     redirect('/sign-in');
+  }
+
+  const hasCart = await db.cart.findFirst({
+    where: { userId: session.user.id },
+    select: { id: true },
+  });
+
+  if (!hasCart) {
+    await db.cart.create({
+      data: {
+        userId: session.user.id,
+      },
+    });
   }
 
   return (
