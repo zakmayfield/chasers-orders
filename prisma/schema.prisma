@@ -63,7 +63,7 @@ model Company {
   name String
 
   userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Product {
@@ -96,7 +96,7 @@ model Cart {
 }
 
 model UnitsOnCart {
-  cart   Cart   @relation(fields: [cartId], references: [id])
+  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId String
   unit   Unit   @relation(fields: [unitId], references: [id])
   unitId String
