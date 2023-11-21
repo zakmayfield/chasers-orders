@@ -15,36 +15,55 @@ export default function ProductsTable({
 }: {
   products: Product[];
 }) {
-  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
+  // initialize selected units to length of product data
+  const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
+    Array(productData.length).fill(null)
+  );
+
   const columnHelper = createColumnHelper<TableProduct>();
 
   const handleUnitChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
-    data: Unit[]
+    rowIndex: number
   ) => {
     const selectedSize = event.target.value;
-    const unit = data.find((unit: Unit) => unit.size === selectedSize) || null;
-    setSelectedUnit(unit);
+    const unit =
+      productData[rowIndex].units.find(
+        (unit: Unit) => unit.size === selectedSize
+      ) || null;
+
+    setSelectedUnits((prevSelectedUnits) => {
+      const newSelectedUnits = [...prevSelectedUnits];
+      newSelectedUnits[rowIndex] = unit;
+      return newSelectedUnits;
+    });
   };
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (data: Unit[], rowIndex: number) => {
+    const selectedUnit = selectedUnits[rowIndex];
+
     if (selectedUnit) {
       console.log('Adding to cart:', selectedUnit);
-      // Add your actual logic for adding to the cart here
     } else {
-      console.log('Please select a unit before adding to cart.');
+      console.log('No selected size, adding first ref');
+      // first unit
+      const defaultUnit = data[0];
+      console.log('default unit ->', defaultUnit);
     }
   };
 
   useEffect(() => {
-    selectedUnit &&
-      console.log('selectedUnit ->', {
-        id: selectedUnit.id,
-        size: selectedUnit.size,
-        price: selectedUnit.price,
-        code: selectedUnit.code,
-      });
-  }, [selectedUnit]);
+    console.log('selected units array ->', selectedUnits);
+    selectedUnits.forEach((selectedUnit) => {
+      selectedUnit &&
+        console.log('selectedUnit ->', {
+          id: selectedUnit.id,
+          size: selectedUnit.size,
+          price: selectedUnit.price,
+          code: selectedUnit.code,
+        });
+    });
+  }, [selectedUnits]);
 
   const columns = [
     columnHelper.accessor('name', {
@@ -59,30 +78,35 @@ export default function ProductsTable({
       header: 'Units',
       cell: (info) => {
         const data = info.getValue();
+        const rowIndex = info.row.index;
 
-        const unitOptions = data.map((unitInfo, index) => (
-          <option key={index} value={unitInfo.size}>
+        const unitOptions = data.map((unitInfo) => (
+          <option key={unitInfo.id} value={unitInfo.size}>
             {unitInfo.size}
           </option>
         ));
 
-        const defaultOption = (
-          <option key='default' value=''>
-            Size
-          </option>
-        );
+        // const defaultOption = (
+        //   <option key='default' value=''>
+        //     Size
+        //   </option>
+        // );
 
         return (
           <div className='flex justify-between'>
             <select
-              value={selectedUnit ? selectedUnit.size : ''}
-              onChange={(e) => handleUnitChange(e, data)}
+              value={
+                selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''
+              }
+              onChange={(e) => handleUnitChange(e, rowIndex)}
             >
-              {defaultOption}
+              {/* {defaultOption} */}
               {unitOptions}
             </select>
 
-            <button onClick={handleAddToCart}>Add to Cart</button>
+            <button onClick={() => handleAddToCart(data, rowIndex)}>
+              Add to Cart
+            </button>
           </div>
         );
       },
