@@ -22,6 +22,7 @@ export default function ProductsTable({
 
   const columnHelper = createColumnHelper<TableProduct>();
 
+  // set selected units to state when changing size value
   const handleUnitChange = (
     event: React.ChangeEvent<HTMLSelectElement>,
     rowIndex: number
@@ -39,31 +40,18 @@ export default function ProductsTable({
     });
   };
 
+  // send selected unit to cart
+  // otherwise send the first unit instance
   const handleAddToCart = (data: Unit[], rowIndex: number) => {
     const selectedUnit = selectedUnits[rowIndex];
 
     if (selectedUnit) {
       console.log('Adding to cart:', selectedUnit);
     } else {
-      console.log('No selected size, adding first ref');
-      // first unit
       const defaultUnit = data[0];
       console.log('default unit ->', defaultUnit);
     }
   };
-
-  useEffect(() => {
-    console.log('selected units array ->', selectedUnits);
-    selectedUnits.forEach((selectedUnit) => {
-      selectedUnit &&
-        console.log('selectedUnit ->', {
-          id: selectedUnit.id,
-          size: selectedUnit.size,
-          price: selectedUnit.price,
-          code: selectedUnit.code,
-        });
-    });
-  }, [selectedUnits]);
 
   const columns = [
     columnHelper.accessor('name', {
@@ -86,21 +74,15 @@ export default function ProductsTable({
           </option>
         ));
 
-        // const defaultOption = (
-        //   <option key='default' value=''>
-        //     Size
-        //   </option>
-        // );
-
         return (
           <div className='flex justify-between'>
             <select
               value={
+                // set row select value to selected unit size
                 selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''
               }
               onChange={(e) => handleUnitChange(e, rowIndex)}
             >
-              {/* {defaultOption} */}
               {unitOptions}
             </select>
 
