@@ -1,21 +1,50 @@
 'use client';
-import type { Product } from '@/types';
+import { useEffect, useState } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
   createColumnHelper,
 } from '@tanstack/react-table';
+import type { Product, Unit } from '@/types';
 
 type TableProduct = Product;
 
 export default function ProductsTable({
-  products: data,
+  products: productData,
 }: {
   products: Product[];
 }) {
-  console.log(data);
+  const [selectedUnit, setSelectedUnit] = useState<Unit | null>(null);
   const columnHelper = createColumnHelper<TableProduct>();
+
+  const handleUnitChange = (
+    event: React.ChangeEvent<HTMLSelectElement>,
+    data: Unit[]
+  ) => {
+    const selectedSize = event.target.value;
+    const unit = data.find((unit: Unit) => unit.size === selectedSize) || null;
+    setSelectedUnit(unit);
+  };
+
+  const handleAddToCart = () => {
+    if (selectedUnit) {
+      console.log('Adding to cart:', selectedUnit);
+      // Add your actual logic for adding to the cart here
+    } else {
+      console.log('Please select a unit before adding to cart.');
+    }
+  };
+
+  useEffect(() => {
+    selectedUnit &&
+      console.log('selectedUnit ->', {
+        id: selectedUnit.id,
+        size: selectedUnit.size,
+        price: selectedUnit.price,
+        code: selectedUnit.code,
+      });
+  }, [selectedUnit]);
 
   const columns = [
     columnHelper.accessor('name', {
@@ -29,18 +58,39 @@ export default function ProductsTable({
     columnHelper.accessor('units', {
       header: 'Units',
       cell: (info) => {
-        const units = info.getValue().map((unitInfo, index) => (
+        const data = info.getValue();
+
+        const unitOptions = data.map((unitInfo, index) => (
           <option key={index} value={unitInfo.size}>
             {unitInfo.size}
           </option>
         ));
-        return <select>{units}</select>;
+
+        const defaultOption = (
+          <option key='default' value=''>
+            Size
+          </option>
+        );
+
+        return (
+          <div className='flex justify-between'>
+            <select
+              value={selectedUnit ? selectedUnit.size : ''}
+              onChange={(e) => handleUnitChange(e, data)}
+            >
+              {defaultOption}
+              {unitOptions}
+            </select>
+
+            <button onClick={handleAddToCart}>Add to Cart</button>
+          </div>
+        );
       },
     }),
   ];
 
   const table = useReactTable({
-    data,
+    data: productData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
