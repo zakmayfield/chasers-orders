@@ -6,14 +6,14 @@ import {
   flexRender,
   createColumnHelper,
 } from '@tanstack/react-table';
-import AddToCartButton from './ui/AddToCartButton';
+import AddToCartButton from './AddToCartButton';
 import type {
   CartHandlerProps,
   Product,
   Unit,
   UnitHandlerProps,
 } from '@/types';
-import UnitSelect from './ui/UnitSelect';
+import UnitSelect from './UnitSelect';
 
 type TableProduct = Product;
 
