@@ -5,3 +5,13 @@ export type Product = ProductType & {
 };
 
 export type Unit = UnitType;
+
+export type UnitHandlerProps = {
+  event: React.ChangeEvent<HTMLSelectElement>;
+  rowIndex: number;
+};
+
+export type CartHandlerProps = {
+  data: Unit[];
+  rowIndex: number;
+};

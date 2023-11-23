@@ -1,12 +1,19 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
   flexRender,
   createColumnHelper,
 } from '@tanstack/react-table';
-import type { Product, Unit } from '@/types';
+import AddToCartButton from './ui/AddToCartButton';
+import type {
+  CartHandlerProps,
+  Product,
+  Unit,
+  UnitHandlerProps,
+} from '@/types';
+import UnitSelect from './ui/UnitSelect';
 
 type TableProduct = Product;
 
@@ -23,10 +30,7 @@ export default function ProductsTable({
   const columnHelper = createColumnHelper<TableProduct>();
 
   // set selected units to state when changing size value
-  const handleUnitChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-    rowIndex: number
-  ) => {
+  const handleUnitChange = ({ event, rowIndex }: UnitHandlerProps) => {
     const selectedSize = event.target.value;
     const unit =
       productData[rowIndex].units.find(
@@ -42,7 +46,7 @@ export default function ProductsTable({
 
   // send selected unit to cart
   // otherwise send the first unit instance
-  const handleAddToCart = (data: Unit[], rowIndex: number) => {
+  const handleAddToCart = ({ data, rowIndex }: CartHandlerProps) => {
     const selectedUnit = selectedUnits[rowIndex];
 
     if (selectedUnit) {
@@ -68,28 +72,14 @@ export default function ProductsTable({
         const data = info.getValue();
         const rowIndex = info.row.index;
 
-        const unitOptions = data.map((unitInfo) => (
-          <option key={unitInfo.id} value={unitInfo.size}>
-            {unitInfo.size}
-          </option>
-        ));
-
         return (
-          <div className='flex justify-between'>
-            <select
-              value={
-                // set row select value to selected unit size
-                selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''
-              }
-              onChange={(e) => handleUnitChange(e, rowIndex)}
-            >
-              {unitOptions}
-            </select>
-
-            <button onClick={() => handleAddToCart(data, rowIndex)}>
-              Add to Cart
-            </button>
-          </div>
+          <UnitSelect
+            cartHandler={handleAddToCart}
+            unitHandler={handleUnitChange}
+            data={data}
+            rowIndex={rowIndex}
+            selectedUnits={selectedUnits}
+          />
         );
       },
     }),
