@@ -6,7 +6,7 @@ export type Product = ProductType & {
 
 export type Unit = UnitType;
 
-export type UnitHandlerProps = {
+export type ChangeUnitHandlerProps = {
   event: React.ChangeEvent<HTMLSelectElement>;
   rowIndex: number;
 };
