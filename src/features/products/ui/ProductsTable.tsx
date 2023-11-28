@@ -6,12 +6,13 @@ import {
   flexRender,
   createColumnHelper,
 } from '@tanstack/react-table';
-import AddToCartButton from './AddToCartButton';
+import { useMutation } from '@tanstack/react-query';
+import { postUnitsToCart } from '@/store';
 import type {
   CartHandlerProps,
   Product,
   Unit,
-  UnitHandlerProps,
+  ChangeUnitHandlerProps,
 } from '@/types';
 import UnitSelect from './UnitSelect';
 
@@ -22,15 +23,24 @@ export default function ProductsTable({
 }: {
   products: Product[];
 }) {
-  // initialize selected units to length of product data
+  // initialize selected units to same length as product data
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
   );
 
+  const { mutate: addToCart } = useMutation({
+    mutationFn: postUnitsToCart,
+    onError: (err) => {
+      if (err) {
+        console.log('(ProductsTable | mutation) Error: ', err);
+      }
+    },
+  });
+
   const columnHelper = createColumnHelper<TableProduct>();
 
   // set selected units to state when changing size value
-  const handleUnitChange = ({ event, rowIndex }: UnitHandlerProps) => {
+  const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
     const selectedSize = event.target.value;
     const unit =
       productData[rowIndex].units.find(
@@ -50,10 +60,10 @@ export default function ProductsTable({
     const selectedUnit = selectedUnits[rowIndex];
 
     if (selectedUnit) {
-      console.log('Adding to cart:', selectedUnit);
+      addToCart(selectedUnit.id);
     } else {
       const defaultUnit = data[0];
-      console.log('default unit ->', defaultUnit);
+      addToCart(defaultUnit.id);
     }
   };
 
@@ -75,7 +85,7 @@ export default function ProductsTable({
         return (
           <UnitSelect
             cartHandler={handleAddToCart}
-            unitHandler={handleUnitChange}
+            changeUnitHandler={handleUnitChange}
             data={data}
             rowIndex={rowIndex}
             selectedUnits={selectedUnits}

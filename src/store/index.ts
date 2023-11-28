@@ -6,3 +6,14 @@ export const getProducts = async (): Promise<Product[]> => {
   );
   return dataList;
 };
+
+export const postUnitsToCart = async (unitId: string): Promise<number> => {
+  const data: number = await fetch('/api/cart/add-to-cart', {
+    method: 'POST',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify(unitId),
+  }).then((res) => res.json());
+  return data;
+};
