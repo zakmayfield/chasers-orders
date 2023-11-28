@@ -1,10 +1,10 @@
-import { CartHandlerProps, Unit, UnitHandlerProps } from '@/types';
+import { CartHandlerProps, Unit, ChangeUnitHandlerProps } from '@/types';
 import AddToCartButton from './AddToCartButton';
 import React from 'react';
 
 interface UnitSelectProps {
   cartHandler: (props: CartHandlerProps) => void;
-  unitHandler: (props: UnitHandlerProps) => void;
+  changeUnitHandler: (props: ChangeUnitHandlerProps) => void;
   data: Unit[];
   rowIndex: number;
   selectedUnits: Array<Unit | null>;
@@ -12,7 +12,7 @@ interface UnitSelectProps {
 
 const UnitSelect: React.FC<UnitSelectProps> = ({
   cartHandler,
-  unitHandler,
+  changeUnitHandler,
   data,
   rowIndex,
   selectedUnits,
@@ -30,7 +30,7 @@ const UnitSelect: React.FC<UnitSelectProps> = ({
           // set row select value to selected unit size
           selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''
         }
-        onChange={(event) => unitHandler({ event, rowIndex })}
+        onChange={(event) => changeUnitHandler({ event, rowIndex })}
       >
         {unitOptions}
       </select>
