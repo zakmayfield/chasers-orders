@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import type { NextRequest } from 'next/server';
 
-export async function handler(req: NextRequest) {
+async function handler(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams;
   const userId = searchParams.get('userId');
 
