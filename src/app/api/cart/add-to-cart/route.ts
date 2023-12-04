@@ -4,6 +4,7 @@ import { db } from '@/lib/db';
 async function handler(req: Request) {
   const session = await getAuthSession();
 
+  // determine user
   if (!session?.user) {
     return new Response(
       JSON.stringify({ message: 'Unauthorized. Please log in to continue.' }),
@@ -11,12 +12,14 @@ async function handler(req: Request) {
     );
   }
 
+  // variables
   const body: string = await req.json();
   const unitId = body;
   const userId = session.user.id;
   let cartId: string;
 
   try {
+    // find user + cart from session ID
     const user = await db.user.findUnique({
       where: { id: userId },
       include: {
@@ -28,6 +31,7 @@ async function handler(req: Request) {
       },
     });
 
+    // validate user's cart
     if (!user?.cart) {
       const createdCart = await db.cart.create({
         data: {
@@ -39,6 +43,7 @@ async function handler(req: Request) {
     } else {
       cartId = user.cart.id;
 
+      // check for existing unit in cart
       const unitExistsInCart = user.cart.items.find(
         (unit) => unit.unitId === unitId
       );
@@ -53,6 +58,7 @@ async function handler(req: Request) {
       }
     }
 
+    // create new junction record
     await db.unitsOnCart.create({
       data: {
         unitId,
