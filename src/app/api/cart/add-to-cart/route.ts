@@ -50,16 +50,16 @@ async function handler(req: Request) {
             status: 409,
           }
         );
-      } else {
-        await db.unitsOnCart.create({
-          data: {
-            unitId,
-            cartId,
-            quantity: 1,
-          },
-        });
       }
     }
+
+    await db.unitsOnCart.create({
+      data: {
+        unitId,
+        cartId,
+        quantity: 1,
+      },
+    });
 
     return new Response(
       JSON.stringify({ message: 'Item successfully added to the cart' }),
