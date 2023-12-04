@@ -5,24 +5,28 @@ async function handler(req: Request) {
   const session = await getAuthSession();
 
   if (!session?.user) {
-    return new Response('Unauthorized', { status: 401 });
+    return new Response(
+      JSON.stringify({ message: 'Unauthorized. Please log in to continue.' }),
+      { status: 401 }
+    );
   }
 
   const body: string = await req.json();
   const unitId = body;
-  // TODO: validate body with custom validator
+  const userId = session.user.id;
+  let cartId: string;
 
   try {
-    const userId = session.user.id;
-
     const user = await db.user.findUnique({
       where: { id: userId },
       include: {
-        cart: true,
+        cart: {
+          include: {
+            items: true,
+          },
+        },
       },
     });
-
-    let cartId;
 
     if (!user?.cart) {
       const createdCart = await db.cart.create({
@@ -34,26 +38,42 @@ async function handler(req: Request) {
       cartId = createdCart.id;
     } else {
       cartId = user.cart.id;
+
+      const unitExistsInCart = user.cart.items.find(
+        (unit) => unit.unitId === unitId
+      );
+
+      if (unitExistsInCart) {
+        return new Response(
+          JSON.stringify({ message: 'Item already in cart' }),
+          {
+            status: 409,
+          }
+        );
+      } else {
+        await db.unitsOnCart.create({
+          data: {
+            unitId,
+            cartId,
+            quantity: 1,
+          },
+        });
+      }
     }
 
-    /**
-     * TODO
-     * Verify UnitsOnCart record
-     * - if unique UnitsOnCart (cartId + unitId) record exists increase quantity
-     * - if not then continue
-     */
-
-    const unitOnCart = await db.unitsOnCart.create({
-      data: {
-        unitId,
-        cartId,
-        quantity: 1,
-      },
-    });
-
-    return new Response('1', { status: 201 });
+    return new Response(
+      JSON.stringify({ message: 'Item successfully added to the cart' }),
+      { status: 201 }
+    );
   } catch (error) {
-    return new Response('0', { status: 500 });
+    if (error instanceof Error) {
+      return new Response(
+        JSON.stringify({ message: 'Server error', error: error.message }),
+        {
+          status: 500,
+        }
+      );
+    }
   }
 }
 
