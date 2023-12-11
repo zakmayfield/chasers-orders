@@ -15,3 +15,13 @@ export type CartHandlerProps = {
   data: Unit[];
   rowIndex: number;
 };
+
+export type RefinedCartItem = {
+  productId: string;
+  unitId: string;
+  productName: string;
+  productCategory: string;
+  unitPrice: number;
+  unitSize: string;
+  cartQuantity: number;
+};
