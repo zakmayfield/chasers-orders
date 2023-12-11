@@ -4,7 +4,7 @@ import { db } from '@/lib/db';
 async function handler(req: Request) {
   const session = await getAuthSession();
 
-  // determine user
+  // determine user auth
   if (!session?.user) {
     return new Response(
       JSON.stringify({ message: 'Unauthorized. Please log in to continue.' }),

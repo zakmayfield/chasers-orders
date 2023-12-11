@@ -8,7 +8,7 @@ export const getProducts = async (): Promise<Product[]> => {
 };
 
 export const postUnitsToCart = async (unitId: string): Promise<Response> => {
-  const data = await fetch('/api/cart/add-to-cart', {
+  const data = await fetch('/api/cart/add', {
     method: 'POST',
     headers: {
       'Content-type': 'application/json',
