@@ -66,6 +66,7 @@ async function handler(req: Request) {
       productsArray = [...products];
     }
 
+    // declare object maps for performance
     const unitMap = new Map(unitsArray.map((unit) => [unit.id, unit]));
     const productMap = new Map(
       productsArray.map((product) => [product.id, product])
@@ -73,44 +74,22 @@ async function handler(req: Request) {
 
     // iterate and construct cart items to send back
     if (productsArray) {
-      let pid: string;
-      let uid: string;
-      let n: string;
-      let c: string;
-      let s: string;
-      let p: number;
-      let q: number;
-
       cart.items.forEach((item) => {
-        // const xUnit = unitMap.get(item.unitId);
-        uid = item.unitId;
-        q = item.quantity;
+        let quantity: number;
+        quantity = item.quantity;
 
-        unitsArray.forEach((unit) => {
-          if (unit.id === item.unitId) {
-            s = unit.size;
-            p = unit.price;
+        const mappedUnit = unitMap.get(item.unitId);
+        let mappedProduct: ProductWithoutUnits | undefined;
+        if (mappedUnit) mappedProduct = productMap.get(mappedUnit?.productId);
 
-            // let xProduct = productMap.get(unit.productId);
-
-            productsArray.forEach((product) => {
-              if (product.id === unit.productId) {
-                pid = product.id;
-                n = product.name;
-                c = product.category;
-              }
-            });
-          }
-        });
-
-        let constructedItem = {
-          productId: pid,
-          unitId: uid,
-          productName: n,
-          productCategory: c,
-          unitSize: s,
-          unitPrice: p,
-          cartQuantity: q,
+        let constructedItem: RefinedCartItem = {
+          productId: mappedProduct!.id,
+          unitId: mappedUnit!.id,
+          productName: mappedProduct!.name,
+          productCategory: mappedProduct!.category,
+          unitSize: mappedUnit!.size,
+          unitPrice: mappedUnit!.price,
+          cartQuantity: quantity,
         };
 
         refinedCartData = [...refinedCartData, constructedItem];
