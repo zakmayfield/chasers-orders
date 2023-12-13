@@ -1,4 +1,4 @@
-import type { Product, RefinedCartItem } from '@/types';
+import type { CartType, Product } from '@/types';
 
 export const getProducts = async (): Promise<Product[]> => {
   const dataList: Product[] = await fetch('/api/get-products').then((res) =>
@@ -7,7 +7,7 @@ export const getProducts = async (): Promise<Product[]> => {
   return dataList;
 };
 
-export const getCart = async (): Promise<RefinedCartItem[]> => {
+export const getCart = async (): Promise<CartType> => {
   const data = await fetch('/api/cart')
     .then((res) => res.json())
     .catch((err) => err);
