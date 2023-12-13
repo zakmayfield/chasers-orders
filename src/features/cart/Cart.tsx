@@ -2,13 +2,10 @@
 
 import { getCart } from '@/store';
 import { useQuery } from '@tanstack/react-query';
-import { RefinedCartItem } from '@/types';
+import { CartType } from '@/types';
 
 export default function Cart() {
-  const { isLoading, isError, data, error } = useQuery<
-    RefinedCartItem[],
-    Error
-  >({
+  const { isLoading, isError, data, error } = useQuery<CartType, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
   });
@@ -25,13 +22,13 @@ export default function Cart() {
     <div>
       <div>Cart</div>
       <div className='grid grid-cols-3 gap-6'>
-        {data.map((item) => (
-          <div key={item.productId}>
-            <p>{item.productName}</p>
-            <p>{item.productCategory}</p>
-            <p>Size: {item.unitSize}</p>
-            <p>Price: {item.unitPrice}</p>
-            <p>Quantity: {item.cartQuantity}</p>
+        {data.items.map((item) => (
+          <div key={item.unit.code}>
+            <p>{item.unit.product.name}</p>
+            <p>{item.unit.product.category}</p>
+            <p>Size: {item.unit.size}</p>
+            <p>Price: {item.unit.price}</p>
+            <p>Quantity: {item.quantity}</p>
           </div>
         ))}
       </div>
