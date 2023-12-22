@@ -48,3 +48,25 @@ export const removeCartItem = async ({
 
   return data;
 };
+
+export const updateCartItemQuantity = async ({
+  cartId,
+  unitId,
+  quantityPayload,
+}: {
+  cartId: string;
+  unitId: string;
+  quantityPayload: number;
+}) => {
+  const data = await fetch('/api/cart/update', {
+    method: 'PUT',
+    headers: {
+      'Content-type': 'application/json',
+    },
+    body: JSON.stringify({ cartId, unitId, quantityPayload }),
+  })
+    .then((res) => res.json())
+    .catch((err) => err);
+
+  return data;
+};
