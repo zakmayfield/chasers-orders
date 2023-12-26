@@ -16,7 +16,7 @@ async function handler(req: Request) {
     const body = await req.json();
     const quantityPayload = Number(body.quantityPayload);
     const unitId: string = body.unitId;
-    const cartId: string = body.unitId;
+    const cartId: string = body.cartId;
 
     switch (true) {
       case !quantityPayload:
