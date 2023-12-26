@@ -32,8 +32,8 @@ const UpdateCartItem = ({
   const options = Array.from({ length: 10 }, (_, i) => i + 1);
 
   return (
-    <div>
-      <p>Quantity: {quantityData}</p>
+    <div className='flex items-center'>
+      <p className='pr-6'>Quantity: </p>
       <form>
         <select
           name='quantity'
