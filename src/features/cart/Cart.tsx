@@ -4,6 +4,7 @@ import { getCart } from '@/store';
 import { useQuery } from '@tanstack/react-query';
 import { CartType } from '@/types';
 import RemoveCartItemButton from './ui/RemoveCartItemButton';
+import UpdateCartItem from './ui/UpdateCartItem';
 
 export default function Cart() {
   const { isLoading, isError, data, error } = useQuery<CartType, Error>({
@@ -29,8 +30,12 @@ export default function Cart() {
             <p>{item.unit.product.category}</p>
             <p>Size: {item.unit.size}</p>
             <p>Price: {item.unit.price}</p>
-            <p>Quantity: {item.quantity}</p>
 
+            <UpdateCartItem
+              cartId={data.id}
+              unitId={item.unit.id}
+              quantityData={item.quantity}
+            />
             <RemoveCartItemButton unitId={item.unit.id} cartId={data.id} />
           </div>
         ))}
