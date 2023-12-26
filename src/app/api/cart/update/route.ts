@@ -1,5 +1,6 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
@@ -40,26 +41,42 @@ async function handler(req: Request) {
       );
     }
 
-    console.log({ cartId, unitId });
-
-    const updated = await db.cart.update({
-      where: { id: cartId },
-      data: {
-        items: {
-          update: {
-            where: {
-              cartId_unitId: {
-                cartId,
-                unitId,
+    const updated = await db.cart
+      .update({
+        where: { id: cartId },
+        data: {
+          items: {
+            update: {
+              where: {
+                cartId_unitId: {
+                  cartId,
+                  unitId,
+                },
               },
-            },
-            data: {
-              quantity: quantityPayload,
+              data: {
+                quantity: quantityPayload,
+              },
             },
           },
         },
-      },
-    });
+      })
+      .catch((err) => {
+        if (err instanceof PrismaClientKnownRequestError) {
+          return new Response(
+            JSON.stringify({
+              error: 'Could not update item',
+              message: err.message,
+              requestedPaylod: {
+                unitId,
+                cartId,
+              },
+            }),
+            {
+              status: 500,
+            }
+          );
+        }
+      });
 
     return new Response(
       JSON.stringify({ message: 'success', response: updated }),
