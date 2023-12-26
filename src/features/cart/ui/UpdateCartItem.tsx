@@ -39,6 +39,7 @@ const UpdateCartItem = ({
           name='quantity'
           id='quantity'
           value={qValue}
+          disabled={isLoading}
           onChange={(e) => handleQuantityChange(e)}
         >
           {options.map((num) => (

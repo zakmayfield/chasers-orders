@@ -20,6 +20,25 @@ export default function Cart() {
     return <span>Error: {error.message}</span>;
   }
 
+  function generateTotal(): number {
+    let total: number = 0;
+
+    if (data && data.items) {
+      data.items.forEach((item) => {
+        if (
+          typeof item.quantity === 'number' &&
+          typeof item.unit.price === 'number'
+        ) {
+          total += item.unit.price * item.quantity;
+        }
+      });
+    }
+
+    return total;
+  }
+
+  // TODO: UI is being re arranged when mutations occur, add arrangement order state for consistency
+
   return (
     <div>
       <div>Cart</div>
@@ -29,7 +48,7 @@ export default function Cart() {
             <p>{item.unit.product.name}</p>
             <p>{item.unit.product.category}</p>
             <p>Size: {item.unit.size}</p>
-            <p>Price: {item.unit.price}</p>
+            <p>Price: {(item.unit.price * item.quantity).toFixed(2)}</p>
 
             <UpdateCartItem
               cartId={data.id}
@@ -40,6 +59,7 @@ export default function Cart() {
           </div>
         ))}
       </div>
+      <div className='mt-12'>Total: {generateTotal()}</div>
     </div>
   );
 }
