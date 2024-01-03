@@ -7,7 +7,9 @@ export default function UserAuthForm() {
   const loginWithGoogle = async () => {
     setIsLoading(true);
     try {
-      await signIn('google');
+      await signIn('google', undefined, {
+        prompt: 'select_account',
+      });
     } catch (err) {
       console.log(err);
     } finally {
