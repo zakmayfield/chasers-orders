@@ -214,8 +214,6 @@ function Filter({
 }) {
   const columnFilterValue = column.getFilterValue();
 
-  console.log('--- filter value ---', columnFilterValue);
-
   return (
     <div className='w-full px-3'>
       <input
