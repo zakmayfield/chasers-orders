@@ -1,20 +1,24 @@
 'use client';
 import React, { useState } from 'react';
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  createColumnHelper,
-} from '@tanstack/react-table';
 import { useMutation } from '@tanstack/react-query';
 import { postUnitsToCart } from '@/store';
+import UnitSelect from './UnitSelect';
+import {
+  Table as ReactTable,
+  useReactTable,
+  Column,
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+} from '@tanstack/react-table';
 import type {
   CartHandlerProps,
   Product,
   Unit,
   ChangeUnitHandlerProps,
 } from '@/types';
-import UnitSelect from './UnitSelect';
 
 type TableProduct = Product;
 
@@ -36,8 +40,6 @@ export default function ProductsTable({
       }
     },
   });
-
-  const columnHelper = createColumnHelper<TableProduct>();
 
   // set selected units to state when changing size value
   const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
@@ -67,17 +69,22 @@ export default function ProductsTable({
     }
   };
 
+  const columnHelper = createColumnHelper<TableProduct>();
+
   const columns = [
     columnHelper.accessor('name', {
       header: 'Name',
+      enableColumnFilter: true,
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('category', {
       header: 'Category',
+      enableColumnFilter: false,
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('units', {
       header: 'Units',
+      enableColumnFilter: false,
       cell: (info) => {
         const data = info.getValue();
         const rowIndex = info.row.index;
@@ -98,7 +105,12 @@ export default function ProductsTable({
   const table = useReactTable({
     data: productData,
     columns,
+    enableFilters: true,
+    enableColumnFilters: true,
+    debugAll: true,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
   });
 
   return (
@@ -111,12 +123,19 @@ export default function ProductsTable({
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
                 <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
+                  {header.isPlaceholder ? null : (
+                    <div>
+                      {flexRender(
                         header.column.columnDef.header,
                         header.getContext()
                       )}
+                      {header.column.getCanFilter() ? (
+                        <div>
+                          <Filter column={header.column} table={table} />
+                        </div>
+                      ) : null}
+                    </div>
+                  )}
                 </th>
               ))}
             </tr>
@@ -134,6 +153,78 @@ export default function ProductsTable({
           ))}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div className='flex gap-6 mt-3'>
+        <div className='flex gap-2'>
+          <button
+            className='border rounded p-1'
+            onClick={() => table.setPageIndex(0)}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {'<<'}
+          </button>
+          <button
+            className='border rounded p-1'
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
+          >
+            {'<'}
+          </button>
+
+          <button
+            className='border rounded p-1'
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            {'>'}
+          </button>
+          <button
+            className='border rounded p-1'
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+            disabled={!table.getCanNextPage()}
+          >
+            {'>>'}
+          </button>
+        </div>
+        <span className='flex items-center gap-1'>
+          <div>Page</div>
+          <strong>
+            {table.getState().pagination.pageIndex + 1} of{' '}
+            {table.getPageCount()}
+          </strong>
+        </span>
+      </div>
+
+      {/* Meta Data */}
+      <div className='mt-12'>
+        <div>{table.getRowModel().rows.length} Rows</div>
+        <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre>
+      </div>
+    </div>
+  );
+}
+
+function Filter({
+  column,
+  table,
+}: {
+  column: Column<any, any>;
+  table: ReactTable<Product>;
+}) {
+  const columnFilterValue = column.getFilterValue();
+
+  console.log('--- filter value ---', columnFilterValue);
+
+  return (
+    <div className='w-full px-3'>
+      <input
+        type='text'
+        value={(columnFilterValue ?? '') as string}
+        onChange={(e) => column.setFilterValue(e.target.value)}
+        placeholder={`Search...`}
+        className='border shadow rounded font-normal w-full'
+      />
     </div>
   );
 }
