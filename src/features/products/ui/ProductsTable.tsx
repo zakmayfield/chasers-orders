@@ -80,7 +80,7 @@ export default function ProductsTable({
     }),
     columnHelper.accessor('category', {
       header: 'Category',
-      enableColumnFilter: false,
+      enableColumnFilter: true,
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('units', {
@@ -138,7 +138,10 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
                     )}
                     {header.column.getCanFilter() ? (
                       <div>
-                        <Filter column={header.column} />
+                        <NameFilter
+                          reactTable={reactTable}
+                          column={header.column}
+                        />
                       </div>
                     ) : null}
                   </div>
@@ -163,10 +166,36 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
   );
 }
 
-function Filter({ column }: { column: Column<any, any> }) {
+function NameFilter({
+  reactTable,
+  column,
+}: {
+  reactTable: ReactTable<TableProduct>;
+  column: Column<any, any>;
+}) {
+  const firstValue = reactTable
+    .getPreFilteredRowModel()
+    .flatRows[0]?.getValue(column.id);
+
+  console.log('first value', firstValue);
+
   const columnFilterValue = column.getFilterValue();
 
-  return (
+  return firstValue === 'BLENDS' ? (
+    <div className='w-full px-3'>
+      <select
+        name='category'
+        id='category'
+        className='font-normal w-full'
+        onChange={(e) => column.setFilterValue(e.target.value)}
+        value={(columnFilterValue ?? '') as string}
+      >
+        <option value=''>SHOW ALL</option>
+        <option value='BLENDS'>BLENDS</option>
+        <option value='CIDERS'>CIDERS</option>
+      </select>
+    </div>
+  ) : (
     <div className='w-full px-3'>
       <input
         type='text'
