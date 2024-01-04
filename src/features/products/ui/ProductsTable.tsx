@@ -41,14 +41,15 @@ export default function ProductsTable({
     },
   });
 
-  // set selected units to state when changing size value
   const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
     const selectedSize = event.target.value;
+
     const unit =
       productData[rowIndex].units.find(
         (unit: Unit) => unit.size === selectedSize
       ) || null;
 
+    // set selected units to state when changing unit size value
     setSelectedUnits((prevSelectedUnits) => {
       const newSelectedUnits = [...prevSelectedUnits];
       newSelectedUnits[rowIndex] = unit;
@@ -56,15 +57,15 @@ export default function ProductsTable({
     });
   };
 
-  // send selected unit to cart
-  // otherwise send the first unit instance
-  const handleAddToCart = ({ data, rowIndex }: CartHandlerProps) => {
+  const handleAddToCart = ({ units, rowIndex }: CartHandlerProps) => {
     const selectedUnit = selectedUnits[rowIndex];
 
     if (selectedUnit) {
+      // send selected unit to cart
       addToCart(selectedUnit.id);
     } else {
-      const defaultUnit = data[0];
+      // otherwise send the first unit instance
+      const defaultUnit = units[0];
       addToCart(defaultUnit.id);
     }
   };
@@ -79,35 +80,34 @@ export default function ProductsTable({
     }),
     columnHelper.accessor('category', {
       header: 'Category',
-      enableColumnFilter: false,
+      enableColumnFilter: true,
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('units', {
       header: 'Units',
       enableColumnFilter: false,
       cell: (info) => {
-        const data = info.getValue();
+        const units = info.getValue();
         const rowIndex = info.row.index;
 
         return (
           <UnitSelect
-            cartHandler={handleAddToCart}
-            changeUnitHandler={handleUnitChange}
-            data={data}
+            units={units}
             rowIndex={rowIndex}
             selectedUnits={selectedUnits}
+            handleAddToCart={handleAddToCart}
+            handleUnitChange={handleUnitChange}
           />
         );
       },
     }),
   ];
 
-  const table = useReactTable({
+  const reactTable = useReactTable({
     data: productData,
     columns,
     enableFilters: true,
     enableColumnFilters: true,
-    debugAll: true,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -115,106 +115,87 @@ export default function ProductsTable({
 
   return (
     <div>
-      <h1>products table</h1>
-
-      <table>
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder ? null : (
-                    <div>
-                      {flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                      {header.column.getCanFilter() ? (
-                        <div>
-                          <Filter column={header.column} table={table} />
-                        </div>
-                      ) : null}
-                    </div>
-                  )}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {/* Pagination */}
-      <div className='flex gap-6 mt-3'>
-        <div className='flex gap-2'>
-          <button
-            className='border rounded p-1'
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<<'}
-          </button>
-          <button
-            className='border rounded p-1'
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            {'<'}
-          </button>
-
-          <button
-            className='border rounded p-1'
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>'}
-          </button>
-          <button
-            className='border rounded p-1'
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            {'>>'}
-          </button>
-        </div>
-        <span className='flex items-center gap-1'>
-          <div>Page</div>
-          <strong>
-            {table.getState().pagination.pageIndex + 1} of{' '}
-            {table.getPageCount()}
-          </strong>
-        </span>
-      </div>
-
-      {/* Meta Data */}
-      <div className='mt-12'>
-        <div>{table.getRowModel().rows.length} Rows</div>
-        <pre>{JSON.stringify(table.getState().pagination, null, 2)}</pre>
-      </div>
+      <Table reactTable={reactTable} />
+      <Pagination reactTable={reactTable} />
+      <Meta reactTable={reactTable} />
     </div>
   );
 }
 
-function Filter({
+function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
+  return (
+    <table>
+      <thead>
+        {reactTable.getHeaderGroups().map((headerGroup) => (
+          <tr key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <th key={header.id}>
+                {header.isPlaceholder ? null : (
+                  <div>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                    {header.column.getCanFilter() ? (
+                      <div>
+                        <NameFilter
+                          reactTable={reactTable}
+                          column={header.column}
+                        />
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody>
+        {reactTable.getRowModel().rows.map((row) => (
+          <tr key={row.id}>
+            {row.getVisibleCells().map((cell) => (
+              <td key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+function NameFilter({
+  reactTable,
   column,
-  table,
 }: {
+  reactTable: ReactTable<TableProduct>;
   column: Column<any, any>;
-  table: ReactTable<Product>;
 }) {
+  const firstValue = reactTable
+    .getPreFilteredRowModel()
+    .flatRows[0]?.getValue(column.id);
+
+  console.log('first value', firstValue);
+
   const columnFilterValue = column.getFilterValue();
 
-  return (
+  return firstValue === 'BLENDS' ? (
+    <div className='w-full px-3'>
+      <select
+        name='category'
+        id='category'
+        className='font-normal w-full'
+        onChange={(e) => column.setFilterValue(e.target.value)}
+        value={(columnFilterValue ?? '') as string}
+      >
+        <option value=''>SHOW ALL</option>
+        <option value='BLENDS'>BLENDS</option>
+        <option value='CIDERS'>CIDERS</option>
+      </select>
+    </div>
+  ) : (
     <div className='w-full px-3'>
       <input
         type='text'
@@ -223,6 +204,60 @@ function Filter({
         placeholder={`Search...`}
         className='border shadow rounded font-normal w-full'
       />
+    </div>
+  );
+}
+
+function Pagination({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
+  return (
+    <div className='flex gap-6 mt-3'>
+      <div className='flex gap-2'>
+        <button
+          className='border rounded p-1'
+          onClick={() => reactTable.setPageIndex(0)}
+          disabled={!reactTable.getCanPreviousPage()}
+        >
+          {'<<'}
+        </button>
+        <button
+          className='border rounded p-1'
+          onClick={() => reactTable.previousPage()}
+          disabled={!reactTable.getCanPreviousPage()}
+        >
+          {'<'}
+        </button>
+
+        <button
+          className='border rounded p-1'
+          onClick={() => reactTable.nextPage()}
+          disabled={!reactTable.getCanNextPage()}
+        >
+          {'>'}
+        </button>
+        <button
+          className='border rounded p-1'
+          onClick={() => reactTable.setPageIndex(reactTable.getPageCount() - 1)}
+          disabled={!reactTable.getCanNextPage()}
+        >
+          {'>>'}
+        </button>
+      </div>
+      <span className='flex items-center gap-1'>
+        <div>Page</div>
+        <strong>
+          {reactTable.getState().pagination.pageIndex + 1} of{' '}
+          {reactTable.getPageCount()}
+        </strong>
+      </span>
+    </div>
+  );
+}
+
+function Meta({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
+  return (
+    <div className='mt-12'>
+      <div>{reactTable.getRowModel().rows.length} Rows</div>
+      <pre>{JSON.stringify(reactTable.getState().pagination, null, 2)}</pre>
     </div>
   );
 }

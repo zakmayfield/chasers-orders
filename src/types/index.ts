@@ -17,7 +17,7 @@ export type ChangeUnitHandlerProps = {
 };
 
 export type CartHandlerProps = {
-  data: Unit[];
+  units: Unit[];
   rowIndex: number;
 };
 
