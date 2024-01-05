@@ -19,6 +19,7 @@ import type {
   Unit,
   ChangeUnitHandlerProps,
 } from '@/types';
+import { categories } from '../categories';
 
 type TableProduct = Product;
 
@@ -76,7 +77,7 @@ export default function ProductsTable({
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => info.getValue(),
+      cell: (info) => info.getValue().split('-').join(' '),
     }),
     columnHelper.accessor('category', {
       header: 'Category',
@@ -177,8 +178,6 @@ function NameFilter({
     .getPreFilteredRowModel()
     .flatRows[0]?.getValue(column.id);
 
-  console.log('first value', firstValue);
-
   const columnFilterValue = column.getFilterValue();
 
   return firstValue === 'BLENDS' ? (
@@ -191,8 +190,14 @@ function NameFilter({
         value={(columnFilterValue ?? '') as string}
       >
         <option value=''>SHOW ALL</option>
-        <option value='BLENDS'>BLENDS</option>
-        <option value='CIDERS'>CIDERS</option>
+        {categories.map((cat) => {
+          let formattedCat = cat.toUpperCase();
+          return (
+            <option key={cat} value={formattedCat}>
+              {formattedCat}
+            </option>
+          );
+        })}
       </select>
     </div>
   ) : (
@@ -213,14 +218,22 @@ function Pagination({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
     <div className='flex gap-6 mt-3'>
       <div className='flex gap-2'>
         <button
-          className='border rounded p-1'
+          className={`border rounded p-1 ${
+            !reactTable.getCanPreviousPage()
+              ? 'opacity-50'
+              : 'opacity-100 cursor-pointer'
+          }`}
           onClick={() => reactTable.setPageIndex(0)}
           disabled={!reactTable.getCanPreviousPage()}
         >
           {'<<'}
         </button>
         <button
-          className='border rounded p-1'
+          className={`border rounded p-1 ${
+            !reactTable.getCanPreviousPage()
+              ? 'opacity-50'
+              : 'opacity-100 cursor-pointer'
+          }`}
           onClick={() => reactTable.previousPage()}
           disabled={!reactTable.getCanPreviousPage()}
         >
@@ -228,14 +241,22 @@ function Pagination({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
         </button>
 
         <button
-          className='border rounded p-1'
+          className={`border rounded p-1 ${
+            !reactTable.getCanNextPage()
+              ? 'opacity-50'
+              : 'opacity-100 cursor-pointer'
+          }`}
           onClick={() => reactTable.nextPage()}
           disabled={!reactTable.getCanNextPage()}
         >
           {'>'}
         </button>
         <button
-          className='border rounded p-1'
+          className={`border rounded p-1 ${
+            !reactTable.getCanNextPage()
+              ? 'opacity-50'
+              : 'opacity-100 cursor-pointer'
+          }`}
           onClick={() => reactTable.setPageIndex(reactTable.getPageCount() - 1)}
           disabled={!reactTable.getCanNextPage()}
         >
