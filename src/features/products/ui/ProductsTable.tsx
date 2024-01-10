@@ -139,7 +139,7 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
                     )}
                     {header.column.getCanFilter() ? (
                       <div>
-                        <NameFilter
+                        <Filter
                           reactTable={reactTable}
                           column={header.column}
                         />
@@ -153,21 +153,29 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
         ))}
       </thead>
       <tbody>
-        {reactTable.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
-            {row.getVisibleCells().map((cell) => (
-              <td key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
+        {reactTable.getRowModel().rows.length > 0 ? (
+          reactTable.getRowModel().rows.map((row) => (
+            <tr key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td className='p-3' colSpan={reactTable.getHeaderGroups().length}>
+              No products found
+            </td>
           </tr>
-        ))}
+        )}
       </tbody>
     </table>
   );
 }
 
-function NameFilter({
+function Filter({
   reactTable,
   column,
 }: {
@@ -181,7 +189,7 @@ function NameFilter({
   const columnFilterValue = column.getFilterValue();
 
   return firstValue === 'BLENDS' ? (
-    <div className='w-full px-3'>
+    <div className='w-full'>
       <select
         name='category'
         id='category'
@@ -201,13 +209,13 @@ function NameFilter({
       </select>
     </div>
   ) : (
-    <div className='w-full px-3'>
+    <div className='w-full'>
       <input
         type='text'
         value={(columnFilterValue ?? '') as string}
         onChange={(e) => column.setFilterValue(e.target.value)}
         placeholder={`Search...`}
-        className='border shadow rounded font-normal w-full'
+        className='border rounded font-normal w-full'
       />
     </div>
   );
@@ -215,7 +223,7 @@ function NameFilter({
 
 function Pagination({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
   return (
-    <div className='flex gap-6 mt-3'>
+    <div className='flex gap-6'>
       <div className='flex gap-2'>
         <button
           className={`border rounded p-1 ${
