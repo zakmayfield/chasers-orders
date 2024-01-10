@@ -139,7 +139,7 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
                     )}
                     {header.column.getCanFilter() ? (
                       <div>
-                        <NameFilter
+                        <Filter
                           reactTable={reactTable}
                           column={header.column}
                         />
@@ -167,7 +167,7 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
   );
 }
 
-function NameFilter({
+function Filter({
   reactTable,
   column,
 }: {
