@@ -77,7 +77,7 @@ export default function ProductsTable({
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => info.getValue().split('-').join(' '),
+      cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('category', {
       header: 'Category',

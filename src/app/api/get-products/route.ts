@@ -11,14 +11,23 @@ export async function GET() {
   }
 
   try {
-    const products: Product[] = await db.product.findMany({
-      select: {
-        id: true,
-        name: true,
-        category: true,
-        units: true,
-      },
-    });
+    const products: Product[] = await db.product
+      .findMany({
+        select: {
+          id: true,
+          name: true,
+          category: true,
+          units: true,
+        },
+      })
+      .then((data) => {
+        let formattedProducts = data.map((item) => {
+          let formattedName = item.name.split('-').join(' ');
+          return { ...item, name: formattedName };
+        });
+
+        return formattedProducts;
+      });
 
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
