@@ -38,11 +38,12 @@ const UnitSelect: React.FC<UnitSelectProps> = ({
         {unitOptions}
       </select>
 
-      {!selectedUnits[rowIndex] ? (
-        <div>$ {units[0].price}</div>
-      ) : (
-        <div>$ {selectedUnits[rowIndex]?.price}</div>
-      )}
+      <div>
+        $
+        {!selectedUnits[rowIndex]
+          ? units[0].price
+          : selectedUnits[rowIndex]?.price}
+      </div>
 
       <AddToCartButton handler={() => handleAddToCart({ units, rowIndex })} />
     </div>
