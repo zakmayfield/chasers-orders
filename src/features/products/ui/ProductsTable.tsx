@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { postUnitsToCart } from '@/store';
-import UnitSelect from './UnitSelect';
+import UnitColumn from './UnitColumn';
 import {
   Table as ReactTable,
   useReactTable,
@@ -92,7 +92,7 @@ export default function ProductsTable({
         const rowIndex = info.row.index;
 
         return (
-          <UnitSelect
+          <UnitColumn
             units={units}
             rowIndex={rowIndex}
             selectedUnits={selectedUnits}
