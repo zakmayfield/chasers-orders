@@ -20,10 +20,10 @@ export async function GET() {
         },
       })
       .then((data) => {
-        let formattedProducts = data.map((item) => {
-          let formattedName = item.name.split('-').join(' ');
-          return { ...item, name: formattedName };
-        });
+        let formattedProducts: Product[] = data.map((item) => ({
+          ...item,
+          name: item.name.replace(/-/g, ' '),
+        }));
 
         return formattedProducts;
       });

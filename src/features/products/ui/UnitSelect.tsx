@@ -17,9 +17,6 @@ const UnitSelect: React.FC<UnitSelectProps> = ({
   rowIndex,
   selectedUnits,
 }) => {
-  console.log('data', units);
-  // null until selected, then will render unit
-
   const unitOptions = units.map((unitInfo) => (
     <option key={unitInfo.id} value={unitInfo.size}>
       {unitInfo.size}
@@ -41,8 +38,8 @@ const UnitSelect: React.FC<UnitSelectProps> = ({
       <div>
         $
         {!selectedUnits[rowIndex]
-          ? units[0].price
-          : selectedUnits[rowIndex]?.price}
+          ? units[0].price.toFixed(2)
+          : selectedUnits[rowIndex]?.price.toFixed(2)}
       </div>
 
       <AddToCartButton handler={() => handleAddToCart({ units, rowIndex })} />
