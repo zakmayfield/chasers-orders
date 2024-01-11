@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
 import type { Product } from '@/types';
@@ -29,10 +28,10 @@ export async function GET() {
         return formattedProducts;
       });
 
-    return NextResponse.json(products, { status: 200 });
+    return new Response(JSON.stringify(products), { status: 200 });
   } catch (error) {
-    return NextResponse.json(
-      { message: 'could not find products' },
+    return new Response(
+      JSON.stringify({ message: 'could not find products' }),
       { status: 500 }
     );
   }
