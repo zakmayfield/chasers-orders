@@ -2,7 +2,7 @@ import { CartHandlerProps, Unit, ChangeUnitHandlerProps } from '@/types';
 import AddToCartButton from './AddToCartButton';
 import React from 'react';
 
-interface UnitSelectProps {
+interface UnitColumnProps {
   handleAddToCart: (props: CartHandlerProps) => void;
   handleUnitChange: (props: ChangeUnitHandlerProps) => void;
   units: Unit[];
@@ -10,16 +10,13 @@ interface UnitSelectProps {
   selectedUnits: Array<Unit | null>;
 }
 
-const UnitSelect: React.FC<UnitSelectProps> = ({
+const UnitColumn: React.FC<UnitColumnProps> = ({
   handleAddToCart,
   handleUnitChange,
   units,
   rowIndex,
   selectedUnits,
 }) => {
-  console.log('data', units);
-  // null until selected, then will render unit
-
   const unitOptions = units.map((unitInfo) => (
     <option key={unitInfo.id} value={unitInfo.size}>
       {unitInfo.size}
@@ -41,8 +38,8 @@ const UnitSelect: React.FC<UnitSelectProps> = ({
       <div>
         $
         {!selectedUnits[rowIndex]
-          ? units[0].price
-          : selectedUnits[rowIndex]?.price}
+          ? units[0].price.toFixed(2)
+          : selectedUnits[rowIndex]?.price.toFixed(2)}
       </div>
 
       <AddToCartButton handler={() => handleAddToCart({ units, rowIndex })} />
@@ -50,4 +47,4 @@ const UnitSelect: React.FC<UnitSelectProps> = ({
   );
 };
 
-export default UnitSelect;
+export default UnitColumn;

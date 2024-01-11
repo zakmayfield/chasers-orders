@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { postUnitsToCart } from '@/store';
-import UnitSelect from './UnitSelect';
+import UnitColumn from './UnitColumn';
 import {
   Table as ReactTable,
   useReactTable,
@@ -92,7 +92,7 @@ export default function ProductsTable({
         const rowIndex = info.row.index;
 
         return (
-          <UnitSelect
+          <UnitColumn
             units={units}
             rowIndex={rowIndex}
             selectedUnits={selectedUnits}
@@ -116,21 +116,23 @@ export default function ProductsTable({
 
   return (
     <div>
-      <Table reactTable={reactTable} />
-      <Pagination reactTable={reactTable} />
-      <Meta reactTable={reactTable} />
+      <div className='mx-auto w-3/4'>
+        <Table reactTable={reactTable} />
+        <Pagination reactTable={reactTable} />
+      </div>
+      {/* <Meta reactTable={reactTable} /> */}
     </div>
   );
 }
 
 function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
   return (
-    <table>
+    <table className='w-full'>
       <thead>
         {reactTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id}>
+              <th key={header.id} className='text-left align-top pb-6'>
                 {header.isPlaceholder ? null : (
                   <div>
                     {flexRender(
@@ -138,7 +140,7 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
                       header.getContext()
                     )}
                     {header.column.getCanFilter() ? (
-                      <div>
+                      <div className='mt-3'>
                         <Filter
                           reactTable={reactTable}
                           column={header.column}
@@ -155,9 +157,9 @@ function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
       <tbody>
         {reactTable.getRowModel().rows.length > 0 ? (
           reactTable.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr key={row.id} className='even:bg-gray-100'>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
+                <td key={cell.id} className='py-2'>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -193,7 +195,7 @@ function Filter({
       <select
         name='category'
         id='category'
-        className='font-normal w-full'
+        className='font-normal rounded border py-1'
         onChange={(e) => column.setFilterValue(e.target.value)}
         value={(columnFilterValue ?? '') as string}
       >
@@ -215,7 +217,7 @@ function Filter({
         value={(columnFilterValue ?? '') as string}
         onChange={(e) => column.setFilterValue(e.target.value)}
         placeholder={`Search...`}
-        className='border rounded font-normal w-full'
+        className='border rounded font-normal w-3/4 py-1 pl-1'
       />
     </div>
   );
@@ -223,7 +225,7 @@ function Filter({
 
 function Pagination({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
   return (
-    <div className='flex gap-6'>
+    <div className='flex gap-6 mt-6'>
       <div className='flex gap-2'>
         <button
           className={`border rounded p-1 ${
