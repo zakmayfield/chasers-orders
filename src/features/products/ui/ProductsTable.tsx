@@ -77,7 +77,15 @@ export default function ProductsTable({
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        return (
+          <div className='w-80'>
+            <div className='overflow-hidden text-ellipsis whitespace-nowrap pl-3'>
+              {info.getValue()}
+            </div>
+          </div>
+        );
+      },
     }),
     columnHelper.accessor('category', {
       header: 'Category',
@@ -85,7 +93,7 @@ export default function ProductsTable({
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor('units', {
-      header: 'Units',
+      header: 'Size',
       enableColumnFilter: false,
       cell: (info) => {
         const units = info.getValue();

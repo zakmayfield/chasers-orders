@@ -24,18 +24,19 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   ));
 
   return (
-    <div className='flex justify-between'>
+    <div className='flex gap-6 items-center w-full'>
       <select
         value={
           // set row select value to selected unit size
           selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''
         }
         onChange={(event) => handleUnitChange({ event, rowIndex })}
+        className='w-24 rounded'
       >
         {unitOptions}
       </select>
 
-      <div>
+      <div className='w-20'>
         $
         {!selectedUnits[rowIndex]
           ? units[0].price.toFixed(2)

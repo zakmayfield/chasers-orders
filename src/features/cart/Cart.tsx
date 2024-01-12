@@ -59,7 +59,7 @@ export default function Cart() {
           </div>
         ))}
       </div>
-      <div className='mt-12'>Total: {generateTotal()}</div>
+      <div className='mt-12'>Total: {generateTotal().toFixed(2)}</div>
     </div>
   );
 }
