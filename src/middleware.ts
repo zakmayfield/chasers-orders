@@ -10,11 +10,23 @@ export async function middleware(req: NextRequest) {
   }
 
   const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-  const apiUrl = new URL(`/api/get-user?userId=${token.id}`, baseURL);
+  const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, baseURL);
 
-  const { isApproved } = await fetch(apiUrl)
+  const { isApproved, emailVerified } = await fetch(apiUrl)
     .then((response) => response.json())
     .catch((error) => console.log(error));
+
+  if (
+    req.nextUrl.pathname.startsWith('/bar') &&
+    (!isApproved || !emailVerified)
+  ) {
+    const notice = 'Your account must be approved to accesss that page';
+    const encodedString = encodeURIComponent(notice);
+
+    return NextResponse.redirect(
+      new URL(`/foo?notice=${encodedString}`, req.nextUrl)
+    );
+  }
 
   if (req.nextUrl.pathname === '/products' && !isApproved) {
     return NextResponse.redirect(new URL('/welcome', req.nextUrl));
