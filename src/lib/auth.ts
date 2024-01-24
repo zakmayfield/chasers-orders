@@ -3,6 +3,8 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { nanoid } from 'nanoid';
 import { NextAuthOptions, Session, getServerSession } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { comparePassword, passwordToSalt } from '@/utils';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
