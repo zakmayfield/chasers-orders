@@ -7,9 +7,12 @@ import { db } from './db';
 import { generateVerificationToken, verifyToken } from '@/utils/authHelpers';
 import { JwtPayload } from 'jsonwebtoken';
 import { sendVerificationEmail } from '@/utils/emailHelpers';
-import { UserAuthValidator } from './validators/user-auth';
+import {
+  AuthSignInValidator,
+  AuthSignUpValidator,
+} from './validators/user-auth';
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   session: {
     strategy: 'jwt',
@@ -34,7 +37,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const parsedCreds = UserAuthValidator.safeParse(credentials);
+        const parsedCreds = AuthSignInValidator.safeParse(credentials);
 
         // parsed credentials guard
         if (!parsedCreds.success) {
@@ -79,7 +82,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const parsedCreds = UserAuthValidator.safeParse(credentials);
+        const parsedCreds = AuthSignUpValidator.safeParse(credentials);
 
         // parsed credentials guard
         if (!parsedCreds.success) {
@@ -160,7 +163,7 @@ export const authOptions = {
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
         where: {
-          email: token.email,
+          email: token.email!,
         },
       });
 
@@ -180,6 +183,6 @@ export const authOptions = {
       return '/ ';
     },
   },
-} satisfies NextAuthOptions;
+};
 
 export const getAuthSession = () => getServerSession(authOptions);
