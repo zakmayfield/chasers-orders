@@ -104,7 +104,6 @@ export async function handler(req: Request) {
           err.message
         );
         console.log(parsedError.message);
-        // return errorResponse({ error: parsedError.message }, 400);
       }
     }
 
@@ -131,7 +130,6 @@ export async function handler(req: Request) {
             err.message
           );
           console.log(parsedError.message);
-          // return errorResponse({ error: parsedError.message }, 400);
         }
       }
 

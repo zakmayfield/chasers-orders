@@ -35,11 +35,6 @@ export default function ProductsTable({
 
   const { mutate: addToCart } = useMutation({
     mutationFn: postUnitsToCart,
-    onError: (err) => {
-      if (err) {
-        console.log('(ProductsTable | mutation) Error: ', err);
-      }
-    },
   });
 
   const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
