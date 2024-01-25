@@ -45,29 +45,69 @@ model VerificationToken {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-
-  // additional cols
-  password          String?
+  // auth
+  id                String              @id @default(cuid())
+  email             String              @unique
+  password          String
+  emailVerified     DateTime?
+  // additional data
+  contact           Contact? // 1:1
+  company           Company? // 1:1
+  cart              Cart? // 1:1
+  // authorization
   isApproved        Boolean             @default(false)
-  verificationToken VerificationToken[]
+  verificationToken VerificationToken[] // 1:m
+  // NextAuth
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+}
 
-  company Company?
-  cart    Cart?
+model Contact {
+  id          String  @id @default(cuid())
+  name        String
+  position    String?
+  phoneNumber String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }
 
 model Company {
-  id   String @id @default(cuid())
-  name String
+  id                  String           @id @default(cuid())
+  name                String
+  shippingAddress     ShippingAddress?
+  billingAddress      BillingAddress?
+  accountPayableEmail String
+  paymentMethod       String
 
   userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ShippingAddress {
+  id                   String  @id @default(cuid())
+  streetAddress        String
+  unit                 String?
+  city                 String
+  state                String
+  postalCode           String
+  deliveryInstructions String?
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String  @unique
+}
+
+model BillingAddress {
+  id            String  @id @default(cuid())
+  streetAddress String
+  unit          String?
+  city          String
+  state         String
+  postalCode    String
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId String  @unique
 }
 
 model Product {
