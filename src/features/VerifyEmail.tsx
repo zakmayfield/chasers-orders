@@ -3,7 +3,7 @@
 import { Session } from 'next-auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { tokenCheck } from '@/store';
+import { tokenCheck } from '@/store/auth/authStore';
 import { useEffect, useRef, useState } from 'react';
 
 export default function VerifyEmail({ session }: { session: Session | null }) {
