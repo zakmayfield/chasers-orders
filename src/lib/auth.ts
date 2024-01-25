@@ -7,9 +7,12 @@ import { db } from './db';
 import { generateVerificationToken, verifyToken } from '@/utils/authHelpers';
 import { JwtPayload } from 'jsonwebtoken';
 import { sendVerificationEmail } from '@/utils/emailHelpers';
-import { UserAuthValidator } from './validators/user-auth';
+import {
+  AuthSignInValidator,
+  AuthSignUpValidator,
+} from './validators/user-auth';
 
-export const authOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
   session: {
     strategy: 'jwt',
@@ -34,7 +37,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const parsedCreds = UserAuthValidator.safeParse(credentials);
+        const parsedCreds = AuthSignInValidator.safeParse(credentials);
 
         // parsed credentials guard
         if (!parsedCreds.success) {
@@ -79,7 +82,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        const parsedCreds = UserAuthValidator.safeParse(credentials);
+        const parsedCreds = AuthSignUpValidator.safeParse(credentials);
 
         // parsed credentials guard
         if (!parsedCreds.success) {
@@ -152,6 +155,7 @@ export const authOptions = {
         session.user.id = token.id;
         session.user.email = token.email;
         session.user.isApproved = token.isApproved;
+        session.user.emailVerified = token.emailVerified;
       }
 
       return session;
@@ -160,7 +164,13 @@ export const authOptions = {
     async jwt({ token, user }) {
       const dbUser = await db.user.findFirst({
         where: {
-          email: token.email,
+          email: token.email!,
+        },
+        select: {
+          id: true,
+          email: true,
+          isApproved: true,
+          emailVerified: true,
         },
       });
 
@@ -173,6 +183,7 @@ export const authOptions = {
         id: dbUser.id,
         email: dbUser.email,
         isApproved: dbUser.isApproved,
+        emailVerified: dbUser.emailVerified,
       };
     },
 
@@ -180,6 +191,6 @@ export const authOptions = {
       return '/ ';
     },
   },
-} satisfies NextAuthOptions;
+};
 
 export const getAuthSession = () => getServerSession(authOptions);

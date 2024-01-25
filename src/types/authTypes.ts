@@ -1,4 +1,8 @@
 import { z } from 'zod';
-import { UserAuthValidator } from './../lib/validators/user-auth';
+import {
+  AuthSignInValidator,
+  AuthSignUpValidator,
+} from './../lib/validators/user-auth';
 
-export type UserAuthFormData = z.infer<typeof UserAuthValidator>;
+export type SignInFormData = z.infer<typeof AuthSignInValidator>;
+export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;

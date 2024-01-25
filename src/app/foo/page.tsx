@@ -13,7 +13,7 @@ export default async function Page({
 
   const user = await db.user.findUnique({
     where: {
-      email: session!.user.email!,
+      id: session?.user.id,
     },
   });
 
