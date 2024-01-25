@@ -155,6 +155,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id;
         session.user.email = token.email;
         session.user.isApproved = token.isApproved;
+        session.user.emailVerified = token.emailVerified;
       }
 
       return session;
@@ -164,6 +165,12 @@ export const authOptions: NextAuthOptions = {
       const dbUser = await db.user.findFirst({
         where: {
           email: token.email!,
+        },
+        select: {
+          id: true,
+          email: true,
+          isApproved: true,
+          emailVerified: true,
         },
       });
 
@@ -176,6 +183,7 @@ export const authOptions: NextAuthOptions = {
         id: dbUser.id,
         email: dbUser.email,
         isApproved: dbUser.isApproved,
+        emailVerified: dbUser.emailVerified,
       };
     },
 

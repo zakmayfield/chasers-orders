@@ -12,6 +12,7 @@ async function handler(req: NextRequest) {
     select: {
       id: true,
       isApproved: true,
+      emailVerified: true,
     },
   });
 
