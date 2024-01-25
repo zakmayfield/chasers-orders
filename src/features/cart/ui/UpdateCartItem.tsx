@@ -1,4 +1,4 @@
-import { updateCartItemQuantity } from '@/store';
+import { updateCartItemQuantity } from '@/store/cart/cartStore';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 

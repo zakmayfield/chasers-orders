@@ -1,6 +1,6 @@
 'use client';
 
-import { getCart } from '@/store';
+import { getCart } from '@/store/cart/cartStore';
 import { useQuery } from '@tanstack/react-query';
 import { CartType } from '@/types';
 import RemoveCartItemButton from './ui/RemoveCartItemButton';

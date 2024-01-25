@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { createCart } from '@/utils';
+import { createCart } from '@/utils/dbHelpers';
 import Link from 'next/link';
 
 export default async function Welcome() {

@@ -1,11 +1,4 @@
-import type { CartType, Product } from '@/types';
-
-export const getProducts = async (): Promise<Product[]> => {
-  const dataList: Product[] = await fetch('/api/get-products').then((res) =>
-    res.json()
-  );
-  return dataList;
-};
+import type { CartType } from '@/types';
 
 export const getCart = async (): Promise<CartType> => {
   const data = await fetch('/api/cart')

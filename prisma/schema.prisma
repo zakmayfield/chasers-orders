@@ -35,11 +35,13 @@ model Session {
 }
 
 model VerificationToken {
-  identifier String
+  identifier String   @unique
   token      String   @unique
   expires    DateTime
+  valid      Boolean  @default(true)
 
-  @@unique([identifier, token])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique
 }
 
 model User {
@@ -51,8 +53,10 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  username   String? @unique
-  isApproved Boolean @default(false)
+  // additional cols
+  password          String?
+  isApproved        Boolean             @default(false)
+  verificationToken VerificationToken[]
 
   company Company?
   cart    Cart?
