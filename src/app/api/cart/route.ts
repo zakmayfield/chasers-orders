@@ -1,7 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { Unit, RefinedCartItem } from '@/types';
-import { Product as ProductWithoutUnits } from '@prisma/client';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
@@ -23,6 +21,9 @@ async function handler(req: Request) {
       where: { userId },
       include: {
         items: {
+          orderBy: {
+            createdAt: 'asc',
+          },
           select: {
             quantity: true,
             unit: {
@@ -51,7 +52,6 @@ async function handler(req: Request) {
       });
     }
 
-    // send cart data back
     return new Response(JSON.stringify(cart), {
       status: 200,
     });

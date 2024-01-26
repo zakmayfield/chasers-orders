@@ -147,5 +147,7 @@ model UnitsOnCart {
 
   quantity Int
 
+  createdAt DateTime @default(now())
+
   @@id([cartId, unitId])
 }

@@ -21,23 +21,6 @@ export default function Cart() {
     return <span>Error: {error.message}</span>;
   }
 
-  function generateTotal(): number {
-    let total: number = 0;
-
-    if (data && data.items) {
-      data.items.forEach((item) => {
-        if (
-          typeof item.quantity === 'number' &&
-          typeof item.unit.price === 'number'
-        ) {
-          total += item.unit.price * item.quantity;
-        }
-      });
-    }
-
-    return total;
-  }
-
   return (
     <div>
       <div>Cart</div>
@@ -50,7 +33,7 @@ export default function Cart() {
           </div>
         )}
         <div className='flex flex-col gap-6 border w-1/2'>
-          {data.items &&
+          {data &&
             data.items.map((item) => (
               <div key={item.unit.code}>
                 <div className='flex items-center gap-3'>
