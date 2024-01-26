@@ -1,7 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db';
-import { Unit, RefinedCartItem } from '@/types';
-import { Product as ProductWithoutUnits } from '@prisma/client';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
@@ -54,9 +52,6 @@ async function handler(req: Request) {
       });
     }
 
-    console.log('~~~cart from API~~~', cart);
-
-    // send cart data back
     return new Response(JSON.stringify(cart), {
       status: 200,
     });
