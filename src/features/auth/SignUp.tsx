@@ -30,7 +30,7 @@ export default function SignUp() {
       shippingCity: '',
       shippingState: '',
       shippingPostalCode: '',
-      shippingDeliveryInstructions: '',
+      deliveryInstructions: '',
       billingStreetAddress: '',
       billingUnit: '',
       billingCity: '',
@@ -175,16 +175,14 @@ export default function SignUp() {
           <p role='alert'>{errors.shippingPostalCode?.message}</p>
         )}
 
-        <label htmlFor='shippingDeliveryInstructions'>
-          Delivery Instructions:
-        </label>
+        <label htmlFor='deliveryInstructions'>Delivery Instructions:</label>
         <input
-          type='shippingDeliveryInstructions'
-          id='shippingDeliveryInstructions'
-          {...register('shippingDeliveryInstructions')}
+          type='deliveryInstructions'
+          id='deliveryInstructions'
+          {...register('deliveryInstructions')}
         />
-        {errors.shippingDeliveryInstructions && (
-          <p role='alert'>{errors.shippingDeliveryInstructions?.message}</p>
+        {errors.deliveryInstructions && (
+          <p role='alert'>{errors.deliveryInstructions?.message}</p>
         )}
 
         {/* BILLING */}

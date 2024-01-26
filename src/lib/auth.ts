@@ -76,10 +76,7 @@ export const authOptions: NextAuthOptions = {
       id: 'sign-up',
       name: 'Credentials',
       credentials: {
-        email: {
-          label: 'Email',
-          type: 'text',
-        },
+        email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
@@ -91,7 +88,27 @@ export const authOptions: NextAuthOptions = {
         }
 
         const {
-          data: { email, password },
+          data: {
+            email,
+            password,
+            contactName,
+            contactPosition,
+            contactPhoneNumber,
+            companyName,
+            accountPayableEmail,
+            paymentMethod,
+            shippingStreetAddress,
+            shippingUnit,
+            shippingCity,
+            shippingState,
+            shippingPostalCode,
+            deliveryInstructions,
+            billingStreetAddress,
+            billingUnit,
+            billingCity,
+            billingState,
+            billingPostalCode,
+          },
         } = parsedCreds;
 
         // query user record
@@ -133,6 +150,39 @@ export const authOptions: NextAuthOptions = {
                 identifier: `email-verification-${email}`,
                 token: verificationToken,
                 expires,
+              },
+            },
+            contact: {
+              create: {
+                name: contactName,
+                position: contactPosition,
+                phoneNumber: contactPhoneNumber,
+              },
+            },
+            company: {
+              create: {
+                name: companyName,
+                accountPayableEmail,
+                paymentMethod,
+                shippingAddress: {
+                  create: {
+                    streetAddress: shippingStreetAddress,
+                    unit: shippingUnit,
+                    city: shippingCity,
+                    state: shippingState,
+                    postalCode: shippingPostalCode,
+                    deliveryInstructions,
+                  },
+                },
+                billingAddress: {
+                  create: {
+                    streetAddress: billingStreetAddress,
+                    unit: billingUnit,
+                    city: billingCity,
+                    state: billingState,
+                    postalCode: billingPostalCode,
+                  },
+                },
               },
             },
           },

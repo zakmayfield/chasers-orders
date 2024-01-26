@@ -14,31 +14,33 @@ async function handler(req: Request) {
   }
 
   try {
-    const body = await req.json();
+    type ReqBody = {
+      cartId: string;
+      unitId: string;
+      quantityPayload: number;
+    };
+
+    const body: ReqBody = await req.json();
     const quantityPayload = Number(body.quantityPayload);
     const unitId: string = body.unitId;
     const cartId: string = body.cartId;
 
     switch (true) {
       case !quantityPayload:
-        return new Response(JSON.stringify({ error: 'Quantity is required' }), {
+        return new Response('Quantity is required', {
           status: 400,
         });
         break;
 
       case quantityPayload <= 0:
-        return new Response(
-          JSON.stringify({ error: 'Quantiy should be a value greater than 0' }),
-          { status: 400 }
-        );
+        return new Response('Quantiy should be a value greater than 0', {
+          status: 400,
+        });
         break;
     }
 
     if (!cartId || !unitId) {
-      return new Response(
-        JSON.stringify({ error: 'Cart ID & Unit ID are required' }),
-        { status: 400 }
-      );
+      return new Response('Cart ID & Unit ID are required', { status: 400 });
     }
 
     const updated = await db.cart
@@ -59,6 +61,9 @@ async function handler(req: Request) {
             },
           },
         },
+        include: {
+          items: true,
+        },
       })
       .catch((err) => {
         if (err instanceof PrismaClientKnownRequestError) {
@@ -78,12 +83,9 @@ async function handler(req: Request) {
         }
       });
 
-    return new Response(
-      JSON.stringify({ message: 'success', response: updated }),
-      {
-        status: 200,
-      }
-    );
+    return new Response(JSON.stringify(updated), {
+      status: 200,
+    });
   } catch (error) {
     if (error instanceof Error) {
       return new Response(JSON.stringify({ error: error.message }), {

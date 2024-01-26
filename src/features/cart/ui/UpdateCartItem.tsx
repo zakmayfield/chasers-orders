@@ -1,4 +1,5 @@
 import { updateCartItemQuantity } from '@/store/cart/cartStore';
+import { UnitsOnCart } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
@@ -11,21 +12,29 @@ const UpdateCartItem = ({
   unitId: string;
   quantityData: number;
 }) => {
-  const [qValue, setQValue] = useState(quantityData);
   const queryClient = useQueryClient();
+  const [quantity, setQuantity] = useState<number | undefined>(
+    () => quantityData
+  );
 
   const { mutate: updateQuantity, isLoading } = useMutation({
     mutationFn: updateCartItemQuantity,
-    // on success of mutation invalidate `cart` query key to trigger a refetch
-    onSuccess: () => {
+    onSuccess: (data) => {
+      const unit: UnitsOnCart | undefined = data.items.find(
+        (item) => item.unitId === unitId
+      );
+
+      setQuantity(unit?.quantity);
+
       queryClient.invalidateQueries(['cart']);
+    },
+    onError(error) {
+      console.log('~~~error from updateQuantity~~~', error);
     },
   });
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = Number(e.target.value);
-    setQValue(newValue);
-
     updateQuantity({ cartId, unitId, quantityPayload: newValue });
   };
 
@@ -38,7 +47,7 @@ const UpdateCartItem = ({
         <select
           name='quantity'
           id='quantity'
-          value={qValue}
+          value={quantity}
           disabled={isLoading}
           onChange={(e) => handleQuantityChange(e)}
         >

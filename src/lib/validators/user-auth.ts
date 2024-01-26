@@ -28,7 +28,7 @@ export const AuthSignUpValidator = z.object({
   shippingCity: z.string().min(1),
   shippingState: z.string().min(1),
   shippingPostalCode: z.string().min(1),
-  shippingDeliveryInstructions: z.string(),
+  deliveryInstructions: z.string(),
   //billing
   billingStreetAddress: z.string().min(1),
   billingUnit: z.string(), // optional
