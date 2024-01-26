@@ -11,6 +11,7 @@ import {
   AuthSignInValidator,
   AuthSignUpValidator,
 } from './validators/user-auth';
+import { createCart } from '@/utils/dbHelpers';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -140,6 +141,8 @@ export const authOptions: NextAuthOptions = {
         if (!user) {
           throw new Error('Error creating account');
         }
+
+        await createCart(user.id);
 
         // send verification email
         // consider async w/ error handling

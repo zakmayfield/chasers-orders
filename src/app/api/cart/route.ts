@@ -47,7 +47,7 @@ async function handler(req: Request) {
 
     if (!cart) {
       return new Response(JSON.stringify({ error: 'Could not locate cart' }), {
-        status: 401,
+        status: 404,
       });
     }
 
