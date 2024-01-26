@@ -26,6 +26,7 @@ const UpdateCartItem = ({
 
       setQuantity(unit?.quantity);
 
+      // .setQueryData() || target individual unit // indexing issue on update
       queryClient.invalidateQueries(['cart']);
     },
     onError(error) {
