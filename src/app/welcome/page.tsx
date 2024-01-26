@@ -1,20 +1,9 @@
 import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db';
-import { createCart } from '@/utils/dbHelpers';
 import Link from 'next/link';
 
 export default async function Welcome() {
   const session = await getAuthSession();
   const { id: userId, isApproved } = session?.user || {};
-
-  const hasCart = await db.cart.findUnique({
-    where: { userId },
-    select: { id: true },
-  });
-
-  if (!hasCart) {
-    await createCart(userId!);
-  }
 
   return (
     <div>

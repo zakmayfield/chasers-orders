@@ -32,7 +32,6 @@ export const verifyApprovalAndEmail: ResolvedVerificationCheck = async (
   token
 ) => {
   if (token && (!token.isApproved || !token.emailVerified)) {
-    console.log('~~~~~MIDDLEWARE API HELPER FIRED~~~~~');
     const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
     const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, baseURL);
 
