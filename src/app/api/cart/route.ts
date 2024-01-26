@@ -23,6 +23,9 @@ async function handler(req: Request) {
       where: { userId },
       include: {
         items: {
+          orderBy: {
+            createdAt: 'asc',
+          },
           select: {
             quantity: true,
             unit: {
@@ -50,6 +53,8 @@ async function handler(req: Request) {
         status: 404,
       });
     }
+
+    console.log('~~~cart from API~~~', cart);
 
     // send cart data back
     return new Response(JSON.stringify(cart), {

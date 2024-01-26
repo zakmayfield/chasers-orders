@@ -1,4 +1,4 @@
-import { updateCartItemQuantity } from '@/store/cart/cartStore';
+import { IUpdatedCart, updateCartItemQuantity } from '@/store/cart/cartStore';
 import { UnitsOnCart } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -27,7 +27,16 @@ const UpdateCartItem = ({
       setQuantity(unit?.quantity);
 
       // .setQueryData() || target individual unit // indexing issue on update
-      queryClient.invalidateQueries(['cart']);
+      queryClient.setQueryData(['cart'], (oldData: IUpdatedCart | undefined) =>
+        oldData && unit
+          ? {
+              ...oldData,
+              items: oldData.items.map((item) =>
+                item.unitId === unitId ? unit : item
+              ),
+            }
+          : oldData
+      );
     },
     onError(error) {
       console.log('~~~error from updateQuantity~~~', error);

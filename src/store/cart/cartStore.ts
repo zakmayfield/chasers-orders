@@ -43,7 +43,7 @@ export const removeCartItem = async ({
   return data;
 };
 
-interface IUpdatedCart {
+export interface IUpdatedCart {
   id: string;
   userId: string;
   items: UnitsOnCart[];
