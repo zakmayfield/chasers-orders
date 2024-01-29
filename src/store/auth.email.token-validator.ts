@@ -1,20 +1,28 @@
-export const tokenValidator = async (
-  token: string | null
-): Promise<Response | undefined> => {
-  const data = await fetch('/api/auth/email/verify', {
-    method: 'PUT',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ token }),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        return res;
-      }
-      return res.json();
-    })
-    .catch((error) => error);
+type TokenValidatorReturn = {
+  (token: string | null): Promise<Response | undefined>;
+};
 
-  return data;
+export const tokenValidator: TokenValidatorReturn = async (
+  token
+): Promise<Response | undefined> => {
+  try {
+    const response = await fetch('/api/auth/email/verify', {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({ token }),
+    });
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    return response.json();
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

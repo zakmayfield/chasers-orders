@@ -129,29 +129,33 @@ const providers: NextAuthProviders = [
         where: { email },
       });
 
-      // null check user/password
       if (existingUser) {
         throw new Error('User already exists. Please log in.');
       }
 
       const verificationToken = generateVerificationToken(email);
 
-      let verifiedAndDecodedToken;
+      let decodedToken;
 
       try {
-        verifiedAndDecodedToken = verifyToken(verificationToken) as JwtPayload;
-      } catch (err) {
-        if (err instanceof Error) {
-          console.log(err);
+        decodedToken = verifyToken(verificationToken) as JwtPayload;
+      } catch (error) {
+        if (error instanceof Error) {
+          if (error.name === 'JsonWebTokenError') {
+            throw new Error(
+              'There was a technical issue. Please visit the account creation page again and complete the account creation process again.'
+            );
+          }
         }
       }
 
-      const expires = new Date(verifiedAndDecodedToken?.exp! * 1000);
+      const expires = new Date(decodedToken?.exp! * 1000);
 
       // salt/hash password
       const salt = await genSalt(12);
       const hashedPassword = await hash(password, salt);
 
+      // TODO: handle possible errors with try...catch
       const user = await db.user.create({
         data: {
           email,
