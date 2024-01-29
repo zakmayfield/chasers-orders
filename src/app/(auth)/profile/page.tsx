@@ -1,4 +1,4 @@
-import { getAuthSession } from '@/lib/auth';
+import { getAuthSession } from '@/lib/nextAuth/auth';
 import { db } from '@/lib/db';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';

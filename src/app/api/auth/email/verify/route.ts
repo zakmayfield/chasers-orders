@@ -1,4 +1,4 @@
-import { getAuthSession } from '@/lib/auth';
+import { getAuthSession } from '@/lib/nextAuth/auth';
 import { db } from '@/lib/db';
 import { generateVerificationToken, verifyToken } from '@/utils/authHelpers';
 import { sendVerificationEmail } from '@/utils/emailHelpers';
