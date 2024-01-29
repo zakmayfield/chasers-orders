@@ -1,4 +1,4 @@
-import { removeCartItem } from '@/store/cart/cart.remove-item';
+import { removeCartItem } from '@/store/cart.remove-item';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const RemoveCartItemButton = ({

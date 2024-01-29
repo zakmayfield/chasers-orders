@@ -1,7 +1,7 @@
 import {
   IUpdatedCart,
   updateCartItemQuantity,
-} from '@/store/cart/cart.update-quantity';
+} from '@/store/cart.update-quantity';
 import { UnitsOnCart } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
