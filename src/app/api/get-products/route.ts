@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/lib/nextAuth/auth';
 import { db } from '@/lib/db';
-import type { Product } from '@/types';
+import { Product } from '@/features/products/Products';
 
 export async function GET() {
   const session = await getAuthSession();

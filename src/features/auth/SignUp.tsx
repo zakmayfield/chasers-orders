@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { SignUpFormData } from '@/types/authTypes';
+import type { SignUpFormData } from '@/types/auth.form-types';
 import { AuthSignUpValidator } from '@/lib/validators/user-auth';
 
 export default function SignUp() {

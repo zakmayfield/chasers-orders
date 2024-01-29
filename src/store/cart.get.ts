@@ -1,4 +1,4 @@
-import type { CartType } from '@/types';
+import { CartType } from '@/features/cart/Cart';
 
 export const getCart = async (): Promise<CartType> => {
   const data = await fetch('/api/cart')

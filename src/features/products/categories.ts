@@ -1,4 +1,4 @@
-export const categories: string[] = [
+export const categoryData: string[] = [
   'blends',
   'singles',
   'lemonades',

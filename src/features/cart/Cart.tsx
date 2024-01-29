@@ -2,10 +2,23 @@
 
 import { getCart } from '@/store/cart.get';
 import { useQuery } from '@tanstack/react-query';
-import { CartType } from '@/types';
 import RemoveCartItemButton from './ui/RemoveCartItemButton';
 import UpdateCartItem from './ui/UpdateCartItem';
 import Link from 'next/link';
+import { Cart, Product, Unit, UnitsOnCart } from '@prisma/client';
+
+export type CartType = Omit<Cart, 'userId'> & {
+  items: CartItems[];
+};
+
+type CartItems = Omit<UnitsOnCart, 'cartId' | 'unitId'> & {
+  quantity: number;
+  unit: UnitWithProduct;
+};
+
+type UnitWithProduct = Omit<Unit, 'productId'> & {
+  product: Product;
+};
 
 export default function Cart() {
   const { isLoading, isError, data, error } = useQuery<CartType, Error>({
