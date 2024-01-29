@@ -1,6 +1,6 @@
 // import NoticeModal from '@/features/NoticeModal';
-import { getAuthSession } from '@/lib/nextAuth/auth';
-import { db } from '@/lib/db';
+import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/prisma.db';
 import Link from 'next/link';
 
 export default async function Page({

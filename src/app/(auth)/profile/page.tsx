@@ -1,5 +1,5 @@
-import { getAuthSession } from '@/lib/nextAuth/auth';
-import { db } from '@/lib/db';
+import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/prisma.db';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 

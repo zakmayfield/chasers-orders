@@ -1,6 +1,6 @@
-import { getAuthSession } from '@/lib/nextAuth/auth';
-import { db } from '@/lib/db';
-import { EditCompanyValidator } from '@/lib/validators/company';
+import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/prisma.db';
+import { EditCompanyValidator } from '@/lib/validator.company';
 
 export async function PATCH(req: Request) {
   try {

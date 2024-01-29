@@ -1,6 +1,9 @@
-import { getAuthSession } from '@/lib/nextAuth/auth';
-import { db } from '@/lib/db';
-import { generateVerificationToken, verifyToken } from '@/utils/auth.token';
+import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/prisma.db';
+import {
+  generateVerificationToken,
+  verifyToken,
+} from '@/utils/auth.manage-token';
 import { sendVerificationEmail } from '@/utils/email.verification-email';
 import { JwtPayload } from 'jsonwebtoken';
 
