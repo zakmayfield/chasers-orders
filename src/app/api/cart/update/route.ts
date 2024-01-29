@@ -1,5 +1,5 @@
-import { getAuthSession } from '@/lib/nextAuth/auth';
-import { db } from '@/lib/db';
+import { getAuthSession } from '@/lib/auth';
+import { db } from '@/lib/prisma.db';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 async function handler(req: Request) {

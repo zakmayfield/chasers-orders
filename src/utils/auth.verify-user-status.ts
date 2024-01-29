@@ -9,9 +9,7 @@ type ResolvedVerificationCheck = {
   (token: JWT | null): Promise<IUserVerification>;
 };
 
-export const verifyApprovalAndEmail: ResolvedVerificationCheck = async (
-  token
-) => {
+export const verifyUserStatus: ResolvedVerificationCheck = async (token) => {
   if (token && (!token.isApproved || !token.emailVerified)) {
     const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
     const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, baseURL);

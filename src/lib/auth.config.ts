@@ -4,14 +4,17 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { JwtPayload } from 'jsonwebtoken';
-import { db } from '../db';
+import { db } from './prisma.db';
 import {
   AuthSignInValidator,
   AuthSignUpValidator,
-} from '../validators/user-auth';
+} from './validator.auth-form';
 import { createCart } from '@/utils/cart.create';
 import { sendVerificationEmail } from '@/utils/email.verification-email';
-import { generateVerificationToken, verifyToken } from '@/utils/auth.token';
+import {
+  generateVerificationToken,
+  verifyToken,
+} from '@/utils/auth.manage-token';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];

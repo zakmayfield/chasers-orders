@@ -1,6 +1,6 @@
 'use client';
 
-import { EditCompanyValidator } from '@/lib/validators/company';
+import { EditCompanyValidator } from '@/lib/validator.company';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Company, User } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';

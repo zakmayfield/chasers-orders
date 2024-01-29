@@ -1,7 +1,7 @@
 import { JWT, getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyApprovalAndEmail } from './utils/auth.verify';
+import { verifyUserStatus } from './utils/auth.verify-user-status';
 
 export async function middleware(req: NextRequest) {
   const token: JWT | null = await getToken({ req });
@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', req.nextUrl));
   }
 
-  const { isApproved, emailVerified } = await verifyApprovalAndEmail(token);
+  const { isApproved, emailVerified } = await verifyUserStatus(token);
 
   if (req.nextUrl.pathname.startsWith('/bar') && !isApproved) {
     const notice = 'Your account must be approved to accesss that page';
