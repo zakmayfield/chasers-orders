@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
+import { Unit } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
-import { postUnitsToCart } from '@/store/cart.add';
-import UnitColumn from './UnitColumn';
 import {
   Table as ReactTable,
   useReactTable,
@@ -13,15 +12,20 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from '@tanstack/react-table';
-import type {
-  CartHandlerProps,
-  Product,
-  Unit,
-  ChangeUnitHandlerProps,
-} from '@/types';
-import { categories } from '../categories';
+import UnitColumn from './UnitColumn';
+import { categoryData as categories } from '../categories';
+import type { Product } from '../Products';
+import { postUnitsToCart } from '@/store/cart.add';
 
-type TableProduct = Product;
+export type CartHandlerProps = {
+  units: Unit[];
+  rowIndex: number;
+};
+
+export type ChangeUnitHandlerProps = {
+  event: React.ChangeEvent<HTMLSelectElement>;
+  rowIndex: number;
+};
 
 export default function ProductsTable({
   products: productData,
@@ -66,7 +70,7 @@ export default function ProductsTable({
     }
   };
 
-  const columnHelper = createColumnHelper<TableProduct>();
+  const columnHelper = createColumnHelper<Product>();
 
   const columns = [
     columnHelper.accessor('name', {
@@ -128,7 +132,7 @@ export default function ProductsTable({
   );
 }
 
-function Table({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
+function Table({ reactTable }: { reactTable: ReactTable<Product> }) {
   return (
     <table className='w-full'>
       <thead>
@@ -184,7 +188,7 @@ function Filter({
   reactTable,
   column,
 }: {
-  reactTable: ReactTable<TableProduct>;
+  reactTable: ReactTable<Product>;
   column: Column<any, any>;
 }) {
   const firstValue = reactTable
@@ -226,7 +230,7 @@ function Filter({
   );
 }
 
-function Pagination({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
+function Pagination({ reactTable }: { reactTable: ReactTable<Product> }) {
   return (
     <div className='flex gap-6 mt-6'>
       <div className='flex gap-2'>
@@ -287,7 +291,7 @@ function Pagination({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
   );
 }
 
-function Meta({ reactTable }: { reactTable: ReactTable<TableProduct> }) {
+function Meta({ reactTable }: { reactTable: ReactTable<Product> }) {
   return (
     <div className='mt-12'>
       <div>{reactTable.getRowModel().rows.length} Rows</div>
