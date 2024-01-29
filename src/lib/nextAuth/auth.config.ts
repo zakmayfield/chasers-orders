@@ -9,9 +9,12 @@ import {
   AuthSignInValidator,
   AuthSignUpValidator,
 } from '../validators/user-auth';
-import { createCart } from '@/utils/dbHelpers';
-import { sendVerificationEmail } from '@/utils/emailHelpers';
-import { generateVerificationToken, verifyToken } from '@/utils/authHelpers';
+import { createCart } from '@/utils/cart.create';
+import { sendVerificationEmail } from '@/utils/email/email.mail';
+import {
+  generateVerificationToken,
+  verifyToken,
+} from '@/utils/auth/auth.token';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
