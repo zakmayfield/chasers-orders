@@ -3,14 +3,14 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { compare, hash, genSalt } from 'bcryptjs';
-import { db } from './db';
+import { db } from '../db';
 import { generateVerificationToken, verifyToken } from '@/utils/authHelpers';
 import { JwtPayload } from 'jsonwebtoken';
 import { sendVerificationEmail } from '@/utils/emailHelpers';
 import {
   AuthSignInValidator,
   AuthSignUpValidator,
-} from './validators/user-auth';
+} from '../validators/user-auth';
 import { createCart } from '@/utils/dbHelpers';
 
 export const authOptions: NextAuthOptions = {
