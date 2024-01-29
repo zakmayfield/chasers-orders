@@ -1,10 +1,7 @@
 import { getAuthSession } from '@/lib/nextAuth/auth';
 import { db } from '@/lib/db';
-import {
-  generateVerificationToken,
-  verifyToken,
-} from '@/utils/auth/auth.token';
-import { sendVerificationEmail } from '@/utils/email/email.mail';
+import { generateVerificationToken, verifyToken } from '@/utils/auth.token';
+import { sendVerificationEmail } from '@/utils/email.verification-email';
 import { JwtPayload } from 'jsonwebtoken';
 
 function errorResponse(
