@@ -3,7 +3,7 @@
 import { Session } from 'next-auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { tokenCheck } from '@/store/auth/authStore';
+import { tokenValidator } from '@/store/auth.token-validator';
 import { useEffect, useRef, useState } from 'react';
 
 export default function VerifyEmail({ session }: { session: Session | null }) {
@@ -13,14 +13,15 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
   const [mutationError, setMutationError] = useState(() => '');
   const router = useRouter();
 
-  // check validity / expiry via API route
+  // When user is redirected here, validate token
   const {
     mutate: validateToken,
     error,
     isError,
   } = useMutation({
-    mutationFn: tokenCheck,
-    onSuccess(data, variables, context) {
+    mutationFn: tokenValidator,
+    // TODO: fix the error handling to allow for onError: @/store/auth.token-validator
+    onSuccess(data) {
       if (data && 'ok' in data) {
         setMutationError(data.statusText);
       } else {

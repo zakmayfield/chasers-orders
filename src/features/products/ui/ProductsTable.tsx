@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { postUnitsToCart } from '@/store/cart/cartStore';
+import { postUnitsToCart } from '@/store/cart/cart.add';
 import UnitColumn from './UnitColumn';
 import {
   Table as ReactTable,

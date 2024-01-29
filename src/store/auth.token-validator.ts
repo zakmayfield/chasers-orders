@@ -1,4 +1,4 @@
-export const tokenCheck = async (
+export const tokenValidator = async (
   token: string | null
 ): Promise<Response | undefined> => {
   const data = await fetch('/api/auth/email/verify', {
