@@ -20,13 +20,12 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
     isError,
   } = useMutation({
     mutationFn: tokenValidator,
-    // TODO: fix the error handling to allow for onError: @/store/auth.token-validator
     onSuccess(data) {
-      if (data && 'ok' in data) {
-        setMutationError(data.statusText);
-      } else {
-        router.push('/foo');
-      }
+      console.log('~~~data from validateToken~~~', data);
+      router.push('/foo');
+    },
+    onError(error) {
+      console.log('~~~error from validateToken~~~', error);
     },
   });
 

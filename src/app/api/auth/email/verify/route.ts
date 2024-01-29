@@ -1,11 +1,15 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/prisma.db';
+import { JwtPayload } from 'jsonwebtoken';
 import {
   generateVerificationToken,
   verifyToken,
 } from '@/utils/auth.manage-token';
 import { sendVerificationEmail } from '@/utils/email.verification-email';
-import { JwtPayload } from 'jsonwebtoken';
+import {
+  PrismaClientKnownRequestError,
+  PrismaClientUnknownRequestError,
+} from '@prisma/client/runtime/library';
 
 function errorResponse(
   errorObject: Record<string, string>,
@@ -32,15 +36,9 @@ export async function handler(req: Request) {
 
   // determine user auth
   if (!session?.user) {
-    return errorResponse(
-      {
-        error: 'Unauthorized. Please log in to continue.',
-      },
-      {
-        status: 401,
-        statusText: 'Unauthorized. Please log in to continue.',
-      }
-    );
+    return new Response('Unauthorized. Please log in to continue.', {
+      status: 401,
+    });
   }
 
   try {
@@ -48,57 +46,28 @@ export async function handler(req: Request) {
     const tokenParam = body.token;
 
     if (!tokenParam) {
-      return errorResponse(
-        {
-          error: 'Missing token',
-        },
-        {
-          status: 400,
-          statusText: 'Missing token',
-        }
-      );
+      return new Response('Missing token', { status: 400 });
     }
 
     const verificationTokenRecord = await db.verificationToken.findUnique({
       where: { token: tokenParam },
     });
     if (!verificationTokenRecord) {
-      return errorResponse(
-        {
-          error: 'Could not locate token',
-        },
-        {
-          status: 400,
-          statusText: 'Could not locate token',
-        }
-      );
+      return new Response('Could not locate token', { status: 400 });
     }
     if (verificationTokenRecord.userId !== session.user.id) {
-      return errorResponse(
-        {
-          error: 'Unauthorized attempt',
-        },
-        {
-          status: 401,
-          statusText: 'Unauthorized attempt',
-        }
-      );
+      return new Response('Unauthorized attempt', { status: 401 });
     }
     if (!verificationTokenRecord.valid) {
-      return errorResponse(
-        {
-          error: 'This token has already been used. Please contact support.',
-        },
-        {
-          status: 400,
-          statusText:
-            'This token has already been used. Please contact support.',
-        }
+      return new Response(
+        'This token has already been used. Please contact support.',
+        { status: 400 }
       );
     }
 
     let decodedTokenParam;
 
+    // TODO: handle verifyToken errors
     try {
       decodedTokenParam = verifyToken(tokenParam) as JwtPayload;
     } catch (err) {
@@ -138,47 +107,80 @@ export async function handler(req: Request) {
 
       const newExpiry = new Date(decodedVerificationToken!.exp! * 1000);
 
-      await db.verificationToken.update({
-        where: { userId: session.user.id },
-        data: {
-          token: newVerificationToken,
-          expires: newExpiry,
-        },
-      });
+      try {
+        await db.verificationToken.update({
+          where: { userId: session.user.id },
+          data: {
+            token: newVerificationToken,
+            expires: newExpiry,
+          },
+        });
+      } catch (error) {
+        const errorPrefix = 'Error updating new token';
+
+        if (error instanceof PrismaClientKnownRequestError) {
+          return new Response(`${errorPrefix}: ${error.message}`, {
+            status: 500,
+          });
+        } else if (error instanceof PrismaClientUnknownRequestError) {
+          return new Response(`${errorPrefix}: ${error.message}`, {
+            status: 500,
+          });
+        } else {
+          if (error instanceof Error) {
+            return new Response(`${errorPrefix}: ${error.message}`, {
+              status: 500,
+            });
+          }
+        }
+      }
 
       sendVerificationEmail(newVerificationToken, session.user.email!);
 
-      return errorResponse(
-        {
-          error:
-            'Your token has expired. Please check your email for a new verification link.',
-        },
-        {
-          status: 400,
-          statusText:
-            'Your token has expired. Please check your email for a new verification link.',
-        }
+      return new Response(
+        'Your token has expired. Please check your email for a new verification link.',
+        { status: 400 }
       );
     }
 
     const uniqueIdentifier = `email-verification-${session.user.email}`;
 
-    await db.user.update({
-      where: { id: session.user.id },
-      data: {
-        emailVerified: new Date().toISOString(),
-        verificationToken: {
-          update: {
-            where: {
-              identifier: uniqueIdentifier,
-            },
-            data: {
-              valid: false,
+    try {
+      await db.user.update({
+        where: { id: session.user.id },
+        data: {
+          emailVerified: new Date().toISOString(),
+          verificationToken: {
+            update: {
+              where: {
+                identifier: uniqueIdentifier,
+              },
+              data: {
+                valid: false,
+              },
             },
           },
         },
-      },
-    });
+      });
+    } catch (error) {
+      const errorPrefix = 'Error updating verification records';
+
+      if (error instanceof PrismaClientKnownRequestError) {
+        return new Response(`${errorPrefix}: ${error.message}`, {
+          status: 500,
+        });
+      } else if (error instanceof PrismaClientUnknownRequestError) {
+        return new Response(`${errorPrefix}: ${error.message}`, {
+          status: 500,
+        });
+      } else {
+        if (error instanceof Error) {
+          return new Response(`${errorPrefix}: ${error.message}`, {
+            status: 500,
+          });
+        }
+      }
+    }
 
     return new Response(
       JSON.stringify({
@@ -191,15 +193,7 @@ export async function handler(req: Request) {
     );
   } catch (error) {
     if (error instanceof Error) {
-      return errorResponse(
-        {
-          error: error.message,
-        },
-        {
-          status: 500,
-          statusText: error.message,
-        }
-      );
+      return new Response(error.message, { status: 500 });
     }
   }
 }
