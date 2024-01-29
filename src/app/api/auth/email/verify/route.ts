@@ -11,16 +11,6 @@ import {
   PrismaClientUnknownRequestError,
 } from '@prisma/client/runtime/library';
 
-function errorResponse(
-  errorObject: Record<string, string>,
-  statusObject: {
-    status: number;
-    statusText: string;
-  }
-) {
-  return new Response(JSON.stringify(errorObject), statusObject);
-}
-
 function isExpired(expires: Date) {
   const now = new Date();
 
@@ -65,17 +55,17 @@ export async function handler(req: Request) {
       );
     }
 
-    let decodedTokenParam;
+    let decodedToken;
 
-    // TODO: handle verifyToken errors
     try {
-      decodedTokenParam = verifyToken(tokenParam) as JwtPayload;
-    } catch (err) {
-      if (err instanceof Error) {
-        const parsedError: { name: string; message: string } = JSON.parse(
-          err.message
-        );
-        console.log(parsedError.message);
+      decodedToken = verifyToken(tokenParam) as JwtPayload;
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.name === 'JsonWebTokenError') {
+          throw new Error(
+            'The verification link contains an invalid token. This may be due to a technical issue. Please contact support.'
+          );
+        }
       }
     }
 
@@ -83,7 +73,7 @@ export async function handler(req: Request) {
       // db verification token record
       isExpired(verificationTokenRecord.expires) ||
       // url token param
-      isExpired(new Date(decodedTokenParam!.exp! * 1000))
+      isExpired(new Date(decodedToken?.exp! * 1000))
     ) {
       // Resend verification email with a newly generated verificationToken & record update
       const newVerificationToken = generateVerificationToken(
@@ -96,12 +86,9 @@ export async function handler(req: Request) {
         decodedVerificationToken = verifyToken(
           newVerificationToken
         ) as JwtPayload;
-      } catch (err) {
-        if (err instanceof Error) {
-          const parsedError: { name: string; message: string } = JSON.parse(
-            err.message
-          );
-          console.log(parsedError.message);
+      } catch (error) {
+        if (error instanceof Error) {
+          console.log(error.message);
         }
       }
 

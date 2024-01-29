@@ -9,6 +9,7 @@ export const AuthSignInValidator = z
   })
   .required();
 
+// TODO: set { message } for each required input
 export const AuthSignUpValidator = z.object({
   email: z.string().email().min(3),
   password: z

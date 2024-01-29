@@ -1,4 +1,5 @@
-import { verify, sign, JsonWebTokenError, JwtPayload } from 'jsonwebtoken';
+import { verify, sign, JwtPayload } from 'jsonwebtoken';
+import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 
 export const generateVerificationToken = (email: string): string => {
   return sign({ email }, process.env.VERIFICATION_TOKEN_SECRET!, {
@@ -6,14 +7,27 @@ export const generateVerificationToken = (email: string): string => {
   });
 };
 
-export const verifyToken = (token: string): string | JwtPayload | undefined => {
+export const verifyToken = (token: string): JwtPayload => {
   try {
-    return verify(token, process.env.VERIFICATION_TOKEN_SECRET!) as JwtPayload;
+    const verified = verify(token, process.env.VERIFICATION_TOKEN_SECRET!);
+
+    const isJwtPayload = (decoded: unknown): decoded is JwtPayload => {
+      return !!decoded && typeof decoded === 'object' && 'exp' in decoded;
+    };
+
+    if (isJwtPayload(verified)) {
+      return verified;
+    } else {
+      throw new Error('Object is not a JwtPayload');
+    }
   } catch (error) {
-    if (error instanceof JsonWebTokenError) {
-      throw new Error(
-        JSON.stringify({ name: error.name, message: error.message })
-      );
+    if (
+      error instanceof JsonWebTokenError &&
+      error.name === 'JsonWebTokenError'
+    ) {
+      throw new JsonWebTokenError(error.message, error);
+    } else {
+      throw new Error('Verify token error');
     }
   }
 };
