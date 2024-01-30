@@ -32,6 +32,7 @@ export default function ProductsTable({
 }: {
   products: Product[];
 }) {
+  // TODO: rework this logic: currently tracks and sets all available unit sizes - should be simplified to only allow single unit added to cart.
   // initialize selected units to same length as product data
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)

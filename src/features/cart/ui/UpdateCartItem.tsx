@@ -1,10 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { UnitsOnCart } from '@prisma/client';
-import {
-  IUpdatedCart,
-  updateCartItemQuantity,
-} from '@/store/cart.update-quantity';
+import { updateQuantity } from '@/store/cart.update-quantity';
+import { CartCache } from '@/types/types.cart';
 
 const UpdateCartItem = ({
   cartId,
@@ -16,38 +13,34 @@ const UpdateCartItem = ({
   quantityData: number;
 }) => {
   const queryClient = useQueryClient();
-  const [quantity, setQuantity] = useState<number | undefined>(
-    () => quantityData
-  );
+  const [quantity, setQuantity] = useState<number | undefined>(quantityData);
 
-  const { mutate: updateQuantity, isLoading } = useMutation({
-    mutationFn: updateCartItemQuantity,
+  const { mutate: quantityMutation, isLoading } = useMutation({
+    mutationFn: updateQuantity,
     onSuccess: (data) => {
-      const unit: UnitsOnCart | undefined = data.items.find(
-        (item) => item.unitId === unitId
-      );
+      console.log('data', data);
 
-      setQuantity(unit?.quantity);
+      setQuantity(data.quantity);
 
-      queryClient.setQueryData(['cart'], (oldData: IUpdatedCart | undefined) =>
-        oldData && unit
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+        oldData
           ? {
               ...oldData,
               items: oldData.items.map((item) =>
-                item.unitId === unitId ? unit : item
+                item.unitId === data.unitId ? data : item
               ),
             }
           : oldData
       );
     },
     onError(error) {
-      console.log('~~~error from updateQuantity~~~', error);
+      console.log('~~~error from quantityMutation~~~', error);
     },
   });
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = Number(e.target.value);
-    updateQuantity({ cartId, unitId, quantityPayload: newValue });
+    quantityMutation({ cartId, unitId, quantityPayload: newValue });
   };
 
   const options = Array.from({ length: 10 }, (_, i) => i + 1);
