@@ -1,32 +1,22 @@
 'use client';
 
-import { Cart, Unit } from '@prisma/client';
+import { CartCache } from '@/types/types.cart';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+
+// TODO: Fix this after Cart and cache get fixed
 
 export default function ConfirmOrder() {
   const queryClient = useQueryClient();
 
-  type CartCache = Cart & {
-    items: Unit[];
-  };
+  const [cartCache, setCartCache] = useState<CartCache | undefined>();
 
-  const [cartCache, setCartCache] = useState<CartCache | null>(null);
-
-  useEffect(() => {
-    console.log(cartCache);
-  }, [cartCache]);
+  const fetchCartCache = async () =>
+    setCartCache(await queryClient.fetchQuery(['cart']));
 
   return (
     <div>
-      <button
-        onClick={async () => {
-          const cartQuery: CartCache = await queryClient.fetchQuery(['cart']);
-          setCartCache(cartQuery);
-        }}
-      >
-        Place order
-      </button>
+      <button onClick={fetchCartCache}>Place order</button>
 
       {cartCache && <pre>{JSON.stringify(cartCache, null, 2)}</pre>}
     </div>
