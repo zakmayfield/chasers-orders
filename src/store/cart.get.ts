@@ -1,9 +1,18 @@
-import { CartType } from '@/features/cart/Cart';
+import { CartCache } from '@/types/types.cart';
 
-export const getCart = async (): Promise<CartType> => {
-  const data = await fetch('/api/cart')
-    .then((res) => res.json())
-    .catch((err) => err);
+export const getCart = async (): Promise<CartCache | undefined> => {
+  try {
+    const response = await fetch('/api/cart');
 
-  return data;
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    return response.json();
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
