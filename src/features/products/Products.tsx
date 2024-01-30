@@ -12,6 +12,7 @@ export default function Products() {
   const { isLoading, isError, data, error } = useQuery<Product[], Error>({
     queryKey: ['products'],
     queryFn: getProducts,
+    staleTime: Infinity,
   });
 
   if (isLoading) {
