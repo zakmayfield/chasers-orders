@@ -1,18 +1,20 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/prisma.db';
+import {
+  PrismaClientKnownRequestError,
+  PrismaClientUnknownRequestError,
+} from '@prisma/client/runtime/library';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
 
   // determine user auth
   if (!session?.user) {
-    return new Response(
-      JSON.stringify({ message: 'Unauthorized. Please log in to continue.' }),
-      { status: 401 }
-    );
+    return new Response('Unauthorized. Please log in to continue.', {
+      status: 401,
+    });
   }
 
-  // variables
   const body: string = await req.json();
   const unitId = body;
   const userId = session.user.id;
@@ -20,19 +22,15 @@ async function handler(req: Request) {
 
   try {
     // find user + cart from session ID
-    const user = await db.user.findUnique({
-      where: { id: userId },
+    const cart = await db.cart.findUnique({
+      where: { userId },
       include: {
-        cart: {
-          include: {
-            items: true,
-          },
-        },
+        items: true,
       },
     });
 
-    // validate user's cart
-    if (!user?.cart) {
+    // create cart record if user does not have a cart
+    if (!cart) {
       const createdCart = await db.cart.create({
         data: {
           userId,
@@ -40,45 +38,47 @@ async function handler(req: Request) {
       });
 
       cartId = createdCart.id;
-    } else {
-      cartId = user.cart.id;
-
-      // check for existing unit in cart
-      const unitExistsInCart = user.cart.items.find(
-        (unit) => unit.unitId === unitId
-      );
-
-      if (unitExistsInCart) {
-        return new Response(
-          JSON.stringify({ message: 'Item already in cart' }),
-          {
-            status: 409,
-          }
-        );
-      }
     }
 
-    // create new junction record
+    cartId = cart!.id;
+
+    // check for existing unit in cart
+    const unitExistsInCart = cart!.items.find((unit) => unit.unitId === unitId);
+
+    if (unitExistsInCart) {
+      return new Response('Item already in cart', {
+        status: 409,
+      });
+    }
+
+    // create new junction record with payload
+    const payload = {
+      unitId,
+      cartId,
+      quantity: 1,
+    };
     await db.unitsOnCart.create({
       data: {
-        unitId,
-        cartId,
-        quantity: 1,
+        ...payload,
       },
     });
 
-    return new Response(
-      JSON.stringify({ message: 'Item successfully added to the cart' }),
-      { status: 201 }
-    );
+    return new Response('Item successfully added to the cart', { status: 201 });
   } catch (error) {
+    if (error instanceof PrismaClientKnownRequestError) {
+      return new Response(error.message, {
+        status: 500,
+      });
+    } else if (error instanceof PrismaClientUnknownRequestError) {
+      return new Response(error.message, {
+        status: 500,
+      });
+    }
+
     if (error instanceof Error) {
-      return new Response(
-        JSON.stringify({ message: 'Server error', error: error.message }),
-        {
-          status: 500,
-        }
-      );
+      return new Response(error.message, {
+        status: 500,
+      });
     }
   }
 }

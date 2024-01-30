@@ -18,8 +18,6 @@ const UpdateCartItem = ({
   const { mutate: quantityMutation, isLoading } = useMutation({
     mutationFn: updateQuantity,
     onSuccess: (data) => {
-      console.log('data', data);
-
       setQuantity(data.quantity);
 
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>

@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
+import { Unit } from '@prisma/client';
 import AddToCartButton from './AddToCartButton';
 import { CartHandlerProps, ChangeUnitHandlerProps } from './ProductsTable';
-import { Unit } from '@prisma/client';
 
 interface UnitColumnProps {
   handleAddToCart: (props: CartHandlerProps) => void;

@@ -1,13 +1,24 @@
-export const postUnitsToCart = async (unitId: string): Promise<Response> => {
-  const data = await fetch('/api/cart/add', {
-    method: 'POST',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify(unitId),
-  })
-    .then((res) => res.json())
-    .catch((err) => err);
+export const addToCart = async (
+  unitId: string
+): Promise<Response | undefined> => {
+  try {
+    const response = await fetch('/api/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(unitId),
+    });
 
-  return data;
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    return response.json();
+  } catch (error) {
+    console.log(error);
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

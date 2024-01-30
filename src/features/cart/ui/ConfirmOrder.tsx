@@ -4,8 +4,6 @@ import { CartCache } from '@/types/types.cart';
 import { useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 
-// TODO: Fix this after Cart and cache get fixed
-
 export default function ConfirmOrder() {
   const queryClient = useQueryClient();
 
