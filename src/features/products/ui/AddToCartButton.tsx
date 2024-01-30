@@ -1,14 +1,14 @@
 import React from 'react';
 
 interface AddToCartButtonProps {
-  handler: () => void;
+  addToCart: () => void;
 }
 
-const AddToCartButton: React.FC<AddToCartButtonProps> = ({ handler }) => {
+const AddToCartButton: React.FC<AddToCartButtonProps> = ({ addToCart }) => {
   return (
     <button
       className='w-24 border text-sm py-1 rounded'
-      onClick={() => handler()}
+      onClick={() => addToCart()}
     >
       Add to Cart
     </button>

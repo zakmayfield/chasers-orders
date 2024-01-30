@@ -37,14 +37,7 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
         {unitOptions}
       </select>
 
-      <div className='w-20'>
-        $
-        {!selectedUnits[rowIndex]
-          ? units[0].price.toFixed(2)
-          : selectedUnits[rowIndex]?.price.toFixed(2)}
-      </div>
-
-      <AddToCartButton handler={() => handleAddToCart({ units, rowIndex })} />
+      <AddToCartButton addToCart={() => handleAddToCart({ units, rowIndex })} />
     </div>
   );
 };
