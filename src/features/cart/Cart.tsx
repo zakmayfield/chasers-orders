@@ -25,8 +25,6 @@ export default function Cart() {
     return <span>Error: {error.message}</span>;
   }
 
-  console.log('data', data);
-
   return (
     <div>
       <div>Cart</div>

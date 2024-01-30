@@ -1,16 +1,14 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/prisma.db';
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
 
   // determine user auth
   if (!session?.user) {
-    return new Response(
-      JSON.stringify({ message: 'Unauthorized. Please log in to continue.' }),
-      { status: 401 }
-    );
+    return new Response('Unauthorized. Please log in to continue.', {
+      status: 401,
+    });
   }
 
   try {
@@ -43,47 +41,28 @@ async function handler(req: Request) {
       return new Response('Cart ID & Unit ID are required', { status: 400 });
     }
 
-    const updated = await db.cart
-      .update({
-        where: { id: cartId },
-        data: {
-          items: {
-            update: {
-              where: {
-                cartId_unitId: {
-                  cartId,
-                  unitId,
-                },
-              },
-              data: {
-                quantity: quantityPayload,
+    const u = await db.unitsOnCart.update({
+      where: { cartId_unitId: { cartId, unitId } },
+      data: { quantity: quantityPayload },
+      select: {
+        unitId: true,
+        quantity: true,
+        unit: {
+          select: {
+            size: true,
+            code: true,
+            product: {
+              select: {
+                name: true,
+                category: true,
               },
             },
           },
         },
-        include: {
-          items: true,
-        },
-      })
-      .catch((err) => {
-        if (err instanceof PrismaClientKnownRequestError) {
-          return new Response(
-            JSON.stringify({
-              error: 'Could not update item',
-              message: err.message,
-              requestedPaylod: {
-                unitId,
-                cartId,
-              },
-            }),
-            {
-              status: 500,
-            }
-          );
-        }
-      });
+      },
+    });
 
-    return new Response(JSON.stringify(updated), {
+    return new Response(JSON.stringify(u), {
       status: 200,
     });
   } catch (error) {

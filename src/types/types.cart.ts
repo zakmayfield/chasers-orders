@@ -4,7 +4,7 @@ export type CartCache = Cart & {
   items: UnitsOnCartCacheType[];
 };
 
-type UnitsOnCartCacheType = Omit<
+export type UnitsOnCartCacheType = Omit<
   UnitsOnCart & {
     unit: UnitCacheType;
   },

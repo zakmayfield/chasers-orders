@@ -1,20 +1,14 @@
-import type { UnitsOnCart } from '@prisma/client';
+import type { UnitsOnCartCacheType } from '@/types/types.cart';
 
-export interface IUpdatedCart {
-  id: string;
-  userId: string;
-  items: UnitsOnCart[];
-}
-
-type ResolvedUpdatedCart = {
+type UpdateQuantityType = {
   (params: {
     cartId: string;
     unitId: string;
     quantityPayload: number;
-  }): Promise<IUpdatedCart>;
+  }): Promise<UnitsOnCartCacheType>;
 };
 
-export const updateCartItemQuantity: ResolvedUpdatedCart = async (params) => {
+export const updateQuantity: UpdateQuantityType = async (params) => {
   const { cartId, unitId, quantityPayload } = params;
 
   try {
