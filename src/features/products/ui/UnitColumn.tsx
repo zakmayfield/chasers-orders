@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { Unit } from '@prisma/client';
-import { CartHandlerProps, ChangeUnitHandlerProps } from './ProductsTable';
+import { HandleUnitChangeProps } from './ProductsTable';
 
 interface UnitColumnProps {
   handleAddToCart: () => void;
-  handleUnitChange: (props: ChangeUnitHandlerProps) => void;
+  handleUnitChange: (props: HandleUnitChangeProps) => void;
   units: Unit[];
   rowIndex: number;
   selectedUnits: Array<Unit | null>;
