@@ -1,4 +1,4 @@
-import { db } from '@/lib/prisma.db';
+import { db } from '@/lib/db.prisma-client';
 
 export const createCart = async (userId: string) => {
   try {

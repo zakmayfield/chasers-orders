@@ -1,6 +1,6 @@
 // import NoticeModal from '@/features/NoticeModal';
 import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/prisma.db';
+import { db } from '@/lib/db.prisma-client';
 import Link from 'next/link';
 
 export default async function Page({
