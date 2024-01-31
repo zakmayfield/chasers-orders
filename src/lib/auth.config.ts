@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { compare, genSalt, hash } from 'bcryptjs';
 import { JwtPayload } from 'jsonwebtoken';
-import { db } from './prisma.db';
+import { db } from './db.prisma-client';
 import {
   AuthSignInValidator,
   AuthSignUpValidator,
@@ -15,6 +15,7 @@ import {
   generateVerificationToken,
   verifyToken,
 } from '@/utils/auth.manage-token';
+import { findUniqueSecureUser, registerUser } from './db.user';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
@@ -93,46 +94,28 @@ const providers: NextAuthProviders = [
       password: { label: 'Password', type: 'password' },
     },
     async authorize(credentials) {
+      // parse credentials
       const parsedCreds = AuthSignUpValidator.safeParse(credentials);
 
-      // parsed credentials guard
       if (!parsedCreds.success) {
         throw new Error(parsedCreds.error.message);
       }
 
       const {
-        data: {
-          email,
-          password,
-          contactName,
-          contactPosition,
-          contactPhoneNumber,
-          companyName,
-          accountPayableEmail,
-          paymentMethod,
-          shippingStreetAddress,
-          shippingUnit,
-          shippingCity,
-          shippingState,
-          shippingPostalCode,
-          deliveryInstructions,
-          billingStreetAddress,
-          billingUnit,
-          billingCity,
-          billingState,
-          billingPostalCode,
-        },
+        data: { email, password },
       } = parsedCreds;
 
-      // query user record
+      // throw if a user exists with desired email
       const existingUser = await db.user.findUnique({
         where: { email },
+        select: { id: true },
       });
 
       if (existingUser) {
         throw new Error('User already exists. Please log in.');
       }
 
+      // generate & verify email verification token
       const verificationToken = generateVerificationToken(email);
 
       let decodedToken;
@@ -149,68 +132,31 @@ const providers: NextAuthProviders = [
         }
       }
 
+      // extract expiration from email verification token
       const expires = new Date(decodedToken?.exp! * 1000);
 
       // salt/hash password
       const salt = await genSalt(12);
       const hashedPassword = await hash(password, salt);
 
-      // TODO: handle possible errors with try...catch
-      const user = await db.user.create({
-        data: {
-          email,
-          password: hashedPassword,
-          verificationToken: {
-            create: {
-              identifier: `email-verification-${email}`,
-              token: verificationToken,
-              expires,
-            },
-          },
-          contact: {
-            create: {
-              name: contactName,
-              position: contactPosition,
-              phoneNumber: contactPhoneNumber,
-            },
-          },
-          company: {
-            create: {
-              name: companyName,
-              accountPayableEmail,
-              paymentMethod,
-              shippingAddress: {
-                create: {
-                  streetAddress: shippingStreetAddress,
-                  unit: shippingUnit,
-                  city: shippingCity,
-                  state: shippingState,
-                  postalCode: shippingPostalCode,
-                  deliveryInstructions,
-                },
-              },
-              billingAddress: {
-                create: {
-                  streetAddress: billingStreetAddress,
-                  unit: billingUnit,
-                  city: billingCity,
-                  state: billingState,
-                  postalCode: billingPostalCode,
-                },
-              },
-            },
-          },
-        },
-      });
+      // register user with payload
+      const registerUserPayload = {
+        credentials: parsedCreds.data,
+        hashedPassword,
+        verificationToken,
+        expires,
+      };
+
+      const user = await registerUser(registerUserPayload);
 
       if (!user) {
         throw new Error('Error creating account');
       }
 
+      // initialize cart record with user data
       await createCart(user.id);
 
       // send verification email
-      // consider async w/ error handling
       sendVerificationEmail(verificationToken, email);
 
       return user;
@@ -233,28 +179,18 @@ const callbacks: NextAuthCallbacks = {
   },
 
   async jwt({ token, user }) {
-    const dbUser = await db.user.findFirst({
-      where: {
-        email: token.email!,
-      },
-      select: {
-        id: true,
-        email: true,
-        isApproved: true,
-        emailVerified: true,
-      },
-    });
+    const u = await findUniqueSecureUser(token.email!);
 
-    if (!dbUser) {
+    if (!u) {
       token.id = user!.id;
       return token;
     }
 
     return {
-      id: dbUser.id,
-      email: dbUser.email,
-      isApproved: dbUser.isApproved,
-      emailVerified: dbUser.emailVerified,
+      id: u.id,
+      email: u.email,
+      isApproved: u.isApproved,
+      emailVerified: u.emailVerified,
     };
   },
 
