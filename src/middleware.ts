@@ -10,7 +10,6 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', req.nextUrl));
   }
 
-  // TODO: Consider implementing a server side cache system for account status data
   const { isApproved, emailVerified } = await verifyUserStatus(token);
 
   if (req.nextUrl.pathname.startsWith('/bar') && !isApproved) {
