@@ -7,7 +7,6 @@ interface AddToCartButtonProps {
 }
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({ addToCart }) => {
-  // TODO: Add disable on loading / already added to cart logic
   return (
     <button
       className='w-24 border text-sm py-1 rounded'

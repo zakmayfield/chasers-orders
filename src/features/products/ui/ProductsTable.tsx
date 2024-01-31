@@ -40,6 +40,7 @@ export default function ProductsTable({
     Array(productData.length).fill(null)
   );
 
+  // TODO: Tooltip to handle error UI?
   const { mutate: addToCartMutation } = useMutation({
     mutationFn: addToCart,
   });
