@@ -30,10 +30,7 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   return (
     <div className='flex gap-6 items-center w-full'>
       <select
-        value={
-          // set row select value to selected unit size
-          selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''
-        }
+        value={selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''}
         onChange={(event) => handleUnitChange({ event, rowIndex })}
         className='w-24 rounded'
       >
@@ -41,6 +38,7 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
       </select>
 
       <button
+        // TODO: Currently disabling all add to cart buttons on the table, need to isolate
         disabled={isLoading}
         className={`w-24 border text-sm py-1 rounded ${
           isLoading && 'opacity-25'

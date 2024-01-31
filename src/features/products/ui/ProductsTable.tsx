@@ -19,12 +19,12 @@ import type { Product } from '../Products';
 import { addToCart } from '@/store/cart.add';
 import { useToast } from '@/hooks/useToast';
 
-export type CartHandlerProps = {
+export type HandleAddToCartProps = {
   units: Unit[];
   rowIndex: number;
 };
 
-export type ChangeUnitHandlerProps = {
+export type HandleUnitChangeProps = {
   event: React.ChangeEvent<HTMLSelectElement>;
   rowIndex: number;
 };
@@ -35,10 +35,7 @@ export default function ProductsTable({
   products: Product[];
 }) {
   const { notify: errorNotification, ToastContainer } = useToast();
-  /*
-    - initialize selected units to same length as product data
-      this allows for the user to select multiple unit sizes without resetting state
-  */
+
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
   );
@@ -52,7 +49,7 @@ export default function ProductsTable({
     },
   });
 
-  const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
+  const handleUnitChange = ({ event, rowIndex }: HandleUnitChangeProps) => {
     const selectedSize = event.target.value;
 
     const unit =
@@ -68,7 +65,7 @@ export default function ProductsTable({
     });
   };
 
-  const handleAddToCart = ({ units, rowIndex }: CartHandlerProps) => {
+  const handleAddToCart = ({ units, rowIndex }: HandleAddToCartProps) => {
     const selectedUnit = selectedUnits[rowIndex];
 
     if (selectedUnit) {
@@ -299,15 +296,6 @@ function Pagination({ reactTable }: { reactTable: ReactTable<Product> }) {
           {reactTable.getPageCount()}
         </strong>
       </span>
-    </div>
-  );
-}
-
-function Meta({ reactTable }: { reactTable: ReactTable<Product> }) {
-  return (
-    <div className='mt-12'>
-      <div>{reactTable.getRowModel().rows.length} Rows</div>
-      <pre>{JSON.stringify(reactTable.getState().pagination, null, 2)}</pre>
     </div>
   );
 }
