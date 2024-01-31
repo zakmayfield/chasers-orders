@@ -1,33 +1,57 @@
 import { verify, sign, JwtPayload } from 'jsonwebtoken';
-import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
+import { JsonWebTokenError } from 'jsonwebtoken';
+
+const secret = process.env.VERIFICATION_TOKEN_SECRET;
 
 export const generateVerificationToken = (email: string): string => {
-  return sign({ email }, process.env.VERIFICATION_TOKEN_SECRET!, {
+  const verifiedSecret = getSecretOrThrow(secret);
+
+  return sign({ email }, verifiedSecret, {
     expiresIn: '48h',
   });
 };
 
-export const verifyToken = (token: string): JwtPayload => {
+export const extractExpiration = (token: string): number => {
+  const verifiedSecret = getSecretOrThrow(secret);
+
   try {
-    const verified = verify(token, process.env.VERIFICATION_TOKEN_SECRET!);
+    const verified = verify(token, verifiedSecret);
 
-    const isJwtPayload = (decoded: unknown): decoded is JwtPayload => {
-      return !!decoded && typeof decoded === 'object' && 'exp' in decoded;
-    };
-
-    if (isJwtPayload(verified)) {
-      return verified;
-    } else {
-      throw new Error('Object is not a JwtPayload');
+    if (!isJwtPayload(verified)) {
+      throw new Error('Invalid token format');
     }
+
+    const { exp } = verified;
+
+    if (typeof exp !== 'number') {
+      throw new Error('Invalid expiration format');
+    }
+
+    return exp;
   } catch (error) {
-    if (
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else if (
       error instanceof JsonWebTokenError &&
       error.name === 'JsonWebTokenError'
     ) {
-      throw new JsonWebTokenError(error.message, error);
+      throw new Error(
+        'There was a technical issue. Please visit the account creation page again and complete the account creation process again.'
+      );
     } else {
-      throw new Error('Verify token error');
+      throw new Error('Error processing token');
     }
   }
 };
+
+function isJwtPayload(decoded: unknown): decoded is JwtPayload {
+  return !!decoded && typeof decoded === 'object' && 'exp' in decoded;
+}
+
+function getSecretOrThrow(secret: string | undefined): string {
+  if (!secret) {
+    throw new Error('Verification token needs a secret');
+  }
+
+  return secret;
+}

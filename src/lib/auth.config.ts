@@ -12,8 +12,8 @@ import {
 import { createCart } from '@/utils/cart.create';
 import { sendVerificationEmail } from '@/utils/email.verification-email';
 import {
+  extractExpiration,
   generateVerificationToken,
-  verifyToken,
 } from '@/utils/auth.manage-token';
 import { findUniqueSecureUser, registerUser } from './db.user';
 
@@ -115,25 +115,13 @@ const providers: NextAuthProviders = [
         throw new Error('User already exists. Please log in.');
       }
 
-      // generate & verify email verification token
+      // generate email verification token
       const verificationToken = generateVerificationToken(email);
 
-      let decodedToken;
+      // extract expiration
+      const tokenExpiration = extractExpiration(verificationToken);
 
-      try {
-        decodedToken = verifyToken(verificationToken) as JwtPayload;
-      } catch (error) {
-        if (error instanceof Error) {
-          if (error.name === 'JsonWebTokenError') {
-            throw new Error(
-              'There was a technical issue. Please visit the account creation page again and complete the account creation process again.'
-            );
-          }
-        }
-      }
-
-      // extract expiration from email verification token
-      const expires = new Date(decodedToken?.exp! * 1000);
+      const expires = new Date(tokenExpiration * 1000);
 
       // salt/hash password
       const salt = await genSalt(12);

@@ -2,8 +2,8 @@ import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
 import { JwtPayload } from 'jsonwebtoken';
 import {
+  extractExpiration,
   generateVerificationToken,
-  verifyToken,
 } from '@/utils/auth.manage-token';
 import { sendVerificationEmail } from '@/utils/email.verification-email';
 import {
@@ -55,44 +55,22 @@ export async function handler(req: Request) {
       );
     }
 
-    let decodedToken;
-
-    try {
-      decodedToken = verifyToken(tokenParam) as JwtPayload;
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.name === 'JsonWebTokenError') {
-          throw new Error(
-            'The verification link contains an invalid token. This may be due to a technical issue. Please contact support.'
-          );
-        }
-      }
-    }
+    const tokenExpiration = extractExpiration(tokenParam);
 
     if (
       // db verification token record
       isExpired(verificationTokenRecord.expires) ||
       // url token param
-      isExpired(new Date(decodedToken?.exp! * 1000))
+      isExpired(new Date(tokenExpiration * 1000))
     ) {
       // Resend verification email with a newly generated verificationToken & record update
       const newVerificationToken = generateVerificationToken(
         session.user.email!
       );
 
-      let decodedVerificationToken;
+      const newTokenExpiration = extractExpiration(newVerificationToken);
 
-      try {
-        decodedVerificationToken = verifyToken(
-          newVerificationToken
-        ) as JwtPayload;
-      } catch (error) {
-        if (error instanceof Error) {
-          console.log(error.message);
-        }
-      }
-
-      const newExpiry = new Date(decodedVerificationToken!.exp! * 1000);
+      const newExpiry = new Date(newTokenExpiration * 1000);
 
       try {
         await db.verificationToken.update({
