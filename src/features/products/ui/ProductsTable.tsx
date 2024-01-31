@@ -1,7 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import React, { useState } from 'react';
 import { Unit } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -16,6 +17,7 @@ import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
 import type { Product } from '../Products';
 import { addToCart } from '@/store/cart.add';
+import { useToast } from '@/hooks/useToast';
 
 export type CartHandlerProps = {
   units: Unit[];
@@ -32,6 +34,7 @@ export default function ProductsTable({
 }: {
   products: Product[];
 }) {
+  const { notify: errorNotification, ToastContainer } = useToast();
   /*
     - initialize selected units to same length as product data
       this allows for the user to select multiple unit sizes without resetting state
@@ -40,9 +43,13 @@ export default function ProductsTable({
     Array(productData.length).fill(null)
   );
 
-  // TODO: Tooltip to handle error UI?
-  const { mutate: addToCartMutation } = useMutation({
+  const { mutate: addToCartMutation, isLoading } = useMutation({
     mutationFn: addToCart,
+    onError(error) {
+      if (error instanceof Error) {
+        errorNotification(error.message, 'error');
+      }
+    },
   });
 
   const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
@@ -104,11 +111,12 @@ export default function ProductsTable({
 
         return (
           <UnitColumn
+            isLoading={isLoading}
             units={units}
             rowIndex={rowIndex}
             selectedUnits={selectedUnits}
-            handleAddToCart={handleAddToCart}
             handleUnitChange={handleUnitChange}
+            handleAddToCart={() => handleAddToCart({ units, rowIndex })}
           />
         );
       },
@@ -131,7 +139,7 @@ export default function ProductsTable({
         <Table reactTable={reactTable} />
         <Pagination reactTable={reactTable} />
       </div>
-      {/* <Meta reactTable={reactTable} /> */}
+      <ToastContainer />
     </div>
   );
 }
