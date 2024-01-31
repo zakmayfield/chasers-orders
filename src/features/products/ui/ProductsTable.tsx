@@ -1,7 +1,7 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Unit } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -15,7 +15,7 @@ import {
 import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
 import type { Product } from '../Products';
-import { postUnitsToCart } from '@/store/cart.add';
+import { addToCart } from '@/store/cart.add';
 
 export type CartHandlerProps = {
   units: Unit[];
@@ -32,14 +32,16 @@ export default function ProductsTable({
 }: {
   products: Product[];
 }) {
-  // TODO: rework this logic: currently tracks and sets all available unit sizes - should be simplified to only allow single unit added to cart.
-  // initialize selected units to same length as product data
+  /*
+    - initialize selected units to same length as product data
+      this allows for the user to select multiple unit sizes without resetting state
+  */
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
   );
 
-  const { mutate: addToCart } = useMutation({
-    mutationFn: postUnitsToCart,
+  const { mutate: addToCartMutation } = useMutation({
+    mutationFn: addToCart,
   });
 
   const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
@@ -63,11 +65,11 @@ export default function ProductsTable({
 
     if (selectedUnit) {
       // send selected unit to cart
-      addToCart(selectedUnit.id);
+      addToCartMutation(selectedUnit.id);
     } else {
       // otherwise send the first unit instance
       const defaultUnit = units[0];
-      addToCart(defaultUnit.id);
+      addToCartMutation(defaultUnit.id);
     }
   };
 
