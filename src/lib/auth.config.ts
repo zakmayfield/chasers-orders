@@ -3,19 +3,18 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { compare, genSalt, hash } from 'bcryptjs';
-import { JwtPayload } from 'jsonwebtoken';
-import { db } from './db.prisma-client';
 import {
   AuthSignInValidator,
   AuthSignUpValidator,
-} from './validator.auth-form';
-import { createCart } from '@/utils/cart.create';
-import { sendVerificationEmail } from '@/utils/email.verification-email';
+} from '@/lib/validator.auth-form';
 import {
   extractExpiration,
   generateVerificationToken,
-} from '@/utils/auth.manage-token';
-import { findUniqueSecureUser, registerUser } from './db.user';
+} from '@/utils/auth.manage-verification-token';
+import { sendVerificationEmail } from '@/utils/auth.email.send-verification-email';
+import { db } from '@/lib/db.prisma-client';
+import { findUniqueSecureUser, registerUser } from '@/lib/db.user';
+import { createCart } from '@/lib/db.cart';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];

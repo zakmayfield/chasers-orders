@@ -11,10 +11,25 @@ let transporter = nodemailer.createTransport({
   },
 });
 
-const generateMailOptions = (
+export const sendVerificationEmail = (
   verificationToken: string,
   email: string
-): Record<string, string> => {
+) => {
+  const mailOptions = generateMailOptions(verificationToken, email);
+
+  transporter.sendMail(mailOptions, (err) => {
+    if (err) {
+      console.log('Error sending email: ', err);
+    } else {
+      console.log('Email sent successfully');
+    }
+  });
+};
+
+function generateMailOptions(
+  verificationToken: string,
+  email: string
+): Record<string, string> {
   const mailOptions = {
     from: 'zakmayfield@gmail.com',
     to: email,
@@ -80,19 +95,4 @@ const generateMailOptions = (
   };
 
   return mailOptions;
-};
-
-export const sendVerificationEmail = (
-  verificationToken: string,
-  email: string
-) => {
-  const mailOptions = generateMailOptions(verificationToken, email);
-
-  transporter.sendMail(mailOptions, (err) => {
-    if (err) {
-      console.log('Error sending email: ', err);
-    } else {
-      console.log('Email sent successfully');
-    }
-  });
-};
+}

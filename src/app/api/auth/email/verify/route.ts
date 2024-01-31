@@ -4,8 +4,8 @@ import { JwtPayload } from 'jsonwebtoken';
 import {
   extractExpiration,
   generateVerificationToken,
-} from '@/utils/auth.manage-token';
-import { sendVerificationEmail } from '@/utils/email.verification-email';
+} from '@/utils/auth.manage-verification-token';
+import { sendVerificationEmail } from '@/utils/auth.email.send-verification-email';
 import {
   PrismaClientKnownRequestError,
   PrismaClientUnknownRequestError,
