@@ -1,5 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/prisma.db';
+import { db } from '@/lib/db.prisma-client';
 
 async function handler(req: Request) {
   const session = await getAuthSession();

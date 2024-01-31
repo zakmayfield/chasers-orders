@@ -1,6 +1,6 @@
 import EditCompanyForm from '@/features/auth/EditCompanyForm';
 import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/prisma.db';
+import { db } from '@/lib/db.prisma-client';
 
 export default async function Page() {
   const session = await getAuthSession();
