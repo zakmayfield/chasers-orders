@@ -1,6 +1,12 @@
-export const addToCart = async (
-  unitId: string
-): Promise<Response | undefined> => {
+import { UnitsOnCart } from '@prisma/client';
+
+type AddToCartParams = {
+  (unitId: string): Promise<AddToCartResponseData>;
+};
+
+type AddToCartResponseData = Pick<UnitsOnCart, 'unitId'>;
+
+export const addToCart: AddToCartParams = async (unitId) => {
   try {
     const response = await fetch('/api/cart/add', {
       method: 'POST',

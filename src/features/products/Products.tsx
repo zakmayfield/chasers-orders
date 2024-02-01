@@ -2,14 +2,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { getProducts } from '@/store/products.get';
 import ProductsTable from './ui/ProductsTable';
-import type { Product as ProductType, Unit } from '@prisma/client';
-
-export type Product = ProductType & {
-  units: Unit[];
-};
+import type { ProductWithUnits } from '@/types/types.product';
 
 export default function Products() {
-  const { isLoading, isError, data, error } = useQuery<Product[], Error>({
+  const { isLoading, isError, data, error } = useQuery<
+    ProductWithUnits[],
+    Error
+  >({
     queryKey: ['products'],
     queryFn: getProducts,
     staleTime: Infinity,

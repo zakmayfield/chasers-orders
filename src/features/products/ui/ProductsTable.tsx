@@ -1,7 +1,8 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+
+import React, { useState } from 'react';
 import { Unit } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -14,15 +15,16 @@ import {
 } from '@tanstack/react-table';
 import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
-import type { Product } from '../Products';
+import type { ProductWithUnits } from '@/types/types.product';
 import { addToCart } from '@/store/cart.add';
+import { useToast } from '@/hooks/useToast';
 
-export type CartHandlerProps = {
+export type HandleAddToCartProps = {
   units: Unit[];
   rowIndex: number;
 };
 
-export type ChangeUnitHandlerProps = {
+export type HandleUnitChangeProps = {
   event: React.ChangeEvent<HTMLSelectElement>;
   rowIndex: number;
 };
@@ -30,22 +32,27 @@ export type ChangeUnitHandlerProps = {
 export default function ProductsTable({
   products: productData,
 }: {
-  products: Product[];
+  products: ProductWithUnits[];
 }) {
-  /*
-    - initialize selected units to same length as product data
-      this allows for the user to select multiple unit sizes without resetting state
-  */
+  const { notify, ToastContainer } = useToast();
+
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
   );
 
-  // TODO: Tooltip to handle error UI?
-  const { mutate: addToCartMutation } = useMutation({
+  const { mutate: addToCartMutation, isLoading } = useMutation({
     mutationFn: addToCart,
+    onSuccess(data) {
+      notify('Item added to cart');
+    },
+    onError(error) {
+      if (error instanceof Error) {
+        notify(error.message, 'error');
+      }
+    },
   });
 
-  const handleUnitChange = ({ event, rowIndex }: ChangeUnitHandlerProps) => {
+  const handleUnitChange = ({ event, rowIndex }: HandleUnitChangeProps) => {
     const selectedSize = event.target.value;
 
     const unit =
@@ -61,7 +68,7 @@ export default function ProductsTable({
     });
   };
 
-  const handleAddToCart = ({ units, rowIndex }: CartHandlerProps) => {
+  const handleAddToCart = ({ units, rowIndex }: HandleAddToCartProps) => {
     const selectedUnit = selectedUnits[rowIndex];
 
     if (selectedUnit) {
@@ -74,7 +81,7 @@ export default function ProductsTable({
     }
   };
 
-  const columnHelper = createColumnHelper<Product>();
+  const columnHelper = createColumnHelper<ProductWithUnits>();
 
   const columns = [
     columnHelper.accessor('name', {
@@ -104,11 +111,12 @@ export default function ProductsTable({
 
         return (
           <UnitColumn
+            isLoading={isLoading}
             units={units}
             rowIndex={rowIndex}
             selectedUnits={selectedUnits}
-            handleAddToCart={handleAddToCart}
             handleUnitChange={handleUnitChange}
+            handleAddToCart={() => handleAddToCart({ units, rowIndex })}
           />
         );
       },
@@ -131,12 +139,12 @@ export default function ProductsTable({
         <Table reactTable={reactTable} />
         <Pagination reactTable={reactTable} />
       </div>
-      {/* <Meta reactTable={reactTable} /> */}
+      <ToastContainer />
     </div>
   );
 }
 
-function Table({ reactTable }: { reactTable: ReactTable<Product> }) {
+function Table({ reactTable }: { reactTable: ReactTable<ProductWithUnits> }) {
   return (
     <table className='w-full'>
       <thead>
@@ -192,7 +200,7 @@ function Filter({
   reactTable,
   column,
 }: {
-  reactTable: ReactTable<Product>;
+  reactTable: ReactTable<ProductWithUnits>;
   column: Column<any, any>;
 }) {
   const firstValue = reactTable
@@ -234,7 +242,11 @@ function Filter({
   );
 }
 
-function Pagination({ reactTable }: { reactTable: ReactTable<Product> }) {
+function Pagination({
+  reactTable,
+}: {
+  reactTable: ReactTable<ProductWithUnits>;
+}) {
   return (
     <div className='flex gap-6 mt-6'>
       <div className='flex gap-2'>
@@ -291,15 +303,6 @@ function Pagination({ reactTable }: { reactTable: ReactTable<Product> }) {
           {reactTable.getPageCount()}
         </strong>
       </span>
-    </div>
-  );
-}
-
-function Meta({ reactTable }: { reactTable: ReactTable<Product> }) {
-  return (
-    <div className='mt-12'>
-      <div>{reactTable.getRowModel().rows.length} Rows</div>
-      <pre>{JSON.stringify(reactTable.getState().pagination, null, 2)}</pre>
     </div>
   );
 }

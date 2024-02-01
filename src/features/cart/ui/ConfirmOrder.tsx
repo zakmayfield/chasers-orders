@@ -2,6 +2,7 @@
 
 import { CartCache } from '@/types/types.cart';
 import { useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export default function ConfirmOrder() {
@@ -14,9 +15,8 @@ export default function ConfirmOrder() {
 
   return (
     <div>
-      <button onClick={fetchCartCache}>Place order</button>
-
-      {cartCache && <pre>{JSON.stringify(cartCache, null, 2)}</pre>}
+      <Link href='/order'>Confirm order</Link>
+      {/* {cartCache && <pre>{JSON.stringify(cartCache, null, 2)}</pre>} */}
     </div>
   );
 }

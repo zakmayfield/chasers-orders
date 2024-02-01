@@ -24,9 +24,7 @@ export const updateQuantity: UpdateQuantityType = async (params) => {
       throw new Error(await response.text());
     }
 
-    const data = response.json();
-
-    return data;
+    return response.json();
   } catch (error) {
     console.log(error);
     if (error instanceof Error) {

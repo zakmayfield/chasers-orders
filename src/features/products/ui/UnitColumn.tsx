@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { Unit } from '@prisma/client';
-import AddToCartButton from './AddToCartButton';
-import { CartHandlerProps, ChangeUnitHandlerProps } from './ProductsTable';
+import { HandleUnitChangeProps } from './ProductsTable';
 
 interface UnitColumnProps {
-  handleAddToCart: (props: CartHandlerProps) => void;
-  handleUnitChange: (props: ChangeUnitHandlerProps) => void;
+  handleAddToCart: () => void;
+  handleUnitChange: (props: HandleUnitChangeProps) => void;
   units: Unit[];
   rowIndex: number;
   selectedUnits: Array<Unit | null>;
+  isLoading: boolean;
 }
 
 const UnitColumn: React.FC<UnitColumnProps> = ({
@@ -19,6 +19,7 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   units,
   rowIndex,
   selectedUnits,
+  isLoading,
 }) => {
   const unitOptions = units.map((unitInfo) => (
     <option key={unitInfo.id} value={unitInfo.size}>
@@ -29,17 +30,23 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   return (
     <div className='flex gap-6 items-center w-full'>
       <select
-        value={
-          // set row select value to selected unit size
-          selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''
-        }
+        value={selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''}
         onChange={(event) => handleUnitChange({ event, rowIndex })}
         className='w-24 rounded'
       >
         {unitOptions}
       </select>
 
-      <AddToCartButton addToCart={() => handleAddToCart({ units, rowIndex })} />
+      <button
+        // TODO: Currently disabling all add to cart buttons on the table, need to isolate
+        disabled={isLoading}
+        className={`w-24 border text-sm py-1 rounded ${
+          isLoading && 'opacity-25'
+        }`}
+        onClick={() => handleAddToCart()}
+      >
+        Add to Cart
+      </button>
     </div>
   );
 };
