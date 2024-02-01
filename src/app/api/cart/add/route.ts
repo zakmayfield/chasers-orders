@@ -18,7 +18,7 @@ async function handler(req: Request) {
   const body: string = await req.json();
   const unitId = body;
   const userId = session.user.id;
-  let cartId: string;
+  let cartId: string | null = null;
 
   try {
     // find user + cart from session ID
@@ -57,13 +57,18 @@ async function handler(req: Request) {
       cartId,
       quantity: 1,
     };
-    await db.unitsOnCart.create({
+    const record = await db.unitsOnCart.create({
       data: {
         ...payload,
       },
+      select: {
+        unitId: true,
+      },
     });
 
-    return new Response('Item successfully added to the cart', { status: 201 });
+    return new Response(JSON.stringify(record), {
+      status: 201,
+    });
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       return new Response(error.message, {

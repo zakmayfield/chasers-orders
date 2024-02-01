@@ -34,7 +34,7 @@ export default function ProductsTable({
 }: {
   products: ProductWithUnits[];
 }) {
-  const { notify: errorNotification, ToastContainer } = useToast();
+  const { notify, ToastContainer } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
@@ -42,9 +42,12 @@ export default function ProductsTable({
 
   const { mutate: addToCartMutation, isLoading } = useMutation({
     mutationFn: addToCart,
+    onSuccess(data) {
+      notify('Item added to cart');
+    },
     onError(error) {
       if (error instanceof Error) {
-        errorNotification(error.message, 'error');
+        notify(error.message, 'error');
       }
     },
   });
