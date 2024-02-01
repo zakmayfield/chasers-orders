@@ -54,6 +54,7 @@ model User {
   contact           Contact? // 1:1
   company           Company? // 1:1
   cart              Cart? // 1:1
+  orders            Order[] // 1:m
   // authorization
   isApproved        Boolean             @default(false)
   verificationToken VerificationToken[] // 1:m
@@ -110,6 +111,9 @@ model BillingAddress {
   companyId String  @unique
 }
 
+// TODO: Somehow need to fix product data: Initial product data had mismatched name/code/unit size configurations
+// Example: Acai-Blueberry-Strawberry (1L) & Acai-Strawberry-Blueberry (2L)
+// Problem: User will not have access to 2L Acai-Blueberry-strawberry since it doesn't exist, they will need to add Acai-Strawberry-Blueberry instead. 
 model Product {
   id       String @id @default(cuid())
   name     String // Product name, e.g., "Banana-Mango-Pineapple"
@@ -127,7 +131,8 @@ model Unit {
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  carts UnitsOnCart[]
+  carts         UnitsOnCart[]
+  OrderLineItem OrderLineItem[]
 }
 
 model Cart {
@@ -143,11 +148,30 @@ model UnitsOnCart {
   cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId String
   unit   Unit   @relation(fields: [unitId], references: [id])
-  unitId String
+  unitId String @unique
 
-  quantity Int
-
+  quantity  Int
   createdAt DateTime @default(now())
 
   @@id([cartId, unitId])
+}
+
+model Order {
+  id        String          @id @default(cuid())
+  createdAt DateTime        @default(now())
+  lineItems OrderLineItem[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model OrderLineItem {
+  id       String @id @default(cuid())
+  quantity Int
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  unit  Unit  @relation(fields: [unitId], references: [id])
+
+  orderId String
+  unitId  String
 }

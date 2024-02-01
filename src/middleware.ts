@@ -12,13 +12,8 @@ export async function middleware(req: NextRequest) {
 
   const { isApproved, emailVerified } = await verifyUserStatus(token);
 
-  if (req.nextUrl.pathname.startsWith('/bar') && !isApproved) {
-    const notice = 'Your account must be approved to accesss that page';
-    const encodedString = encodeURIComponent(notice);
-
-    return NextResponse.redirect(
-      new URL(`/foo?notice=${encodedString}`, req.nextUrl)
-    );
+  if (!emailVerified) {
+    return NextResponse.redirect(new URL('/welcome'));
   }
 
   if (req.nextUrl.pathname === '/products' && !isApproved) {
@@ -28,12 +23,5 @@ export async function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: [
-    '/products',
-    '/profile/:path*',
-    '/cart',
-    '/welcome',
-    '/foo',
-    '/bar',
-  ],
+  matcher: ['/products', '/profile/:path*', '/cart/:path*', '/welcome'],
 };

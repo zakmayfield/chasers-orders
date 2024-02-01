@@ -2,6 +2,8 @@ import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Profile from '@/features/profile/Profile';
+import RecentOrders from '@/features/profile/RecentOrders';
 
 export default async function Page() {
   const session = await getAuthSession();
@@ -13,6 +15,14 @@ export default async function Page() {
     },
     include: {
       company: true,
+      orders: {
+        orderBy: {
+          createdAt: 'asc',
+        },
+        include: {
+          lineItems: true,
+        },
+      },
     },
   });
 
@@ -20,19 +30,8 @@ export default async function Page() {
 
   return (
     <div>
-      <h1>Profile</h1>
-
-      <div>
-        <h2>Company Information</h2>
-        {user.company && (
-          <div>
-            <p>{user.company.name}</p>
-          </div>
-        )}
-      </div>
-      <div>
-        <Link href='/profile/edit'>Edit Company</Link>
-      </div>
+      <Profile company={user.company!} />
+      <RecentOrders orders={user.orders} />
     </div>
   );
 }
