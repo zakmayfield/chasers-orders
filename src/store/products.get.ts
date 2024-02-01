@@ -1,8 +1,21 @@
 import { ProductWithUnits } from '@/types/types.product';
 
-export const getProducts = async (): Promise<ProductWithUnits[]> => {
-  const dataList: ProductWithUnits[] = await fetch('/api/get-products').then(
-    (res) => res.json()
-  );
-  return dataList;
+type GetProductsParams = {
+  (): Promise<ProductWithUnits[]>;
+};
+
+export const getProducts: GetProductsParams = async () => {
+  try {
+    const response = await fetch('/api/get-products');
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    return response.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };
