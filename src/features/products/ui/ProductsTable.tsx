@@ -34,7 +34,6 @@ export default function ProductsTable({
 }: {
   products: ProductWithUnits[];
 }) {
-  console.log('product data', productData[0]);
   const { notify: errorNotification, ToastContainer } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
