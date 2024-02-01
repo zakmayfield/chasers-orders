@@ -1,8 +1,3 @@
-/*
-  TODO: Make er look pretty
-    - JSDocumentation
-*/
-
 import { UnitsOnCart } from '@prisma/client';
 import { RemoveCartItemProps } from '@/features/cart/ui/RemoveCartItemButton';
 
@@ -11,6 +6,14 @@ type RemoveCartItemStore = {
 };
 
 type DeletedItemID = Pick<UnitsOnCart, 'unitId'>;
+
+/**
+ * Remove cart item - Mutation function
+ * @param payload
+ * @param {string} payload.unitId
+ * @param {string} payload.cartId
+ * @returns Resolved promise with { unitId }
+ */
 
 export const removeCartItem: RemoveCartItemStore = async (payload) => {
   const body = JSON.stringify(payload);

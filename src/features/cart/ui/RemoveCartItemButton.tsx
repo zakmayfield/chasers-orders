@@ -1,5 +1,6 @@
 import { useToast } from '@/hooks/useToast';
 import { removeCartItem } from '@/store/cart.remove-item';
+import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export interface RemoveCartItemProps {
@@ -22,12 +23,20 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     mutationFn: removeCartItem,
     // on success of mutation invalidate `cart` query key to trigger a refetch
     onSuccess: (data) => {
-      /*
-        TODO: utilize setQueryData() instead of invalidating queries
-          - setQueryData() won't trigger a refetch of the getCart API, thus increasing performance
-          - Send back the removed unitId and filter the cache
-      */
-      queryClient.invalidateQueries(['cart']);
+      const { unitId } = data;
+
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
+        const items = oldData?.items.filter(
+          (item) => item.unitId !== unitId
+        ) as UnitsOnCartCacheType[];
+
+        return oldData
+          ? {
+              ...oldData,
+              items,
+            }
+          : oldData;
+      });
 
       notify('Removed item from cart');
     },
