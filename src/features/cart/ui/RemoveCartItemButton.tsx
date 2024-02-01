@@ -21,7 +21,6 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
 
   const { mutate: removeItem, isLoading } = useMutation({
     mutationFn: removeCartItem,
-    // on success of mutation invalidate `cart` query key to trigger a refetch
     onSuccess: (data) => {
       const { unitId } = data;
 
