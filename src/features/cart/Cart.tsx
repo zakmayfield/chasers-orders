@@ -59,7 +59,7 @@ export default function Cart() {
                 </div>
               ))}
 
-              <Link href='/order'>Confirm order</Link>
+              <Link href='/cart/order'>Confirm order</Link>
             </div>
           )}
         </div>
