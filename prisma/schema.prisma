@@ -54,6 +54,7 @@ model User {
   contact           Contact? // 1:1
   company           Company? // 1:1
   cart              Cart? // 1:1
+  orders            Order[] // 1:m
   // authorization
   isApproved        Boolean             @default(false)
   verificationToken VerificationToken[] // 1:m
@@ -130,7 +131,8 @@ model Unit {
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  carts UnitsOnCart[]
+  carts         UnitsOnCart[]
+  OrderLineItem OrderLineItem[]
 }
 
 model Cart {
@@ -146,11 +148,30 @@ model UnitsOnCart {
   cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
   cartId String
   unit   Unit   @relation(fields: [unitId], references: [id])
-  unitId String
+  unitId String @unique
 
-  quantity Int
-
+  quantity  Int
   createdAt DateTime @default(now())
 
   @@id([cartId, unitId])
+}
+
+model Order {
+  id        String          @id @default(cuid())
+  createdAt DateTime        @default(now())
+  lineItems OrderLineItem[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+}
+
+model OrderLineItem {
+  id       String @id @default(cuid())
+  quantity Int
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  unit  Unit  @relation(fields: [unitId], references: [id])
+
+  orderId String
+  unitId  String
 }
