@@ -12,6 +12,10 @@ export async function middleware(req: NextRequest) {
 
   const { isApproved, emailVerified } = await verifyUserStatus(token);
 
+  if (!emailVerified) {
+    return NextResponse.redirect(new URL('/welcome'));
+  }
+
   if (req.nextUrl.pathname === '/products' && !isApproved) {
     return NextResponse.redirect(new URL('/welcome', req.nextUrl));
   }
@@ -19,5 +23,5 @@ export async function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/products', '/profile/:path*', '/cart', '/welcome'],
+  matcher: ['/products', '/profile/:path*', '/cart/:path*', '/welcome'],
 };
