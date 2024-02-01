@@ -1,48 +1,45 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
+import { RemoveCartItemProps } from '@/features/cart/ui/RemoveCartItemButton';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
 
   // determine user auth
   if (!session?.user) {
-    return new Response(
-      JSON.stringify({ message: 'Unauthorized. Please log in to continue.' }),
-      { status: 401 }
-    );
+    return new Response('Unauthorized. Please log in to continue.', {
+      status: 401,
+    });
   }
 
-  // extract unitId from request body & other variables
-  const { unitId, cartId }: { unitId: string; cartId: string } =
-    await req.json();
+  const body: RemoveCartItemProps['payload'] = await req.json();
+  const { unitId, cartId } = body;
 
   if (!unitId || !cartId) {
-    return new Response(
-      JSON.stringify({ error: 'A valid Unit ID and Cart ID are required' }),
-      { status: 400 }
-    );
+    return new Response("Valid ID's are required", {
+      status: 400,
+    });
   }
 
   try {
-    // query db for UnitsOnCart record
-    await db.unitsOnCart.delete({
+    const deletedItemID = await db.unitsOnCart.delete({
       where: {
         cartId_unitId: {
           cartId,
           unitId,
         },
       },
+      select: {
+        unitId: true,
+      },
     });
 
-    return new Response(JSON.stringify({ message: 'success' }), {
+    return new Response(JSON.stringify(deletedItemID), {
       status: 200,
     });
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(
-        JSON.stringify({ message: 'error', error: error.message }),
-        { status: 500 }
-      );
+      return new Response(error.message, { status: 500 });
     }
   }
 }

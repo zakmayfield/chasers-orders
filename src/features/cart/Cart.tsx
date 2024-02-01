@@ -7,6 +7,7 @@ import RemoveCartItemButton from './ui/RemoveCartItemButton';
 import UpdateCartItem from './ui/UpdateCartItem';
 import ConfirmOrder from './ui/ConfirmOrder';
 import { CartCache } from '@/types/types.cart';
+import { ToastContainer } from 'react-toastify';
 
 export default function Cart() {
   const { isLoading, isError, data, error } = useQuery<
@@ -37,7 +38,7 @@ export default function Cart() {
           </div>
         )}
         <div className='flex w-full'>
-          <div className='flex flex-col gap-6 border w-1/2'>
+          <div className='flex flex-col gap-6'>
             {data &&
               data.items.map((item) => (
                 <div key={item.unit.code}>
@@ -52,16 +53,17 @@ export default function Cart() {
                     unitId={item.unitId}
                     quantityData={item.quantity}
                   />
-                  <RemoveCartItemButton unitId={item.unitId} cartId={data.id} />
+                  <RemoveCartItemButton
+                    payload={{ unitId: item.unitId, cartId: data.id }}
+                  />
                 </div>
               ))}
-          </div>
 
-          <div className='border w-1/2'>
             <ConfirmOrder />
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

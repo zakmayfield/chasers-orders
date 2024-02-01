@@ -1,19 +1,37 @@
-export const removeCartItem = async ({
-  unitId,
-  cartId,
-}: {
-  unitId: string;
-  cartId: string;
-}): Promise<Response> => {
-  const data = await fetch('/api/cart/remove', {
-    method: 'DELETE',
-    headers: {
-      'Content-type': 'application/json',
-    },
-    body: JSON.stringify({ unitId, cartId }),
-  })
-    .then((res) => res.json())
-    .catch((err) => err);
+/*
+  TODO: Make er look pretty
+    - JSDocumentation
+*/
 
-  return data;
+import { UnitsOnCart } from '@prisma/client';
+import { RemoveCartItemProps } from '@/features/cart/ui/RemoveCartItemButton';
+
+type RemoveCartItemStore = {
+  (payload: RemoveCartItemProps['payload']): Promise<DeletedItemID>;
+};
+
+type DeletedItemID = Pick<UnitsOnCart, 'unitId'>;
+
+export const removeCartItem: RemoveCartItemStore = async (payload) => {
+  const body = JSON.stringify(payload);
+
+  try {
+    const response = await fetch('/api/cart/remove', {
+      method: 'DELETE',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body,
+    });
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    return response.json();
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
 };

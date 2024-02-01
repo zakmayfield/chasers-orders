@@ -1,5 +1,6 @@
 import type { Cart, UnitsOnCart, Unit, Product } from '@prisma/client';
 
+// Cart cache
 export type CartCache = Cart & {
   items: UnitsOnCartCacheType[];
 };
