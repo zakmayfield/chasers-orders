@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { getCart } from '@/store/cart.get';
 import RemoveCartItemButton from './ui/RemoveCartItemButton';
 import UpdateCartItem from './ui/UpdateCartItem';
-import ConfirmOrder from './ui/ConfirmOrder';
 import { CartCache } from '@/types/types.cart';
 import { ToastContainer } from 'react-toastify';
 
@@ -16,6 +15,7 @@ export default function Cart() {
   >({
     queryKey: ['cart'],
     queryFn: getCart,
+    staleTime: 60 * 5000,
   });
 
   if (isLoading) {
@@ -28,7 +28,6 @@ export default function Cart() {
 
   return (
     <div>
-      <div>Cart</div>
       <div>
         {data && data.items.length < 1 && (
           <div>
@@ -37,10 +36,11 @@ export default function Cart() {
             </Link>
           </div>
         )}
+
         <div className='flex w-full'>
-          <div className='flex flex-col gap-6'>
-            {data &&
-              data.items.map((item) => (
+          {data && data.items.length > 0 && (
+            <div className='flex flex-col gap-6'>
+              {data.items.map((item) => (
                 <div key={item.unit.code}>
                   <div className='flex items-center gap-3'>
                     <p>{item.unit.product.name}</p>
@@ -59,8 +59,9 @@ export default function Cart() {
                 </div>
               ))}
 
-            <ConfirmOrder />
-          </div>
+              <Link href='/order'>Confirm order</Link>
+            </div>
+          )}
         </div>
       </div>
       <ToastContainer />
