@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateQuantity } from '@/store/cart.update-quantity';
 import { CartCache } from '@/types/types.cart';
+import { useToast } from '@/hooks/useToast';
 
 const UpdateCartItem = ({
   cartId,
@@ -13,6 +14,7 @@ const UpdateCartItem = ({
   quantityData: number;
 }) => {
   const queryClient = useQueryClient();
+  const { notify } = useToast();
   const [quantity, setQuantity] = useState<number | undefined>(quantityData);
 
   const { mutate: quantityMutation, isLoading } = useMutation({
@@ -30,6 +32,8 @@ const UpdateCartItem = ({
             }
           : oldData
       );
+
+      notify(`Updated quantity to ${data.quantity}`);
     },
     onError(error) {
       console.log('~~~error from quantityMutation~~~', error);
