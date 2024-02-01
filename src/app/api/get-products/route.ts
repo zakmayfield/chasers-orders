@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
-import { Product } from '@/features/products/Products';
+import { ProductWithUnits } from '@/types/types.product';
 
 export async function GET() {
   const session = await getAuthSession();
@@ -10,7 +10,7 @@ export async function GET() {
   }
 
   try {
-    const products: Product[] = await db.product
+    const products: ProductWithUnits[] = await db.product
       .findMany({
         select: {
           id: true,
@@ -20,7 +20,7 @@ export async function GET() {
         },
       })
       .then((data) => {
-        let formattedProducts: Product[] = data.map((item) => ({
+        let formattedProducts: ProductWithUnits[] = data.map((item) => ({
           ...item,
           name: item.name.replace(/-/g, ' '),
         }));
@@ -30,9 +30,8 @@ export async function GET() {
 
     return new Response(JSON.stringify(products), { status: 200 });
   } catch (error) {
-    return new Response(
-      JSON.stringify({ message: 'could not find products' }),
-      { status: 500 }
-    );
+    if (error instanceof Error) {
+      return new Response(error.message, { status: 500 });
+    }
   }
 }

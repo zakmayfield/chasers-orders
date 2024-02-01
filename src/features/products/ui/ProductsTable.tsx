@@ -15,7 +15,7 @@ import {
 } from '@tanstack/react-table';
 import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
-import type { Product } from '../Products';
+import type { ProductWithUnits } from '@/types/types.product';
 import { addToCart } from '@/store/cart.add';
 import { useToast } from '@/hooks/useToast';
 
@@ -32,8 +32,9 @@ export type HandleUnitChangeProps = {
 export default function ProductsTable({
   products: productData,
 }: {
-  products: Product[];
+  products: ProductWithUnits[];
 }) {
+  console.log('product data', productData[0]);
   const { notify: errorNotification, ToastContainer } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
@@ -78,7 +79,7 @@ export default function ProductsTable({
     }
   };
 
-  const columnHelper = createColumnHelper<Product>();
+  const columnHelper = createColumnHelper<ProductWithUnits>();
 
   const columns = [
     columnHelper.accessor('name', {
@@ -141,7 +142,7 @@ export default function ProductsTable({
   );
 }
 
-function Table({ reactTable }: { reactTable: ReactTable<Product> }) {
+function Table({ reactTable }: { reactTable: ReactTable<ProductWithUnits> }) {
   return (
     <table className='w-full'>
       <thead>
@@ -197,7 +198,7 @@ function Filter({
   reactTable,
   column,
 }: {
-  reactTable: ReactTable<Product>;
+  reactTable: ReactTable<ProductWithUnits>;
   column: Column<any, any>;
 }) {
   const firstValue = reactTable
@@ -239,7 +240,11 @@ function Filter({
   );
 }
 
-function Pagination({ reactTable }: { reactTable: ReactTable<Product> }) {
+function Pagination({
+  reactTable,
+}: {
+  reactTable: ReactTable<ProductWithUnits>;
+}) {
   return (
     <div className='flex gap-6 mt-6'>
       <div className='flex gap-2'>

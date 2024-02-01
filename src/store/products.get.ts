@@ -1,8 +1,8 @@
-import { Product } from '@/features/products/Products';
+import { ProductWithUnits } from '@/types/types.product';
 
-export const getProducts = async (): Promise<Product[]> => {
-  const dataList: Product[] = await fetch('/api/get-products').then((res) =>
-    res.json()
+export const getProducts = async (): Promise<ProductWithUnits[]> => {
+  const dataList: ProductWithUnits[] = await fetch('/api/get-products').then(
+    (res) => res.json()
   );
   return dataList;
 };
