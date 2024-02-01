@@ -82,7 +82,7 @@ function generateMailOptions(
       <p>We're excited to have you on board. To get started, please confirm your email address by clicking the button below:</p>
 
       <div class="cta-container">
-        <a href="http://localhost:3000/verify-email?token=${verificationToken}" class="button" style="color: #fff;">Confirm Email</a>
+        <a href="http://localhost:3000/profile/verify-email?token=${verificationToken}" class="button" style="color: #fff;">Confirm Email</a>
         <p style="font-size: 12; font-style: italic; color: #999;">This link expires in 48 hours.</p>
       </div>
       
