@@ -15,7 +15,6 @@ export default function Cart() {
   >({
     queryKey: ['cart'],
     queryFn: getCart,
-    staleTime: 60 * 5000,
   });
 
   if (isLoading) {
