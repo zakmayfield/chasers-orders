@@ -36,8 +36,8 @@ export default function PlaceOrder() {
       );
 
       setTimeout(() => {
-        router.push('/cart');
-      }, 3000);
+        router.push('/profile');
+      }, 5000);
     },
     onError(error) {
       if (error instanceof Error) {

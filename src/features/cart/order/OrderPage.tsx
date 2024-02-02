@@ -10,6 +10,7 @@ export default function OrderPage() {
   const { data, error, isLoading } = useQuery<CartCache | undefined, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
+    staleTime: Infinity,
   });
 
   if (isLoading) {
