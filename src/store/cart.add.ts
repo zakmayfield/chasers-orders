@@ -1,10 +1,10 @@
-import { UnitsOnCart } from '@prisma/client';
+import { UnitsOnCartCacheType } from '@/types/types.cart';
 
 type AddToCartParams = {
   (unitId: string): Promise<AddToCartResponseData>;
 };
 
-type AddToCartResponseData = Pick<UnitsOnCart, 'unitId'>;
+type AddToCartResponseData = UnitsOnCartCacheType;
 
 export const addToCart: AddToCartParams = async (unitId) => {
   try {

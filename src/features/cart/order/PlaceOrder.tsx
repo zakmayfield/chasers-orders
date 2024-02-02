@@ -1,10 +1,11 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createOrder } from '@/store/order.create';
+import { CreateOrderPayload, createOrder } from '@/store/order.create';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 import { useRouter } from 'next/navigation';
+import { OrderType } from '@/features/profile/RecentOrders';
 
 export default function PlaceOrder() {
   const queryClient = useQueryClient();
@@ -15,10 +16,28 @@ export default function PlaceOrder() {
     mutationFn: createOrder,
     onSuccess(data) {
       notify(`Order placed`);
+
+      // Set 'recent-orders' cache data to include new order
+      queryClient.setQueryData(
+        ['recent-orders'],
+        (oldData: OrderType[] | undefined) => {
+          return oldData ? [data, ...oldData] : oldData;
+        }
+      );
+
+      // Clear 'cart' items cache after successful order
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+        oldData
+          ? {
+              ...oldData,
+              items: [],
+            }
+          : oldData
+      );
+
       setTimeout(() => {
-        router.push('/profile');
+        router.push('/cart');
       }, 3000);
-      // TODO: clear cart cache after successful order
     },
     onError(error) {
       if (error instanceof Error) {
@@ -28,9 +47,12 @@ export default function PlaceOrder() {
   });
 
   const handlePlaceOrder = async () => {
-    const cartCache: CartCache = await queryClient.fetchQuery(['cart']);
-    const items = cartCache.items;
-    mutate(items);
+    const cartCache: CartCache | undefined = queryClient.getQueryData(['cart']);
+    const payload: CreateOrderPayload = {
+      items: cartCache!.items,
+      cartId: cartCache!.id,
+    };
+    mutate(payload);
   };
 
   return (

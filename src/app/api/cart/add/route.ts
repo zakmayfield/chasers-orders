@@ -63,6 +63,19 @@ async function handler(req: Request) {
       },
       select: {
         unitId: true,
+        quantity: true,
+        unit: {
+          select: {
+            size: true,
+            code: true,
+            product: {
+              select: {
+                name: true,
+                category: true,
+              },
+            },
+          },
+        },
       },
     });
 

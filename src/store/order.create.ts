@@ -2,11 +2,16 @@ import { CartCache } from '@/types/types.cart';
 import { Order, OrderLineItem } from '@prisma/client';
 
 type CreateOrderType = {
-  (payload: CartCache['items']): Promise<OrderData>;
+  (payload: CreateOrderPayload): Promise<OrderData>;
 };
 
 type OrderData = Order & {
   lineItems: OrderLineItem[];
+};
+
+export type CreateOrderPayload = {
+  items: CartCache['items'];
+  cartId: string;
 };
 
 export const createOrder: CreateOrderType = async (payload) => {

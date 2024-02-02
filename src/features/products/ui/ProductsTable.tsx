@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Unit } from '@prisma/client';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -18,6 +18,7 @@ import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
 import { addToCart } from '@/store/cart.add';
 import { useToast } from '@/hooks/useToast';
+import { CartCache } from '@/types/types.cart';
 
 export type HandleAddToCartProps = {
   units: Unit[];
@@ -34,6 +35,7 @@ export default function ProductsTable({
 }: {
   products: ProductWithUnits[];
 }) {
+  const queryClient = useQueryClient();
   const { notify, ToastContainer } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
@@ -44,6 +46,16 @@ export default function ProductsTable({
     mutationFn: addToCart,
     onSuccess(data) {
       notify('Item added to cart');
+
+      // Update `cart` items cache with data from response
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+        oldData
+          ? {
+              ...oldData,
+              items: [data, ...oldData.items],
+            }
+          : oldData
+      );
     },
     onError(error) {
       if (error instanceof Error) {

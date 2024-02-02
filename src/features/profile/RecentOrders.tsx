@@ -20,6 +20,11 @@ const RecentOrders = () => {
   } = useQuery<OrderType[]>({
     queryKey: ['recent-orders'],
     queryFn: getOrders,
+    /*
+      `recent-orders` cache will only get fetched on initial page load &
+      cache data will update within the onSuccess of the createOrder mutation
+    */
+    staleTime: Infinity,
   });
 
   if (error && error instanceof Error) {
