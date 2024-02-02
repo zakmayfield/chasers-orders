@@ -27,13 +27,7 @@ export async function POST(req: Request) {
         },
       },
       include: {
-        lineItems: {
-          select: {
-            id: true,
-            quantity: true,
-            unitId: true,
-          },
-        },
+        lineItems: true,
       },
     });
 

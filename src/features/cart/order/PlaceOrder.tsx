@@ -5,6 +5,7 @@ import { createOrder } from '@/store/order.create';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 import { useRouter } from 'next/navigation';
+import { OrderType } from '@/features/profile/RecentOrders';
 
 export default function PlaceOrder() {
   const queryClient = useQueryClient();
@@ -15,10 +16,20 @@ export default function PlaceOrder() {
     mutationFn: createOrder,
     onSuccess(data) {
       notify(`Order placed`);
+
+      // Set 'recent-orders' cache data to include new order
+      queryClient.setQueryData(
+        ['recent-orders'],
+        (oldData: OrderType[] | undefined) => {
+          return oldData ? [data, ...oldData] : oldData;
+        }
+      );
+
+      // TODO: clear 'cart' cache after successful order
+
       setTimeout(() => {
         router.push('/profile');
       }, 3000);
-      // TODO: clear cart cache after successful order
     },
     onError(error) {
       if (error instanceof Error) {
