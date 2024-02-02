@@ -13,21 +13,24 @@ type OrderType = Order & {
 
 const RecentOrders: React.FC<RecentOrderDetails> = ({ orders }) => {
   const [expanded, setExpanded] = useState<OrderType>();
+
   return (
     <div>
       <div>Recent Orders</div>
+      {orders.length === 0 && <p>No recent orders.</p>}
 
-      {orders.map((order) => (
-        <div key={order.id}>
-          <p onClick={() => setExpanded(order)}>
-            {order.createdAt.toUTCString()}
-          </p>
+      {orders.map((order) => {
+        const createdAtDate = new Date(order.createdAt).toDateString();
+        return (
+          <div key={order.id}>
+            <p onClick={() => setExpanded(order)}>{createdAtDate}</p>
 
-          {expanded && expanded.id === order.id && (
-            <pre>{JSON.stringify(expanded.lineItems, null, 2)}</pre>
-          )}
-        </div>
-      ))}
+            {expanded && expanded.id === order.id && (
+              <pre>{JSON.stringify(expanded.lineItems, null, 2)}</pre>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 };
