@@ -1,5 +1,6 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
+import { CreateOrderPayload } from '@/store/order.create';
 import { CartCache } from '@/types/types.cart';
 
 export async function POST(req: Request) {
@@ -9,9 +10,10 @@ export async function POST(req: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const body: CartCache['items'] = await req.json();
+  const body: CreateOrderPayload = await req.json();
+  const { items, cartId } = body;
 
-  const orderLineItemData = body.map((item) => {
+  const orderLineItemData = items.map((item) => {
     return {
       unitId: item.unitId,
       quantity: item.quantity,
@@ -31,7 +33,11 @@ export async function POST(req: Request) {
       },
     });
 
-    // TODO: clear cart records after creating order
+    await db.unitsOnCart.deleteMany({
+      where: {
+        cartId,
+      },
+    });
 
     return new Response(JSON.stringify(order), { status: 201 });
   } catch (error) {
