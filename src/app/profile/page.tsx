@@ -1,7 +1,6 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
 import { notFound } from 'next/navigation';
-import Link from 'next/link';
 import Profile from '@/features/profile/Profile';
 import RecentOrders from '@/features/profile/RecentOrders';
 
@@ -16,6 +15,7 @@ export default async function Page() {
     include: {
       company: true,
       orders: {
+        take: 3,
         orderBy: {
           createdAt: 'asc',
         },
