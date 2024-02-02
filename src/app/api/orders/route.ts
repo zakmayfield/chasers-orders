@@ -1,6 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
-import { CartCache } from '@/types/types.cart';
 
 export async function GET(req: Request) {
   const session = await getAuthSession();
