@@ -1,37 +1,24 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
-import { notFound } from 'next/navigation';
-import Link from 'next/link';
-import Profile from '@/features/profile/Profile';
+import Company from '@/features/profile/Company';
 import RecentOrders from '@/features/profile/RecentOrders';
 
 export default async function Page() {
   const session = await getAuthSession();
   const id = session?.user.id;
 
-  const user = await db.user.findUnique({
+  const company = await db.company.findUnique({
     where: {
-      id,
-    },
-    include: {
-      company: true,
-      orders: {
-        orderBy: {
-          createdAt: 'asc',
-        },
-        include: {
-          lineItems: true,
-        },
-      },
+      userId: id,
     },
   });
 
-  if (!user) return notFound();
-
   return (
     <div>
-      <Profile company={user.company!} />
-      <RecentOrders orders={user.orders} />
+      <h1>Profile</h1>
+
+      <Company company={company} />
+      <RecentOrders />
     </div>
   );
 }

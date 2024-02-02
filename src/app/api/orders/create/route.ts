@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(order), { status: 201 });
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      return new Response(error.message, { status: 500 });
     }
   }
 }

@@ -1,6 +1,5 @@
 import { getAuthSession } from '@/lib/auth';
 import { db } from '@/lib/db.prisma-client';
-import { CartCache } from '@/types/types.cart';
 
 export async function GET(req: Request) {
   const session = await getAuthSession();
@@ -10,8 +9,8 @@ export async function GET(req: Request) {
   }
 
   try {
-    const orders = db.order.findMany({
-      where: { userId: session!.user.id },
+    const orders = await db.order.findMany({
+      where: { userId: session.user.id },
       orderBy: {
         createdAt: 'asc',
       },
@@ -20,10 +19,10 @@ export async function GET(req: Request) {
       },
     });
 
-    return new Response(JSON.stringify(orders), { status: 201 });
+    return new Response(JSON.stringify(orders), { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(error.message);
+      return new Response(error.message), { status: 500 };
     }
   }
 }

@@ -1,21 +1,13 @@
-import { Order, OrderLineItem } from '@prisma/client';
+import { OrderType } from '@/features/profile/RecentOrders';
 
 type GetOrdersType = {
-  (): Promise<Orders>;
-};
-
-type Orders = Order & {
-  lineItems: OrderLineItem[];
+  (): Promise<OrderType[]>;
 };
 
 export const getOrders: GetOrdersType = async () => {
   try {
-    const response = await fetch('/api/orders', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
+    const fetchUrl = new URL(`/api/orders`, process.env.NEXT_PUBLIC_BASE_URL);
+    const response = await fetch(fetchUrl);
 
     if (!response.ok) {
       throw new Error(await response.text());
