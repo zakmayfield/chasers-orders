@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
-import { getProducts } from '@/store/products.get';
+import { getProducts } from '@/store/products/products.get';
 import ProductsTable from './ui/ProductsTable';
 import type { ProductWithUnits } from '@/types/types.product';
 

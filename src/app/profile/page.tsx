@@ -1,7 +1,6 @@
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db.prisma-client';
-import Company from '@/features/profile/Company';
-import RecentOrders from '@/features/profile/RecentOrders';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { db } from '@/lib/db/db.prisma-client';
+import Profile from '@/features/profile/Profile';
 
 export default async function Page() {
   const session = await getAuthSession();
@@ -15,10 +14,7 @@ export default async function Page() {
 
   return (
     <div>
-      <h1>Profile</h1>
-
-      <Company company={company} />
-      <RecentOrders />
+      <Profile companyData={company} />
     </div>
   );
 }

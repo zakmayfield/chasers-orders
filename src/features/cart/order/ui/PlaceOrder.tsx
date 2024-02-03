@@ -1,11 +1,11 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CreateOrderPayload, createOrder } from '@/store/order.create';
+import { CreateOrderPayload, createOrder } from '@/store/order/order.create';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 import { useRouter } from 'next/navigation';
-import { OrderType } from '@/features/profile/RecentOrders';
+import { OrderType } from '@/features/profile/ui/RecentOrders';
 
 export default function PlaceOrder() {
   const queryClient = useQueryClient();
@@ -36,8 +36,8 @@ export default function PlaceOrder() {
       );
 
       setTimeout(() => {
-        router.push('/cart');
-      }, 3000);
+        router.push('/profile');
+      }, 5000);
     },
     onError(error) {
       if (error instanceof Error) {

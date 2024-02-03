@@ -1,15 +1,16 @@
 'use client';
 
-import { getCart } from '@/store/cart.get';
+import { getCart } from '@/store/cart/cart.get';
 import { CartCache } from '@/types/types.cart';
 import { useQuery } from '@tanstack/react-query';
-import PlaceOrder from '@/features/cart/order/PlaceOrder';
-import ShippingDetails from '@/features/cart/order/ShippingDetails';
+import PlaceOrder from '@/features/cart/order/ui/PlaceOrder';
+import ShippingDetails from '@/features/cart/order/ui/ShippingDetails';
 
 export default function OrderPage() {
   const { data, error, isLoading } = useQuery<CartCache | undefined, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
+    staleTime: Infinity,
   });
 
   if (isLoading) {

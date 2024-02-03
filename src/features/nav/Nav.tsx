@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import UserNav from './UserNav';
-import { getAuthSession } from '@/lib/auth';
+import UserNav from './ui/UserNav';
+import { getAuthSession } from '@/lib/auth/auth.options';
 
 export default async function Nav() {
   const session = await getAuthSession();

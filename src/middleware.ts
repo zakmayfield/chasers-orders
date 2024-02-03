@@ -1,7 +1,7 @@
 import { JWT, getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyUserStatus } from './utils/auth.verify-user-status';
+import { verifyUserStatus } from './utils/auth/auth.verify-user-status';
 
 export async function middleware(req: NextRequest) {
   const token: JWT | null = await getToken({ req });

@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks/useToast';
-import { removeCartItem } from '@/store/cart.remove-item';
+import { removeCartItem } from '@/store/cart/cart.remove-item';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -8,8 +8,8 @@ export interface RemoveCartItemProps {
 }
 
 type RemoveItemPayloadData = {
-  unitId: string;
   cartId: string;
+  unitId: string;
 };
 
 const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {

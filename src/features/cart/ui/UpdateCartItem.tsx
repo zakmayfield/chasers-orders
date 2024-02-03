@@ -1,18 +1,22 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateQuantity } from '@/store/cart.update-quantity';
+import { updateQuantity } from '@/store/cart/cart.update-quantity';
 import { CartCache } from '@/types/types.cart';
 import { useToast } from '@/hooks/useToast';
 
-const UpdateCartItem = ({
-  cartId,
-  unitId,
-  quantityData,
-}: {
-  cartId: string;
-  unitId: string;
-  quantityData: number;
-}) => {
+type UpdateCartItemProps = {
+  payload: {
+    cartId: string;
+    unitId: string;
+    quantityData: number;
+  };
+};
+
+const UpdateCartItem: React.FC<UpdateCartItemProps> = (props) => {
+  const {
+    payload: { cartId, unitId, quantityData },
+  } = props;
+
   const queryClient = useQueryClient();
   const { notify } = useToast();
   const [quantity, setQuantity] = useState<number | undefined>(quantityData);

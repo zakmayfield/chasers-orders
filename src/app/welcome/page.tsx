@@ -1,4 +1,4 @@
-import { getAuthSession } from '@/lib/auth';
+import { getAuthSession } from '@/lib/auth/auth.options';
 import Link from 'next/link';
 
 export default async function Welcome() {

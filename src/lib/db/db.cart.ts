@@ -1,4 +1,4 @@
-import { db } from '@/lib/db.prisma-client';
+import { db } from '@/lib/db/db.prisma-client';
 import type { Cart } from '@prisma/client';
 
 interface ICreateCart {

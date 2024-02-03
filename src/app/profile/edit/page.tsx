@@ -1,6 +1,6 @@
-import EditCompanyForm from '@/features/auth/EditCompanyForm';
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db.prisma-client';
+import EditCompanyForm from '@/features/profile/ui/EditCompanyForm';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { db } from '@/lib/db/db.prisma-client';
 
 export default async function Page() {
   const session = await getAuthSession();
@@ -15,6 +15,7 @@ export default async function Page() {
     <div>
       <EditCompanyForm
         user={{ id: session?.user.id ?? '' }}
+        // TODO: fix this
         company={company}
       />
     </div>

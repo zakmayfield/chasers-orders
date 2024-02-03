@@ -1,5 +1,5 @@
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db.prisma-client';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { db } from '@/lib/db/db.prisma-client';
 
 export async function GET(req: Request) {
   const session = await getAuthSession();
@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     const orders = await db.order.findMany({
       where: { userId: session.user.id },
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
       include: {
         lineItems: true,

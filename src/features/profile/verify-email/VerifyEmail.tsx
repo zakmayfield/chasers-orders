@@ -3,8 +3,10 @@
 import { Session } from 'next-auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { tokenValidator } from '@/store/auth.email.token-validator';
+import { tokenValidator } from '@/store/auth/auth.email.token-validator';
 import { useEffect, useRef, useState } from 'react';
+
+// TODO: Handle errors/success and routing
 
 export default function VerifyEmail({ session }: { session: Session | null }) {
   const searchParams = useSearchParams();
@@ -22,7 +24,7 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
     mutationFn: tokenValidator,
     onSuccess(data) {
       console.log('~~~data from validateToken~~~', data);
-      router.push('/foo');
+      router.push('/profile');
     },
     onError(error) {
       console.log('~~~error from validateToken~~~', error);

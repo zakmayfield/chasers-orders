@@ -1,5 +1,5 @@
-import VerifyEmail from '@/features/VerifyEmail';
-import { getAuthSession } from '@/lib/auth';
+import VerifyEmail from '@/features/profile/verify-email/VerifyEmail';
+import { getAuthSession } from '@/lib/auth/auth.options';
 
 export default async function Page() {
   const session = await getAuthSession();

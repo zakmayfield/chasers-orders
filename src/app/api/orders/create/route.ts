@@ -1,6 +1,6 @@
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db.prisma-client';
-import { CreateOrderPayload } from '@/store/order.create';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { db } from '@/lib/db/db.prisma-client';
+import { CreateOrderPayload } from '@/store/order/order.create';
 import { CartCache } from '@/types/types.cart';
 
 export async function POST(req: Request) {
@@ -38,6 +38,8 @@ export async function POST(req: Request) {
         cartId,
       },
     });
+
+    // TODO: configure and send email order to administration
 
     return new Response(JSON.stringify(order), { status: 201 });
   } catch (error) {
