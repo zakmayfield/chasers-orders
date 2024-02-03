@@ -11,7 +11,7 @@ import {
   extractExpiration,
   generateVerificationToken,
 } from '@/utils/auth.manage-verification-token';
-import { sendVerificationEmail } from '@/utils/auth.email.send-verification-email';
+import { sendVerificationEmail } from '@/utils/email.send-verification-email';
 import { db } from '@/lib/db.prisma-client';
 import { findUniqueSecureUser, registerUser } from '@/lib/db.user';
 import { createCart } from '@/lib/db.cart';

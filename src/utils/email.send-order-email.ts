@@ -1,20 +1,8 @@
-import nodemailer from 'nodemailer';
+import transporter from './email.config';
 
-let transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    type: 'OAuth2',
-    user: process.env.GMAIL_USERNAME,
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
-  },
-});
+// TODO: update boilerplate
 
-export const sendVerificationEmail = (
-  verificationToken: string,
-  email: string
-) => {
+export const sendOrderEmail = (verificationToken: string, email: string) => {
   const mailOptions = generateMailOptions(verificationToken, email);
 
   transporter.sendMail(mailOptions, (err) => {
