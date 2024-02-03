@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     const orders = await db.order.findMany({
       where: { userId: session.user.id },
       orderBy: {
-        createdAt: 'asc',
+        createdAt: 'desc',
       },
       include: {
         lineItems: true,

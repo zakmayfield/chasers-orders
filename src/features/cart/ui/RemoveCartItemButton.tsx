@@ -8,8 +8,8 @@ export interface RemoveCartItemProps {
 }
 
 type RemoveItemPayloadData = {
-  unitId: string;
   cartId: string;
+  unitId: string;
 };
 
 const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
