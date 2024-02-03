@@ -6,6 +6,7 @@ import { CartCache } from '@/types/types.cart';
 import { ToastContainer } from 'react-toastify';
 import CartItem from './ui/CartItem';
 import EmptyCart from './ui/EmptyCart';
+import Link from 'next/link';
 
 export default function Cart() {
   const { isLoading, isError, data, error } = useQuery<
@@ -42,6 +43,8 @@ export default function Cart() {
             />
           ))}
       </div>
+
+      <Link href='/cart/order'>Confirm Order</Link>
 
       <ToastContainer />
     </div>

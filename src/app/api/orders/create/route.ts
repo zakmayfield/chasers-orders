@@ -39,6 +39,8 @@ export async function POST(req: Request) {
       },
     });
 
+    // TODO: configure and send email order to administration
+
     return new Response(JSON.stringify(order), { status: 201 });
   } catch (error) {
     if (error instanceof Error) {

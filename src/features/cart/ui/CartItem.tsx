@@ -16,7 +16,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
 
   return (
     <div>
-      <div key={cartItem.unit.code}>
+      <div>
         <div className='flex items-center gap-3'>
           <p>{cartItem.unit.product.name}</p>
           <p>{cartItem.unit.product.category}</p>
