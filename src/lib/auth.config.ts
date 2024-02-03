@@ -10,8 +10,8 @@ import {
 import {
   extractExpiration,
   generateVerificationToken,
-} from '@/utils/auth.manage-verification-token';
-import { sendVerificationEmail } from '@/utils/email.send-verification-email';
+} from '@/utils/auth/auth.manage-verification-token';
+import { sendVerificationEmail } from '@/utils/email/email.send-verification-email';
 import { db } from '@/lib/db.prisma-client';
 import { findUniqueSecureUser, registerUser } from '@/lib/db.user';
 import { createCart } from '@/lib/db.cart';
