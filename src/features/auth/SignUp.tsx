@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { SignUpFormData } from '@/types/types.auth-forms';
-import { AuthSignUpValidator } from '@/lib/validator.auth-form';
+import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
 
 export default function SignUp() {
   const router = useRouter();

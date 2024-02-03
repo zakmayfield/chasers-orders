@@ -1,6 +1,6 @@
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db.prisma-client';
-import { EditCompanyValidator } from '@/lib/validator.company';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { db } from '@/lib/db/db.prisma-client';
+import { EditCompanyValidator } from '@/lib/validators/validator.company';
 
 export async function PATCH(req: Request) {
   try {

@@ -1,5 +1,5 @@
-import { getAuthSession } from '@/lib/auth';
-import { db } from '@/lib/db.prisma-client';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { db } from '@/lib/db/db.prisma-client';
 import { JwtPayload } from 'jsonwebtoken';
 import {
   extractExpiration,

@@ -6,15 +6,15 @@ import { compare, genSalt, hash } from 'bcryptjs';
 import {
   AuthSignInValidator,
   AuthSignUpValidator,
-} from '@/lib/validator.auth-form';
+} from '@/lib/validators/validator.auth-form';
 import {
   extractExpiration,
   generateVerificationToken,
 } from '@/utils/auth/auth.manage-verification-token';
 import { sendVerificationEmail } from '@/utils/email/email.send-verification-email';
-import { db } from '@/lib/db.prisma-client';
-import { findUniqueSecureUser, registerUser } from '@/lib/db.user';
-import { createCart } from '@/lib/db.cart';
+import { db } from '@/lib/db/db.prisma-client';
+import { findUniqueSecureUser, registerUser } from '@/lib/db/db.user';
+import { createCart } from '@/lib/db/db.cart';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
