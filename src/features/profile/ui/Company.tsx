@@ -1,7 +1,11 @@
-import { Company } from '@prisma/client';
+import { Company as CompanyType } from '@prisma/client';
 import Link from 'next/link';
 
-export default function Company({ company }: { company: Company | null }) {
+type CompanyProps = {
+  company: CompanyType | null;
+};
+
+const Company: React.FC<CompanyProps> = ({ company }) => {
   return (
     <div>
       <div>
@@ -18,4 +22,6 @@ export default function Company({ company }: { company: Company | null }) {
       </div>
     </div>
   );
-}
+};
+
+export default Company;

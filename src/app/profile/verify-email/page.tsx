@@ -1,4 +1,4 @@
-import VerifyEmail from '@/features/VerifyEmail';
+import VerifyEmail from '@/features/profile/verify-email/VerifyEmail';
 import { getAuthSession } from '@/lib/auth/auth.options';
 
 export default async function Page() {
