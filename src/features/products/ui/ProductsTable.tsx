@@ -16,7 +16,7 @@ import {
 import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
-import { addToCart } from '@/store/cart.add';
+import { addToCart } from '@/store/cart/cart.add';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 

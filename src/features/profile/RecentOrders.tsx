@@ -1,6 +1,6 @@
 'use client';
 
-import { getOrders } from '@/store/order.get';
+import { getOrders } from '@/store/order/order.get';
 import { Order, OrderLineItem } from '@prisma/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
