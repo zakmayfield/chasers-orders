@@ -1,8 +1,6 @@
 import { Company, Order, OrderLineItem, User } from '@prisma/client';
 import transporter from './email.config';
 
-// TODO: update boilerplate
-
 type PayloadType = {
   order: Order & {
     lineItems: OrderLineItem[];
@@ -59,6 +57,7 @@ function generateMailOptions(payload: PayloadType): Record<string, string> {
   const email = userData!.email;
   const companyName = userData!.company!.name;
 
+  // TODO: Configure html template
   const mailOptions = {
     from: 'zakmayfield@gmail.com',
     to: email,
