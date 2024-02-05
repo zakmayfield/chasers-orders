@@ -1,5 +1,4 @@
-import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
-import { Unit } from '@prisma/client';
+import { UnitsOnCartCacheType } from '@/types/types.cart';
 
 type UpdateItemSizeProps = {
   (params: {
