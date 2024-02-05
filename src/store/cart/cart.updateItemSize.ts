@@ -1,23 +1,23 @@
-import type { UnitsOnCartCacheType } from '@/types/types.cart';
+import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
+import { Unit } from '@prisma/client';
 
-type UpdateQuantityType = {
+type UpdateItemSizeProps = {
   (params: {
     cartId: string;
     unitId: string;
-    quantityPayload: number;
+    selectedUnitId: string | undefined;
   }): Promise<UnitsOnCartCacheType>;
 };
 
-export const updateQuantity: UpdateQuantityType = async (params) => {
-  const { cartId, unitId, quantityPayload } = params;
-
+export const updateItemSize: UpdateItemSizeProps = async (params) => {
+  const { cartId, unitId, selectedUnitId } = params;
   try {
-    const response = await fetch('/api/cart/update-quantity', {
+    const response = await fetch(`/api/cart/update-size`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({ cartId, unitId, quantityPayload }),
+      body: JSON.stringify({ cartId, unitId, selectedUnitId }),
     });
 
     if (!response.ok) {

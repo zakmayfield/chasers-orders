@@ -4,7 +4,7 @@ import { updateQuantity } from '@/store/cart/cart.update-quantity';
 import { CartCache } from '@/types/types.cart';
 import { useToast } from '@/hooks/useToast';
 
-type UpdateCartItemProps = {
+type UpdateCartItemQuantityProps = {
   payload: {
     cartId: string;
     unitId: string;
@@ -12,7 +12,9 @@ type UpdateCartItemProps = {
   };
 };
 
-const UpdateCartItem: React.FC<UpdateCartItemProps> = (props) => {
+const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
+  props
+) => {
   const {
     payload: { cartId, unitId, quantityData },
   } = props;
@@ -73,4 +75,4 @@ const UpdateCartItem: React.FC<UpdateCartItemProps> = (props) => {
   );
 };
 
-export default UpdateCartItem;
+export default UpdateCartItemQuantity;

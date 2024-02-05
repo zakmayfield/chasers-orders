@@ -1,6 +1,7 @@
 import { UnitsOnCartCacheType } from '@/types/types.cart';
 import RemoveCartItemButton from './RemoveCartItemButton';
-import UpdateCartItem from './UpdateCartItem';
+import UpdateCartItemQuantity from './UpdateCartItemQuantity';
+import UpdateCartItemSize from './UpdateCartItemSize';
 
 type CartItemProps = {
   payload: {
@@ -23,7 +24,15 @@ const CartItem: React.FC<CartItemProps> = (props) => {
           <p>Size: {cartItem.unit.size}</p>
         </div>
 
-        <UpdateCartItem
+        <UpdateCartItemSize
+          payload={{
+            cartId,
+            unitId: cartItem.unitId,
+            sizeData: cartItem.unit.size,
+          }}
+        />
+
+        <UpdateCartItemQuantity
           payload={{
             cartId,
             unitId: cartItem.unitId,
