@@ -35,8 +35,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# db/prisma related stuff
 products.json
-products1.json
-products.examples.txt
+products-original.json
+products-final.json
 
 todos.ts

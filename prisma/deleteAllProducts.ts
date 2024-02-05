@@ -8,5 +8,8 @@ export async function deleteAllProducts() {
     throw new Error(`Error deleting products: ${error}`);
   } finally {
     await prisma.$disconnect();
+    process.exit(1);
   }
 }
+
+deleteAllProducts();
