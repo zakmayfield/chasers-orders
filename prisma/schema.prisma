@@ -111,9 +111,6 @@ model BillingAddress {
   companyId String  @unique
 }
 
-// TODO: Somehow need to fix product data: Initial product data had mismatched name/code/unit size configurations
-// Example: Acai-Blueberry-Strawberry (1L) & Acai-Strawberry-Blueberry (2L)
-// Problem: User will not have access to 2L Acai-Blueberry-strawberry since it doesn't exist, they will need to add Acai-Strawberry-Blueberry instead. 
 model Product {
   id       String @id @default(cuid())
   name     String // Product name, e.g., "Banana-Mango-Pineapple"

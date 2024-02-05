@@ -2,6 +2,8 @@ import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/db/db.prisma-client';
 import { CreateOrderPayload } from '@/store/order/order.create';
 import { CartCache } from '@/types/types.cart';
+import { client } from '@/trigger';
+import { sendOrderEmail } from '@/utils/email/email.send-order-email';
 
 export async function POST(req: Request) {
   const session = await getAuthSession();
@@ -39,7 +41,28 @@ export async function POST(req: Request) {
       },
     });
 
-    // TODO: configure and send email order to administration
+    const userData = await db.user.findUnique({
+      where: { id: session.user.id },
+      select: {
+        id: true,
+        email: true,
+        company: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    const payload = {
+      order,
+      userData,
+    };
+
+    await client.sendEvent({
+      name: 'order.created',
+      payload,
+    });
 
     return new Response(JSON.stringify(order), { status: 201 });
   } catch (error) {
