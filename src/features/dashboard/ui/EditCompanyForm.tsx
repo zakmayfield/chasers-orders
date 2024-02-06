@@ -10,16 +10,12 @@ import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
 interface EditCompanyFormProps {
-  user: Pick<User, 'id'>;
-  company: Omit<Company, 'userId'> | null;
+  company: Pick<Company, 'id' | 'name'> | null;
 }
 
 type FormData = z.infer<typeof EditCompanyValidator>;
 
-export default function EditCompanyForm({
-  user,
-  company,
-}: EditCompanyFormProps) {
+export default function EditCompanyForm({ company }: EditCompanyFormProps) {
   const router = useRouter();
 
   const { handleSubmit, register } = useForm<FormData>({

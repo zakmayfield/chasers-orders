@@ -4,14 +4,10 @@ import { Company as CompanyType } from '@prisma/client';
 import RecentOrders from './ui/RecentOrders';
 import Company from '@/features/dashboard/ui/Company';
 
-type DashboardProps = {
-  companyData: CompanyType | null;
-};
-
-const Dashboard: React.FC<DashboardProps> = ({ companyData }) => {
+const Dashboard = () => {
   return (
     <div>
-      <Company company={companyData} />
+      <Company />
       <RecentOrders />
     </div>
   );

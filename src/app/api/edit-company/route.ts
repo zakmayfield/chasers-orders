@@ -3,27 +3,23 @@ import { db } from '@/lib/db/db.prisma-client';
 import { EditCompanyValidator } from '@/lib/validators/validator.company';
 
 export async function PATCH(req: Request) {
+  const session = await getAuthSession();
+
+  if (!session?.user) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
   try {
-    const session = await getAuthSession();
-
-    if (!session?.user) {
-      return new Response('Unauthorized', { status: 401 });
-    }
-
     const id = session.user.id;
     const body = await req.json();
     const { name } = EditCompanyValidator.parse(body);
 
-    await db.company.upsert({
+    await db.company.update({
       where: {
         userId: id,
       },
-      update: {
+      data: {
         name,
-      },
-      create: {
-        name,
-        userId: id,
       },
     });
 

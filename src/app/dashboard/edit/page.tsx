@@ -13,11 +13,7 @@ export default async function Page() {
   });
   return (
     <div>
-      <EditCompanyForm
-        user={{ id: session?.user.id ?? '' }}
-        // TODO: fix this
-        company={company}
-      />
+      <EditCompanyForm company={company} />
     </div>
   );
 }

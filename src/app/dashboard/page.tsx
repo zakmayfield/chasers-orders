@@ -6,15 +6,9 @@ export default async function Page() {
   const session = await getAuthSession();
   const id = session?.user.id;
 
-  const company = await db.company.findUnique({
-    where: {
-      userId: id,
-    },
-  });
-
   return (
     <div>
-      <Dashboard companyData={company} />
+      <Dashboard />
     </div>
   );
 }
