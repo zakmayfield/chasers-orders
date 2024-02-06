@@ -12,7 +12,7 @@ export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
   const { cartId, unitId, quantityPayload } = params;
 
   try {
-    const response = await fetch('/api/cart/update-quantity', {
+    const response = await fetch('/api/cart/item/quantity', {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',

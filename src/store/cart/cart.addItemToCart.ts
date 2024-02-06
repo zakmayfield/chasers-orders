@@ -8,7 +8,7 @@ type AddToCartResponseData = UnitsOnCartCacheType;
 
 export const addItemToCart: AddItemToCartParams = async (unitId) => {
   try {
-    const response = await fetch('/api/cart/add', {
+    const response = await fetch('/api/cart/item/add', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

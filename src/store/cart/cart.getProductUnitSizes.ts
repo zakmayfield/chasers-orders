@@ -14,7 +14,7 @@ export type SizesData = {
 
 export const getProductUnitSizes: GetProductUnitSizesProps = async (unitId) => {
   try {
-    const response = await fetch(`/api/cart/unit-sizes?unitId=${unitId}`);
+    const response = await fetch(`/api/cart/item/sizes?unitId=${unitId}`);
 
     if (!response.ok) {
       throw new Error(await response.text());
