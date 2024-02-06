@@ -13,15 +13,19 @@ export async function middleware(req: NextRequest) {
   const { isApproved, emailVerified } = await verifyUserStatus(token);
 
   if (!emailVerified) {
-    return NextResponse.redirect(new URL('/welcome'));
+    return NextResponse.redirect(
+      new URL('/dashboard/account-pending', req.nextUrl)
+    );
   }
 
-  if (req.nextUrl.pathname === '/products' && !isApproved) {
-    return NextResponse.redirect(new URL('/welcome', req.nextUrl));
+  if (req.nextUrl.pathname === '/products' && (!isApproved || !emailVerified)) {
+    return NextResponse.redirect(
+      new URL('/dashboard/account-pending', req.nextUrl)
+    );
   }
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/products', '/profile/:path*', '/cart/:path*', '/welcome'],
+  matcher: ['/products', '/cart/:path*'],
 };

@@ -158,7 +158,7 @@ model Order {
   createdAt DateTime        @default(now())
   lineItems OrderLineItem[]
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
 

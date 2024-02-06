@@ -15,7 +15,6 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
   const [mutationError, setMutationError] = useState(() => '');
   const router = useRouter();
 
-  // When user is redirected here, validate token
   const {
     mutate: validateToken,
     error,
@@ -23,8 +22,7 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
   } = useMutation({
     mutationFn: tokenValidator,
     onSuccess(data) {
-      console.log('~~~data from validateToken~~~', data);
-      router.push('/profile');
+      router.push('/dashboard/account-pending');
     },
     onError(error) {
       console.log('~~~error from validateToken~~~', error);

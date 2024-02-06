@@ -1,14 +1,15 @@
-import { getAuthSession } from '@/lib/auth/auth.options';
+'use client';
+import { Session } from 'next-auth';
 import Link from 'next/link';
 
-export default async function Welcome() {
-  const session = await getAuthSession();
-  const { id: userId, isApproved } = session?.user || {};
-
+export default function AccountPending({
+  user,
+}: {
+  user: Session['user'] | undefined;
+}) {
   return (
     <div>
-      <h1>Welcome</h1>
-      {isApproved ? (
+      {user?.isApproved ? (
         <div>
           <h2>Your account is approved</h2>
           <p>
@@ -23,9 +24,10 @@ export default async function Welcome() {
           <h2>Your account is pending approval</h2>
           <p>
             Visit your{' '}
-            <Link href='/profile' className='underline'>
-              Profile
-            </Link>
+            <Link href='/dashboard' className='underline'>
+              Dashboard
+            </Link>{' '}
+            to view your account status.
           </p>
         </div>
       )}

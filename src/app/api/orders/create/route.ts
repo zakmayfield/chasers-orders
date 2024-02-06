@@ -2,7 +2,7 @@ import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/db/db.prisma-client';
 import { CreateOrderPayload } from '@/store/order/order.create';
 import { CartCache } from '@/types/types.cart';
-import { client } from '@/trigger';
+import { client } from '@/lib/trigger';
 import { sendOrderEmail } from '@/utils/email/email.send-order-email';
 
 export async function POST(req: Request) {

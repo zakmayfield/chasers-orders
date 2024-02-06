@@ -1,4 +1,4 @@
-import EditCompanyForm from '@/features/profile/ui/EditCompanyForm';
+import EditCompanyForm from '@/features/dashboard/ui/EditCompanyForm';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/db/db.prisma-client';
 
@@ -13,11 +13,7 @@ export default async function Page() {
   });
   return (
     <div>
-      <EditCompanyForm
-        user={{ id: session?.user.id ?? '' }}
-        // TODO: fix this
-        company={company}
-      />
+      <EditCompanyForm company={company} />
     </div>
   );
 }

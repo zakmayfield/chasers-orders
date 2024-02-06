@@ -5,7 +5,7 @@ import { CreateOrderPayload, createOrder } from '@/store/order/order.create';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 import { useRouter } from 'next/navigation';
-import { OrderType } from '@/features/profile/ui/RecentOrders';
+import { OrderType } from '@/features/dashboard/ui/RecentOrders';
 
 export default function PlaceOrder() {
   const queryClient = useQueryClient();
@@ -36,7 +36,7 @@ export default function PlaceOrder() {
       );
 
       setTimeout(() => {
-        router.push('/profile');
+        router.push('/dashboard');
       }, 5000);
     },
     onError(error) {
