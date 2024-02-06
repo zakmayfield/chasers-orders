@@ -16,7 +16,7 @@ import {
 import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
-import { addToCart } from '@/store/cart/cart.add';
+import { addItemToCart } from '@/store/cart/cart.addItemToCart';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 
@@ -43,7 +43,7 @@ export default function ProductsTable({
   );
 
   const { mutate: addToCartMutation, isLoading } = useMutation({
-    mutationFn: addToCart,
+    mutationFn: addItemToCart,
     onSuccess(data) {
       notify('Item added to cart');
 

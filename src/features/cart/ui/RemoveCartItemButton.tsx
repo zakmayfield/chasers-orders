@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks/useToast';
-import { removeCartItem } from '@/store/cart/cart.remove-item';
+import { removeCartItem } from '@/store/cart/cart.removeCartItem';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 

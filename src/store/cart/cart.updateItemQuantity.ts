@@ -1,6 +1,6 @@
 import type { UnitsOnCartCacheType } from '@/types/types.cart';
 
-type UpdateQuantityType = {
+type UpdateItemQuantityType = {
   (params: {
     cartId: string;
     unitId: string;
@@ -8,7 +8,7 @@ type UpdateQuantityType = {
   }): Promise<UnitsOnCartCacheType>;
 };
 
-export const updateQuantity: UpdateQuantityType = async (params) => {
+export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
   const { cartId, unitId, quantityPayload } = params;
 
   try {
