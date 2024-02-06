@@ -1,5 +1,5 @@
 import { eventTrigger } from '@trigger.dev/sdk';
-import { client } from '@/trigger';
+import { client } from '@/lib/trigger';
 import { Company, Order, OrderLineItem, User } from '@prisma/client';
 import { sendOrderEmail } from '@/utils/email/email.send-order-email';
 
