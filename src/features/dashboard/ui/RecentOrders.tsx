@@ -3,7 +3,8 @@
 import { getRecentOrders } from '@/store/order/order.recent';
 import { Order, OrderLineItem } from '@prisma/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export type OrderType = Order & {
   lineItems: OrderLineItem[];
@@ -11,7 +12,9 @@ export type OrderType = Order & {
 
 const RecentOrders = () => {
   const queryClient = useQueryClient();
-  const [expanded, setExpanded] = useState<OrderType>();
+  const params = useSearchParams();
+  const [expanded, setExpanded] = useState<OrderType | null>();
+  const orderId = params.get('orderId');
 
   const {
     data: orders,
@@ -27,9 +30,22 @@ const RecentOrders = () => {
     staleTime: Infinity,
   });
 
+  useEffect(() => {
+    const orderFromParams = orders?.find((order) => order.id === orderId);
+    setExpanded(orderFromParams);
+  }, [orderId, orders]);
+
   if (error && error instanceof Error) {
     return <div>{error.message}</div>;
   }
+
+  const handleExpanded = (order: OrderType) => {
+    if (expanded) {
+      setExpanded(null);
+    } else {
+      setExpanded(order);
+    }
+  };
 
   return (
     <div>
@@ -43,7 +59,7 @@ const RecentOrders = () => {
           const createdAtDate = new Date(order.createdAt).toDateString();
           return (
             <div key={order.id}>
-              <p onClick={() => setExpanded(order)}>{createdAtDate}</p>
+              <p onClick={() => handleExpanded(order)}>{createdAtDate}</p>
 
               {expanded && expanded.id === order.id && (
                 <pre>{JSON.stringify(expanded.lineItems, null, 2)}</pre>
