@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getCart } from '@/store/cart/cart.get';
+import { getCart } from '@/store/cart/cart.getCart';
 import { CartCache } from '@/types/types.cart';
 import { ToastContainer } from 'react-toastify';
 import EmptyCart from './ui/EmptyCart';

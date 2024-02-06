@@ -16,7 +16,7 @@ async function handler(req: NextRequest) {
   const unitId = searchParams.get('unitId');
 
   if (!unitId) {
-    return new Response('Invalid Unit ID', { status: 401 });
+    return new Response('Invalid Unit ID', { status: 400 });
   }
 
   try {

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateQuantity } from '@/store/cart/cart.update-quantity';
+import { updateItemQuantity } from '@/store/cart/cart.updateItemQuantity';
 import { CartCache } from '@/types/types.cart';
 import { useToast } from '@/hooks/useToast';
 
@@ -24,7 +24,7 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
   const [quantity, setQuantity] = useState<number | undefined>(quantityData);
 
   const { mutate: quantityMutation, isLoading } = useMutation({
-    mutationFn: updateQuantity,
+    mutationFn: updateItemQuantity,
     onSuccess: (data) => {
       setQuantity(data.quantity);
 

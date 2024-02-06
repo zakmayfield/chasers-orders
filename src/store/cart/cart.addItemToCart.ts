@@ -1,14 +1,14 @@
 import { UnitsOnCartCacheType } from '@/types/types.cart';
 
-type AddToCartParams = {
+type AddItemToCartParams = {
   (unitId: string): Promise<AddToCartResponseData>;
 };
 
 type AddToCartResponseData = UnitsOnCartCacheType;
 
-export const addToCart: AddToCartParams = async (unitId) => {
+export const addItemToCart: AddItemToCartParams = async (unitId) => {
   try {
-    const response = await fetch('/api/cart/add', {
+    const response = await fetch('/api/cart/item/add', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',

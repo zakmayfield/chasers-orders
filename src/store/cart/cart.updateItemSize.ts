@@ -1,5 +1,4 @@
-import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
-import { Unit } from '@prisma/client';
+import { UnitsOnCartCacheType } from '@/types/types.cart';
 
 type UpdateItemSizeProps = {
   (params: {
@@ -12,7 +11,7 @@ type UpdateItemSizeProps = {
 export const updateItemSize: UpdateItemSizeProps = async (params) => {
   const { cartId, unitId, selectedUnitId } = params;
   try {
-    const response = await fetch(`/api/cart/update-size`, {
+    const response = await fetch(`/api/cart/item/size`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',

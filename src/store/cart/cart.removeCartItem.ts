@@ -19,7 +19,7 @@ export const removeCartItem: RemoveCartItemStore = async (payload) => {
   const body = JSON.stringify(payload);
 
   try {
-    const response = await fetch('/api/cart/remove', {
+    const response = await fetch('/api/cart/item/remove', {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

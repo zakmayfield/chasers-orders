@@ -1,6 +1,6 @@
 'use client';
 
-import { getCart } from '@/store/cart/cart.get';
+import { getCart } from '@/store/cart/cart.getCart';
 import { CartCache } from '@/types/types.cart';
 import { useQuery } from '@tanstack/react-query';
 import PlaceOrder from '@/features/cart/order/ui/PlaceOrder';
