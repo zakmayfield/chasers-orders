@@ -1,6 +1,6 @@
 'use client';
 
-import { getOrders } from '@/store/order/order.get';
+import { getRecentOrders } from '@/store/order/order.recent';
 import { Order, OrderLineItem } from '@prisma/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ const RecentOrders = () => {
     isLoading,
   } = useQuery<OrderType[]>({
     queryKey: ['recent-orders'],
-    queryFn: getOrders,
+    queryFn: getRecentOrders,
     /*
       `recent-orders` cache will only get fetched on initial page load &
       cache data will update within the onSuccess of the createOrder mutation

@@ -29,7 +29,7 @@ export default function EditCompanyForm({ company }: EditCompanyFormProps) {
     mutationFn: async ({ name }: { name: string }) => {
       const payload = { name };
 
-      const { data } = await axios.patch(`/api/edit-company`, payload);
+      const { data } = await axios.patch(`/api/user/company/edit`, payload);
       return data;
     },
     onSuccess: () => {
