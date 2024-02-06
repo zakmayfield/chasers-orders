@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/welcome'));
   }
 
-  if (req.nextUrl.pathname === '/products' && !isApproved) {
+  if (req.nextUrl.pathname === '/products' && (!isApproved || !emailVerified)) {
     return NextResponse.redirect(new URL('/welcome', req.nextUrl));
   }
 }

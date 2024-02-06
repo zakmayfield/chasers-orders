@@ -8,7 +8,6 @@ export default async function Nav() {
   return (
     <nav className='flex items-center gap-6'>
       <Link href='/'>Home</Link>
-      <Link href='/products'>Shop</Link>
 
       {session?.user ? <UserNav /> : <Link href='/sign-in'>Sign In</Link>}
     </nav>
