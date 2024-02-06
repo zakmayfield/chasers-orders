@@ -2,7 +2,7 @@
 
 import { EditCompanyValidator } from '@/lib/validators/validator.company';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Company, User } from '@prisma/client';
+import { Company } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
@@ -29,7 +29,7 @@ export default function EditCompanyForm({ company }: EditCompanyFormProps) {
     mutationFn: async ({ name }: { name: string }) => {
       const payload = { name };
 
-      const { data } = await axios.patch(`/api/edit-company`, payload);
+      const { data } = await axios.patch(`/api/user/company/edit`, payload);
       return data;
     },
     onSuccess: () => {

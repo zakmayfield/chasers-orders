@@ -1,4 +1,3 @@
-import { Company as CompanyType } from '@prisma/client';
 import Link from 'next/link';
 
 const Company = () => {
