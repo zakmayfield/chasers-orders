@@ -10,16 +10,18 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', req.nextUrl));
   }
 
-  console.log('mw token', token);
-
   const { isApproved, emailVerified } = await verifyUserStatus(token);
 
   if (!emailVerified) {
-    return NextResponse.redirect(new URL('/dashboard/welcome', req.nextUrl));
+    return NextResponse.redirect(
+      new URL('/dashboard/account-pending', req.nextUrl)
+    );
   }
 
   if (req.nextUrl.pathname === '/products' && (!isApproved || !emailVerified)) {
-    return NextResponse.redirect(new URL('/dashboard/welcome', req.nextUrl));
+    return NextResponse.redirect(
+      new URL('/dashboard/account-pending', req.nextUrl)
+    );
   }
 }
 

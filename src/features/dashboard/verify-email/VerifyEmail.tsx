@@ -22,7 +22,7 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
   } = useMutation({
     mutationFn: tokenValidator,
     onSuccess(data) {
-      router.push('/dashboard/welcome');
+      router.push('/dashboard/account-pending');
     },
     onError(error) {
       console.log('~~~error from validateToken~~~', error);
