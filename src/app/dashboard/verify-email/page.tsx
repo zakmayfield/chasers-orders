@@ -6,8 +6,6 @@ export default async function Page() {
 
   return (
     <div>
-      <div>Verify Email</div>
-
       <VerifyEmail session={session} />
     </div>
   );

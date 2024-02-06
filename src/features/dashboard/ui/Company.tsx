@@ -6,12 +6,6 @@ const Company = () => {
     <div>
       <div>
         <h2>Company Information</h2>
-        {/* {company && (
-          <div>
-            <p>{company?.name}</p>
-          </div>
-        )} */}
-
         <div>
           <Link href='/dashboard/edit'>Edit Company</Link>
         </div>

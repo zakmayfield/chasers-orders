@@ -7,7 +7,6 @@ export default async function Welcome() {
 
   return (
     <div>
-      <h1>Welcome</h1>
       {isApproved ? (
         <div>
           <h2>Your account is approved</h2>

@@ -7,8 +7,7 @@ import Company from '@/features/dashboard/ui/Company';
 const Dashboard = () => {
   return (
     <div>
-      <Company />
-      <RecentOrders />
+      <p>Dashboard</p>
     </div>
   );
 };
