@@ -2,13 +2,13 @@
 
 import { Company as CompanyType } from '@prisma/client';
 import RecentOrders from './ui/RecentOrders';
-import Company from '@/features/profile/ui/Company';
+import Company from '@/features/dashboard/ui/Company';
 
-type ProfileProps = {
+type DashboardProps = {
   companyData: CompanyType | null;
 };
 
-const Profile: React.FC<ProfileProps> = ({ companyData }) => {
+const Dashboard: React.FC<DashboardProps> = ({ companyData }) => {
   return (
     <div>
       <Company company={companyData} />
@@ -17,4 +17,4 @@ const Profile: React.FC<ProfileProps> = ({ companyData }) => {
   );
 };
 
-export default Profile;
+export default Dashboard;

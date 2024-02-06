@@ -23,8 +23,8 @@ export default async function Welcome() {
           <h2>Your account is pending approval</h2>
           <p>
             Visit your{' '}
-            <Link href='/profile' className='underline'>
-              Profile
+            <Link href='/dashboard' className='underline'>
+              Dashboard
             </Link>
           </p>
         </div>
