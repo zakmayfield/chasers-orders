@@ -4,8 +4,14 @@ import { DashboardContact } from '@/types/types.dashboard';
 import { useDashboardQuery } from '@/hooks/useDashboardQuery';
 
 export default function Contact() {
-  const { fetchState, isData, isError } =
+  const { fetchState, isLoading, isData, isError } =
     useDashboardQuery<DashboardContact>('contact');
+
+  const OnLoad = isLoading && (
+    <div>
+      <p>Loading contact data...</p>
+    </div>
+  );
 
   const ErrorInfo = fetchState && isError(fetchState) && (
     <div className='foobar'>
@@ -38,6 +44,7 @@ export default function Contact() {
   return (
     <div>
       <p>Contact Data</p>
+      {OnLoad}
       {ErrorInfo}
       {ContactInfo}
     </div>

@@ -13,6 +13,7 @@ export const useDashboardQuery = <T>(
   const queryClient = useQueryClient();
 
   const [fetchState, setFetchState] = useState<DashboardFetchState<T>>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   function isError(data: unknown): data is DashboardQueryError {
     return !!data && typeof data === 'object' && 'error' in data;
@@ -24,6 +25,7 @@ export const useDashboardQuery = <T>(
   useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         const data: DashboardUserData | undefined =
           await queryClient.fetchQuery(
             ['user-dashboard'],
@@ -35,18 +37,21 @@ export const useDashboardQuery = <T>(
           setFetchState({
             error: `Could not access ${property ? property : 'account'} data`,
           });
+          setIsLoading(false);
           return;
         }
 
         setFetchState(property ? (data[property] as T) : (data as T));
+        setIsLoading(false);
       } catch (error) {
         if (error instanceof Error) {
           setFetchState({ error: error.message });
+          setIsLoading(false);
           console.error(error);
         }
       }
     })();
   }, [property, queryClient]);
 
-  return { fetchState, isData, isError };
+  return { fetchState, isLoading, isData, isError };
 };

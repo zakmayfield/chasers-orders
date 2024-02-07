@@ -9,8 +9,14 @@ import { useDashboardQuery } from '@/hooks/useDashboardQuery';
 type CompanyFetchState = DashboardCompany | DashboardQueryError | null;
 
 export default function Company() {
-  const { fetchState, isData, isError } =
+  const { fetchState, isLoading, isData, isError } =
     useDashboardQuery<DashboardCompany>('company');
+
+  const OnLoad = isLoading && (
+    <div>
+      <p>Loading account data...</p>
+    </div>
+  );
 
   const ErrorInfo = fetchState && isError(fetchState) && (
     <div className='foobar'>
@@ -74,6 +80,7 @@ export default function Company() {
   return (
     <div>
       <p>Company Data</p>
+      {OnLoad}
       {ErrorInfo}
       {ContactInfo}
     </div>

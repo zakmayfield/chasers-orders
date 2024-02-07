@@ -4,7 +4,14 @@ import { useDashboardQuery } from '@/hooks/useDashboardQuery';
 import { DashboardUser } from '@/types/types.dashboard';
 
 export default function Account() {
-  const { fetchState, isError, isData } = useDashboardQuery<DashboardUser>();
+  const { fetchState, isLoading, isError, isData } =
+    useDashboardQuery<DashboardUser>();
+
+  const OnLoad = isLoading && (
+    <div>
+      <p>Loading account data...</p>
+    </div>
+  );
 
   const OnError = fetchState && isError(fetchState) && (
     <div className='foobar'>
@@ -35,6 +42,7 @@ export default function Account() {
   return (
     <div>
       <p>Account Data</p>
+      {OnLoad}
       {OnError}
       {AccountInfo}
     </div>
