@@ -1,53 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { getDashboardUserData } from '@/store/user/user.getDashboardUserData';
-import {
-  DashboardContact,
-  DashboardQueryError,
-  DashboardUserData,
-} from '@/types/types.dashboard';
-
-type ContactFetchState = DashboardContact | DashboardQueryError | null;
+import { DashboardContact } from '@/types/types.dashboard';
+import { useDashboardQuery } from '@/hooks/useDashboardQuery';
 
 export default function Contact() {
-  const queryClient = useQueryClient();
-  const [fetchState, setFetchState] = useState<ContactFetchState>(null);
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const data: DashboardUserData | undefined =
-          await queryClient.fetchQuery(
-            ['user-dashboard'],
-            getDashboardUserData,
-            { staleTime: 60 * 1000 * 5 }
-          );
-
-        if (!data) {
-          setFetchState({ error: 'Could not access contact data.' });
-          return;
-        }
-
-        const { contact } = data;
-
-        setFetchState(contact);
-      } catch (error) {
-        if (error instanceof Error) {
-          setFetchState({ error: error.message });
-          console.error(error);
-        }
-      }
-    })();
-  }, [queryClient]);
-
-  function isError(data: unknown): data is DashboardQueryError {
-    return !!data && typeof data === 'object' && 'error' in data;
-  }
-  function isContactData(data: unknown): data is DashboardContact {
-    return !!data && typeof data === 'object' && 'id' in data;
-  }
+  const { fetchState, isData, isError } =
+    useDashboardQuery<DashboardContact>('contact');
 
   const ErrorInfo = fetchState && isError(fetchState) && (
     <div className='foobar'>
@@ -55,7 +13,7 @@ export default function Contact() {
     </div>
   );
 
-  const ContactInfo = fetchState && isContactData(fetchState) && (
+  const ContactInfo = fetchState && isData(fetchState) && (
     <div>
       <div className='py-3'>
         <p>
