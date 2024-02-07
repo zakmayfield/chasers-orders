@@ -9,20 +9,16 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-interface EditCompanyFormProps {
-  company: Pick<Company, 'id' | 'name'> | null;
-}
-
 type FormData = z.infer<typeof EditCompanyValidator>;
 
-export default function EditCompanyForm({ company }: EditCompanyFormProps) {
+export default function EditCompanyForm() {
   const router = useRouter();
 
   const { handleSubmit, register } = useForm<FormData>({
     resolver: zodResolver(EditCompanyValidator),
-    defaultValues: {
-      name: company?.name || '',
-    },
+    // defaultValues: {
+    //   name: company?.name || '',
+    // },
   });
 
   const { mutate: updateCompany, isLoading } = useMutation({

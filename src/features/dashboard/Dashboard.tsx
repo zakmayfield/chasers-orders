@@ -11,7 +11,7 @@ const Dashboard = () => {
     DashboardUserData,
     Error
   >({
-    queryKey: ['user'],
+    queryKey: ['user-dashboard'],
     queryFn: getDashboardUserData,
   });
 
