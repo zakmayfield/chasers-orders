@@ -13,6 +13,7 @@ const Dashboard = () => {
   >({
     queryKey: ['user-dashboard'],
     queryFn: getDashboardUserData,
+    staleTime: 60 * 1000 * 5,
   });
 
   const LoadingData = <div>Loading dashboard...</div>;

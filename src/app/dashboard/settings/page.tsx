@@ -9,7 +9,6 @@ export default function Page() {
         <div>
           <h2>Account</h2>
           <p>{`{account}`}</p>
-          <Link href='/dashboard/settings/account/edit'>Edit</Link>
         </div>
 
         <div>
