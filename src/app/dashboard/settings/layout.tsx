@@ -8,8 +8,10 @@ export default function SettingsLayout({
   return (
     <div>
       <div>
-        <nav className='flex items-center gap-3'>
+        <nav className='flex items-center gap-3 justify-center'>
+          <Link href='/dashboard/settings'>Settings</Link>
           <Link href='/dashboard/settings/account'>Account</Link>
+          <Link href='/dashboard/settings/contact'>Contact</Link>
           <Link href='/dashboard/settings/company'>Company</Link>
         </nav>
       </div>
