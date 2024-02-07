@@ -7,7 +7,7 @@ import {
   DashboardCompany,
   DashboardQueryError,
   DashboardUserData,
-} from '@/types/types.user';
+} from '@/types/types.dashboard';
 
 type CompanyFetchState = DashboardCompany | DashboardQueryError | null;
 

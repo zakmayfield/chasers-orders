@@ -5,7 +5,7 @@ import {
   DashboardQueryError,
   DashboardUser,
   DashboardUserData,
-} from '@/types/types.user';
+} from '@/types/types.dashboard';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 

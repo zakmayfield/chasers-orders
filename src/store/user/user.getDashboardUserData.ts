@@ -1,5 +1,4 @@
-import { OrderType } from '@/features/dashboard/ui/RecentOrders';
-import { DashboardUserData } from '@/types/types.user';
+import { DashboardUserData } from '@/types/types.dashboard';
 
 type GetDashboardUserDataProps = {
   (): Promise<DashboardUserData>;

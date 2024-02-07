@@ -7,7 +7,7 @@ import {
   DashboardContact,
   DashboardQueryError,
   DashboardUserData,
-} from '@/types/types.user';
+} from '@/types/types.dashboard';
 
 type ContactFetchState = DashboardContact | DashboardQueryError | null;
 
