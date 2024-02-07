@@ -7,18 +7,18 @@ import {
   BillingAddress,
 } from '@prisma/client';
 
-export type DashboardUserData = PartialUser & {
-  contact: PartialContact;
-  orders: PartialOrders[];
+export type DashboardUserData = DashboardUser & {
+  contact: DashboardContact;
+  orders: DashboardOrder[];
   company: ExtendedCompany;
 };
 
-type PartialUser = Pick<User, 'id' | 'isApproved' | 'emailVerified'>;
-type PartialContact = Omit<Contact, 'userId'>;
-type PartialOrders = Omit<Order, 'userId'>;
-type PartialCompany = Omit<Company, 'userId'>;
+type DashboardUser = Pick<User, 'id' | 'isApproved' | 'emailVerified'>;
+type DashboardContact = Omit<Contact, 'userId'>;
+type DashboardOrder = Omit<Order, 'userId'>;
+type DashboardCompany = Omit<Company, 'userId'>;
 
-type ExtendedCompany = PartialCompany & {
+type ExtendedCompany = DashboardCompany & {
   shippingAddress: ShippingAddress;
   billingAddress: BillingAddress;
 };
