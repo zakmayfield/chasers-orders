@@ -15,6 +15,7 @@ export async function GET() {
       where: { id },
       select: {
         id: true,
+        email: true,
         isApproved: true,
         emailVerified: true,
         contact: {

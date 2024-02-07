@@ -10,15 +10,21 @@ import {
 export type DashboardUserData = DashboardUser & {
   contact: DashboardContact;
   orders: DashboardOrder[];
-  company: ExtendedCompany;
+  company: DashboardCompany;
 };
 
-type DashboardUser = Pick<User, 'id' | 'isApproved' | 'emailVerified'>;
-type DashboardContact = Omit<Contact, 'userId'>;
-type DashboardOrder = Omit<Order, 'userId'>;
-type DashboardCompany = Omit<Company, 'userId'>;
-
-type ExtendedCompany = DashboardCompany & {
+export type DashboardUser = Pick<
+  User,
+  'id' | 'email' | 'isApproved' | 'emailVerified'
+>;
+export type DashboardContact = Omit<Contact, 'userId'>;
+export type DashboardOrder = Omit<Order, 'userId'>;
+export type DashboardCompany = CompanyType & {
   shippingAddress: ShippingAddress;
   billingAddress: BillingAddress;
+};
+type CompanyType = Omit<Company, 'userId'>;
+
+export type DashboardQueryError = {
+  error: string;
 };
