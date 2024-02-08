@@ -19,6 +19,7 @@ import type { ProductWithUnits } from '@/types/types.product';
 import { addItemToCart } from '@/store/cart/cart.addItemToCart';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
+import NameColumn from './NameColumn';
 
 export type HandleAddToCartProps = {
   units: Unit[];
@@ -99,15 +100,7 @@ export default function ProductsTable({
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => {
-        return (
-          <div className='w-80'>
-            <div className='overflow-hidden text-ellipsis whitespace-nowrap pl-3'>
-              {info.getValue()}
-            </div>
-          </div>
-        );
-      },
+      cell: (info) => <NameColumn products={productData} info={info} />,
     }),
     columnHelper.accessor('category', {
       header: 'Category',
