@@ -12,6 +12,7 @@ const dashboardNavItems: DashboardNavItem[] = [
     content: 'Dashboard Home',
   },
   {
+    path: '/favorites',
     content: 'Favorite Juice',
   },
   {

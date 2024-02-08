@@ -36,6 +36,17 @@ export async function GET() {
             createdAt: true,
           },
         },
+        favorites: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+          select: {
+            id: true,
+            createdAt: true,
+            juiceId: true,
+            juice: true,
+          },
+        },
         company: {
           select: {
             id: true,
