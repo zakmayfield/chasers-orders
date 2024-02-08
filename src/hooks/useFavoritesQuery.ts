@@ -13,7 +13,7 @@ type Favorites = Favorite[];
 
 export const useFavoritesQuery: UseFavoritesQuery = (options) => {
   const { data: favorites } = useQuery<Favorite[], Error>({
-    queryKey: ['favorites'],
+    queryKey: ['favorites', `${options?.extended && 'extended'}`],
     queryFn: async () => await getFavorites(options?.extended),
     staleTime: Infinity,
   });

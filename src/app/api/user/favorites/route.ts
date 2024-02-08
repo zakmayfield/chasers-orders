@@ -24,7 +24,10 @@ export async function GET(req: NextRequest) {
       orderBy: {
         createdAt: 'desc',
       },
-      include: {
+      select: {
+        id: true,
+        createdAt: true,
+        juiceId: true,
         juice: isExtended(extendedFlag),
       },
     });
