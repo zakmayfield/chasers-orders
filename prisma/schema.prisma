@@ -55,6 +55,7 @@ model User {
   company           Company? // 1:1
   cart              Cart? // 1:1
   orders            Order[] // 1:m
+  favorites         Favorite[]
   // authorization
   isApproved        Boolean             @default(false)
   verificationToken VerificationToken[] // 1:m
@@ -112,10 +113,11 @@ model BillingAddress {
 }
 
 model Product {
-  id       String @id @default(cuid())
-  name     String // Product name, e.g., "Banana-Mango-Pineapple"
-  category String // Product category, e.g., "BLENDS"
-  units    Unit[]
+  id        String     @id @default(cuid())
+  name      String // Product name, e.g., "Banana-Mango-Pineapple"
+  category  String // Product category, e.g., "BLENDS"
+  units     Unit[]
+  favorites Favorite[]
 }
 
 model Unit {
@@ -171,4 +173,16 @@ model OrderLineItem {
 
   orderId String
   unitId  String
+}
+
+model Favorite {
+  id String @id @default(cuid())
+
+  juice   Product @relation(fields: [juiceId], references: [id])
+  juiceId String
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  @@unique([userId, juiceId])
 }
