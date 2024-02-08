@@ -176,7 +176,8 @@ model OrderLineItem {
 }
 
 model Favorite {
-  id String @id @default(cuid())
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
 
   juice   Product @relation(fields: [juiceId], references: [id])
   juiceId String
