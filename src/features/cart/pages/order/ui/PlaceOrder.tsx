@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CreateOrderPayload, createOrder } from '@/store/order/order.create';
+import { CreateOrderPayload, createOrder } from '@/store/orders/orders.create';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 import { useRouter } from 'next/navigation';

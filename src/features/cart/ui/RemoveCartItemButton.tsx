@@ -1,5 +1,5 @@
 import { useToast } from '@/hooks/useToast';
-import { removeCartItem } from '@/store/cart/cart.removeCartItem';
+import { removeItem } from '@/store/cart/cart.removeItem';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
@@ -19,8 +19,8 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     payload: { unitId, cartId },
   } = props;
 
-  const { mutate: removeItem, isLoading } = useMutation({
-    mutationFn: removeCartItem,
+  const { mutate: removeCartItem, isLoading } = useMutation({
+    mutationFn: removeItem,
     onSuccess: (data) => {
       const { unitId } = data;
 
@@ -47,7 +47,10 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
   });
 
   return (
-    <button disabled={isLoading} onClick={() => removeItem({ unitId, cartId })}>
+    <button
+      disabled={isLoading}
+      onClick={() => removeCartItem({ unitId, cartId })}
+    >
       Remove
     </button>
   );

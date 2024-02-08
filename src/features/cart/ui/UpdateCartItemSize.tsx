@@ -4,8 +4,8 @@ import { CartCache } from '@/types/types.cart';
 import { useToast } from '@/hooks/useToast';
 import {
   SizesData,
-  getProductUnitSizes,
-} from '@/store/cart/cart.getProductUnitSizes';
+  getItemUnitSizes,
+} from '@/store/cart/cart.getItemUnitSizes';
 import { updateItemSize } from '@/store/cart/cart.updateItemSize';
 
 type UpdateCartItemSizeProps = {
@@ -31,7 +31,7 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
     error,
   } = useQuery<SizesData | undefined, Error>({
     queryKey: ['unit-sizes', unitId],
-    queryFn: async () => await getProductUnitSizes(unitId),
+    queryFn: async () => await getItemUnitSizes(unitId),
   });
 
   const { mutate: sizeMutation, isLoading: mutationIsLoading } = useMutation({
