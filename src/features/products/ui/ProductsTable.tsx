@@ -39,7 +39,7 @@ export default function ProductsTable({
   products: ProductWithUnits[];
 }) {
   const queryClient = useQueryClient();
-  const { favorites } = useFavoritesQuery({ extended: true });
+  const { favorites } = useFavoritesQuery();
   const { notify, ToastContainer } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
