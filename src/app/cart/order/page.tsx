@@ -1,4 +1,4 @@
-import OrderPage from '@/features/cart/order/OrderPage';
+import OrderPage from '@/features/cart/pages/order/OrderPage';
 
 export default function Page() {
   return (

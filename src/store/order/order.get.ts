@@ -1,4 +1,4 @@
-import { OrderType } from '@/features/dashboard/ui/RecentOrders';
+import { OrderType } from '@/features/dashboard/pages/recent-orders/RecentOrders';
 
 type GetOrdersType = {
   (): Promise<OrderType[]>;
