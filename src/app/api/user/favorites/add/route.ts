@@ -15,8 +15,6 @@ export async function POST(req: Request) {
     return new Response('Invalid input', { status: 400 });
   }
 
-  console.log(productId);
-
   try {
     const f = await db.favorite.create({
       data: {
