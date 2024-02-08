@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Unit } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Favorite, Unit } from '@prisma/client';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -19,7 +19,9 @@ import type { ProductWithUnits } from '@/types/types.product';
 import { addItemToCart } from '@/store/cart/cart.addItemToCart';
 import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
-import NameColumn from './NameColumn';
+import NameCell from './NameCell';
+import { getFavorites } from '@/store/favorite/fav.getFavorites';
+import { useFavoritesQuery } from '@/hooks/useFavoritesQuery';
 
 export type HandleAddToCartProps = {
   units: Unit[];
@@ -37,6 +39,7 @@ export default function ProductsTable({
   products: ProductWithUnits[];
 }) {
   const queryClient = useQueryClient();
+  const { favorites } = useFavoritesQuery({ extended: true });
   const { notify, ToastContainer } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
@@ -100,7 +103,7 @@ export default function ProductsTable({
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => <NameColumn products={productData} info={info} />,
+      cell: (info) => <NameCell products={productData} info={info} />,
     }),
     columnHelper.accessor('category', {
       header: 'Category',
