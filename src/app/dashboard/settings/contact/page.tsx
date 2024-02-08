@@ -1,4 +1,4 @@
-import Contact from '@/features/dashboard/settings/contact/Contact';
+import Contact from '@/features/dashboard/pages/settings/contact/Contact';
 
 export default function Page() {
   return (

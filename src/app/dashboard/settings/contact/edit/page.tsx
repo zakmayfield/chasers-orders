@@ -1,4 +1,4 @@
-import EditContact from '@/features/dashboard/settings/contact/EditContact';
+import EditContact from '@/features/dashboard/pages/settings/contact/EditContact';
 
 export default function Page() {
   return (

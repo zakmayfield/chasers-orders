@@ -1,7 +1,7 @@
 'use client';
 
 import { getDashboardUserData } from '@/store/user/user.getDashboardUserData';
-import { DashboardUserData } from '@/types/types.user';
+import { DashboardUserData } from '@/types/types.dashboard';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 

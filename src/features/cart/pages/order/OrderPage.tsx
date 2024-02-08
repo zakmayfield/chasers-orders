@@ -3,8 +3,8 @@
 import { getCart } from '@/store/cart/cart.getCart';
 import { CartCache } from '@/types/types.cart';
 import { useQuery } from '@tanstack/react-query';
-import PlaceOrder from '@/features/cart/order/ui/PlaceOrder';
-import ShippingDetails from '@/features/cart/order/ui/ShippingDetails';
+import PlaceOrder from '@/features/cart/pages/order/ui/PlaceOrder';
+import ShippingDetails from '@/features/cart/pages/order/ui/ShippingDetails';
 
 export default function OrderPage() {
   const { data, error, isLoading } = useQuery<CartCache | undefined, Error>({
