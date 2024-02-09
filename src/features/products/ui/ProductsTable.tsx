@@ -39,12 +39,14 @@ export default function ProductsTable({
   products: ProductWithUnits[];
 }) {
   const queryClient = useQueryClient();
-  const { favorites } = useFavoritesQuery({ extended: true });
+  const { favorites } = useFavoritesQuery();
   const { notify, ToastContainer } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
   );
+
+  console.log('favorites', favorites);
 
   const { mutate: addToCartMutation, isLoading } = useMutation({
     mutationFn: addItemToCart,
@@ -103,7 +105,9 @@ export default function ProductsTable({
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => <NameCell products={productData} info={info} />,
+      cell: (info) => (
+        <NameCell products={productData} favorites={favorites} info={info} />
+      ),
     }),
     columnHelper.accessor('category', {
       header: 'Category',

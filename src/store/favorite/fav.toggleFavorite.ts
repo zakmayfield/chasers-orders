@@ -1,17 +1,19 @@
 import { Favorite } from '@prisma/client';
 
-type CreateFavoriteType = {
-  (productId?: string): Promise<Favorite>;
+type ToggleFavoriteProps = {
+  (action: Actions, id?: string): Promise<Favorite>;
 };
+export type Actions = 'add' | 'remove';
 
-export const createFavorite: CreateFavoriteType = async (productId) => {
+export const toggleFavorite: ToggleFavoriteProps = async (action, id) => {
   try {
-    const response = await fetch('/api/user/favorites/add', {
+    const response = await fetch('/api/user/favorites/toggle', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
+        'X-Action': action,
       },
-      body: JSON.stringify(productId),
+      body: JSON.stringify({ id }),
     });
 
     if (!response.ok) {
