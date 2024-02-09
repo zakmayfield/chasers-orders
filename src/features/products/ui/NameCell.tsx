@@ -26,7 +26,7 @@ export default function NameCell({
   info: CellContext<ProductWithUnits, string>;
 }) {
   const queryClient = useQueryClient();
-  const { notify, ToastContainer } = useToast();
+  const { notify } = useToast();
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
 
   const { mutate } = useToggleFavoriteMutation({
