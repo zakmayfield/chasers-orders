@@ -46,8 +46,6 @@ export default function ProductsTable({
     Array(productData.length).fill(null)
   );
 
-  console.log('favorites', favorites);
-
   const { mutate: addToCartMutation, isLoading } = useMutation({
     mutationFn: addItemToCart,
     onSuccess(data) {
