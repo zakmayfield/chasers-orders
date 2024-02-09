@@ -8,7 +8,7 @@ import {
 import { getDashboardUserData } from '@/store/user/user.getDashboardUserData';
 
 export const useDashboardQuery = <T>(
-  property?: 'contact' | 'orders' | 'company'
+  property?: 'contact' | 'orders' | 'company' | 'favorites'
 ) => {
   const queryClient = useQueryClient();
 

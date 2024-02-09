@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/db/db.prisma-client';
-import { CreateOrderPayload } from '@/store/order/order.create';
+import { CreateOrderPayload } from '@/store/orders/orders.create';
 import { CartCache } from '@/types/types.cart';
 import { client } from '@/lib/trigger';
 import { sendOrderEmail } from '@/utils/email/email.send-order-email';

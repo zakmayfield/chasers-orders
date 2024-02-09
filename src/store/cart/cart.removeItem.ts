@@ -15,7 +15,7 @@ type DeletedItemID = Pick<UnitsOnCart, 'unitId'>;
  * @returns Resolved promise with { unitId }
  */
 
-export const removeCartItem: RemoveCartItemStore = async (payload) => {
+export const removeItem: RemoveCartItemStore = async (payload) => {
   const body = JSON.stringify(payload);
 
   try {

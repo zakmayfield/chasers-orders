@@ -1,6 +1,6 @@
 'use client';
 
-import { getRecentOrders } from '@/store/order/order.recent';
+import { getRecentOrders } from '@/store/orders/orders.recent';
 import { Order, OrderLineItem } from '@prisma/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';

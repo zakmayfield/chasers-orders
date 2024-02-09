@@ -7,7 +7,7 @@ type GetOrdersType = {
 export const getRecentOrders: GetOrdersType = async () => {
   try {
     const fetchUrl = new URL(
-      `/api/user/orders/recent`,
+      `/api/orders/recent`,
       process.env.NEXT_PUBLIC_BASE_URL
     );
     const response = await fetch(fetchUrl);
