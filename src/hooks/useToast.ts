@@ -5,7 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 interface UseToastProps {
   (): {
     notify: (message: string, variant?: Variants) => Id;
-    ToastContainer: (props: ToastContainerProps) => JSX.Element;
   };
 }
 
@@ -19,6 +18,5 @@ export const useToast: UseToastProps = () => {
 
   return {
     notify,
-    ToastContainer,
   };
 };

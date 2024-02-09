@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCart } from '@/store/cart/cart.getCart';
 import { CartCache } from '@/types/types.cart';
-import { ToastContainer } from 'react-toastify';
 import EmptyCart from './ui/EmptyCart';
 import Link from 'next/link';
 import CartItemContainer from './ui/CartItemContainer';
@@ -31,7 +30,6 @@ export default function Cart() {
       {data && data.items.length < 1 && <EmptyCart />}
       {data && data.items.length > 0 && <CartItemContainer cartData={data} />}
       <Link href='/cart/order'>Confirm Order</Link>
-      <ToastContainer />
     </div>
   );
 }

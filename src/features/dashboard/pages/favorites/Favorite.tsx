@@ -5,7 +5,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
-  const { notify, ToastContainer } = useToast();
+  const { notify } = useToast();
 
   const { mutate } = useToggleFavoriteMutation({
     onSuccess,
@@ -43,7 +43,6 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
       </span>
       <span className='col-span-3 border'>{fav.juice.name}</span>
       <span className='col-span-1 border'>{fav.juice.category}</span>
-      <ToastContainer />
     </div>
   );
 }

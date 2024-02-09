@@ -10,7 +10,7 @@ import { OrderType } from '@/features/dashboard/pages/recent-orders/RecentOrders
 export default function PlaceOrder() {
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { notify, ToastContainer } = useToast();
+  const { notify } = useToast();
 
   const { mutate } = useMutation({
     mutationFn: createOrder,
@@ -58,7 +58,6 @@ export default function PlaceOrder() {
   return (
     <div className='w-full flex justify-end'>
       <button onClick={handlePlaceOrder}>Place Order</button>
-      <ToastContainer />
     </div>
   );
 }

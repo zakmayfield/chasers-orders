@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Nav from '../features/nav/Nav';
 import Providers from '@/lib/providers/Providers';
+import { ToastContainer } from 'react-toastify';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <Nav />
           <div>{children}</div>
           <ReactQueryDevtools initialIsOpen={false} />
+          <ToastContainer />
         </body>
       </html>
     </Providers>

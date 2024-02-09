@@ -40,7 +40,7 @@ export default function ProductsTable({
 }) {
   const queryClient = useQueryClient();
   const { favorites } = useFavoritesQuery();
-  const { notify, ToastContainer } = useToast();
+  const { notify } = useToast();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
@@ -149,7 +149,6 @@ export default function ProductsTable({
         <Table reactTable={reactTable} />
         <Pagination reactTable={reactTable} />
       </div>
-      <ToastContainer />
     </div>
   );
 }
