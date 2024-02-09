@@ -21,11 +21,13 @@ export type ExtendedFavorite = FavoriteWithoutUserID & {
 };
 
 export const useFavoritesQuery: UseFavoritesQuery = (options) => {
+  const key = options?.extended ? ['favorites', 'extended'] : ['favorites'];
+
   const { data: favorites, isLoading } = useQuery<
     FavoriteWithoutUserID[] | ExtendedFavorite[],
     Error
   >({
-    queryKey: ['favorites', `${options?.extended && 'extended'}`],
+    queryKey: key,
     queryFn: async () => await getFavorites(options?.extended),
     staleTime: Infinity,
   });
