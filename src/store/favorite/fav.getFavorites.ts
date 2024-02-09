@@ -1,15 +1,13 @@
-import { Favorite } from '@prisma/client';
+import { ExtendedFavorite } from '@/hooks/useFavoritesQuery';
 
 type GetFavoritesType = {
-  (extended?: boolean): Promise<Favorite[]>;
+  (): Promise<ExtendedFavorite[]>;
 };
 
-export const getFavorites: GetFavoritesType = async (extended = false) => {
+export const getFavorites: GetFavoritesType = async () => {
   const apiUrl = '/api/user/favorites';
-  const extendedFlag = `?extended=${extended}`;
-
   try {
-    const response = await fetch(apiUrl + extendedFlag);
+    const response = await fetch(apiUrl);
 
     if (!response.ok) {
       throw new Error(await response.text());

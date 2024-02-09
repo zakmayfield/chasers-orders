@@ -11,38 +11,20 @@ type Options = {
 };
 
 type UseFavoritesQueryReturn = {
-  favorites: FavoriteWithoutUserID[] | ExtendedFavorite[] | undefined;
+  favorites: ExtendedFavorite[] | undefined;
   isLoading: boolean;
-  isExtended: (data: unknown) => data is ExtendedFavorite[];
 };
 export type FavoriteWithoutUserID = Omit<Favorite, 'userId'>;
 export type ExtendedFavorite = FavoriteWithoutUserID & {
   juice: Product;
 };
 
-export const useFavoritesQuery: UseFavoritesQuery = (options) => {
-  const key = options?.extended ? ['favorites', 'extended'] : ['favorites'];
-
-  const { data: favorites, isLoading } = useQuery<
-    FavoriteWithoutUserID[] | ExtendedFavorite[],
-    Error
-  >({
-    queryKey: key,
-    queryFn: async () => await getFavorites(options?.extended),
+export const useFavoritesQuery: UseFavoritesQuery = () => {
+  const { data: favorites, isLoading } = useQuery<ExtendedFavorite[], Error>({
+    queryKey: ['favorites'],
+    queryFn: getFavorites,
     staleTime: Infinity,
   });
 
-  function isExtended(data: unknown): data is ExtendedFavorite[] {
-    function isItemExtended(data: unknown): data is ExtendedFavorite {
-      return !!data && typeof data === 'object' && 'juice' in data;
-    }
-
-    return (
-      !!data &&
-      Array.isArray(data) &&
-      data.every((item) => isItemExtended(item))
-    );
-  }
-
-  return { favorites, isLoading, isExtended };
+  return { favorites, isLoading };
 };
