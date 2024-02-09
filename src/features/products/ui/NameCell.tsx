@@ -26,41 +26,44 @@ export default function NameCell({
   info: CellContext<ProductWithUnits, string>;
 }) {
   const queryClient = useQueryClient();
-  const { notify } = useToast();
+  const { notify, ToastContainer } = useToast();
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
 
-  const { mutate, data, isSuccess, error } = useToggleFavoriteMutation();
+  const { mutate } = useToggleFavoriteMutation({
+    onSuccess,
+    onError,
+  });
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      queryClient.setQueryData(
-        ['favorites'],
-        (oldData: Favorite[] | undefined) => {
-          const newData = oldData && [data, ...oldData];
-          const filteredData =
-            oldData && oldData.filter((item) => item.id !== data.id);
+  function onSuccess(data: ExtendedFavorite) {
+    queryClient.setQueryData(
+      ['favorites'],
+      (oldData: ExtendedFavorite[] | undefined) => {
+        const newData = oldData && [data, ...oldData];
+        const filteredData =
+          oldData && oldData.filter((item) => item.id !== data.id);
 
-          return oldData
-            ? actionState === 'add'
-              ? newData
-              : filteredData
-            : oldData;
-        }
-      );
-
-      notify(
-        actionState === 'add'
-          ? `Added to favorites ❤️`
-          : `Removed from favorites 💔`
-      );
-    } else if (!isSuccess && error) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      } else {
-        notify('Error toggling favorite');
+        return oldData
+          ? actionState === 'add'
+            ? newData
+            : filteredData
+          : oldData;
       }
+    );
+
+    notify(
+      actionState === 'add'
+        ? `Added to favorites ❤️`
+        : `Removed from favorites 💔`
+    );
+  }
+
+  function onError(error: unknown) {
+    if (error instanceof Error) {
+      notify(error.message, 'error');
+    } else {
+      notify('Error favoriting', 'error');
     }
-  }, [data, isSuccess, error, queryClient, notify, actionState]);
+  }
 
   const product = products.find((item) => item.name === info.getValue());
 

@@ -1,7 +1,8 @@
+import { ExtendedFavorite } from '@/hooks/useFavoritesQuery';
 import { Favorite } from '@prisma/client';
 
 type ToggleFavoriteProps = {
-  (action: Actions, id?: string): Promise<Favorite>;
+  (action: Actions, id?: string): Promise<ExtendedFavorite>;
 };
 export type Actions = 'add' | 'remove';
 

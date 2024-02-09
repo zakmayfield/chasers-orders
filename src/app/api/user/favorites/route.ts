@@ -9,13 +9,6 @@ export async function GET(req: NextRequest) {
     return new Response('Unauthenticated', { status: 400 });
   }
 
-  const searchParams = req.nextUrl.searchParams;
-  const extendedFlag = searchParams.get('extended');
-
-  function isExtended(flag: string | null) {
-    return flag === 'true';
-  }
-
   const { id: userId } = session.user;
 
   try {
@@ -28,7 +21,7 @@ export async function GET(req: NextRequest) {
         id: true,
         createdAt: true,
         juiceId: true,
-        juice: isExtended(extendedFlag),
+        juice: true,
       },
     });
 

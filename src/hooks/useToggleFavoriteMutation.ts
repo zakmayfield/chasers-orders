@@ -1,37 +1,39 @@
-import { Actions, toggleFavorite } from '@/store/favorite/fav.toggleFavorite';
+import { toggleFavorite } from '@/store/favorite/fav.toggleFavorite';
 import { ActionTypes } from '@/store/favorite/fav.actions';
-import { Favorite } from '@prisma/client';
 import { UseMutateFunction, useMutation } from '@tanstack/react-query';
+import { ExtendedFavorite } from './useFavoritesQuery';
 
-type UseToggleFavoriteProps = {
-  (): {
+type UseToggleFavorite = {
+  ({ onSuccess, onError }: ToggleFavoriteProps): {
     mutate: MutateType;
-    data: Favorite | undefined;
-    isSuccess: boolean;
-    error: unknown;
   };
 };
 
+type ToggleFavoriteProps = {
+  onSuccess?: (data: ExtendedFavorite) => void;
+  onError?: (error: unknown) => void;
+};
+
 type MutateType = UseMutateFunction<
-  | {
-      id: string;
-      createdAt: Date;
-      juiceId: string;
-      userId: string;
-    }
-  | undefined,
+  ExtendedFavorite,
   unknown,
-  {
-    action: Actions;
-    id: string;
-  },
+  ActionTypes,
   unknown
 >;
 
-export const useToggleFavoriteMutation: UseToggleFavoriteProps = () => {
-  const { mutate, isSuccess, data, error } = useMutation({
+export const useToggleFavoriteMutation: UseToggleFavorite = ({
+  onSuccess,
+  onError,
+}) => {
+  const { mutate } = useMutation({
     mutationFn: ({ action, id }: ActionTypes) => toggleFavorite(action, id),
+    onSuccess(data) {
+      onSuccess?.(data);
+    },
+    onError(error) {
+      onError?.(error);
+    },
   });
 
-  return { mutate, data, isSuccess, error };
+  return { mutate };
 };

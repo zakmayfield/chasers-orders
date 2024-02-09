@@ -51,6 +51,7 @@ const handler = async (req: NextRequest) => {
             id: true,
             createdAt: true,
             juiceId: true,
+            juice: true,
           },
         });
         return new Response(JSON.stringify(added));
