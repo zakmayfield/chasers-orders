@@ -1,4 +1,4 @@
-import { db } from '@/lib/db/db.prisma-client';
+import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/types/types.auth-forms';
 import { User } from '@prisma/client';
 import { JWT } from 'next-auth/jwt';

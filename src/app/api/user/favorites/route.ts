@@ -1,4 +1,4 @@
-import { db } from '@/lib/db/db.prisma-client';
+import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { NextRequest } from 'next/server';
 

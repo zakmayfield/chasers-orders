@@ -2,7 +2,7 @@ import { getAuthSession } from '@/lib/auth/auth.options';
 import { Favorite } from '@prisma/client';
 import { NextRequest } from 'next/server';
 import { headers } from 'next/headers';
-import { db } from '@/lib/db/db.prisma-client';
+import { db } from '@/lib/prisma';
 import { Actions } from '@/services/mutations/favorite.toggleFavorite';
 
 const handler = async (req: NextRequest) => {

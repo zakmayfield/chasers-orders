@@ -1,5 +1,5 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { db } from '@/lib/db/db.prisma-client';
+import { db } from '@/lib/prisma';
 import {
   PrismaClientKnownRequestError,
   PrismaClientUnknownRequestError,

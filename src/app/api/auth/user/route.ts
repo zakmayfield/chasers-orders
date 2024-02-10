@@ -1,4 +1,4 @@
-import { db } from '@/lib/db/db.prisma-client';
+import { db } from '@/lib/prisma';
 import type { NextRequest } from 'next/server';
 
 async function handler(req: NextRequest) {
