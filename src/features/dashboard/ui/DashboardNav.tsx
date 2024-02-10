@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FaClockRotateLeft, FaRegHeart } from 'react-icons/fa6';
 import { RxDashboard } from 'react-icons/rx';
 import { IoSettingsOutline } from 'react-icons/io5';
-import { usePathname, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 type DashboardNavItem = {
   path: string;
@@ -37,8 +37,6 @@ const dashboardNavItems: DashboardNavItem[] = [
 
 export default function DashboardNav() {
   const pathname = usePathname();
-  console.log(pathname);
-
   const basePath = '/dashboard';
   return (
     <div className='flex flex-col gap-3 w-2/3 mx-auto'>
@@ -47,8 +45,7 @@ export default function DashboardNav() {
         const route = basePath + itemPath;
         const isActive = route === pathname;
 
-        console.log({ isActive, route, pathname });
-
+        // TODO: Figure out the active state for nested settings routes
         return (
           <Link
             key={item.content}
