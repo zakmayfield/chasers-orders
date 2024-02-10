@@ -1,4 +1,4 @@
-import DashboardNav from '@/features/dashboard/ui/nav/DashboardNav';
+import DashboardNav from '@/features/dashboard/ui/DashboardNav';
 
 export default function DashboardLayout({
   children,
