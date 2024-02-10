@@ -1,10 +1,9 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/db/db.prisma-client';
-import { JwtPayload } from 'jsonwebtoken';
 import {
   extractExpiration,
   generateVerificationToken,
-} from '@/utils/auth/auth.manage-verification-token';
+} from '@/utils/token.utils';
 import { sendVerificationEmail } from '@/utils/email/email.send-verification-email';
 import {
   PrismaClientKnownRequestError,

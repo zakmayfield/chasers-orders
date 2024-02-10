@@ -1,8 +1,23 @@
 import { verify, sign, JwtPayload } from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
 
+// secret
 const secret = process.env.VERIFICATION_TOKEN_SECRET;
 
+// helpers
+function getSecretOrThrow(secret: string | undefined): string {
+  if (!secret) {
+    throw new Error('Verification token needs a secret');
+  }
+
+  return secret;
+}
+
+function isJwtPayload(decoded: unknown): decoded is JwtPayload {
+  return !!decoded && typeof decoded === 'object' && 'exp' in decoded;
+}
+
+// util functions
 export const generateVerificationToken = (email: string): string => {
   const validSecret = getSecretOrThrow(secret);
 
@@ -43,15 +58,3 @@ export const extractExpiration = (token: string): number => {
     }
   }
 };
-
-function isJwtPayload(decoded: unknown): decoded is JwtPayload {
-  return !!decoded && typeof decoded === 'object' && 'exp' in decoded;
-}
-
-function getSecretOrThrow(secret: string | undefined): string {
-  if (!secret) {
-    throw new Error('Verification token needs a secret');
-  }
-
-  return secret;
-}

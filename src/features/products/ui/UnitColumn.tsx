@@ -4,7 +4,7 @@ import React from 'react';
 import { HandleUnitChangeProps } from './ProductsTable';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { UnitsOnCartCacheType } from '@/types/types.cart';
-import { RowPayload } from '@/utils/products/products.table';
+import { RowPayload } from '@/utils/products.table.utils';
 
 interface UnitColumnProps {
   handleUnitChange: (props: HandleUnitChangeProps) => void;

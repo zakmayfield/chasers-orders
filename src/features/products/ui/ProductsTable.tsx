@@ -21,7 +21,7 @@ import { useToast } from '@/hooks/general';
 import { CartCache } from '@/types/types.cart';
 import NameCell from './NameCell';
 import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
-import { getRowPayload } from '@/utils/products/products.table';
+import { getRowPayload } from '@/utils/products.table.utils';
 
 export type HandleUnitChangeProps = {
   event: React.ChangeEvent<HTMLSelectElement>;
