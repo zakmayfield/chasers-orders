@@ -1,7 +1,7 @@
 import { JWT, getToken } from 'next-auth/jwt';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyUserStatus } from './utils/auth/auth.verify-user-status';
+import { userStatus } from './utils/auth.utils';
 
 export async function middleware(req: NextRequest) {
   const token: JWT | null = await getToken({ req });
@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', req.nextUrl));
   }
 
-  const { isApproved, emailVerified } = await verifyUserStatus(token);
+  const { isApproved, emailVerified } = await userStatus(token);
 
   if (!emailVerified) {
     return NextResponse.redirect(

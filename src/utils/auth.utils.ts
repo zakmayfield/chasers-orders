@@ -1,8 +1,41 @@
-import { User } from '@prisma/client';
-import { db } from './db.prisma-client';
+import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/types/types.auth-forms';
+import { User } from '@prisma/client';
+import { JWT } from 'next-auth/jwt';
 
-// Get secure user
+/*
+  USER ACCOUNT STATUS
+*/
+
+interface IUserVerification {
+  isApproved: boolean;
+  emailVerified: Date | null;
+}
+
+type ResolvedVerificationCheck = {
+  (token: JWT | null): Promise<IUserVerification>;
+};
+
+export const userStatus: ResolvedVerificationCheck = async (token) => {
+  if (token && (!token.isApproved || !token.emailVerified)) {
+    const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, baseURL);
+
+    try {
+      const response = await fetch(apiUrl);
+      const { isApproved, emailVerified } = await response.json();
+      return { isApproved, emailVerified };
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return { isApproved: token!.isApproved, emailVerified: token!.emailVerified };
+};
+
+/*
+  GET SECURE USER
+*/
 
 type UniqueSecureUser = {
   (email: string): Promise<SecureUser | null>;
@@ -21,7 +54,9 @@ export const findUniqueSecureUser: UniqueSecureUser = async (email) =>
     },
   });
 
-// Register user
+/*
+  REGISTER USER
+*/
 
 interface IRegisterUser {
   (payload: RegisterUserPayload): Promise<SecureUser | null>;

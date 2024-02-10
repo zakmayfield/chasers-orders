@@ -1,8 +1,9 @@
 import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
-import { useToast } from '@/hooks/general';
+import { useToast } from '@/hooks/general.hooks';
 import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
 import { useQueryClient } from '@tanstack/react-query';
 import { FaHeart } from 'react-icons/fa';
+import { GoHeartFill } from 'react-icons/go';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
@@ -38,7 +39,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
         className='col-span-1 border cursor-pointer'
         onClick={() => mutate({ action: 'remove', id: fav.id })}
       >
-        <FaHeart />
+        <GoHeartFill color='red' />
       </span>
       <span className='col-span-3 border'>{fav.juice.name}</span>
       <span className='col-span-1 border'>{fav.juice.category}</span>

@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Unit } from '@prisma/client';
+import React from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
@@ -17,29 +16,20 @@ import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
 import { addItem } from '@/services/mutations/cart.addItem';
-import { useToast } from '@/hooks/general';
+import { useToast } from '@/hooks/general.hooks';
 import { CartCache } from '@/types/types.cart';
 import NameCell from './NameCell';
 import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
-import { getRowPayload } from '@/utils/products/products.table';
-
-export type HandleUnitChangeProps = {
-  event: React.ChangeEvent<HTMLSelectElement>;
-  rowIndex: number;
-};
+import { getRowPayload } from '@/utils/products.table.utils';
 
 export default function ProductsTable({
   products: productData,
 }: {
   products: ProductWithUnits[];
 }) {
-  const { notify } = useToast();
   const queryClient = useQueryClient();
+  const { notify } = useToast();
   const { favorites } = useFavoritesQuery();
-
-  const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
-    Array(productData.length).fill(null)
-  );
 
   const { mutate: addToCartMutation } = useMutation({
     mutationFn: addItem,
@@ -63,23 +53,6 @@ export default function ProductsTable({
     },
   });
 
-  // TODO: next
-  const handleUnitChange = ({ event, rowIndex }: HandleUnitChangeProps) => {
-    const selectedSize = event.target.value;
-
-    const unit =
-      productData[rowIndex].units.find(
-        (unit: Unit) => unit.size === selectedSize
-      ) || null;
-
-    // set selected units to state when changing unit size value
-    setSelectedUnits((prevSelectedUnits) => {
-      const newSelectedUnits = [...prevSelectedUnits];
-      newSelectedUnits[rowIndex] = unit;
-      return newSelectedUnits;
-    });
-  };
-
   const columnHelper = createColumnHelper<ProductWithUnits>();
 
   const columns = [
@@ -99,13 +72,12 @@ export default function ProductsTable({
       header: 'Size',
       enableColumnFilter: false,
       cell: (info) => {
-        const { rowPayload } = getRowPayload(info, selectedUnits);
+        const { rowPayload } = getRowPayload(info);
 
         return (
           <UnitColumn
             rowPayload={rowPayload}
             addToCartMutation={addToCartMutation}
-            handleUnitChange={handleUnitChange}
           />
         );
       },

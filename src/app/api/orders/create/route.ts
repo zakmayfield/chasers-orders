@@ -1,9 +1,9 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { db } from '@/lib/db/db.prisma-client';
+import { db } from '@/lib/prisma';
 import { CreateOrderPayload } from '@/services/mutations/orders.create';
 import { CartCache } from '@/types/types.cart';
 import { client } from '@/lib/trigger';
-import { sendOrderEmail } from '@/utils/email/email.send-order-email';
+import { sendOrderEmail } from '@/utils/email.utils';
 
 export async function POST(req: Request) {
   const session = await getAuthSession();

@@ -3,32 +3,26 @@ import { Unit } from '@prisma/client';
 import { CellContext } from '@tanstack/react-table';
 
 type GetRowPayload = {
-  (
-    info: CellContext<ProductWithUnits, Unit[]>,
-    selectedUnits: (Unit | null)[]
-  ): {
+  (info: CellContext<ProductWithUnits, Unit[]>): {
     rowPayload: RowPayload;
   };
 };
 
 export type RowPayload = {
-  rowIndex: number;
+  defaultUnit: Unit;
   units: Unit[];
-  unit: Unit | null;
+  product: ProductWithUnits;
 };
 
-export const getRowPayload: GetRowPayload = (info, selectedUnits) => {
+export const getRowPayload: GetRowPayload = (info) => {
   const units = info.getValue();
-  const rowIndex = info.row.index;
-
-  const unit: Unit | null = selectedUnits[rowIndex]
-    ? selectedUnits[rowIndex]
-    : units[0];
+  const product = info.row.original;
+  const defaultUnit = units[0];
 
   const rowPayload: RowPayload = {
-    rowIndex,
+    defaultUnit,
     units,
-    unit,
+    product,
   };
 
   return { rowPayload };
