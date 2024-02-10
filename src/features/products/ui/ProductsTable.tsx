@@ -17,7 +17,7 @@ import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
 import { addItem } from '@/services/mutations/cart.addItem';
-import { useToast } from '@/hooks/general';
+import { useToast } from '@/hooks/general.hooks';
 import { CartCache } from '@/types/types.cart';
 import NameCell from './NameCell';
 import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';

@@ -1,5 +1,5 @@
 'use client';
-import { useToast } from '@/hooks/general';
+import { useToast } from '@/hooks/general.hooks';
 import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
 import { ProductWithUnits } from '@/types/types.product';
 import { useQueryClient } from '@tanstack/react-query';

@@ -5,7 +5,7 @@ import {
   CreateOrderPayload,
   createOrder,
 } from '@/services/mutations/orders.create';
-import { useToast } from '@/hooks/general';
+import { useToast } from '@/hooks/general.hooks';
 import { CartCache } from '@/types/types.cart';
 import { useRouter } from 'next/navigation';
 import { OrderType } from '@/features/dashboard/pages/recent-orders/RecentOrders';
