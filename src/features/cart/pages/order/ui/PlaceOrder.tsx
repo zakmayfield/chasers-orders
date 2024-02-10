@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CreateOrderPayload, createOrder } from '@/store/orders/orders.create';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/general';
 import { CartCache } from '@/types/types.cart';
 import { useRouter } from 'next/navigation';
 import { OrderType } from '@/features/dashboard/pages/recent-orders/RecentOrders';

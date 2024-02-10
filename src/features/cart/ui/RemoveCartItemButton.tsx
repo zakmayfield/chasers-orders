@@ -1,4 +1,4 @@
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/general';
 import { removeItem } from '@/store/cart/cart.removeItem';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

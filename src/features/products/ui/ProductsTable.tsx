@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { Unit } from '@prisma/client';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -18,10 +18,10 @@ import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
 import { addItemToCart } from '@/store/cart/cart.addItemToCart';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/general';
 import { CartCache } from '@/types/types.cart';
 import NameCell from './NameCell';
-import { useFavoritesQuery } from '@/hooks/useFavoritesQuery';
+import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
 import { getRowPayload } from '@/utils/products/products.table';
 
 export type HandleUnitChangeProps = {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CartCache } from '@/types/types.cart';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/general';
 import {
   SizesData,
   getItemUnitSizes,

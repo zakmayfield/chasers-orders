@@ -1,4 +1,4 @@
-import { ExtendedFavorite } from '@/hooks/useFavoritesQuery';
+import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 
 type GetFavoritesType = {
   (): Promise<ExtendedFavorite[]>;

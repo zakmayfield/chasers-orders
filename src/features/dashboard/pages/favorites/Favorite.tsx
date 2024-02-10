@@ -1,5 +1,5 @@
-import { ExtendedFavorite } from '@/hooks/useFavoritesQuery';
-import { useToast } from '@/hooks/useToast';
+import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
+import { useToast } from '@/hooks/general';
 import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
 import { useQueryClient } from '@tanstack/react-query';
 import { FaHeart } from 'react-icons/fa';
