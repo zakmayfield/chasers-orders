@@ -4,7 +4,7 @@ type GetDashboardUserDataProps = {
   (): Promise<DashboardUserData>;
 };
 
-export const getDashboardUserData: GetDashboardUserDataProps = async () => {
+export const getDashboardUser: GetDashboardUserDataProps = async () => {
   try {
     const fetchUrl = new URL(`/api/user`, process.env.NEXT_PUBLIC_BASE_URL);
     const response = await fetch(fetchUrl);
