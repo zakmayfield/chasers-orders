@@ -1,6 +1,6 @@
 'use client';
 import { useToast } from '@/hooks/useToast';
-import { useToggleFavoriteMutation } from '@/hooks/useToggleFavoriteMutation';
+import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
 import { ProductWithUnits } from '@/types/types.product';
 import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
@@ -88,6 +88,7 @@ export default function NameCell({
     mutate(action);
   };
 
+  // TODO: kindof a choppy render for the heart icons
   return (
     <div className='w-80 flex items-center'>
       <div className='cursor-pointer px-1' onClick={handleMutation}>
