@@ -2,11 +2,8 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CartCache } from '@/types/types.cart';
 import { useToast } from '@/hooks/general';
-import {
-  SizesData,
-  getItemUnitSizes,
-} from '@/store/cart/cart.getItemUnitSizes';
-import { updateItemSize } from '@/store/cart/cart.updateItemSize';
+import { SizesData, getItemSizes } from '@/services/queries/cart.getItemSizes';
+import { updateItemSize } from '@/services/mutations/cart.updateItemSize';
 
 type UpdateCartItemSizeProps = {
   payload: {
@@ -31,7 +28,7 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
     error,
   } = useQuery<SizesData | undefined, Error>({
     queryKey: ['unit-sizes', unitId],
-    queryFn: async () => await getItemUnitSizes(unitId),
+    queryFn: async () => await getItemSizes(unitId),
   });
 
   const { mutate: sizeMutation, isLoading: mutationIsLoading } = useMutation({

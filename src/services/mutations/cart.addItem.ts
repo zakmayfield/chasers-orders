@@ -6,7 +6,7 @@ type AddItemToCartParams = {
 
 type AddToCartResponseData = UnitsOnCartCacheType;
 
-export const addItemToCart: AddItemToCartParams = async (unitId) => {
+export const addItem: AddItemToCartParams = async (unitId) => {
   try {
     const response = await fetch('/api/cart/item/add', {
       method: 'POST',
