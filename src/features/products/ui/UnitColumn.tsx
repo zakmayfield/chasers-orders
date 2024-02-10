@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Unit } from '@prisma/client';
 import { HandleUnitChangeProps } from './ProductsTable';
 import { UseMutateFunction } from '@tanstack/react-query';
 import { UnitsOnCartCacheType } from '@/types/types.cart';

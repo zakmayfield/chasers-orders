@@ -12,7 +12,6 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  CellContext,
 } from '@tanstack/react-table';
 import UnitColumn from './UnitColumn';
 import { categoryData as categories } from '../categories';
