@@ -11,10 +11,10 @@ import {
   extractExpiration,
   generateVerificationToken,
 } from '@/utils/token.utils';
-import { sendVerificationEmail } from '@/utils/email/email.send-verification-email';
+import { sendVerificationEmail } from '@/utils/email.utils';
 import { db } from '@/lib/db/db.prisma-client';
-import { findUniqueSecureUser, registerUser } from '@/lib/db/db.user';
-import { createCart } from '@/lib/db/db.cart';
+import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
+import { createCart } from '@/utils/cart.utils';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
