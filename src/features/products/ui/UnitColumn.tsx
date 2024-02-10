@@ -1,13 +1,16 @@
 'use client';
 
-import React from 'react';
-import { HandleUnitChangeProps } from './ProductsTable';
-import { UseMutateFunction } from '@tanstack/react-query';
+import React, { useEffect, useState } from 'react';
+import {
+  UseMutateFunction,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { UnitsOnCartCacheType } from '@/types/types.cart';
 import { RowPayload } from '@/utils/products.table.utils';
 
 interface UnitColumnProps {
-  handleUnitChange: (props: HandleUnitChangeProps) => void;
   rowPayload: RowPayload;
   addToCartMutation: UseMutateFunction<
     UnitsOnCartCacheType,
@@ -19,13 +22,30 @@ interface UnitColumnProps {
 
 const UnitColumn: React.FC<UnitColumnProps> = ({
   addToCartMutation,
-  handleUnitChange,
   rowPayload,
 }) => {
-  const { rowIndex, units, unit } = rowPayload;
+  const { defaultUnit, units, product } = rowPayload;
+  const queryClient = useQueryClient();
 
-  const handleAddToCart = () => {
-    addToCartMutation(unit!.id);
+  const sizeCache: string | undefined = queryClient.getQueryData([
+    'size',
+    product.id,
+  ]);
+
+  const { mutate: setColumnSizeCache } = useMutation({
+    mutationFn: async (value: string) => {
+      queryClient.setQueryData(['size', product.id], value);
+    },
+  });
+
+  const handleAddToCart = async () => {
+    addToCartMutation(defaultUnit.id);
+  };
+
+  const handleSizeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+
+    setColumnSizeCache(value);
   };
 
   const unitOptions = units.map((unitInfo) => (
@@ -37,8 +57,8 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   return (
     <div className='flex gap-6 items-center w-full'>
       <select
-        value={unit!.size}
-        onChange={(event) => handleUnitChange({ event, rowIndex })}
+        value={sizeCache ? sizeCache : defaultUnit.size}
+        onChange={handleSizeSelect}
         className='w-24 rounded'
       >
         {unitOptions}
