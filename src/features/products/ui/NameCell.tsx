@@ -7,7 +7,7 @@ import { CellContext } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
-import { ActionTypes } from '@/store/favorite/fav.actions';
+import { ActionTypes } from '@/types/types.favorite.actions';
 
 export default function NameCell({
   favorites,
