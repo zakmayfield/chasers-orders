@@ -4,9 +4,9 @@ import { JsonWebTokenError } from 'jsonwebtoken';
 const secret = process.env.VERIFICATION_TOKEN_SECRET;
 
 export const generateVerificationToken = (email: string): string => {
-  const verifiedSecret = getSecretOrThrow(secret);
+  const validSecret = getSecretOrThrow(secret);
 
-  return sign({ email }, verifiedSecret, {
+  return sign({ email }, validSecret, {
     expiresIn: '48h',
   });
 };

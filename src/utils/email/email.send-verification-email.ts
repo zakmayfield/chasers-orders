@@ -1,4 +1,4 @@
-import transporter from './email.config';
+import transporter from '@/lib/nodemailer';
 
 export const sendVerificationEmail = (
   verificationToken: string,

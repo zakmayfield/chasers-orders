@@ -1,5 +1,5 @@
-import { Company, Order, OrderLineItem, User } from '@prisma/client';
-import transporter from './email.config';
+import { Order, OrderLineItem } from '@prisma/client';
+import transporter from '@/lib/nodemailer';
 
 type PayloadType = {
   order: Order & {
