@@ -21,7 +21,7 @@ import { useToast } from '@/hooks/useToast';
 import { CartCache } from '@/types/types.cart';
 import NameCell from './NameCell';
 import { getFavorites } from '@/store/favorite/fav.getFavorites';
-import { useFavoritesQuery } from '@/hooks/useFavoritesQuery';
+import { ExtendedFavorite, useFavoritesQuery } from '@/hooks/useFavoritesQuery';
 
 export type HandleAddToCartProps = {
   units: Unit[];
@@ -39,8 +39,8 @@ export default function ProductsTable({
   products: ProductWithUnits[];
 }) {
   const queryClient = useQueryClient();
-  const { favorites } = useFavoritesQuery();
   const { notify } = useToast();
+  const { favorites } = useFavoritesQuery();
 
   const [selectedUnits, setSelectedUnits] = useState<Array<Unit | null>>(
     Array(productData.length).fill(null)
@@ -103,9 +103,9 @@ export default function ProductsTable({
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => (
-        <NameCell products={productData} favorites={favorites} info={info} />
-      ),
+      cell: (info) => {
+        return <NameCell favorites={favorites} info={info} />;
+      },
     }),
     columnHelper.accessor('category', {
       header: 'Category',

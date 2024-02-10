@@ -2,11 +2,11 @@ import { ExtendedFavorite } from '@/hooks/useFavoritesQuery';
 import { useToast } from '@/hooks/useToast';
 import { useToggleFavoriteMutation } from '@/hooks/useToggleFavoriteMutation';
 import { useQueryClient } from '@tanstack/react-query';
+import { FaHeart } from 'react-icons/fa';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-
   const { mutate } = useToggleFavoriteMutation({
     onSuccess,
     onError,
@@ -36,10 +36,10 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   return (
     <div className='grid grid-cols-5'>
       <span
-        className='col-span-1 border'
+        className='col-span-1 border cursor-pointer'
         onClick={() => mutate({ action: 'remove', id: fav.id })}
       >
-        ❤️
+        <FaHeart />
       </span>
       <span className='col-span-3 border'>{fav.juice.name}</span>
       <span className='col-span-1 border'>{fav.juice.category}</span>
