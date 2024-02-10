@@ -1,4 +1,4 @@
-import { toggleFavorite } from '@/store/favorite/fav.toggleFavorite';
+import { toggleFavorite } from '@/services/mutations/favorite.toggleFavorite';
 import { ActionTypes } from '@/types/types.favorite.actions';
 import { UseMutateFunction, useMutation } from '@tanstack/react-query';
 import { ExtendedFavorite } from '../queries/useFavoritesQuery';
