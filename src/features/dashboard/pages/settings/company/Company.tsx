@@ -1,10 +1,7 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { getDashboardUserData } from '@/store/user/user.getDashboardUserData';
 import { DashboardCompany, DashboardQueryError } from '@/types/types.dashboard';
-import { useDashboardQuery } from '@/hooks/useDashboardQuery';
+import { useDashboardQuery } from '@/hooks/query.hooks';
 
 type CompanyFetchState = DashboardCompany | DashboardQueryError | null;
 

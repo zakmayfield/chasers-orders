@@ -1,5 +1,5 @@
-import { toast, ToastContainer } from 'react-toastify';
-import type { Id, ToastContainerProps } from 'react-toastify';
+import { toast } from 'react-toastify';
+import type { Id } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface UseToastProps {

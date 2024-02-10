@@ -3,7 +3,7 @@
 import { Session } from 'next-auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { tokenValidator } from '@/store/auth/auth.email.token-validator';
+import { verifyEmail } from '@/services/mutations/auth.verifyEmail';
 import { useEffect, useRef, useState } from 'react';
 
 // TODO: Handle errors/success and routing
@@ -20,7 +20,7 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
     error,
     isError,
   } = useMutation({
-    mutationFn: tokenValidator,
+    mutationFn: verifyEmail,
     onSuccess(data) {
       router.push('/dashboard/account-pending');
     },

@@ -1,4 +1,4 @@
-import { ExtendedFavorite } from '@/hooks/useFavoritesQuery';
+import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 import { Favorite } from '@prisma/client';
 
 type ToggleFavoriteProps = {

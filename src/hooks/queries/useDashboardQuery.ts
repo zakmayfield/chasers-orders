@@ -5,7 +5,7 @@ import {
   DashboardUserData,
   DashboardFetchState,
 } from '@/types/types.dashboard';
-import { getDashboardUserData } from '@/store/user/user.getDashboardUserData';
+import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 
 export const useDashboardQuery = <T>(
   property?: 'contact' | 'orders' | 'company' | 'favorites'
@@ -27,11 +27,9 @@ export const useDashboardQuery = <T>(
       try {
         setIsLoading(true);
         const data: DashboardUserData | undefined =
-          await queryClient.fetchQuery(
-            ['user-dashboard'],
-            getDashboardUserData,
-            { staleTime: 60 * 1000 * 5 }
-          );
+          await queryClient.fetchQuery(['user-dashboard'], getDashboardUser, {
+            staleTime: 60 * 1000 * 5,
+          });
 
         if (!data) {
           setFetchState({

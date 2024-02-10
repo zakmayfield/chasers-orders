@@ -1,26 +1,33 @@
 'use client';
 
 import React from 'react';
-import { Unit } from '@prisma/client';
 import { HandleUnitChangeProps } from './ProductsTable';
+import { UseMutateFunction } from '@tanstack/react-query';
+import { UnitsOnCartCacheType } from '@/types/types.cart';
+import { RowPayload } from '@/utils/products/products.table';
 
 interface UnitColumnProps {
-  handleAddToCart: () => void;
   handleUnitChange: (props: HandleUnitChangeProps) => void;
-  units: Unit[];
-  rowIndex: number;
-  selectedUnits: Array<Unit | null>;
-  isLoading: boolean;
+  rowPayload: RowPayload;
+  addToCartMutation: UseMutateFunction<
+    UnitsOnCartCacheType,
+    unknown,
+    string,
+    unknown
+  >;
 }
 
 const UnitColumn: React.FC<UnitColumnProps> = ({
-  handleAddToCart,
+  addToCartMutation,
   handleUnitChange,
-  units,
-  rowIndex,
-  selectedUnits,
-  isLoading,
+  rowPayload,
 }) => {
+  const { rowIndex, units, unit } = rowPayload;
+
+  const handleAddToCart = () => {
+    addToCartMutation(unit!.id);
+  };
+
   const unitOptions = units.map((unitInfo) => (
     <option key={unitInfo.id} value={unitInfo.size}>
       {unitInfo.size}
@@ -30,7 +37,7 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   return (
     <div className='flex gap-6 items-center w-full'>
       <select
-        value={selectedUnits[rowIndex] ? selectedUnits[rowIndex]?.size : ''}
+        value={unit!.size}
         onChange={(event) => handleUnitChange({ event, rowIndex })}
         className='w-24 rounded'
       >
@@ -38,12 +45,8 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
       </select>
 
       <button
-        // TODO: Currently disabling all add to cart buttons on the table, need to isolate
-        disabled={isLoading}
-        className={`w-24 border text-sm py-1 rounded ${
-          isLoading && 'opacity-25'
-        }`}
-        onClick={() => handleAddToCart()}
+        className={`w-24 border text-sm py-1 rounded`}
+        onClick={handleAddToCart}
       >
         Add to Cart
       </button>

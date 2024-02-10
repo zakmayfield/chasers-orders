@@ -1,6 +1,6 @@
 'use client';
 
-import { useDashboardQuery } from '@/hooks/useDashboardQuery';
+import { useDashboardQuery } from '@/hooks/query.hooks';
 import { DashboardUserData } from '@/types/types.dashboard';
 import Link from 'next/link';
 

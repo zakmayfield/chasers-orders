@@ -1,6 +1,6 @@
 'use client';
 
-import { useFavoritesQuery } from '@/hooks/useFavoritesQuery';
+import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
 import Favorite from './Favorite';
 
 export default function Favorites() {

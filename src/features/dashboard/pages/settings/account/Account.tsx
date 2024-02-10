@@ -1,6 +1,6 @@
 'use client';
 
-import { useDashboardQuery } from '@/hooks/useDashboardQuery';
+import { useDashboardQuery } from '@/hooks/query.hooks';
 import { DashboardUser } from '@/types/types.dashboard';
 
 export default function Account() {

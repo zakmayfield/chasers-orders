@@ -2,7 +2,7 @@ type TokenValidatorReturn = {
   (token: string | null): Promise<Response | undefined>;
 };
 
-export const tokenValidator: TokenValidatorReturn = async (
+export const verifyEmail: TokenValidatorReturn = async (
   token
 ): Promise<Response | undefined> => {
   try {

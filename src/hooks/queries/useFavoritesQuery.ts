@@ -1,4 +1,4 @@
-import { getFavorites } from '@/store/favorite/fav.getFavorites';
+import { getFavorites } from '@/services/queries/favorite.getFavorites';
 import { Favorite, Product } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 
