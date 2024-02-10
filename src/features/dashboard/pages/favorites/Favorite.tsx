@@ -13,7 +13,6 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   });
 
   function onSuccess(data: ExtendedFavorite) {
-    console.log('onSuccess fired', data);
     queryClient.setQueryData(
       ['favorites'],
       (oldData: ExtendedFavorite[] | undefined) => {
