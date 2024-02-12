@@ -4,9 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getCart } from '@/services/queries/cart.getCart';
 import { CartCache } from '@/types/types.cart';
 import EmptyCart from './ui/EmptyCart';
-import Link from 'next/link';
 import CartItemContainer from './ui/CartItemContainer';
-import GridContainer from '../ui/layout/GridContainer';
 
 export default function Cart() {
   const { isLoading, isError, data, error } = useQuery<

@@ -7,9 +7,10 @@ type CartItemContainerProps = {
   cartData: CartCache;
 };
 
-// TODO: refreshing on the cart page will reverse the order of cart items - need to adjust either `orderBy` or how the cache is stored
 const CartItemContainer: React.FC<CartItemContainerProps> = (props) => {
   const { cartData } = props;
+
+  // TODO: refreshing on the cart page will reverse the order of cart items - need to adjust either `orderBy` or how the cache is stored
   return (
     <GridContainer cols={12}>
       {cartData.items.map((item) => (
