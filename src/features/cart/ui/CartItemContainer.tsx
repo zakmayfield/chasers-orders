@@ -1,14 +1,17 @@
 import { CartCache } from '@/types/types.cart';
 import CartItem from './CartItem';
+import GridContainer from '@/features/ui/layout/GridContainer';
+import Link from 'next/link';
 
 type CartItemContainerProps = {
   cartData: CartCache;
 };
 
+// TODO: refreshing on the cart page will reverse the order of cart items - need to adjust either `orderBy` or how the cache is stored
 const CartItemContainer: React.FC<CartItemContainerProps> = (props) => {
   const { cartData } = props;
   return (
-    <div className='grid grid-cols-10 gap-y-3'>
+    <GridContainer cols={12}>
       {cartData.items.map((item) => (
         <CartItem
           key={item.unitId}
@@ -18,7 +21,13 @@ const CartItemContainer: React.FC<CartItemContainerProps> = (props) => {
           }}
         />
       ))}
-    </div>
+      <Link
+        href='/cart/order'
+        className='col-start-7 col-span-2 text-center border rounded-lg py-2'
+      >
+        Confirm Order
+      </Link>
+    </GridContainer>
   );
 };
 
