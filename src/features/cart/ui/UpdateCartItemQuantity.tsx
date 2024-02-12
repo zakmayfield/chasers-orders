@@ -62,7 +62,7 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
         value={quantity}
         disabled={isLoading}
         onChange={handleQuantityChange}
-        className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+        className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-16'
       >
         {options.map((num) => (
           <option key={num} value={num}>

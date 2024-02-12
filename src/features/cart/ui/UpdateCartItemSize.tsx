@@ -80,7 +80,7 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
             id='size'
             value={size}
             onChange={handleSizeChange}
-            className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+            className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-24'
           >
             {options &&
               options.map((size) => (
