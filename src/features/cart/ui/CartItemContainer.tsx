@@ -13,15 +13,17 @@ const CartItemContainer: React.FC<CartItemContainerProps> = (props) => {
   // TODO: refreshing on the cart page will reverse the order of cart items - need to adjust either `orderBy` or how the cache is stored
   return (
     <GridContainer cols={12}>
-      {cartData.items.map((item) => (
-        <CartItem
-          key={item.unitId}
-          payload={{
-            cartId: cartData.id,
-            cartItem: item,
-          }}
-        />
-      ))}
+      <div className='col-start-5 col-end-9'>
+        {cartData.items.map((item) => (
+          <CartItem
+            key={item.unitId}
+            payload={{
+              cartId: cartData.id,
+              cartItem: item,
+            }}
+          />
+        ))}
+      </div>
       <Link
         href='/cart/order'
         className='col-start-7 col-span-2 text-center border rounded-lg py-2'

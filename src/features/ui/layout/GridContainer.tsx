@@ -8,7 +8,7 @@ const GridContainer: React.FC<GridContainerProps> = ({
   cols = 1,
 }) => {
   const columns = cols;
-  return <div className={`grid grid-cols-${cols} gap-4`}>{children}</div>;
+  return <div className={`grid grid-cols-${columns} gap-4`}>{children}</div>;
 };
 
 export default GridContainer;
