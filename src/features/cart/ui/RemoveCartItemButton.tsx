@@ -50,6 +50,7 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     <button
       disabled={isLoading}
       onClick={() => removeCartItem({ unitId, cartId })}
+      className='text-red-400 hover:text-red-600 focus:outline-none underline text-left'
     >
       Remove
     </button>

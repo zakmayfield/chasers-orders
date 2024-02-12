@@ -8,7 +8,7 @@ type CartItemContainerProps = {
 const CartItemContainer: React.FC<CartItemContainerProps> = (props) => {
   const { cartData } = props;
   return (
-    <div>
+    <div className='grid grid-cols-10 gap-y-3'>
       {cartData.items.map((item) => (
         <CartItem
           key={item.unitId}
