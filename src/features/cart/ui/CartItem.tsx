@@ -18,7 +18,6 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const { quantity, unit } = cartItem;
   const { product } = unit;
 
-  // TODO: size is being set to the first available size when added to cart, instead of selected size
   return (
     <div className='col-start-5 col-end-9 pb-3 border-b'>
       <div className='flex space-x-2 items-center'>
