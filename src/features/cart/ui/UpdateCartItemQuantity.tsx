@@ -54,23 +54,22 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
   const options = Array.from({ length: 10 }, (_, i) => i + 1);
 
   return (
-    <div className='flex items-center'>
-      <p className='pr-6'>Quantity: </p>
-      <form>
-        <select
-          name='quantity'
-          id='quantity'
-          value={quantity}
-          disabled={isLoading}
-          onChange={(e) => handleQuantityChange(e)}
-        >
-          {options.map((num) => (
-            <option key={num} value={num}>
-              {num}
-            </option>
-          ))}
-        </select>
-      </form>
+    <div className='flex items-center space-x-2'>
+      <p className='text-sm text-gray-500'>Quantity</p>
+      <select
+        name='quantity'
+        id='quantity'
+        value={quantity}
+        disabled={isLoading}
+        onChange={handleQuantityChange}
+        className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+      >
+        {options.map((num) => (
+          <option key={num} value={num}>
+            {num}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };

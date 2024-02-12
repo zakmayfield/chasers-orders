@@ -68,23 +68,29 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
 
   const options = data && data.product.units.map((unit) => unit.size);
 
-  const selectWhenLoading = queryIsLoading ? (
-    <div>Loading...</div>
-  ) : (
-    <select name='size' id='size' value={size} onChange={handleSizeChange}>
-      {options &&
-        options.map((size) => (
-          <option key={size} value={size}>
-            {size}
-          </option>
-        ))}
-    </select>
-  );
-
   return (
-    <div className='flex items-center'>
-      <p className='pr-6'>Size: </p>
-      <form>{selectWhenLoading}</form>
+    <div className='flex space-x-2'>
+      <div className='flex items-center space-x-2'>
+        <p className='text-sm text-gray-500'>Size</p>
+        {queryIsLoading ? (
+          <span className='pl-2'>Loading...</span>
+        ) : (
+          <select
+            name='size'
+            id='size'
+            value={size}
+            onChange={handleSizeChange}
+            className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500'
+          >
+            {options &&
+              options.map((size) => (
+                <option key={size} value={size}>
+                  {size}
+                </option>
+              ))}
+          </select>
+        )}
+      </div>
     </div>
   );
 };

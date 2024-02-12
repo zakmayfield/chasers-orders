@@ -6,6 +6,7 @@ import { CartCache } from '@/types/types.cart';
 import EmptyCart from './ui/EmptyCart';
 import Link from 'next/link';
 import CartItemContainer from './ui/CartItemContainer';
+import GridContainer from '../ui/layout/GridContainer';
 
 export default function Cart() {
   const { isLoading, isError, data, error } = useQuery<
@@ -29,7 +30,6 @@ export default function Cart() {
     <div>
       {data && data.items.length < 1 && <EmptyCart />}
       {data && data.items.length > 0 && <CartItemContainer cartData={data} />}
-      <Link href='/cart/order'>Confirm Order</Link>
     </div>
   );
 }

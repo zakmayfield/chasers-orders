@@ -41,17 +41,18 @@ export default function DashboardNav() {
   return (
     <div className='flex flex-col gap-3 w-2/3 mx-auto'>
       {dashboardNavItems.map((item) => {
-        const itemPath = item.path ? item.path : '';
+        const itemPath = item.path;
         const route = basePath + itemPath;
-        const isActive = route === pathname;
+        const isActive =
+          pathname === route ||
+          (route !== basePath && pathname.startsWith(route));
 
-        // TODO: Figure out the active state for nested settings routes
         return (
           <Link
             key={item.content}
             href={route}
             className={`border rounded-lg p-2 flex items-center gap-3 ${
-              isActive && 'bg-black bg-opacity-5 border-2'
+              isActive && 'bg-slate-200 border-2'
             }`}
           >
             {item.icon}
