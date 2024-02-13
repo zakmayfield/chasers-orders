@@ -25,7 +25,7 @@ async function handler(req: Request) {
         userId: true,
         items: {
           orderBy: {
-            createdAt: 'asc',
+            createdAt: 'desc',
           },
           select: {
             unitId: true,

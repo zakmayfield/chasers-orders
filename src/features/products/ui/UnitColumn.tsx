@@ -39,7 +39,8 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   });
 
   const handleAddToCart = async () => {
-    addToCartMutation(defaultUnit.id);
+    const unitId = units.find((unit) => unit.size === sizeCache)?.id;
+    addToCartMutation(unitId!);
   };
 
   const handleSizeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
