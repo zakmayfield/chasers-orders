@@ -19,7 +19,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const { product } = unit;
 
   return (
-    <div className='col-start-5 col-end-9 pb-3 border-b'>
+    <div className='w-full pb-3 border-b'>
       <div className='flex space-x-2 items-center'>
         <h3 className='text-lg font-medium'>{product.name}</h3>
         <p className='text-sm text-gray-500'>{product.category}</p>
