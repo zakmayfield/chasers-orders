@@ -49,7 +49,7 @@ export default function OrderButton() {
   return (
     <button
       onClick={handlePlaceOrder}
-      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 ${isSuccess && 'bg-black bg-opacity-5'}`}
+      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 focus:ring-green-600 focus:ring-2 ${isSuccess && 'bg-black bg-opacity-5'}`}
       disabled={isSuccess}
     >
       {isSuccess ? '👍' : 'Place Order'}
