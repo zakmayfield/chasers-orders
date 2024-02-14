@@ -32,14 +32,14 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
     product.id,
   ]);
 
-  const { mutate: setColumnSizeCache } = useMutation({
+  const { mutateAsync: setColumnSizeCache } = useMutation({
     mutationFn: async (value: string) => {
       queryClient.setQueryData(['size', product.id], value);
     },
   });
 
   const handleAddToCart = async () => {
-    setColumnSizeCache(sizeCache ? sizeCache : defaultUnit.size);
+    await setColumnSizeCache(sizeCache ? sizeCache : defaultUnit.size);
     const unit = units.find((unit) => unit.size === sizeCache);
     addToCartMutation(unit!.id);
   };

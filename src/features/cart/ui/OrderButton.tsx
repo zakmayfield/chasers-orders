@@ -1,21 +1,19 @@
-'use client';
-
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { OrderType } from '@/features/dashboard/pages/recent-orders/RecentOrders';
+import { useToast } from '@/hooks/general.hooks';
 import {
   CreateOrderPayload,
   createOrder,
 } from '@/services/mutations/orders.create';
-import { useToast } from '@/hooks/general.hooks';
 import { CartCache } from '@/types/types.cart';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { OrderType } from '@/features/dashboard/pages/recent-orders/RecentOrders';
 
-export default function PlaceOrder() {
+export default function OrderButton() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { notify } = useToast();
 
-  const { mutate } = useMutation({
+  const { mutate, isSuccess } = useMutation({
     mutationFn: createOrder,
     onSuccess(data) {
       notify(`Order placed`);
@@ -29,15 +27,6 @@ export default function PlaceOrder() {
       );
 
       // Clear 'cart' items cache after successful order
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              items: [],
-            }
-          : oldData
-      );
-
       setTimeout(() => {
         router.push('/dashboard');
       }, 5000);
@@ -57,10 +46,13 @@ export default function PlaceOrder() {
     };
     mutate(payload);
   };
-
   return (
-    <div className='w-full flex justify-end'>
-      <button onClick={handlePlaceOrder}>Place Order</button>
-    </div>
+    <button
+      onClick={handlePlaceOrder}
+      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 ${isSuccess && 'bg-black bg-opacity-5'}`}
+      disabled={isSuccess}
+    >
+      {isSuccess ? '👍' : 'Place Order'}
+    </button>
   );
 }

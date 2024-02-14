@@ -20,6 +20,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const { quantity, unit } = cartItem;
   const { product } = unit;
 
+  // TODO: add an 'x' icon to handle removing item from cart
   return (
     <div className='w-full pb-3 border-b'>
       <div className='flex space-x-2 items-center'>

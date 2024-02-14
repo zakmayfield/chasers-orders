@@ -51,7 +51,7 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
     quantityMutation({ cartId, unitId, quantityPayload: newValue });
   };
 
-  const options = Array.from({ length: 10 }, (_, i) => i + 1);
+  const options = Array.from({ length: 50 }, (_, i) => i + 1);
 
   return (
     <div className='flex items-center space-x-2'>
