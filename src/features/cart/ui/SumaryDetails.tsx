@@ -26,13 +26,14 @@ function Detail({ item }: { item: UnitsOnCartCacheType }) {
   const { product } = unit;
 
   return (
-    <div className='flex items-center justify-between pb-4 mt-4 text-sm border-b'>
-      <span className='w-full max-w-[250px]'>{product.name}</span>
-
-      <div className='w-full max-w-[90px] flex items-center justify-between gap-3'>
+    <div className='flex flex-col gap-1 pb-4 mt-4 border-b last-of-type:border-none'>
+      <div className='flex gap-3 text-sm'>
+        <span className='text-gray-500'>x{quantity}</span>
         <span>{unit.size}</span>
-        <span>x{quantity}</span>
+        <span className='text-gray-500'>{product.category.toLowerCase()}</span>
       </div>
+
+      <span className='text-sm font-semibold'>{product.name}</span>
     </div>
   );
 }
