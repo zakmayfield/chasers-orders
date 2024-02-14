@@ -13,7 +13,7 @@ const OrderSummary = () => {
         {/* Order button */}
         <Link
           href='/cart/order'
-          className='col-start-2 col-span-2 text-center border rounded-lg py-2'
+          className='col-start-1 col-span-3 text-center border rounded-lg py-2'
         >
           Confirm Order
         </Link>
