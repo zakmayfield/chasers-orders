@@ -1,34 +1,29 @@
 import { CartCache } from '@/types/types.cart';
 import CartItem from './CartItem';
-import GridContainer from '@/features/ui/layout/GridContainer';
-import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
+import { getCart } from '@/services/queries/cart.getCart';
 
-type CartItemContainerProps = {
-  cartData: CartCache;
-};
+export default function CartItemContainer() {
+  const { data } = useQuery<CartCache | undefined, Error>({
+    queryKey: ['cart'],
+    queryFn: getCart,
+    staleTime: Infinity,
+  });
 
-const CartItemContainer: React.FC<CartItemContainerProps> = (props) => {
-  const { cartData } = props;
+  console.log('data', data);
 
   return (
-    <GridContainer cols={12}>
-      {cartData.items.map((item) => (
-        <CartItem
-          key={item.unitId}
-          payload={{
-            cartId: cartData.id,
-            cartItem: item,
-          }}
-        />
-      ))}
-      <Link
-        href='/cart/order'
-        className='col-start-7 col-span-2 text-center border rounded-lg py-2'
-      >
-        Confirm Order
-      </Link>
-    </GridContainer>
+    <div className='col-start-3 col-span-4'>
+      {data &&
+        data.items.map((item) => (
+          <CartItem
+            key={item.unitId}
+            payload={{
+              cartId: data.id,
+              cartItem: item,
+            }}
+          />
+        ))}
+    </div>
   );
-};
-
-export default CartItemContainer;
+}

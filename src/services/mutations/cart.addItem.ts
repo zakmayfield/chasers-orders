@@ -13,7 +13,7 @@ export const addItem: AddItemToCartParams = async (unitId) => {
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify(unitId),
+      body: JSON.stringify({ unitId }),
     });
 
     if (!response.ok) {

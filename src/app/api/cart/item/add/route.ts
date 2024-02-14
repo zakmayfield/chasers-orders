@@ -15,8 +15,8 @@ async function handler(req: Request) {
     });
   }
 
-  const body: string = await req.json();
-  const unitId = body;
+  const body: { unitId: string } = await req.json();
+  const { unitId } = body;
   const userId = session.user.id;
   let cartId: string | null = null;
 

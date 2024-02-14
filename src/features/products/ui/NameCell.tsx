@@ -26,6 +26,7 @@ export default function NameCell({
     onError,
   });
 
+  // TODO: implement server side logic for the favorites // pull into a hook
   useEffect(() => {
     const juice = favorites?.find(
       (item) => item.juiceId === info.row.original.id
