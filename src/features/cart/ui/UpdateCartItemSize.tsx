@@ -13,6 +13,8 @@ type UpdateCartItemSizeProps = {
   };
 };
 
+// TODO: adjust quantity limit
+
 const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
   const {
     payload: { cartId, unitId, sizeData },

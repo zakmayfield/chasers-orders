@@ -1,8 +1,8 @@
 'use client';
 
-import Link from 'next/link';
 import GridContainer from '@/features/ui/layout/GridContainer';
 import SummaryDetails from './SumaryDetails';
+import OrderButton from './OrderButton';
 
 const OrderSummary = () => {
   return (
@@ -11,12 +11,7 @@ const OrderSummary = () => {
         <SummaryDetails />
 
         {/* Order button */}
-        <Link
-          href='/cart/order'
-          className='col-start-1 col-span-3 text-center border rounded-lg py-2'
-        >
-          Confirm Order
-        </Link>
+        <OrderButton />
       </GridContainer>
     </div>
   );

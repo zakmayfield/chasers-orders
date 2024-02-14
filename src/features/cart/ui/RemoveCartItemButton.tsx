@@ -2,6 +2,7 @@ import { useToast } from '@/hooks/general.hooks';
 import { removeItem } from '@/services/mutations/cart.removeItem';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { GiCancel } from 'react-icons/gi';
 
 export interface RemoveCartItemProps {
   payload: RemoveItemPayloadData;
@@ -50,9 +51,9 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     <button
       disabled={isLoading}
       onClick={() => removeCartItem({ unitId, cartId })}
-      className='text-red-400 hover:text-red-600 focus:outline-none underline text-left'
+      className=' text-gray-700 hover:text-red-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:text-red-600'
     >
-      Remove
+      <GiCancel />
     </button>
   );
 };

@@ -39,10 +39,21 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
   });
 
   const handleAddToCart = async () => {
-    setColumnSizeCache(sizeCache ? sizeCache : defaultUnit.size);
+    if (!sizeCache) {
+      const unit = setToCacheAndReturnUnit(defaultUnit.size);
+      addToCartMutation(unit.id);
+      return;
+    }
     const unit = units.find((unit) => unit.size === sizeCache);
     addToCartMutation(unit!.id);
+    return;
   };
+
+  function setToCacheAndReturnUnit(size: string) {
+    setColumnSizeCache(size);
+    const unit = units[0];
+    return unit;
+  }
 
   const handleSizeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
