@@ -51,7 +51,7 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     <button
       disabled={isLoading}
       onClick={() => removeCartItem({ unitId, cartId })}
-      className=' hover:text-red-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:text-red-600'
+      className=' text-gray-700 hover:text-red-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:text-red-600'
     >
       <GiCancel />
     </button>
