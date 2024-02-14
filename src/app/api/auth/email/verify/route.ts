@@ -4,7 +4,7 @@ import {
   extractExpiration,
   generateVerificationToken,
 } from '@/utils/token.utils';
-import { sendVerificationEmail } from '@/utils/email/email.send-verification-email';
+import { sendVerificationEmail } from '@/utils/email.utils';
 import {
   PrismaClientKnownRequestError,
   PrismaClientUnknownRequestError,
@@ -20,7 +20,7 @@ function isExpired(expires: Date) {
   return false;
 }
 
-export async function handler(req: Request) {
+async function handler(req: Request) {
   const session = await getAuthSession();
 
   // determine user auth
