@@ -2,6 +2,7 @@ interface GridContainerProps {
   children: React.ReactNode;
   view?: View;
   cols?: number;
+  gap?: number;
 }
 
 enum Grids {
@@ -16,10 +17,12 @@ const GridContainer: React.FC<GridContainerProps> = ({
   children,
   view = 'desktop',
   cols,
+  gap,
 }) => {
-  let columns = getGridView(view, cols);
+  const columns = getGridView(view, cols);
+  const gapData = gap ? 'gap-' + gap : 'gap-4';
 
-  return <div className={`grid ${columns}`}>{children}</div>;
+  return <div className={`grid ${columns} ${gapData}`}>{children}</div>;
 };
 
 type Grid = Grids.desktop | Grids.tablet | Grids.mobile | string;
