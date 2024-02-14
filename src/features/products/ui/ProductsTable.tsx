@@ -22,6 +22,8 @@ import NameCell from './NameCell';
 import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
 import { getRowPayload } from '@/utils/products.table.utils';
 
+// TODO: gotta rework the favorite icons and the add to cart button state - a general cleanup may be needed as well
+
 export default function ProductsTable({
   products: productData,
 }: {
@@ -29,7 +31,7 @@ export default function ProductsTable({
 }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const { favorites } = useFavoritesQuery();
+  const { favorites, isLoading } = useFavoritesQuery();
 
   const { mutate: addToCartMutation } = useMutation({
     mutationFn: addItem,
@@ -60,6 +62,7 @@ export default function ProductsTable({
       header: 'Name',
       enableColumnFilter: true,
       cell: (info) => {
+        console.log({ favorites, product: info.row.original });
         return <NameCell favorites={favorites} info={info} />;
       },
     }),
@@ -97,7 +100,12 @@ export default function ProductsTable({
   return (
     <div>
       <div className='mx-auto w-3/4'>
-        <Table reactTable={reactTable} />
+        {isLoading ? (
+          <div className='text-center py-24'>Loading...</div>
+        ) : (
+          <Table reactTable={reactTable} />
+        )}
+
         <Pagination reactTable={reactTable} />
       </div>
     </div>
