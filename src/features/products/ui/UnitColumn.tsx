@@ -38,10 +38,9 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
     },
   });
 
-  // TODO: add to cart is broken
   const handleAddToCart = async () => {
+    setColumnSizeCache(sizeCache ? sizeCache : defaultUnit.size);
     const unit = units.find((unit) => unit.size === sizeCache);
-    console.log('unit', unit);
     addToCartMutation(unit!.id);
   };
 

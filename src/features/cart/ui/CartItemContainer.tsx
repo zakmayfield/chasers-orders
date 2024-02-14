@@ -1,3 +1,5 @@
+'use client';
+
 import { CartCache } from '@/types/types.cart';
 import CartItem from './CartItem';
 import { useQuery } from '@tanstack/react-query';
@@ -9,8 +11,6 @@ export default function CartItemContainer() {
     queryFn: getCart,
     staleTime: Infinity,
   });
-
-  console.log('data', data);
 
   return (
     <div className='col-start-3 col-span-4'>
