@@ -1,3 +1,5 @@
+'use client';
+
 import { getCart } from '@/services/queries/cart.getCart';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useQuery } from '@tanstack/react-query';

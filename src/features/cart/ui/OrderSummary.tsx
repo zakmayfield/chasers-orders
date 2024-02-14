@@ -1,3 +1,5 @@
+'use client';
+
 import Link from 'next/link';
 import GridContainer from '@/features/ui/layout/GridContainer';
 import SummaryDetails from './SumaryDetails';
