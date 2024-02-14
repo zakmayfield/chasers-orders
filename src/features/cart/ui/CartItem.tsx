@@ -20,7 +20,6 @@ const CartItem: React.FC<CartItemProps> = (props) => {
   const { quantity, unit } = cartItem;
   const { product } = unit;
 
-  // TODO: add an 'x' icon to handle removing item from cart
   return (
     <div className='w-full pb-3 border-b flex items-center gap-10'>
       <RemoveCartItemButton
@@ -31,7 +30,7 @@ const CartItem: React.FC<CartItemProps> = (props) => {
       />
 
       <div>
-        <div className='flex space-x-2 items-center'>
+        <div className='flex space-x-2 items-center mt-3'>
           <h3 className='text-lg font-medium'>{product.name}</h3>
           <p className='text-sm text-gray-500'>{product.category}</p>
         </div>
