@@ -13,18 +13,16 @@ import {
 import { ActionTypes } from '@/types/types.favorite.actions';
 
 export default function NameCell({
-  favorites,
   info,
+  favorites,
 }: {
-  favorites: ExtendedFavorite[] | undefined;
   info: CellContext<ProductWithUnits, string>;
+  favorites: ExtendedFavorite[] | undefined;
 }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
   const [isFav, setIsFav] = useState(false);
-  // pull favorites in direct, if loading wait to render product. This should probably be up a level in products table
-  // const { favorites } = useFavoritesQuery();
 
   const { mutate } = useToggleFavoriteMutation({
     onSuccess,

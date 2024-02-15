@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -19,19 +19,23 @@ import { addItem } from '@/services/mutations/cart.addItem';
 import { useToast } from '@/hooks/general.hooks';
 import { CartCache } from '@/types/types.cart';
 import NameCell from './NameCell';
-import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
 import { getRowPayload } from '@/utils/products.table.utils';
+import { getProducts } from '@/services/queries/products.getProducts';
+import { useFavoritesQuery } from '@/hooks/query.hooks';
 
-// TODO: gotta rework the favorite icons and the add to cart button state - a general cleanup may be needed as well
-
-export default function ProductsTable({
-  products: productData,
-}: {
-  products: ProductWithUnits[];
-}) {
+export default function ProductsTable() {
+  // tools
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const { favorites, isLoading } = useFavoritesQuery();
+
+  // data
+  const { favorites } = useFavoritesQuery();
+
+  const { data } = useQuery<ProductWithUnits[], Error>({
+    queryKey: ['products'],
+    queryFn: getProducts,
+    staleTime: Infinity,
+  });
 
   const { mutate: addToCartMutation } = useMutation({
     mutationFn: addItem,
@@ -55,6 +59,7 @@ export default function ProductsTable({
     },
   });
 
+  // table config
   const columnHelper = createColumnHelper<ProductWithUnits>();
 
   const columns = [
@@ -62,7 +67,6 @@ export default function ProductsTable({
       header: 'Name',
       enableColumnFilter: true,
       cell: (info) => {
-        console.log({ favorites, product: info.row.original });
         return <NameCell favorites={favorites} info={info} />;
       },
     }),
@@ -88,7 +92,7 @@ export default function ProductsTable({
   ];
 
   const reactTable = useReactTable({
-    data: productData,
+    data: data ? data : [],
     columns,
     enableFilters: true,
     enableColumnFilters: true,
@@ -97,15 +101,10 @@ export default function ProductsTable({
     getFilteredRowModel: getFilteredRowModel(),
   });
 
-  // TODO make the isLoading functionality more robust
   return (
     <div>
       <div className='mx-auto w-3/4'>
-        {isLoading ? (
-          <div className='text-center py-24'>Loading...</div>
-        ) : (
-          <Table reactTable={reactTable} />
-        )}
+        <Table reactTable={reactTable} />
 
         <Pagination reactTable={reactTable} />
       </div>
