@@ -1,5 +1,5 @@
-import Products from '@/features/products/Products';
+import ProductsTable from '@/features/products/table/ProductsTable';
 
 export default async function Page() {
-  return <Products />;
+  return <ProductsTable />;
 }

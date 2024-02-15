@@ -6,19 +6,15 @@ import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import {
-  ExtendedFavorite,
-  useFavoritesQuery,
-} from '@/hooks/queries/useFavoritesQuery';
+import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 import { ActionTypes } from '@/types/types.favorite.actions';
 
-export default function NameCell({
-  info,
-  favorites,
-}: {
+type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
   favorites: ExtendedFavorite[] | undefined;
-}) {
+};
+
+export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
@@ -104,4 +100,4 @@ export default function NameCell({
       </div>
     </div>
   );
-}
+};

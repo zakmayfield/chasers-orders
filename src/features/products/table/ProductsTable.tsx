@@ -4,24 +4,19 @@ import React from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
-  useReactTable,
   Column,
   createColumnHelper,
   flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
 } from '@tanstack/react-table';
-import UnitColumn from './UnitColumn';
+import { tableConfig, getRowPayload } from '@/utils/products.table.utils';
+import { NameCol, CategoryCol, UnitCol } from './columns';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
+import { CartCache } from '@/types/types.cart';
 import { addItem } from '@/services/mutations/cart.addItem';
 import { useToast } from '@/hooks/general.hooks';
-import { CartCache } from '@/types/types.cart';
-import NameCell from './NameCell';
-import { getRowPayload } from '@/utils/products.table.utils';
-import { getProducts } from '@/services/queries/products.getProducts';
 import { useFavoritesQuery } from '@/hooks/query.hooks';
+import { getProducts } from '@/services/queries/products.getProducts';
 
 export default function ProductsTable() {
   // tools
@@ -66,40 +61,23 @@ export default function ProductsTable() {
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => {
-        return <NameCell favorites={favorites} info={info} />;
-      },
+      cell: (info) => <NameCol favorites={favorites} info={info} />,
     }),
     columnHelper.accessor('category', {
       header: 'Category',
       enableColumnFilter: true,
-      cell: (info) => info.getValue(),
+      cell: (info) => <CategoryCol info={info} />,
     }),
     columnHelper.accessor('units', {
       header: 'Size',
       enableColumnFilter: false,
-      cell: (info) => {
-        const { rowPayload } = getRowPayload(info);
-
-        return (
-          <UnitColumn
-            rowPayload={rowPayload}
-            addToCartMutation={addToCartMutation}
-          />
-        );
-      },
+      cell: (info) => (
+        <UnitCol info={info} addToCartMutation={addToCartMutation} />
+      ),
     }),
   ];
 
-  const reactTable = useReactTable({
-    data: data ? data : [],
-    columns,
-    enableFilters: true,
-    enableColumnFilters: true,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-  });
+  const { reactTable } = tableConfig(data, columns);
 
   return (
     <div>
