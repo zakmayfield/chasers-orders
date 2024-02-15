@@ -1,6 +1,34 @@
 import { ProductWithUnits } from '@/types/types.product';
 import { Unit } from '@prisma/client';
 import { CellContext } from '@tanstack/react-table';
+import {
+  ColumnDef,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+
+export const tableConfig = (
+  data: ProductWithUnits[] | undefined,
+  columns: ColumnDef<ProductWithUnits, any>[]
+) => {
+  const options = {
+    enableFilters: true,
+    enableColumnFilters: true,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  };
+
+  const reactTable = useReactTable({
+    data: data ? data : [],
+    columns,
+    ...options,
+  });
+
+  return { reactTable };
+};
 
 type GetRowPayload = {
   (info: CellContext<ProductWithUnits, Unit[]>): {

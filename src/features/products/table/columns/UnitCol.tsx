@@ -8,10 +8,13 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { UnitsOnCartCacheType } from '@/types/types.cart';
-import { RowPayload } from '@/utils/products.table.utils';
+import { RowPayload, getRowPayload } from '@/utils/products.table.utils';
+import { CellContext } from '@tanstack/react-table';
+import { ProductWithUnits } from '@/types/types.product';
+import { Unit } from '@prisma/client';
 
 interface UnitColumnProps {
-  rowPayload: RowPayload;
+  info: CellContext<ProductWithUnits, Unit[]>;
   addToCartMutation: UseMutateFunction<
     UnitsOnCartCacheType,
     unknown,
@@ -20,12 +23,14 @@ interface UnitColumnProps {
   >;
 }
 
-const UnitColumn: React.FC<UnitColumnProps> = ({
+export const UnitCol: React.FC<UnitColumnProps> = ({
+  info,
   addToCartMutation,
-  rowPayload,
 }) => {
-  const { defaultUnit, units, product } = rowPayload;
   const queryClient = useQueryClient();
+
+  const { rowPayload } = getRowPayload(info);
+  const { defaultUnit, units, product } = rowPayload;
 
   const sizeCache: string | undefined = queryClient.getQueryData([
     'size',
@@ -86,5 +91,3 @@ const UnitColumn: React.FC<UnitColumnProps> = ({
     </div>
   );
 };
-
-export default UnitColumn;
