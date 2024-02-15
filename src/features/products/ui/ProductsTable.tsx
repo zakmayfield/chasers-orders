@@ -97,6 +97,7 @@ export default function ProductsTable({
     getFilteredRowModel: getFilteredRowModel(),
   });
 
+  // TODO make the isLoading functionality more robust
   return (
     <div>
       <div className='mx-auto w-3/4'>
