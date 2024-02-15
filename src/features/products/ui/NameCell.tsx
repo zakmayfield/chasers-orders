@@ -6,15 +6,18 @@ import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
+import {
+  ExtendedFavorite,
+  useFavoritesQuery,
+} from '@/hooks/queries/useFavoritesQuery';
 import { ActionTypes } from '@/types/types.favorite.actions';
 
 export default function NameCell({
-  favorites,
   info,
+  favorites,
 }: {
-  favorites: ExtendedFavorite[] | undefined;
   info: CellContext<ProductWithUnits, string>;
+  favorites: ExtendedFavorite[] | undefined;
 }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
@@ -27,6 +30,7 @@ export default function NameCell({
   });
 
   // TODO: implement server side logic for the favorites // pull into a hook
+  // temporarily i could just check the loading state of the favorites query - when that query has resolved then the products will show up, ensuring that the UI doesn't flash
   useEffect(() => {
     const juice = favorites?.find(
       (item) => item.juiceId === info.row.original.id

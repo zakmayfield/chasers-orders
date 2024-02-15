@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Table as ReactTable,
   useReactTable,
@@ -19,17 +19,23 @@ import { addItem } from '@/services/mutations/cart.addItem';
 import { useToast } from '@/hooks/general.hooks';
 import { CartCache } from '@/types/types.cart';
 import NameCell from './NameCell';
-import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
 import { getRowPayload } from '@/utils/products.table.utils';
+import { getProducts } from '@/services/queries/products.getProducts';
+import { useFavoritesQuery } from '@/hooks/query.hooks';
 
-export default function ProductsTable({
-  products: productData,
-}: {
-  products: ProductWithUnits[];
-}) {
+export default function ProductsTable() {
+  // tools
   const queryClient = useQueryClient();
   const { notify } = useToast();
+
+  // data
   const { favorites } = useFavoritesQuery();
+
+  const { data } = useQuery<ProductWithUnits[], Error>({
+    queryKey: ['products'],
+    queryFn: getProducts,
+    staleTime: Infinity,
+  });
 
   const { mutate: addToCartMutation } = useMutation({
     mutationFn: addItem,
@@ -53,6 +59,7 @@ export default function ProductsTable({
     },
   });
 
+  // table config
   const columnHelper = createColumnHelper<ProductWithUnits>();
 
   const columns = [
@@ -85,7 +92,7 @@ export default function ProductsTable({
   ];
 
   const reactTable = useReactTable({
-    data: productData,
+    data: data ? data : [],
     columns,
     enableFilters: true,
     enableColumnFilters: true,
@@ -98,6 +105,7 @@ export default function ProductsTable({
     <div>
       <div className='mx-auto w-3/4'>
         <Table reactTable={reactTable} />
+
         <Pagination reactTable={reactTable} />
       </div>
     </div>
