@@ -26,7 +26,7 @@ export default function ProductsTable() {
   // data
   const { favorites } = useFavoritesQuery();
 
-  const { data } = useQuery<ProductWithUnits[], Error>({
+  const { data, isLoading } = useQuery<ProductWithUnits[], Error>({
     queryKey: ['products'],
     queryFn: getProducts,
     staleTime: Infinity,
@@ -61,7 +61,9 @@ export default function ProductsTable() {
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => <NameCol favorites={favorites} info={info} />,
+      cell: (info) => (
+        <NameCol favorites={favorites} info={info} isLoading={isLoading} />
+      ),
     }),
     columnHelper.accessor('category', {
       header: 'Category',
@@ -82,9 +84,16 @@ export default function ProductsTable() {
   return (
     <div>
       <div className='mx-auto w-3/4'>
-        <Table reactTable={reactTable} />
-
-        <Pagination reactTable={reactTable} />
+        {isLoading ? (
+          <div className='h-[545px] rounded shadow flex items-center justify-center'>
+            <p>Loading...</p>
+          </div>
+        ) : (
+          <div>
+            <Table reactTable={reactTable} />
+            <Pagination reactTable={reactTable} />
+          </div>
+        )}
       </div>
     </div>
   );
@@ -120,23 +129,18 @@ function Table({ reactTable }: { reactTable: ReactTable<ProductWithUnits> }) {
         ))}
       </thead>
       <tbody>
-        {reactTable.getRowModel().rows.length > 0 ? (
+        {reactTable.getRowModel().rows.length > 0 &&
           reactTable.getRowModel().rows.map((row) => (
             <tr key={row.id} className='even:bg-gray-100'>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className='py-2'>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
+              {row.getVisibleCells().map((cell) => {
+                return (
+                  <td key={cell.id} className='py-2'>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                );
+              })}
             </tr>
-          ))
-        ) : (
-          <tr>
-            <td className='p-3' colSpan={reactTable.getHeaderGroups().length}>
-              No products found
-            </td>
-          </tr>
-        )}
+          ))}
       </tbody>
     </table>
   );

@@ -12,9 +12,14 @@ import { ActionTypes } from '@/types/types.favorite.actions';
 type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
   favorites: ExtendedFavorite[] | undefined;
+  isLoading: boolean;
 };
 
-export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
+export const NameCol: React.FC<NameColProps> = ({
+  info,
+  favorites,
+  isLoading,
+}) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
@@ -89,7 +94,6 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
     mutate(action);
   };
 
-  // TODO: kindof a choppy render for the heart icons
   return (
     <div className='w-80 flex items-center'>
       <div className='cursor-pointer px-1' onClick={handleMutation}>
