@@ -1,7 +1,7 @@
 'use client';
 
 import GridContainer from '@/features/ui/layout/GridContainer';
-import SummaryDetails from './SumaryDetails';
+import SummaryDetails from './SummaryDetail';
 import OrderButton from './OrderButton';
 
 const OrderSummary = () => {
