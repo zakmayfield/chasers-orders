@@ -198,61 +198,81 @@ function Pagination({
   reactTable: ReactTable<ProductWithUnits>;
 }) {
   return (
-    <div className='flex gap-6 mt-6'>
-      <div className='flex gap-2'>
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanPreviousPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.setPageIndex(0)}
-          disabled={!reactTable.getCanPreviousPage()}
-        >
-          {'<<'}
-        </button>
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanPreviousPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.previousPage()}
-          disabled={!reactTable.getCanPreviousPage()}
-        >
-          {'<'}
-        </button>
+    <div className='flex justify-between gap-6 mt-6'>
+      <div className='flex items-center gap-6'>
+        <div className='flex gap-2'>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanPreviousPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() => reactTable.setPageIndex(0)}
+            disabled={!reactTable.getCanPreviousPage()}
+          >
+            {'<<'}
+          </button>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanPreviousPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() => reactTable.previousPage()}
+            disabled={!reactTable.getCanPreviousPage()}
+          >
+            {'<'}
+          </button>
 
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanNextPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.nextPage()}
-          disabled={!reactTable.getCanNextPage()}
-        >
-          {'>'}
-        </button>
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanNextPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.setPageIndex(reactTable.getPageCount() - 1)}
-          disabled={!reactTable.getCanNextPage()}
-        >
-          {'>>'}
-        </button>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanNextPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() => reactTable.nextPage()}
+            disabled={!reactTable.getCanNextPage()}
+          >
+            {'>'}
+          </button>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanNextPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() =>
+              reactTable.setPageIndex(reactTable.getPageCount() - 1)
+            }
+            disabled={!reactTable.getCanNextPage()}
+          >
+            {'>>'}
+          </button>
+        </div>
+        <span className='flex items-center gap-1'>
+          <div>Page</div>
+          <strong>
+            {reactTable.getState().pagination.pageIndex + 1} of{' '}
+            {reactTable.getPageCount()}
+          </strong>
+        </span>
       </div>
-      <span className='flex items-center gap-1'>
-        <div>Page</div>
-        <strong>
-          {reactTable.getState().pagination.pageIndex + 1} of{' '}
-          {reactTable.getPageCount()}
-        </strong>
-      </span>
+
+      <div>
+        <select
+          value={reactTable.getState().pagination.pageSize}
+          onChange={(e) => {
+            reactTable.setPageSize(Number(e.target.value));
+          }}
+          className='border rounded p-2 font-extralight'
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show <span className='font-normal'>{pageSize}</span>
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }
