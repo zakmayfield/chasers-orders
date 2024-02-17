@@ -3,6 +3,8 @@
 import { getCart } from '@/services/queries/cart.getCart';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { CiShop } from 'react-icons/ci';
 
 const SummaryDetails = () => {
   const { data, isFetching } = useQuery<CartCache | undefined, Error>({
@@ -15,6 +17,21 @@ const SummaryDetails = () => {
     <div className='col-span-3'>
       <h2 className='mb-6 font-light text-xl'>Order Summary</h2>
       {/* Summary Items Container */}
+      {/* No Cart Items */}
+      {data && data.items.length === 0 && (
+        <div className='font-extralight'>
+          <p className='flex items-center'>
+            Visit the{' '}
+            <Link href='/products' className='underline flex items-center px-1'>
+              <CiShop />
+              shop
+            </Link>{' '}
+            to get started
+          </p>
+        </div>
+      )}
+
+      {/* Data with items */}
       <div className=' border-b pb-6'>
         {isFetching && !data ? (
           // Placeholder Loading Items

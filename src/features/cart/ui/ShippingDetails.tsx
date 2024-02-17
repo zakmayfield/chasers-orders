@@ -6,9 +6,11 @@ import { getShipping } from '@/services/queries/cart.getShipping';
 import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import { Dispatch, SetStateAction, useState } from 'react';
 import Link from 'next/link';
+import { CgSpinnerAlt } from 'react-icons/cg';
+import { ImSpinner2 } from 'react-icons/im';
 
 const ShippingDetails = () => {
-  const { data, isLoading, error } = useQuery<
+  const { data, isFetching, error } = useQuery<
     GetShippingPayload | undefined,
     Error
   >({
@@ -21,7 +23,7 @@ const ShippingDetails = () => {
   if (error) {
     return (
       <div className='mt-6'>
-        <ContainerHeader noArrow={true} setExpanded={setExpanded} />
+        <ContainerHeader setExpanded={setExpanded} />
 
         <p className=' flex items-center gap-3 font-extralight'>
           Could not locate shipping information{' '}
@@ -39,7 +41,11 @@ const ShippingDetails = () => {
   return (
     <div className='col-span-3 mt-3 font-light'>
       {/* Details Container Header */}
-      <ContainerHeader expanded={expanded} setExpanded={setExpanded} />
+      <ContainerHeader
+        expanded={expanded}
+        isFetching={isFetching}
+        setExpanded={setExpanded}
+      />
 
       {/* Dropdown */}
       {expanded && (
@@ -73,11 +79,11 @@ const ShippingDetails = () => {
 
 function ContainerHeader({
   expanded,
-  noArrow,
+  isFetching,
   setExpanded,
 }: {
   expanded?: boolean;
-  noArrow?: boolean;
+  isFetching?: boolean;
   setExpanded: Dispatch<SetStateAction<boolean>>;
 }) {
   function handleExpand() {
@@ -87,9 +93,14 @@ function ContainerHeader({
     <div className='flex items-center justify-between mb-6'>
       <h4>Shipping information</h4>
 
-      {!noArrow && (
+      {/* Render Spinner when fetching shipping info */}
+      {isFetching ? (
+        <div>
+          <ImSpinner2 className='animate-spin' />
+        </div>
+      ) : (
         <button
-          className={`text-slate-600 px-6 py-2 transform  ${expanded && 'rotate-180'}`}
+          className={`text-slate-600 px-6 py-2 transform  ${expanded ? 'rotate-180' : ''}`}
           onClick={handleExpand}
         >
           <FaChevronDown />
