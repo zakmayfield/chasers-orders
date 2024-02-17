@@ -14,7 +14,6 @@ export default function CartItemContainer() {
     queryFn: getCart,
     staleTime: Infinity,
   });
-  // TODO: empty cart state
   return (
     <div className='col-start-3 col-span-4'>
       {/* Cart Items Container Header */}

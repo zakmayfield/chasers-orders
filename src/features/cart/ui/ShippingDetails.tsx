@@ -16,6 +16,7 @@ const ShippingDetails = () => {
   >({
     queryKey: ['shipping-address'],
     queryFn: getShipping,
+    staleTime: 60 * 1000 * 60,
   });
 
   const [expanded, setExpanded] = useState(false);

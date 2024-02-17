@@ -18,6 +18,7 @@ export default function OrderButton() {
   const { data: cartData } = useQuery<CartCache | undefined, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
+    staleTime: Infinity,
   });
 
   const { mutate, isSuccess } = useMutation({

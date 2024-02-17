@@ -17,6 +17,7 @@ import { addItem } from '@/services/mutations/cart.addItem';
 import { useToast } from '@/hooks/general.hooks';
 import { useFavoritesQuery } from '@/hooks/query.hooks';
 import { getProducts } from '@/services/queries/products.getProducts';
+import { ImSpinner2 } from 'react-icons/im';
 
 export default function ProductsTable() {
   // tools
@@ -26,7 +27,7 @@ export default function ProductsTable() {
   // data
   const { favorites } = useFavoritesQuery();
 
-  const { data, isLoading } = useQuery<ProductWithUnits[], Error>({
+  const { data, isLoading, isFetching } = useQuery<ProductWithUnits[], Error>({
     queryKey: ['products'],
     queryFn: getProducts,
     staleTime: Infinity,
@@ -81,20 +82,33 @@ export default function ProductsTable() {
 
   const { reactTable } = tableConfig(data, columns);
 
+  // TODO: Rework the table loading states
+  // Headers and Pagination should render as normal, utilizing spinners for loading data
+  // Body will render either a spinner or the data - be aware of a possible UI bug where the body content doesn't stretch the width of the whole table: 🤷
   return (
-    <div>
-      <div className='mx-auto w-3/4'>
-        {isLoading ? (
-          <div className='h-[545px] rounded shadow flex items-center justify-center'>
-            <p>Loading...</p>
-          </div>
-        ) : (
-          <div>
-            <Table reactTable={reactTable} />
-            <Pagination reactTable={reactTable} />
-          </div>
-        )}
-      </div>
+    <div className='mx-auto w-3/4'>
+      {isFetching ? (
+        <TableLoadingSkeleton />
+      ) : (
+        <Table reactTable={reactTable} />
+      )}
+
+      <Pagination reactTable={reactTable} isFetching={isFetching} />
+    </div>
+  );
+}
+
+function TableLoadingSkeleton() {
+  return (
+    <div className='mt-24 pt-1'>
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
+        return (
+          <div
+            key={item}
+            className='h-[45px] w-3/4 mx-auto even:bg-gray-100 animate-pulse'
+          ></div>
+        );
+      })}
     </div>
   );
 }
@@ -106,15 +120,18 @@ function Table({ reactTable }: { reactTable: ReactTable<ProductWithUnits> }) {
         {reactTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className='text-left align-top pb-6'>
+              <th
+                key={header.id}
+                className='text-left font-extralight align-top pb-6'
+              >
                 {header.isPlaceholder ? null : (
-                  <div>
+                  <div className='text-2xl'>
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
                     )}
                     {header.column.getCanFilter() ? (
-                      <div className='mt-3'>
+                      <div className='mt-3 text-base'>
                         <Filter
                           reactTable={reactTable}
                           column={header.column}
@@ -194,65 +211,97 @@ function Filter({
 
 function Pagination({
   reactTable,
+  isFetching,
 }: {
   reactTable: ReactTable<ProductWithUnits>;
+  isFetching?: boolean;
 }) {
   return (
-    <div className='flex gap-6 mt-6'>
-      <div className='flex gap-2'>
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanPreviousPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.setPageIndex(0)}
-          disabled={!reactTable.getCanPreviousPage()}
-        >
-          {'<<'}
-        </button>
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanPreviousPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.previousPage()}
-          disabled={!reactTable.getCanPreviousPage()}
-        >
-          {'<'}
-        </button>
+    <div className='flex justify-between gap-6 mt-6'>
+      {/* Next/Previous Pagination */}
+      <div className='flex items-center gap-6'>
+        <div className='flex gap-2'>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanPreviousPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() => reactTable.setPageIndex(0)}
+            disabled={!reactTable.getCanPreviousPage()}
+          >
+            {'<<'}
+          </button>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanPreviousPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() => reactTable.previousPage()}
+            disabled={!reactTable.getCanPreviousPage()}
+          >
+            {'<'}
+          </button>
 
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanNextPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.nextPage()}
-          disabled={!reactTable.getCanNextPage()}
-        >
-          {'>'}
-        </button>
-        <button
-          className={`border rounded p-1 ${
-            !reactTable.getCanNextPage()
-              ? 'opacity-50'
-              : 'opacity-100 cursor-pointer'
-          }`}
-          onClick={() => reactTable.setPageIndex(reactTable.getPageCount() - 1)}
-          disabled={!reactTable.getCanNextPage()}
-        >
-          {'>>'}
-        </button>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanNextPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() => reactTable.nextPage()}
+            disabled={!reactTable.getCanNextPage()}
+          >
+            {'>'}
+          </button>
+          <button
+            className={`border rounded p-1 ${
+              !reactTable.getCanNextPage()
+                ? 'opacity-50'
+                : 'opacity-100 cursor-pointer'
+            }`}
+            onClick={() =>
+              reactTable.setPageIndex(reactTable.getPageCount() - 1)
+            }
+            disabled={!reactTable.getCanNextPage()}
+          >
+            {'>>'}
+          </button>
+        </div>
+        <span className='flex items-center gap-1'>
+          <div>Page</div>
+          {isFetching ? (
+            <strong className='flex items-center gap-2'>
+              1 of
+              <ImSpinner2 className='animate-spin' />
+            </strong>
+          ) : (
+            <strong>
+              {reactTable.getState().pagination.pageIndex + 1} of{' '}
+              {reactTable.getPageCount()}
+            </strong>
+          )}
+        </span>
       </div>
-      <span className='flex items-center gap-1'>
-        <div>Page</div>
-        <strong>
-          {reactTable.getState().pagination.pageIndex + 1} of{' '}
-          {reactTable.getPageCount()}
-        </strong>
-      </span>
+
+      {/* TODO: Fix this hydration error. Can render this select but don't know if this will have any bug implications. If there is a bug with the show x, then check here. */}
+      {/* Show X Amount */}
+      {/* <div>
+        <select
+          value={reactTable.getState().pagination.pageSize}
+          onChange={(e) => {
+            reactTable.setPageSize(Number(e.target.value));
+          }}
+          className='border rounded p-2 font-extralight'
+        >
+          {[10, 20, 30, 40, 50].map((pageSize) => (
+            <option key={pageSize} value={pageSize}>
+              Show <span className='font-normal'>{pageSize}</span>
+            </option>
+          ))}
+        </select>
+      </div> */}
     </div>
   );
 }
