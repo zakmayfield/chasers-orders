@@ -27,9 +27,9 @@ export default function OrderButton() {
       );
 
       // Clear 'cart' items cache after successful order
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 5000);
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
+        return oldData ? { ...oldData, items: [] } : oldData;
+      });
     },
     onError(error) {
       if (error instanceof Error) {
@@ -49,7 +49,7 @@ export default function OrderButton() {
   return (
     <button
       onClick={handlePlaceOrder}
-      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm ${isSuccess && 'bg-black bg-opacity-5'}`}
+      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm `}
       disabled={isSuccess}
     >
       {isSuccess ? '👍' : 'Place Order'}
