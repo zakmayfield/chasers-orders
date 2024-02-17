@@ -120,15 +120,18 @@ function Table({ reactTable }: { reactTable: ReactTable<ProductWithUnits> }) {
         {reactTable.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className='text-left align-top pb-6'>
+              <th
+                key={header.id}
+                className='text-left font-extralight align-top pb-6'
+              >
                 {header.isPlaceholder ? null : (
-                  <div>
+                  <div className='text-2xl'>
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
                     )}
                     {header.column.getCanFilter() ? (
-                      <div className='mt-3'>
+                      <div className='mt-3 text-base'>
                         <Filter
                           reactTable={reactTable}
                           column={header.column}
