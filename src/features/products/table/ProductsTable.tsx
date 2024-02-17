@@ -17,6 +17,7 @@ import { addItem } from '@/services/mutations/cart.addItem';
 import { useToast } from '@/hooks/general.hooks';
 import { useFavoritesQuery } from '@/hooks/query.hooks';
 import { getProducts } from '@/services/queries/products.getProducts';
+import { ImSpinner2 } from 'react-icons/im';
 
 export default function ProductsTable() {
   // tools
@@ -26,7 +27,7 @@ export default function ProductsTable() {
   // data
   const { favorites } = useFavoritesQuery();
 
-  const { data, isLoading } = useQuery<ProductWithUnits[], Error>({
+  const { data, isLoading, isFetching } = useQuery<ProductWithUnits[], Error>({
     queryKey: ['products'],
     queryFn: getProducts,
     staleTime: Infinity,
@@ -81,20 +82,33 @@ export default function ProductsTable() {
 
   const { reactTable } = tableConfig(data, columns);
 
+  // TODO: Rework the table loading states
+  // Headers and Pagination should render as normal, utilizing spinners for loading data
+  // Body will render either a spinner or the data - be aware of a possible UI bug where the body content doesn't stretch the width of the whole table: 🤷
   return (
-    <div>
-      <div className='mx-auto w-3/4'>
-        {isLoading ? (
-          <div className='h-[545px] rounded shadow flex items-center justify-center'>
-            <p>Loading...</p>
-          </div>
-        ) : (
-          <div>
-            <Table reactTable={reactTable} />
-            <Pagination reactTable={reactTable} />
-          </div>
-        )}
-      </div>
+    <div className='mx-auto w-3/4'>
+      {isFetching ? (
+        <TableLoadingSkeleton />
+      ) : (
+        <Table reactTable={reactTable} />
+      )}
+
+      <Pagination reactTable={reactTable} isFetching={isFetching} />
+    </div>
+  );
+}
+
+function TableLoadingSkeleton() {
+  return (
+    <div className='mt-24'>
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
+        return (
+          <div
+            key={item}
+            className='h-[45px] w-3/4 mx-auto even:bg-gray-100 animate-pulse'
+          ></div>
+        );
+      })}
     </div>
   );
 }
@@ -194,11 +208,14 @@ function Filter({
 
 function Pagination({
   reactTable,
+  isFetching,
 }: {
   reactTable: ReactTable<ProductWithUnits>;
+  isFetching?: boolean;
 }) {
   return (
     <div className='flex justify-between gap-6 mt-6'>
+      {/* Next/Previous Pagination */}
       <div className='flex items-center gap-6'>
         <div className='flex gap-2'>
           <button
@@ -251,13 +268,22 @@ function Pagination({
         </div>
         <span className='flex items-center gap-1'>
           <div>Page</div>
-          <strong>
-            {reactTable.getState().pagination.pageIndex + 1} of{' '}
-            {reactTable.getPageCount()}
-          </strong>
+          {isFetching ? (
+            <strong className='flex items-center gap-2'>
+              1 of
+              <ImSpinner2 className='animate-spin' />
+            </strong>
+          ) : (
+            <strong>
+              {reactTable.getState().pagination.pageIndex + 1} of{' '}
+              {reactTable.getPageCount()}
+            </strong>
+          )}
         </span>
       </div>
 
+      {/* TODO: Fix this hydration error. Can render this select but don't know if this will have any bug implications. If there is a bug with the show x, then check here. */}
+      {/* Show X Amount */}
       <div>
         <select
           value={reactTable.getState().pagination.pageSize}
