@@ -4,14 +4,21 @@ import {
   CreateOrderPayload,
   createOrder,
 } from '@/services/mutations/orders.create';
+import { getCart } from '@/services/queries/cart.getCart';
 import { CartCache } from '@/types/types.cart';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 export default function OrderButton() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { notify } = useToast();
+
+  // Cart Cache query
+  const { data: cartData } = useQuery<CartCache | undefined, Error>({
+    queryKey: ['cart'],
+    queryFn: getCart,
+  });
 
   const { mutate, isSuccess } = useMutation({
     mutationFn: createOrder,
@@ -27,9 +34,9 @@ export default function OrderButton() {
       );
 
       // Clear 'cart' items cache after successful order
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 5000);
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
+        return oldData ? { ...oldData, items: [] } : oldData;
+      });
     },
     onError(error) {
       if (error instanceof Error) {
@@ -49,10 +56,18 @@ export default function OrderButton() {
   return (
     <button
       onClick={handlePlaceOrder}
-      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm ${isSuccess && 'bg-black bg-opacity-5'}`}
-      disabled={isSuccess}
+      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm ${cartData?.items.length === 0 && 'bg-slate-50'}`}
+      disabled={isSuccess || cartData?.items.length === 0}
     >
-      {isSuccess ? '👍' : 'Place Order'}
+      {isSuccess ? (
+        '👍'
+      ) : (
+        <span
+          className={`font-light ${cartData?.items.length === 0 && 'opacity-50 font-extralight'}`}
+        >
+          Place Order
+        </span>
+      )}
     </button>
   );
 }
