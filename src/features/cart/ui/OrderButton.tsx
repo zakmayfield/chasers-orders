@@ -34,9 +34,9 @@ export default function OrderButton() {
       );
 
       // Clear 'cart' items cache after successful order
-      setTimeout(() => {
-        router.push('/dashboard');
-      }, 5000);
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
+        return oldData ? { ...oldData, items: [] } : oldData;
+      });
     },
     onError(error) {
       if (error instanceof Error) {
