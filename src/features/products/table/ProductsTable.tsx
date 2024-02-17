@@ -100,7 +100,7 @@ export default function ProductsTable() {
 
 function TableLoadingSkeleton() {
   return (
-    <div className='mt-24'>
+    <div className='mt-24 pt-1'>
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => {
         return (
           <div
@@ -287,7 +287,7 @@ function Pagination({
 
       {/* TODO: Fix this hydration error. Can render this select but don't know if this will have any bug implications. If there is a bug with the show x, then check here. */}
       {/* Show X Amount */}
-      <div>
+      {/* <div>
         <select
           value={reactTable.getState().pagination.pageSize}
           onChange={(e) => {
@@ -301,7 +301,7 @@ function Pagination({
             </option>
           ))}
         </select>
-      </div>
+      </div> */}
     </div>
   );
 }
