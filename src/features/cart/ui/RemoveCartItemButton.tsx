@@ -3,6 +3,8 @@ import { removeItem } from '@/services/mutations/cart.removeItem';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { GiCancel } from 'react-icons/gi';
+import { TbTrashFilled } from 'react-icons/tb';
+import { LuTrash2 } from 'react-icons/lu';
 
 export interface RemoveCartItemProps {
   payload: RemoveItemPayloadData;
@@ -51,9 +53,9 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     <button
       disabled={isLoading}
       onClick={() => removeCartItem({ unitId, cartId })}
-      className=' text-gray-700 hover:text-red-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:text-red-600'
+      className=' text-gray-700 text-xl hover:text-red-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:text-red-600'
     >
-      <GiCancel />
+      <LuTrash2 />
     </button>
   );
 };
