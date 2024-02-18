@@ -17,8 +17,8 @@ export default function CartItemContainer() {
   return (
     <div className='col-start-3 col-span-4'>
       {/* Cart Items Container Header */}
-      <div className='flex items-center gap-3 font-extralight'>
-        <h4 className='h-24 text-2xl flex items-center pl-12'>Cart</h4>
+      <h4 className='h-12 flex gap-3 text-2xl font-extralight'>
+        <span>Cart</span>
         {isFetching ? (
           <span className='animate-spin'>
             <ImSpinner2 />
@@ -28,7 +28,7 @@ export default function CartItemContainer() {
             (<span>{data?.items.length}</span>)
           </p>
         )}
-      </div>
+      </h4>
 
       {/* Cart Items */}
       {/* No items in cart */}
