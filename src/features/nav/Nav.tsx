@@ -1,17 +1,26 @@
-import Link from 'next/link';
-import UserNav from './ui/UserNav';
-import { getAuthSession } from '@/lib/auth/auth.options';
+'use server';
 
-export default async function Nav() {
+import { FC } from 'react';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import type { Session } from 'next-auth';
+import Navigation from './Navigation';
+
+interface NavProps {}
+
+const Nav: FC<NavProps> = async ({}) => {
   const session = await getAuthSession();
 
-  // console.log(session);
+  const checkAuth = (data: unknown): data is Session => {
+    return !!data && typeof data === 'object' && 'user' in data;
+  };
+
+  const isAuth = checkAuth(session);
 
   return (
     <nav className='flex items-center gap-6'>
-      <Link href='/'>Home</Link>
-
-      {session?.user ? <UserNav /> : <Link href='/sign-in'>Sign In</Link>}
+      <Navigation isAuth={isAuth} />
     </nav>
   );
-}
+};
+
+export default Nav;

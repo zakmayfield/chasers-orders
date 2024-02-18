@@ -1,11 +1,12 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import Nav from '../features/nav/Nav';
 import Providers from '@/lib/Providers';
 import { ToastContainer } from 'react-toastify';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import Nav from '@/features/nav/Nav';
+import Header from '@/features/header/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,7 +24,7 @@ export default function RootLayout({
     <Providers>
       <html lang='en'>
         <body className={inter.className}>
-          <Nav />
+          <Header />
           <div>{children}</div>
           <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer />

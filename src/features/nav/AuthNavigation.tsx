@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 
-export default function UserNav() {
+export default function AuthNavigation() {
   const queryClient = useQueryClient();
 
   return (
