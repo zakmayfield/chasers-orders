@@ -18,6 +18,7 @@ import { useToast } from '@/hooks/general.hooks';
 import { useFavoritesQuery } from '@/hooks/query.hooks';
 import { getProducts } from '@/services/queries/products.getProducts';
 import { ImSpinner2 } from 'react-icons/im';
+import ButtonCol from './columns/ButtonCol';
 
 export default function ProductsTable() {
   // tools
@@ -74,17 +75,20 @@ export default function ProductsTable() {
     columnHelper.accessor('units', {
       header: 'Size',
       enableColumnFilter: false,
+      cell: (info) => <UnitCol info={info} />,
+    }),
+    columnHelper.accessor('units', {
+      id: 'cta',
+      header: '',
+      enableColumnFilter: false,
       cell: (info) => (
-        <UnitCol info={info} addToCartMutation={addToCartMutation} />
+        <ButtonCol info={info} addToCartMutation={addToCartMutation} />
       ),
     }),
   ];
 
   const { reactTable } = tableConfig(data, columns);
 
-  // TODO: Rework the table loading states
-  // Headers and Pagination should render as normal, utilizing spinners for loading data
-  // Body will render either a spinner or the data - be aware of a possible UI bug where the body content doesn't stretch the width of the whole table: 🤷
   return (
     <div className='mx-auto w-3/4'>
       {isFetching ? (
