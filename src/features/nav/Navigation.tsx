@@ -10,8 +10,7 @@ interface NavigationProps {
 const Navigation: FC<NavigationProps> = ({ isAuth }) => {
   return (
     <div className='flex items-center gap-6'>
-      <Link href='/'>Home</Link>
-      {!isAuth ? <Link href='/sign-in'>Sign In</Link> : <AuthNavigation />}
+      {!isAuth ? <Link href='/'>Sign In</Link> : <AuthNavigation />}
     </div>
   );
 };

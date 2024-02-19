@@ -239,7 +239,7 @@ export default function SignUp() {
         <button type='submit'>Sign Up</button>
       </form>
 
-      <Link href='/sign-in'>Go to Sign In</Link>
+      <Link href='/'>Go to Sign In</Link>
     </div>
   );
 }

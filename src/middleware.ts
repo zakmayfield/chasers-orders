@@ -7,18 +7,12 @@ export async function middleware(req: NextRequest) {
   const token: JWT | null = await getToken({ req });
 
   if (!token) {
-    return NextResponse.redirect(new URL('/sign-in', req.nextUrl));
+    return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
   const { isApproved, emailVerified } = await userStatus(token);
 
-  if (!emailVerified) {
-    return NextResponse.redirect(
-      new URL('/dashboard/account-pending', req.nextUrl)
-    );
-  }
-
-  if (req.nextUrl.pathname === '/products' && (!isApproved || !emailVerified)) {
+  if (!isApproved || !emailVerified) {
     return NextResponse.redirect(
       new URL('/dashboard/account-pending', req.nextUrl)
     );
@@ -27,5 +21,5 @@ export async function middleware(req: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/products', '/cart/:path*'],
+  matcher: ['/products', '/cart/:path*', '/dashboard/:path*'],
 };
