@@ -12,13 +12,15 @@ export async function middleware(req: NextRequest) {
 
   const { isApproved, emailVerified } = await userStatus(token);
 
-  if (!isApproved || !emailVerified) {
+  if (
+    !req.nextUrl.pathname.includes('/dashboard') &&
+    (!isApproved || !emailVerified)
+  ) {
     return NextResponse.redirect(
       new URL('/dashboard/account-pending', req.nextUrl)
     );
   }
 }
-
 // See "Matching Paths" below to learn more
 export const config = {
   matcher: ['/products', '/cart/:path*', '/dashboard/:path*'],
