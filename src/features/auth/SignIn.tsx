@@ -94,37 +94,3 @@ export default function SignIn() {
     </div>
   );
 }
-
-/*
-<form onSubmit={handleSubmit}>
-        <div className='flex flex-col gap-6'>
-          <div className='flex flex-col'>
-            <label htmlFor='email'>Email</label>
-
-            <input
-              type='email'
-              id='email'
-              value={email}
-              className='border-2 rounded'
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div className='flex flex-col'>
-            <label htmlFor='password'>Password</label>
-
-            <input
-              type='password'
-              id='password'
-              value={password}
-              className='border-2 rounded'
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-        </div>
-
-        <button type='submit' className='border-2 rounded'>
-          Sign In
-        </button>
-      </form>
-*/

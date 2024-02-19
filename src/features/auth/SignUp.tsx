@@ -8,7 +8,7 @@ import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
 import GridContainer from '../ui/layout/GridContainer';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { IoIosReturnRight } from 'react-icons/io';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 type Steps = '1' | '2' | '3' | '4';
 
