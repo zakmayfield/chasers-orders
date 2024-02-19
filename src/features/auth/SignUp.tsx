@@ -7,8 +7,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { SignUpFormData } from '@/types/types.auth-forms';
 import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
 import GridContainer from '../ui/layout/GridContainer';
+import { useQueryClient } from '@tanstack/react-query';
+import { IoIosReturnRight } from 'react-icons/io';
+import { IconType } from 'react-icons';
 
 export default function SignUp() {
+  const queryClient = useQueryClient();
   const router = useRouter();
 
   const {
@@ -51,9 +55,25 @@ export default function SignUp() {
     }
   };
 
+  // SET STEP CACHE: 'credentials:1': type step = 'credentials:1' | 'contact:2' | 'company:3' | 'shipping:4'
+  queryClient.setQueryData(['step', 'credentials'], true);
+  // USER FILLS OUT CREDENTIALS FORM AND CLICKS NEXT
+  // CREATE A FUNCTION WHICH UPDATES THE
+  // MUTATE STEP CACHE TO 'contact:2'
+  // RENDER FORM WHICH MATCHES STEP (i.e. contact or company)
+
   return (
     <div className='border col-start-5 col-span-4 py-6 px-12 font-extralight'>
       <h2 className='font-light text-2xl mb-12'>Sign Up</h2>
+
+      {/* STEPS */}
+      <div className='text-center text-sm tracking-wide flex items-center justify-center gap-3 mb-12'>
+        <span>credentials</span> <span className='text-lg'>/</span>
+        <span>contact</span> <span className='text-lg'>/</span>
+        <span>company</span> <span className='text-lg'>/</span>
+        <span>shipping</span>
+      </div>
+
       <form onSubmit={handleSubmit(credentialSignUp)}>
         <div className='flex flex-col gap-24'>
           {/* STEP ONE */}
@@ -82,6 +102,8 @@ export default function SignUp() {
               {errors.password && (
                 <p role='alert'>{errors.password?.message}</p>
               )}
+
+              <NextStepButton content='Contact' />
             </GridContainer>
           </div>
 
@@ -126,6 +148,8 @@ export default function SignUp() {
               {errors.contactPhoneNumber && (
                 <p role='alert'>{errors.contactPhoneNumber?.message}</p>
               )}
+
+              <NextStepButton content='Company' />
             </GridContainer>
           </div>
 
@@ -170,6 +194,7 @@ export default function SignUp() {
               {errors.paymentMethod && (
                 <p role='alert'>{errors.paymentMethod?.message}</p>
               )}
+              <NextStepButton content='Shipping' />
             </GridContainer>
           </div>
 
@@ -177,7 +202,7 @@ export default function SignUp() {
           <div>
             <GridContainer cols={6}>
               <label htmlFor='shippingStreetAddress' className='col-span-6'>
-                Shipping Address:
+                Shipping Address (optional):
               </label>
               <input
                 type='shippingStreetAddress'
@@ -319,6 +344,8 @@ export default function SignUp() {
               {errors.billingPostalCode && (
                 <p role='alert'>{errors.billingPostalCode?.message}</p>
               )}
+
+              <FinalSubmitButton />
             </GridContainer>
           </div>
 
@@ -330,5 +357,30 @@ export default function SignUp() {
 
       <Link href='/'>Go to Sign In</Link>
     </div>
+  );
+}
+
+function FinalSubmitButton() {
+  return (
+    <button
+      onClick={() => {}}
+      className='col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg mt-12'
+    >
+      Create Account
+    </button>
+  );
+}
+
+function NextStepButton({ content }: { content: string }) {
+  return (
+    <button
+      onClick={() => {}}
+      className='col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg'
+    >
+      <span>{content} </span>
+      <span>
+        <IoIosReturnRight />
+      </span>
+    </button>
   );
 }
