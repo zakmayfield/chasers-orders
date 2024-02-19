@@ -1,9 +1,12 @@
 import SignUp from '@/features/auth/SignUp';
+import GridContainer from '@/features/ui/layout/GridContainer';
 
 export default function Page() {
   return (
     <main>
-      <SignUp />
+      <GridContainer cols={12}>
+        <SignUp />
+      </GridContainer>
     </main>
   );
 }

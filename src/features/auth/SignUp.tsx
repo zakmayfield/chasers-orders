@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { SignUpFormData } from '@/types/types.auth-forms';
 import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
+import GridContainer from '../ui/layout/GridContainer';
 
 export default function SignUp() {
   const router = useRouter();
@@ -51,192 +52,262 @@ export default function SignUp() {
   };
 
   return (
-    <div>
-      <form
-        onSubmit={handleSubmit(credentialSignUp)}
-        className='border w-80 flex flex-col'
-      >
-        <label htmlFor='email'>Email:</label>
-        <input type='email' id='email' {...register('email')} />
-        {errors.email && <p role='alert'>{errors.email?.message}</p>}
+    <div className='border col-start-5 col-span-4 py-6 px-12 font-extralight'>
+      <h2 className='font-light text-2xl mb-12'>Sign Up</h2>
+      <form onSubmit={handleSubmit(credentialSignUp)}>
+        <GridContainer cols={6}>
+          {/* STEP ONE */}
+          <label htmlFor='email' className='col-span-6'>
+            Email:
+          </label>
+          <input
+            type='email'
+            id='email'
+            {...register('email')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.email && <p role='alert'>{errors.email?.message}</p>}
 
-        <label htmlFor='password'>Password:</label>
-        <input type='password' id='password' {...register('password')} />
-        {errors.password && <p role='alert'>{errors.password?.message}</p>}
+          <label htmlFor='password' className='col-span-6'>
+            Password:
+          </label>
+          <input
+            type='password'
+            id='password'
+            {...register('password')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.password && <p role='alert'>{errors.password?.message}</p>}
 
-        <label htmlFor='contactName'>Contact Name:</label>
-        <input
-          type='contactName'
-          id='contactName'
-          {...register('contactName')}
-        />
-        {errors.contactName && (
-          <p role='alert'>{errors.contactName?.message}</p>
-        )}
+          {/* STEP TWO */}
+          <label htmlFor='contactName' className='col-span-6'>
+            Contact Name:
+          </label>
+          <input
+            type='contactName'
+            id='contactName'
+            {...register('contactName')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.contactName && (
+            <p role='alert'>{errors.contactName?.message}</p>
+          )}
 
-        <label htmlFor='contactPosition'>Contact Position:</label>
-        <input
-          type='contactPosition'
-          id='contactPosition'
-          {...register('contactPosition')}
-        />
-        {errors.contactPosition && (
-          <p role='alert'>{errors.contactPosition?.message}</p>
-        )}
+          <label htmlFor='contactPosition' className='col-span-6'>
+            Contact Position:
+          </label>
+          <input
+            type='contactPosition'
+            id='contactPosition'
+            {...register('contactPosition')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.contactPosition && (
+            <p role='alert'>{errors.contactPosition?.message}</p>
+          )}
 
-        <label htmlFor='contactPhoneNumber'>Contact Phone Number:</label>
-        <input
-          type='contactPhoneNumber'
-          id='contactPhoneNumber'
-          {...register('contactPhoneNumber')}
-        />
-        {errors.contactPhoneNumber && (
-          <p role='alert'>{errors.contactPhoneNumber?.message}</p>
-        )}
+          <label htmlFor='contactPhoneNumber' className='col-span-6'>
+            Contact Phone Number:
+          </label>
+          <input
+            type='contactPhoneNumber'
+            id='contactPhoneNumber'
+            {...register('contactPhoneNumber')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.contactPhoneNumber && (
+            <p role='alert'>{errors.contactPhoneNumber?.message}</p>
+          )}
 
-        <label htmlFor='companyName'>Company Name:</label>
-        <input
-          type='companyName'
-          id='companyName'
-          {...register('companyName')}
-        />
-        {errors.companyName && (
-          <p role='alert'>{errors.companyName?.message}</p>
-        )}
+          {/* STEP THREE */}
+          <label htmlFor='companyName' className='col-span-6'>
+            Company Name:
+          </label>
+          <input
+            type='companyName'
+            id='companyName'
+            {...register('companyName')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.companyName && (
+            <p role='alert'>{errors.companyName?.message}</p>
+          )}
 
-        <label htmlFor='accountPayableEmail'>Account Payable Email:</label>
-        <input
-          type='accountPayableEmail'
-          id='accountPayableEmail'
-          {...register('accountPayableEmail')}
-        />
-        {errors.accountPayableEmail && (
-          <p role='alert'>{errors.accountPayableEmail?.message}</p>
-        )}
+          <label htmlFor='accountPayableEmail' className='col-span-6'>
+            Account Payable Email:
+          </label>
+          <input
+            type='accountPayableEmail'
+            id='accountPayableEmail'
+            {...register('accountPayableEmail')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.accountPayableEmail && (
+            <p role='alert'>{errors.accountPayableEmail?.message}</p>
+          )}
 
-        <label htmlFor='paymentMethod'>Payment Method:</label>
-        <input
-          type='paymentMethod'
-          id='paymentMethod'
-          {...register('paymentMethod')}
-        />
-        {errors.paymentMethod && (
-          <p role='alert'>{errors.paymentMethod?.message}</p>
-        )}
+          <label htmlFor='paymentMethod' className='col-span-6'>
+            Payment Method:
+          </label>
+          <input
+            type='paymentMethod'
+            id='paymentMethod'
+            {...register('paymentMethod')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.paymentMethod && (
+            <p role='alert'>{errors.paymentMethod?.message}</p>
+          )}
 
-        {/* SHIPPING */}
-        <label htmlFor='shippingStreetAddress'>Shipping Address:</label>
-        <input
-          type='shippingStreetAddress'
-          id='shippingStreetAddress'
-          {...register('shippingStreetAddress')}
-        />
-        {errors.shippingStreetAddress && (
-          <p role='alert'>{errors.shippingStreetAddress?.message}</p>
-        )}
+          {/* STEP four*/}
+          <label htmlFor='shippingStreetAddress' className='col-span-6'>
+            Shipping Address:
+          </label>
+          <input
+            type='shippingStreetAddress'
+            id='shippingStreetAddress'
+            {...register('shippingStreetAddress')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.shippingStreetAddress && (
+            <p role='alert'>{errors.shippingStreetAddress?.message}</p>
+          )}
 
-        <label htmlFor='shippingUnit'>Shipping Unit:</label>
-        <input
-          type='shippingUnit'
-          id='shippingUnit'
-          {...register('shippingUnit')}
-        />
-        {errors.shippingUnit && (
-          <p role='alert'>{errors.shippingUnit?.message}</p>
-        )}
+          <label htmlFor='shippingUnit' className='col-span-6'>
+            Shipping Unit:
+          </label>
+          <input
+            type='shippingUnit'
+            id='shippingUnit'
+            {...register('shippingUnit')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.shippingUnit && (
+            <p role='alert'>{errors.shippingUnit?.message}</p>
+          )}
 
-        <label htmlFor='shippingCity'>Shipping City:</label>
-        <input
-          type='shippingCity'
-          id='shippingCity'
-          {...register('shippingCity')}
-        />
-        {errors.shippingCity && (
-          <p role='alert'>{errors.shippingCity?.message}</p>
-        )}
+          <label htmlFor='shippingCity' className='col-span-6'>
+            Shipping City:
+          </label>
+          <input
+            type='shippingCity'
+            id='shippingCity'
+            {...register('shippingCity')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.shippingCity && (
+            <p role='alert'>{errors.shippingCity?.message}</p>
+          )}
 
-        <label htmlFor='shippingState'>Shipping State:</label>
-        <input
-          type='shippingState'
-          id='shippingState'
-          {...register('shippingState')}
-        />
-        {errors.shippingState && (
-          <p role='alert'>{errors.shippingState?.message}</p>
-        )}
+          <label htmlFor='shippingState' className='col-span-6'>
+            Shipping State:
+          </label>
+          <input
+            type='shippingState'
+            id='shippingState'
+            {...register('shippingState')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.shippingState && (
+            <p role='alert'>{errors.shippingState?.message}</p>
+          )}
 
-        <label htmlFor='shippingPostalCode'>Shipping Postal Code:</label>
-        <input
-          type='shippingPostalCode'
-          id='shippingPostalCode'
-          {...register('shippingPostalCode')}
-        />
-        {errors.shippingPostalCode && (
-          <p role='alert'>{errors.shippingPostalCode?.message}</p>
-        )}
+          <label htmlFor='shippingPostalCode' className='col-span-6'>
+            Shipping Postal Code:
+          </label>
+          <input
+            type='shippingPostalCode'
+            id='shippingPostalCode'
+            {...register('shippingPostalCode')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.shippingPostalCode && (
+            <p role='alert'>{errors.shippingPostalCode?.message}</p>
+          )}
 
-        <label htmlFor='deliveryInstructions'>Delivery Instructions:</label>
-        <input
-          type='deliveryInstructions'
-          id='deliveryInstructions'
-          {...register('deliveryInstructions')}
-        />
-        {errors.deliveryInstructions && (
-          <p role='alert'>{errors.deliveryInstructions?.message}</p>
-        )}
+          <label htmlFor='deliveryInstructions' className='col-span-6'>
+            Delivery Instructions:
+          </label>
+          <input
+            type='deliveryInstructions'
+            id='deliveryInstructions'
+            {...register('deliveryInstructions')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.deliveryInstructions && (
+            <p role='alert'>{errors.deliveryInstructions?.message}</p>
+          )}
 
-        {/* BILLING */}
-        <label htmlFor='billingStreetAddress'>Billing Address:</label>
-        <input
-          type='billingStreetAddress'
-          id='billingStreetAddress'
-          {...register('billingStreetAddress')}
-        />
-        {errors.billingStreetAddress && (
-          <p role='alert'>{errors.billingStreetAddress?.message}</p>
-        )}
+          {/* BILLING */}
+          <label htmlFor='billingStreetAddress' className='col-span-6'>
+            Billing Address:
+          </label>
+          <input
+            type='billingStreetAddress'
+            id='billingStreetAddress'
+            {...register('billingStreetAddress')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.billingStreetAddress && (
+            <p role='alert'>{errors.billingStreetAddress?.message}</p>
+          )}
 
-        <label htmlFor='billingUnit'>Billing Unit:</label>
-        <input
-          type='billingUnit'
-          id='billingUnit'
-          {...register('billingUnit')}
-        />
-        {errors.billingUnit && (
-          <p role='alert'>{errors.billingUnit?.message}</p>
-        )}
+          <label htmlFor='billingUnit' className='col-span-6'>
+            Billing Unit:
+          </label>
+          <input
+            type='billingUnit'
+            id='billingUnit'
+            {...register('billingUnit')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.billingUnit && (
+            <p role='alert'>{errors.billingUnit?.message}</p>
+          )}
 
-        <label htmlFor='billingCity'>Billing City:</label>
-        <input
-          type='billingCity'
-          id='billingCity'
-          {...register('billingCity')}
-        />
-        {errors.billingCity && (
-          <p role='alert'>{errors.billingCity?.message}</p>
-        )}
+          <label htmlFor='billingCity' className='col-span-6'>
+            Billing City:
+          </label>
+          <input
+            type='billingCity'
+            id='billingCity'
+            {...register('billingCity')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.billingCity && (
+            <p role='alert'>{errors.billingCity?.message}</p>
+          )}
 
-        <label htmlFor='billingState'>Billing State:</label>
-        <input
-          type='billingState'
-          id='billingState'
-          {...register('billingState')}
-        />
-        {errors.billingState && (
-          <p role='alert'>{errors.billingState?.message}</p>
-        )}
+          <label htmlFor='billingState' className='col-span-6'>
+            Billing State:
+          </label>
+          <input
+            type='billingState'
+            id='billingState'
+            {...register('billingState')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.billingState && (
+            <p role='alert'>{errors.billingState?.message}</p>
+          )}
 
-        <label htmlFor='billingPostalCode'>Billing Postal Code:</label>
-        <input
-          type='billingPostalCode'
-          id='billingPostalCode'
-          {...register('billingPostalCode')}
-        />
-        {errors.billingPostalCode && (
-          <p role='alert'>{errors.billingPostalCode?.message}</p>
-        )}
+          <label htmlFor='billingPostalCode' className='col-span-6'>
+            Billing Postal Code:
+          </label>
+          <input
+            type='billingPostalCode'
+            id='billingPostalCode'
+            {...register('billingPostalCode')}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+          />
+          {errors.billingPostalCode && (
+            <p role='alert'>{errors.billingPostalCode?.message}</p>
+          )}
 
-        <button type='submit'>Sign Up</button>
+          <button type='submit' className='col-span-6'>
+            Sign Up
+          </button>
+        </GridContainer>
       </form>
 
       <Link href='/'>Go to Sign In</Link>

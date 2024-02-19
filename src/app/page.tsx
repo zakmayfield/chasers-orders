@@ -1,4 +1,5 @@
 import SignIn from '@/features/auth/SignIn';
+import GridContainer from '@/features/ui/layout/GridContainer';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { redirect } from 'next/navigation';
 
@@ -13,7 +14,9 @@ export default async function Home() {
 
   return (
     <main>
-      <SignIn />
+      <GridContainer cols={12}>
+        <SignIn />
+      </GridContainer>
     </main>
   );
 }

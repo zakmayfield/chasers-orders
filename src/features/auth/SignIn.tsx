@@ -2,6 +2,7 @@
 import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import GridContainer from '../ui/layout/GridContainer';
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>('');
@@ -41,33 +42,89 @@ export default function SignIn() {
     await credLogin(email, password);
   };
 
+  // TODO: NEED TO HANDLE LOG IN ERRORS
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='email'>Email:</label>
+    <div className='border col-start-5 col-span-4 py-6 px-12 font-extralight'>
+      <h2 className='font-light text-2xl mb-12'>Log In</h2>
+      <form onSubmit={handleSubmit} className=''>
+        <GridContainer cols={6}>
+          <label htmlFor='email' className='col-span-6'>
+            Email
+          </label>
 
-        <input
-          type='email'
-          id='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input
+            type='email'
+            id='email'
+            value={email}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg '
+            placeholder='email@example.com'
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <label htmlFor='password'>Password:</label>
+          <label htmlFor='password' className='col-span-6 mt-6'>
+            Password
+          </label>
 
-        <input
-          type='password'
-          id='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            type='password'
+            id='password'
+            value={password}
+            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button type='submit'>Sign In</button>
+          <button
+            type='submit'
+            className='border-2 rounded-lg p-2 col-span-6 mt-6'
+          >
+            Sign In
+          </button>
+        </GridContainer>
       </form>
 
-      <Link href='/sign-up'>Go to Sign Up</Link>
-      {/* <p>OR</p> */}
-      {/* <button onClick={signInWithGoogle}>Sign in with Google</button> */}
+      <div className='text-center mt-12'>
+        <p>
+          Need to create an account?{' '}
+          <Link href='/sign-up' className='underline'>
+            Sign Up Here
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
+
+/*
+<form onSubmit={handleSubmit}>
+        <div className='flex flex-col gap-6'>
+          <div className='flex flex-col'>
+            <label htmlFor='email'>Email</label>
+
+            <input
+              type='email'
+              id='email'
+              value={email}
+              className='border-2 rounded'
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+
+          <div className='flex flex-col'>
+            <label htmlFor='password'>Password</label>
+
+            <input
+              type='password'
+              id='password'
+              value={password}
+              className='border-2 rounded'
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <button type='submit' className='border-2 rounded'>
+          Sign In
+        </button>
+      </form>
+*/
