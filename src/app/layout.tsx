@@ -25,7 +25,7 @@ export default function RootLayout({
       <html lang='en'>
         <body className={inter.className}>
           <Header />
-          <div>{children}</div>
+          <div className='py-6 border-2'>{children}</div>
           <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer />
         </body>
