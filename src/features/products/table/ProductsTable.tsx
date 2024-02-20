@@ -8,7 +8,7 @@ import {
   createColumnHelper,
   flexRender,
 } from '@tanstack/react-table';
-import { tableConfig, getRowPayload } from '@/utils/products.table.utils';
+import { tableConfig } from '@/utils/products.table.utils';
 import { NameCol, CategoryCol, UnitCol } from './columns';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
@@ -191,7 +191,7 @@ function Filter({
       >
         <option value=''>SHOW ALL</option>
         {categories.map((cat) => {
-          let formattedCat = cat.toUpperCase();
+          const formattedCat = cat.toUpperCase();
           return (
             <option key={cat} value={formattedCat}>
               {formattedCat}

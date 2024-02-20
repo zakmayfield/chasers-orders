@@ -20,7 +20,7 @@ export async function GET() {
         },
       })
       .then((data) => {
-        let formattedProducts: ProductWithUnits[] = data.map((item) => ({
+        const formattedProducts: ProductWithUnits[] = data.map((item) => ({
           ...item,
           name: item.name.replace(/-/g, ' '),
         }));

@@ -5,7 +5,7 @@ import {
   PrismaClientUnknownRequestError,
 } from '@prisma/client/runtime/library';
 
-async function handler(req: Request) {
+async function handler() {
   const session = await getAuthSession();
 
   // determine user auth

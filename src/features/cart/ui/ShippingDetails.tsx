@@ -6,7 +6,6 @@ import { getShipping } from '@/services/queries/cart.getShipping';
 import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import { Dispatch, SetStateAction, useState } from 'react';
 import Link from 'next/link';
-import { CgSpinnerAlt } from 'react-icons/cg';
 import { ImSpinner2 } from 'react-icons/im';
 
 const ShippingDetails = () => {

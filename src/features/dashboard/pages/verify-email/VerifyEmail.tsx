@@ -12,20 +12,16 @@ export default function VerifyEmail({ session }: { session: Session | null }) {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const hasRun = useRef(false);
-  const [mutationError, setMutationError] = useState(() => '');
+  const [mutationError] = useState(() => '');
   const router = useRouter();
 
-  const {
-    mutate: validateToken,
-    error,
-    isError,
-  } = useMutation({
+  const { mutate: validateToken } = useMutation({
     mutationFn: verifyEmail,
-    onSuccess(data) {
+    onSuccess() {
       router.push('/dashboard/account-pending');
     },
     onError(error) {
-      console.log('~~~error from validateToken~~~', error);
+      console.error('~~~error from validateToken~~~', error);
     },
   });
 

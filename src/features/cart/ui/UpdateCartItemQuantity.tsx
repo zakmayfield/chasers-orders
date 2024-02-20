@@ -42,7 +42,7 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
       notify(`Updated quantity to ${data.quantity}`);
     },
     onError(error) {
-      console.log('~~~error from quantityMutation~~~', error);
+      console.error('~~~error from quantityMutation~~~', error);
     },
   });
 

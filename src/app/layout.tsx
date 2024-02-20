@@ -5,7 +5,6 @@ import Providers from '@/lib/Providers';
 import { ToastContainer } from 'react-toastify';
 
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-import Nav from '@/features/nav/Nav';
 import Header from '@/features/header/Header';
 
 const inter = Inter({ subsets: ['latin'] });

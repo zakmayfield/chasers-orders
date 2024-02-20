@@ -7,7 +7,7 @@ export type GetShippingPayload = {
   companyName?: string;
 };
 
-export async function GET(req: Request) {
+export async function GET() {
   const session = await getAuthSession();
 
   if (!session?.user) {

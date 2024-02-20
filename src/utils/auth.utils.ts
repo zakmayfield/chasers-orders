@@ -26,7 +26,7 @@ export const userStatus: ResolvedVerificationCheck = async (token) => {
       const { isApproved, emailVerified } = await response.json();
       return { isApproved, emailVerified };
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
