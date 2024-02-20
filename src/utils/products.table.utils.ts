@@ -9,7 +9,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-export const tableConfig = (
+export const useTableConfig = (
   data: ProductWithUnits[] | undefined,
   columns: ColumnDef<ProductWithUnits, any>[]
 ) => {

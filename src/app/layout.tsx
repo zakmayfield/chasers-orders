@@ -23,8 +23,8 @@ export default async function RootLayout({
   const session = await getAuthSession();
   const isAuth = !!session?.user;
   return (
-    <Providers>
-      <html lang='en'>
+    <html lang='en'>
+      <Providers>
         <body className={inter.className}>
           {isAuth && <Header />}
 
@@ -32,7 +32,7 @@ export default async function RootLayout({
           <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer />
         </body>
-      </html>
-    </Providers>
+      </Providers>
+    </html>
   );
 }

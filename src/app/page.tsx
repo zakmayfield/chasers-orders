@@ -13,10 +13,8 @@ export default async function Home() {
   }
 
   return (
-    <main>
-      <GridContainer cols={12}>
-        <SignIn />
-      </GridContainer>
-    </main>
+    <GridContainer cols={12}>
+      <SignIn />
+    </GridContainer>
   );
 }
