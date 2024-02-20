@@ -5,6 +5,7 @@ async function handler(req: Request) {
   const session = await getAuthSession();
 
   // determine user auth
+  // test
   if (!session?.user) {
     return new Response('Unauthorized. Please log in to continue.', {
       status: 401,
