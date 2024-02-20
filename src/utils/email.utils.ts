@@ -57,7 +57,7 @@ export const sendOrderEmail = async (payload: PayloadType) => {
 };
 
 function orderEmailOptions(payload: PayloadType): Record<string, string> {
-  const { order, userData } = payload;
+  const { userData } = payload;
   const email = userData!.email;
   const companyName = userData!.company!.name;
 
@@ -113,9 +113,9 @@ export const sendVerificationEmail = (
 
   transporter.sendMail(mailOptions, (err) => {
     if (err) {
-      console.log('Error sending email: ', err);
+      console.error('Error sending email: ', err);
     } else {
-      console.log('Email sent successfully');
+      console.info('Email sent successfully');
     }
   });
 };

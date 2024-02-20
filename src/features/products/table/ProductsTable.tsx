@@ -191,7 +191,7 @@ function Filter({
       >
         <option value=''>SHOW ALL</option>
         {categories.map((cat) => {
-          let formattedCat = cat.toUpperCase();
+          const formattedCat = cat.toUpperCase();
           return (
             <option key={cat} value={formattedCat}>
               {formattedCat}

@@ -51,7 +51,7 @@ export default function SignUp() {
         ...data,
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
     }
   };

@@ -1,5 +1,4 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { Favorite } from '@prisma/client';
 import { NextRequest } from 'next/server';
 import { headers } from 'next/headers';
 import { db } from '@/lib/prisma';

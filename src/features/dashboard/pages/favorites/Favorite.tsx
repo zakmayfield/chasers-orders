@@ -2,7 +2,6 @@ import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 import { useToast } from '@/hooks/general.hooks';
 import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
 import { useQueryClient } from '@tanstack/react-query';
-import { FaHeart } from 'react-icons/fa';
 import { GoHeartFill } from 'react-icons/go';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
@@ -13,7 +12,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
     onError,
   });
 
-  function onSuccess(data: ExtendedFavorite) {
+  function onSuccess() {
     queryClient.setQueryData(
       ['favorites'],
       (oldData: ExtendedFavorite[] | undefined) => {

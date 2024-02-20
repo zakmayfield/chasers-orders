@@ -1,7 +1,6 @@
 'use client';
 
 import GridContainer from '../ui/layout/GridContainer';
-import EmptyCart from './ui/EmptyCart';
 import CartItemContainer from './ui/CartItemContainer';
 import OrderSummary from './ui/OrderSummary';
 

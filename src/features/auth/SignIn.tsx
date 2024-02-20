@@ -18,24 +18,24 @@ export default function SignIn() {
         password,
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const signInWithGoogle = async () => {
-    setIsLoading(true);
-    try {
-      await signIn('google', undefined, {
-        prompt: 'select_account',
-      });
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // const signInWithGoogle = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     await signIn('google', undefined, {
+  //       prompt: 'select_account',
+  //     });
+  //   } catch (err) {
+  //     console.log(err);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

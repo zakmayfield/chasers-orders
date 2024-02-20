@@ -15,11 +15,7 @@ type NameColProps = {
   isLoading: boolean;
 };
 
-export const NameCol: React.FC<NameColProps> = ({
-  info,
-  favorites,
-  isLoading,
-}) => {
+export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');

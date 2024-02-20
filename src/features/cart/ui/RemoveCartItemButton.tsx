@@ -2,8 +2,6 @@ import { useToast } from '@/hooks/general.hooks';
 import { removeItem } from '@/services/mutations/cart.removeItem';
 import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { GiCancel } from 'react-icons/gi';
-import { TbTrashFilled } from 'react-icons/tb';
 import { LuTrash2 } from 'react-icons/lu';
 
 export interface RemoveCartItemProps {

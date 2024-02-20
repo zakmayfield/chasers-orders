@@ -7,11 +7,9 @@ import {
 import { getCart } from '@/services/queries/cart.getCart';
 import { CartCache } from '@/types/types.cart';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 
 export default function OrderButton() {
   const queryClient = useQueryClient();
-  const router = useRouter();
   const { notify } = useToast();
 
   // Cart Cache query

@@ -21,7 +21,7 @@ client.defineJob({
   trigger: eventTrigger({
     name: 'order.created',
   }),
-  run: async (payload: PayloadType, io, context) => {
+  run: async (payload: PayloadType, io) => {
     await io.logger.info('Running send-email task...');
 
     await io.runTask('send-email', async () => {

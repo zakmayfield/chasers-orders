@@ -1,8 +1,7 @@
 import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   const session = await getAuthSession();
 
   if (!session || !session.user) {

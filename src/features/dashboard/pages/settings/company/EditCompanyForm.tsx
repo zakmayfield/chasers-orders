@@ -2,7 +2,6 @@
 
 import { EditCompanyValidator } from '@/lib/validators/validator.company';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Company } from '@prisma/client';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
