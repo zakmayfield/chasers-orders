@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { SignUpFormData } from '@/types/types.auth-forms';
 import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
 import GridContainer from '../ui/layout/GridContainer';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { IoIosReturnRight } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
@@ -18,7 +18,8 @@ export default function SignUp() {
   const {
     handleSubmit,
     register,
-    formState: { errors, isDirty, isValid },
+    getValues,
+    formState: { errors },
   } = useForm<SignUpFormData>({
     resolver: zodResolver(AuthSignUpValidator),
     defaultValues: {
@@ -64,9 +65,21 @@ export default function SignUp() {
     }
 
     hasRun.current = true;
-  });
+  }, []);
 
+  // TODO: Caching is not complete
   function nextStepCallback() {
+    // Add current form values to cache
+    const formData = getValues();
+    console.log(formData);
+    // Set cache
+    queryClient.setQueryData(
+      ['form-values'],
+      (oldData: SignUpFormData | undefined) =>
+        oldData ? { ...formData } : oldData
+    );
+
+    // Increment step
     let stepToNumber = Number(step);
     if (stepToNumber === 4) {
       return;
@@ -449,6 +462,7 @@ function FinalSubmitButton() {
   );
 }
 
+// TODO: Prevent NextStepButton from triggering if fields are not complete
 function NextStepButton({
   content,
   nextStepCallback,
@@ -457,6 +471,7 @@ function NextStepButton({
   nextStepCallback: () => void;
 }) {
   const handleNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     nextStepCallback();
   };
 
@@ -465,7 +480,7 @@ function NextStepButton({
       onClick={(e) => handleNextStep(e)}
       className='col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg'
     >
-      <span>{content} </span>
+      <span>{content}</span>
       <span>
         <IoIosReturnRight />
       </span>
