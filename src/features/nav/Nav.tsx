@@ -16,7 +16,6 @@ const Nav: FC<NavProps> = async ({}) => {
 
   const isAuth = checkAuth(session);
   const isApproved = !!session?.user.isApproved;
-  console.log(session);
 
   return (
     <nav className='flex items-center gap-6'>
