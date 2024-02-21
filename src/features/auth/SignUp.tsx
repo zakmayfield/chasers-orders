@@ -115,7 +115,7 @@ export default function SignUp() {
                   id='email'
                   placeholder='email@email.com'
                   {...register('email')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.email && <p role='alert'>{errors.email?.message}</p>}
 
@@ -126,7 +126,7 @@ export default function SignUp() {
                   type='password'
                   id='password'
                   {...register('password')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg'
                 />
                 {errors.password && (
                   <p role='alert'>{errors.password?.message}</p>
@@ -154,8 +154,9 @@ export default function SignUp() {
                 <input
                   type='contactName'
                   id='contactName'
+                  placeholder='John'
                   {...register('contactName')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.contactName && (
                   <p role='alert'>{errors.contactName?.message}</p>
@@ -167,8 +168,9 @@ export default function SignUp() {
                 <input
                   type='contactPosition'
                   id='contactPosition'
+                  placeholder='Bartender'
                   {...register('contactPosition')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.contactPosition && (
                   <p role='alert'>{errors.contactPosition?.message}</p>
@@ -180,8 +182,9 @@ export default function SignUp() {
                 <input
                   type='contactPhoneNumber'
                   id='contactPhoneNumber'
+                  placeholder='8412238765'
                   {...register('contactPhoneNumber')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.contactPhoneNumber && (
                   <p role='alert'>{errors.contactPhoneNumber?.message}</p>
@@ -209,8 +212,9 @@ export default function SignUp() {
                 <input
                   type='companyName'
                   id='companyName'
+                  placeholder='Acme'
                   {...register('companyName')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.companyName && (
                   <p role='alert'>{errors.companyName?.message}</p>
@@ -222,8 +226,9 @@ export default function SignUp() {
                 <input
                   type='accountPayableEmail'
                   id='accountPayableEmail'
+                  placeholder='payable@email.com'
                   {...register('accountPayableEmail')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.accountPayableEmail && (
                   <p role='alert'>{errors.accountPayableEmail?.message}</p>
@@ -232,11 +237,13 @@ export default function SignUp() {
                 <label htmlFor='paymentMethod' className='col-span-6'>
                   Payment Method:
                 </label>
+
+                {/* TODO: Select dropdown */}
                 <input
                   type='paymentMethod'
                   id='paymentMethod'
                   {...register('paymentMethod')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.paymentMethod && (
                   <p role='alert'>{errors.paymentMethod?.message}</p>
@@ -254,30 +261,32 @@ export default function SignUp() {
           )}
 
           {/* STEP four*/}
-          {/* {step === '4' && (
+          {step === '4' && (
             <div>
               <GridContainer cols={6}>
                 <label htmlFor='shippingStreetAddress' className='col-span-6'>
-                  Shipping Address (optional):
+                  Shipping Address:
                 </label>
                 <input
                   type='shippingStreetAddress'
                   id='shippingStreetAddress'
+                  placeholder='123 Main St'
                   {...register('shippingStreetAddress')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.shippingStreetAddress && (
                   <p role='alert'>{errors.shippingStreetAddress?.message}</p>
                 )}
 
                 <label htmlFor='shippingUnit' className='col-span-6'>
-                  Shipping Unit:
+                  Shipping Unit (optional):
                 </label>
                 <input
                   type='shippingUnit'
                   id='shippingUnit'
+                  placeholder='Optional'
                   {...register('shippingUnit')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.shippingUnit && (
                   <p role='alert'>{errors.shippingUnit?.message}</p>
@@ -289,8 +298,9 @@ export default function SignUp() {
                 <input
                   type='shippingCity'
                   id='shippingCity'
+                  placeholder='Toronto'
                   {...register('shippingCity')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.shippingCity && (
                   <p role='alert'>{errors.shippingCity?.message}</p>
@@ -299,11 +309,14 @@ export default function SignUp() {
                 <label htmlFor='shippingState' className='col-span-6'>
                   Shipping State:
                 </label>
+
+                {/* TODO: refactor to dropdown select */}
                 <input
                   type='shippingState'
                   id='shippingState'
+                  placeholder='ON'
                   {...register('shippingState')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.shippingState && (
                   <p role='alert'>{errors.shippingState?.message}</p>
@@ -315,8 +328,9 @@ export default function SignUp() {
                 <input
                   type='shippingPostalCode'
                   id='shippingPostalCode'
+                  placeholder='X2X 2X2'
                   {...register('shippingPostalCode')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.shippingPostalCode && (
                   <p role='alert'>{errors.shippingPostalCode?.message}</p>
@@ -328,8 +342,9 @@ export default function SignUp() {
                 <input
                   type='deliveryInstructions'
                   id='deliveryInstructions'
+                  placeholder='Deliver to side door...'
                   {...register('deliveryInstructions')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.deliveryInstructions && (
                   <p role='alert'>{errors.deliveryInstructions?.message}</p>
@@ -341,21 +356,23 @@ export default function SignUp() {
                 <input
                   type='billingStreetAddress'
                   id='billingStreetAddress'
+                  placeholder='123 Main St'
                   {...register('billingStreetAddress')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.billingStreetAddress && (
                   <p role='alert'>{errors.billingStreetAddress?.message}</p>
                 )}
 
                 <label htmlFor='billingUnit' className='col-span-6'>
-                  Billing Unit:
+                  Billing Unit (optional):
                 </label>
                 <input
                   type='billingUnit'
                   id='billingUnit'
                   {...register('billingUnit')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  placeholder='Optional'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.billingUnit && (
                   <p role='alert'>{errors.billingUnit?.message}</p>
@@ -367,8 +384,9 @@ export default function SignUp() {
                 <input
                   type='billingCity'
                   id='billingCity'
+                  placeholder='Toronto'
                   {...register('billingCity')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.billingCity && (
                   <p role='alert'>{errors.billingCity?.message}</p>
@@ -380,8 +398,9 @@ export default function SignUp() {
                 <input
                   type='billingState'
                   id='billingState'
+                  placeholder='ON'
                   {...register('billingState')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.billingState && (
                   <p role='alert'>{errors.billingState?.message}</p>
@@ -393,8 +412,9 @@ export default function SignUp() {
                 <input
                   type='billingPostalCode'
                   id='billingPostalCode'
+                  placeholder='X2X 2X2'
                   {...register('billingPostalCode')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.billingPostalCode && (
                   <p role='alert'>{errors.billingPostalCode?.message}</p>
@@ -403,7 +423,7 @@ export default function SignUp() {
                 <FinalSubmitButton />
               </GridContainer>
             </div>
-          )} */}
+          )}
         </div>
       </form>
 
