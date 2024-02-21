@@ -472,7 +472,6 @@ function FinalSubmitButton() {
   );
 }
 
-// TODO: Prevent NextStepButton from triggering if fields are not complete
 function NextStepButton({
   content,
   step,
