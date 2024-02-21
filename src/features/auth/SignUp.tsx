@@ -544,7 +544,7 @@ function NextStepButton({
   return (
     <button
       onClick={(e) => handleNextStep(e)}
-      className={`col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg`}
+      className={`active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg`}
     >
       <span>{content}</span>
       <span>
