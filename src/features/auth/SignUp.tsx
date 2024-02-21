@@ -1,7 +1,11 @@
 'use client';
 import Link from 'next/link';
 import { signIn } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
+import {
+  UseFormGetFieldState,
+  UseFormGetValues,
+  useForm,
+} from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { SignUpFormData } from '@/types/types.auth-forms';
 import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
@@ -10,39 +14,43 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { IoIosReturnRight } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
+import { useToast } from '@/hooks/general.hooks';
+
 type Steps = '1' | '2' | '3' | '4';
+const defaultValues = {
+  email: '',
+  password: '',
+  contactName: '',
+  contactPosition: '',
+  contactPhoneNumber: '',
+  companyName: '',
+  accountPayableEmail: '',
+  paymentMethod: '',
+  shippingStreetAddress: '',
+  shippingUnit: '',
+  shippingCity: '',
+  shippingState: '',
+  shippingPostalCode: '',
+  deliveryInstructions: '',
+  billingStreetAddress: '',
+  billingUnit: '',
+  billingCity: '',
+  billingState: '',
+  billingPostalCode: '',
+};
 
 export default function SignUp() {
   const queryClient = useQueryClient();
 
   const {
+    formState: { errors, isDirty, isValid },
     handleSubmit,
     register,
     getValues,
-    formState: { errors },
+    getFieldState,
   } = useForm<SignUpFormData>({
     resolver: zodResolver(AuthSignUpValidator),
-    defaultValues: {
-      email: '',
-      password: '',
-      contactName: '',
-      contactPosition: '',
-      contactPhoneNumber: '',
-      companyName: '',
-      accountPayableEmail: '',
-      paymentMethod: '',
-      shippingStreetAddress: '',
-      shippingUnit: '',
-      shippingCity: '',
-      shippingState: '',
-      shippingPostalCode: '',
-      deliveryInstructions: '',
-      billingStreetAddress: '',
-      billingUnit: '',
-      billingCity: '',
-      billingState: '',
-      billingPostalCode: '',
-    },
+    defaultValues,
   });
 
   const credentialSignUp = async (data: SignUpFormData) => {
@@ -69,19 +77,9 @@ export default function SignUp() {
 
   // TODO: Caching is not complete
   function nextStepCallback() {
-    // Add current form values to cache
-    const formData = getValues();
-    console.log(formData);
-    // Set cache
-    queryClient.setQueryData(
-      ['form-values'],
-      (oldData: SignUpFormData | undefined) =>
-        oldData ? { ...formData } : oldData
-    );
-
     // Increment step
     let stepToNumber = Number(step);
-    if (stepToNumber === 4) {
+    if (stepToNumber >= 4) {
       return;
     }
     const nextStep = (stepToNumber = stepToNumber + 1);
@@ -135,6 +133,10 @@ export default function SignUp() {
 
                 <NextStepButton
                   content='contact'
+                  step={step}
+                  isDirty={isDirty}
+                  getValues={getValues}
+                  getFieldState={getFieldState}
                   nextStepCallback={nextStepCallback}
                 />
               </GridContainer>
@@ -142,7 +144,7 @@ export default function SignUp() {
           )}
 
           {/* STEP TWO */}
-          {step === '2' && (
+          {/* {step === '2' && (
             <div>
               <GridContainer cols={6}>
                 <label htmlFor='contactName' className='col-span-6'>
@@ -187,13 +189,14 @@ export default function SignUp() {
                 <NextStepButton
                   content='company'
                   nextStepCallback={nextStepCallback}
+                  disabled={() => isStepButtonDisabled('2')}
                 />
               </GridContainer>
             </div>
-          )}
+          )} */}
 
           {/* STEP THREE */}
-          {step === '3' && (
+          {/* {step === '3' && (
             <div>
               <GridContainer cols={6}>
                 <label htmlFor='companyName' className='col-span-6'>
@@ -237,13 +240,14 @@ export default function SignUp() {
                 <NextStepButton
                   content='shipping'
                   nextStepCallback={nextStepCallback}
+                  disabled={() => isStepButtonDisabled('3')}
                 />
               </GridContainer>
             </div>
-          )}
+          )} */}
 
           {/* STEP four*/}
-          {step === '4' && (
+          {/* {step === '4' && (
             <div>
               <GridContainer cols={6}>
                 <label htmlFor='shippingStreetAddress' className='col-span-6'>
@@ -324,7 +328,6 @@ export default function SignUp() {
                   <p role='alert'>{errors.deliveryInstructions?.message}</p>
                 )}
 
-                {/* BILLING */}
                 <label htmlFor='billingStreetAddress' className='col-span-6'>
                   Billing Address:
                 </label>
@@ -393,7 +396,7 @@ export default function SignUp() {
                 <FinalSubmitButton />
               </GridContainer>
             </div>
-          )}
+          )} */}
         </div>
       </form>
 
@@ -465,20 +468,83 @@ function FinalSubmitButton() {
 // TODO: Prevent NextStepButton from triggering if fields are not complete
 function NextStepButton({
   content,
+  step,
+  isDirty,
+  getValues,
   nextStepCallback,
+  getFieldState,
 }: {
   content: string;
+  step: Steps;
+  isDirty: boolean;
+  getValues: UseFormGetValues<SignUpFormData>;
   nextStepCallback: () => void;
+  getFieldState: UseFormGetFieldState<SignUpFormData>;
 }) {
+  const { notify } = useToast();
+  const [isDisabled, setIsDisabled] = useState(true);
+
+  type Key =
+    | 'email'
+    | 'password'
+    | 'contactName'
+    | 'contactPosition'
+    | 'contactPhoneNumber'
+    | 'companyName'
+    | 'accountPayableEmail'
+    | 'paymentMethod'
+    | 'shippingStreetAddress'
+    | 'shippingUnit'
+    | 'shippingCity'
+    | 'shippingState'
+    | 'shippingPostalCode'
+    | 'deliveryInstructions'
+    | 'billingStreetAddress'
+    | 'billingUnit'
+    | 'billingCity'
+    | 'billingState'
+    | 'billingPostalCode';
+
+  interface IRequiredFields {
+    [step: string]: Key[];
+  }
+
+  const requiredFields: IRequiredFields = {
+    '1': ['email', 'password'],
+    '2': ['contactName', 'contactPosition', 'contactPhoneNumber'],
+    '3': ['companyName', 'paymentMethod', 'accountPayableEmail'],
+    '4': [
+      'shippingStreetAddress',
+      'shippingCity',
+      'shippingState',
+      'shippingPostalCode',
+    ],
+  };
+
+  function isStepComplete(currentStep: Steps) {
+    const formValues = getValues();
+
+    // define required fields via the current step
+    const required = requiredFields[currentStep];
+
+    return required.every((field) => !!formValues[field]);
+  }
+
   const handleNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    nextStepCallback();
+
+    function handleNotComplete() {
+      // set focus when submitting an incomplete form to the first item in the required arr if not empty
+      notify('Please complete all required fields', 'info');
+    }
+
+    isStepComplete(step) ? nextStepCallback() : handleNotComplete();
   };
 
   return (
     <button
       onClick={(e) => handleNextStep(e)}
-      className='col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg'
+      className={`col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg`}
     >
       <span>{content}</span>
       <span>
