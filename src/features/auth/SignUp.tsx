@@ -113,8 +113,9 @@ export default function SignUp() {
                 <input
                   type='email'
                   id='email'
+                  placeholder='email@email.com'
                   {...register('email')}
-                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
                 />
                 {errors.email && <p role='alert'>{errors.email?.message}</p>}
 
@@ -144,7 +145,7 @@ export default function SignUp() {
           )}
 
           {/* STEP TWO */}
-          {/* {step === '2' && (
+          {step === '2' && (
             <div>
               <GridContainer cols={6}>
                 <label htmlFor='contactName' className='col-span-6'>
@@ -161,7 +162,7 @@ export default function SignUp() {
                 )}
 
                 <label htmlFor='contactPosition' className='col-span-6'>
-                  Contact Position:
+                  Contact Position (optional):
                 </label>
                 <input
                   type='contactPosition'
@@ -187,16 +188,19 @@ export default function SignUp() {
                 )}
 
                 <NextStepButton
-                  content='company'
+                  content='contact'
+                  step={step}
+                  isDirty={isDirty}
+                  getValues={getValues}
+                  getFieldState={getFieldState}
                   nextStepCallback={nextStepCallback}
-                  disabled={() => isStepButtonDisabled('2')}
                 />
               </GridContainer>
             </div>
-          )} */}
+          )}
 
           {/* STEP THREE */}
-          {/* {step === '3' && (
+          {step === '3' && (
             <div>
               <GridContainer cols={6}>
                 <label htmlFor='companyName' className='col-span-6'>
@@ -238,13 +242,16 @@ export default function SignUp() {
                   <p role='alert'>{errors.paymentMethod?.message}</p>
                 )}
                 <NextStepButton
-                  content='shipping'
+                  content='contact'
+                  step={step}
+                  isDirty={isDirty}
+                  getValues={getValues}
+                  getFieldState={getFieldState}
                   nextStepCallback={nextStepCallback}
-                  disabled={() => isStepButtonDisabled('3')}
                 />
               </GridContainer>
             </div>
-          )} */}
+          )}
 
           {/* STEP four*/}
           {/* {step === '4' && (
@@ -488,19 +495,15 @@ function NextStepButton({
     | 'email'
     | 'password'
     | 'contactName'
-    | 'contactPosition'
     | 'contactPhoneNumber'
     | 'companyName'
     | 'accountPayableEmail'
     | 'paymentMethod'
     | 'shippingStreetAddress'
-    | 'shippingUnit'
     | 'shippingCity'
     | 'shippingState'
     | 'shippingPostalCode'
-    | 'deliveryInstructions'
     | 'billingStreetAddress'
-    | 'billingUnit'
     | 'billingCity'
     | 'billingState'
     | 'billingPostalCode';
@@ -511,7 +514,7 @@ function NextStepButton({
 
   const requiredFields: IRequiredFields = {
     '1': ['email', 'password'],
-    '2': ['contactName', 'contactPosition', 'contactPhoneNumber'],
+    '2': ['contactName', 'contactPhoneNumber'],
     '3': ['companyName', 'paymentMethod', 'accountPayableEmail'],
     '4': [
       'shippingStreetAddress',
