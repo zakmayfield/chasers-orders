@@ -7,6 +7,7 @@ import FormSwitchLink from './ui/FormSwitchLink';
 import { SignInFormData } from '@/types/types.auth-forms';
 import { AuthSignInValidator } from '@/lib/validators/validator.auth-form';
 import { useToast } from '@/hooks/general.hooks';
+import FieldError from './ui/FieldError';
 
 export default function SignIn() {
   const { notify } = useToast();
@@ -55,7 +56,11 @@ export default function SignIn() {
             className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
             placeholder='geralt@rivia.com'
           />
-          {errors.email && <p role='alert'>{errors.email?.message}</p>}
+          {errors.email && (
+            <div className='col-span-6'>
+              <FieldError message={errors.email.message} />
+            </div>
+          )}
 
           <label htmlFor='password' className='col-span-6'>
             Password
@@ -68,7 +73,11 @@ export default function SignIn() {
             className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
             placeholder='Password'
           />
-          {errors.password && <p role='alert'>{errors.password?.message}</p>}
+          {errors.password && (
+            <div className='col-span-6'>
+              <FieldError message={errors.password.message} />
+            </div>
+          )}
 
           <button
             type='submit'
