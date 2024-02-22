@@ -2,7 +2,7 @@
 
 import { getRecentOrders } from '@/services/queries/orders.getRecentOrders';
 import { Order, OrderLineItem } from '@prisma/client';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -11,7 +11,6 @@ export type OrderType = Order & {
 };
 
 const RecentOrders = () => {
-  const queryClient = useQueryClient();
   const params = useSearchParams();
   const [expanded, setExpanded] = useState<OrderType | null>();
   const orderId = params.get('orderId');

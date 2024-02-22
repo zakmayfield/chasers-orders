@@ -1,10 +1,11 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 
-async function handler(req: Request) {
+export async function PUT(req: Request) {
   const session = await getAuthSession();
 
   // determine user auth
+  // test
   if (!session?.user) {
     return new Response('Unauthorized. Please log in to continue.', {
       status: 401,
@@ -76,5 +77,3 @@ async function handler(req: Request) {
     }
   }
 }
-
-export { handler as PUT };

@@ -1,10 +1,20 @@
-import Image from 'next/image';
+import SignIn from '@/features/auth/SignIn';
+import GridContainer from '@/features/ui/layout/GridContainer';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { redirect } from 'next/navigation';
 
-export default function Home() {
+export default async function Home() {
+  const session = await getAuthSession();
+
+  const user = session?.user;
+
+  if (user) {
+    redirect('/products');
+  }
+
   return (
-    <main>
-      <h1>Chasers Fresh Juice</h1>
-      <h2>Orders</h2>
-    </main>
+    <GridContainer cols={12}>
+      <SignIn />
+    </GridContainer>
   );
 }

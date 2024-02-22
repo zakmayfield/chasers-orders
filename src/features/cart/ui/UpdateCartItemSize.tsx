@@ -24,20 +24,17 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
   const { notify } = useToast();
   const [size, setSize] = useState<string | undefined>(sizeData);
 
-  const {
-    data,
-    isLoading: queryIsLoading,
-    error,
-  } = useQuery<SizesData | undefined, Error>({
+  const { data, isLoading: queryIsLoading } = useQuery<
+    SizesData | undefined,
+    Error
+  >({
     queryKey: ['unit-sizes', unitId],
     queryFn: async () => await getItemSizes(unitId),
   });
 
-  const { mutate: sizeMutation, isLoading: mutationIsLoading } = useMutation({
+  const { mutate: sizeMutation } = useMutation({
     mutationFn: updateItemSize,
     onSuccess: (data) => {
-      console.log(data);
-
       setSize(data?.unit.size);
 
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
@@ -56,7 +53,7 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
       notify(`Updated size to ${data?.unit.size}`);
     },
     onError(error) {
-      console.log('~~~error from sizeMutation~~~', error);
+      console.error('~~~error from sizeMutation~~~', error);
     },
   });
 

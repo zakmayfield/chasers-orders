@@ -10,7 +10,7 @@ export const getCart = async (): Promise<CartCache | undefined> => {
 
     return response.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }

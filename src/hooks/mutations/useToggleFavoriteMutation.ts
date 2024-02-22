@@ -2,7 +2,6 @@ import { toggleFavorite } from '@/services/mutations/favorite.toggleFavorite';
 import { ActionTypes } from '@/types/types.favorite.actions';
 import { UseMutateFunction, useMutation } from '@tanstack/react-query';
 import { ExtendedFavorite } from '../queries/useFavoritesQuery';
-import { useState } from 'react';
 
 type UseToggleFavorite = {
   ({ onSuccess, onError }: ToggleFavoriteProps): {

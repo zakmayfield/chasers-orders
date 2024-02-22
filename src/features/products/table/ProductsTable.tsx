@@ -8,7 +8,7 @@ import {
   createColumnHelper,
   flexRender,
 } from '@tanstack/react-table';
-import { tableConfig, getRowPayload } from '@/utils/products.table.utils';
+import { useTableConfig, getRowPayload } from '@/utils/products.table.utils';
 import { NameCol, CategoryCol, UnitCol } from './columns';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
@@ -87,7 +87,7 @@ export default function ProductsTable() {
     }),
   ];
 
-  const { reactTable } = tableConfig(data, columns);
+  const { reactTable } = useTableConfig(data, columns);
 
   return (
     <div className='mx-auto w-3/4'>
@@ -191,7 +191,7 @@ function Filter({
       >
         <option value=''>SHOW ALL</option>
         {categories.map((cat) => {
-          let formattedCat = cat.toUpperCase();
+          const formattedCat = cat.toUpperCase();
           return (
             <option key={cat} value={formattedCat}>
               {formattedCat}

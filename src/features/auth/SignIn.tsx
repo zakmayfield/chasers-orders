@@ -2,6 +2,7 @@
 import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
+import GridContainer from '../ui/layout/GridContainer';
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>('');
@@ -17,20 +18,7 @@ export default function SignIn() {
         password,
       });
     } catch (err) {
-      console.log(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const signInWithGoogle = async () => {
-    setIsLoading(true);
-    try {
-      await signIn('google', undefined, {
-        prompt: 'select_account',
-      });
-    } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -41,33 +29,56 @@ export default function SignIn() {
     await credLogin(email, password);
   };
 
+  // TODO: NEED TO HANDLE LOG IN ERRORS
+
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor='email'>Email:</label>
+    <div className='border col-start-5 col-span-4 py-6 px-12 font-extralight'>
+      <h2 className='font-light text-2xl mb-12'>Log In</h2>
+      <form onSubmit={handleSubmit} className=''>
+        <GridContainer cols={6}>
+          <label htmlFor='email' className='col-span-6'>
+            Email
+          </label>
 
-        <input
-          type='email'
-          id='email'
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+          <input
+            type='email'
+            id='email'
+            value={email}
+            className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
+            placeholder='geralt@rivia.com'
+            onChange={(e) => setEmail(e.target.value)}
+          />
 
-        <label htmlFor='password'>Password:</label>
+          <label htmlFor='password' className='col-span-6'>
+            Password
+          </label>
 
-        <input
-          type='password'
-          id='password'
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+          <input
+            type='password'
+            id='password'
+            value={password}
+            className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
+            placeholder='Password'
+            onChange={(e) => setPassword(e.target.value)}
+          />
 
-        <button type='submit'>Sign In</button>
+          <button
+            type='submit'
+            className='border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6'
+          >
+            Sign In
+          </button>
+        </GridContainer>
       </form>
 
-      <Link href='/sign-up'>Go to Sign Up</Link>
-      {/* <p>OR</p> */}
-      {/* <button onClick={signInWithGoogle}>Sign in with Google</button> */}
+      <div className='text-center mt-12'>
+        <p>
+          Need to create an account?{' '}
+          <Link href='/sign-up' className='underline'>
+            Sign Up Here
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

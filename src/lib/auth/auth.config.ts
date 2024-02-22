@@ -29,7 +29,7 @@ const session: NextAuthSessionStrategy = {
 // pages
 type NextAuthPages = NextAuthOptions['pages'];
 const pages: NextAuthPages = {
-  signIn: '/sign-in',
+  signIn: '/',
   error: '/error',
 };
 

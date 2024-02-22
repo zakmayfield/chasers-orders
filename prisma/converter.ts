@@ -30,7 +30,7 @@ function writeToFile(data: TransformedItem[], fileName: string) {
     if (err) {
       console.error('Error writing to file:', err);
     } else {
-      console.log('Data has been written to', fileName);
+      console.info('Data has been written to', fileName);
     }
   });
 }

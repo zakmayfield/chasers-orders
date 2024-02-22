@@ -22,7 +22,7 @@ export const getItemSizes: GetProductUnitSizesProps = async (unitId) => {
 
     return response.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }

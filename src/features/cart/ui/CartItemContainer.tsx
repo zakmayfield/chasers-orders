@@ -17,12 +17,13 @@ export default function CartItemContainer() {
   return (
     <div className='col-start-3 col-span-4'>
       {/* Cart Items Container Header */}
-      <div className='flex items-center gap-3 font-extralight'>
-        <h4 className='h-24 text-2xl flex items-center pl-12'>Cart</h4>
+      <div className='flex items-center gap-3'>
+        <h4 className=' text-2xl font-extralight'>
+          <span>Cart</span>
+        </h4>
+
         {isFetching ? (
-          <span className='animate-spin'>
-            <ImSpinner2 />
-          </span>
+          <ImSpinner2 className='animate-spin' />
         ) : (
           <p>
             (<span>{data?.items.length}</span>)
