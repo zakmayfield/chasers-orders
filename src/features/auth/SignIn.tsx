@@ -3,6 +3,7 @@ import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import GridContainer from '../ui/layout/GridContainer';
+import FormSwitchLink from './ui/FormSwitchLink';
 
 export default function SignIn() {
   const [email, setEmail] = useState<string>('');
@@ -71,14 +72,7 @@ export default function SignIn() {
         </GridContainer>
       </form>
 
-      <div className='text-center mt-12'>
-        <p>
-          Need to create an account?{' '}
-          <Link href='/sign-up' className='underline'>
-            Sign Up Here
-          </Link>
-        </p>
-      </div>
+      <FormSwitchLink formType='sign-in' />
     </div>
   );
 }

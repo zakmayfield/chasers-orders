@@ -15,6 +15,7 @@ import { IoIosReturnRight } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 import { useToast } from '@/hooks/general.hooks';
+import FormSwitchLink from './ui/FormSwitchLink';
 
 type Steps = '1' | '2' | '3' | '4';
 const defaultValues = {
@@ -440,14 +441,7 @@ export default function SignUp() {
         </div>
       </form>
 
-      <div className='text-center mt-12'>
-        <p>
-          Prefer to sign in?{' '}
-          <Link href='/' className='underline focus:ring-2 focus:ring-blue-400'>
-            Sign In Here
-          </Link>
-        </p>
-      </div>
+      <FormSwitchLink formType='sign-up' />
     </div>
   );
 }
