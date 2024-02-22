@@ -16,6 +16,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 import { useToast } from '@/hooks/general.hooks';
 import FormSwitchLink from './ui/FormSwitchLink';
+import FieldError from './ui/FieldError';
 
 type Steps = '1' | '2' | '3' | '4';
 const defaultValues = {
@@ -122,7 +123,11 @@ export default function SignUp() {
                   {...register('email')}
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
-                {errors.email && <p role='alert'>{errors.email?.message}</p>}
+                {errors.email && (
+                  <div className='col-span-6'>
+                    <FieldError message={errors.email.message} />
+                  </div>
+                )}
 
                 <label htmlFor='password' className='col-span-6'>
                   Password:
@@ -135,7 +140,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.password && (
-                  <p role='alert'>{errors.password?.message}</p>
+                  <FieldError message={errors.password.message} />
                 )}
 
                 <NextStepButton
@@ -163,7 +168,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.contactName && (
-                  <p role='alert'>{errors.contactName?.message}</p>
+                  <FieldError message={errors.contactName.message} />
                 )}
 
                 <label htmlFor='contactPosition' className='col-span-6'>
@@ -178,7 +183,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 bg-slate-50 bg-opacity-60 focus:ring-4 focus:ring-green-300'
                 />
                 {errors.contactPosition && (
-                  <p role='alert'>{errors.contactPosition?.message}</p>
+                  <FieldError message={errors.contactPosition.message} />
                 )}
 
                 <label htmlFor='contactPhoneNumber' className='col-span-6'>
@@ -192,7 +197,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.contactPhoneNumber && (
-                  <p role='alert'>{errors.contactPhoneNumber?.message}</p>
+                  <FieldError message={errors.contactPhoneNumber.message} />
                 )}
 
                 <NextStepButton
@@ -220,7 +225,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.companyName && (
-                  <p role='alert'>{errors.companyName?.message}</p>
+                  <FieldError message={errors.companyName.message} />
                 )}
 
                 {/* TODO: allow input or N/A */}
@@ -239,7 +244,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.accountPayableEmail && (
-                  <p role='alert'>{errors.accountPayableEmail?.message}</p>
+                  <FieldError message={errors.accountPayableEmail.message} />
                 )}
 
                 <label htmlFor='paymentMethod' className='col-span-6'>
@@ -254,7 +259,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.paymentMethod && (
-                  <p role='alert'>{errors.paymentMethod?.message}</p>
+                  <FieldError message={errors.paymentMethod.message} />
                 )}
                 <NextStepButton
                   content='contact'
@@ -281,7 +286,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingStreetAddress && (
-                  <p role='alert'>{errors.shippingStreetAddress?.message}</p>
+                  <FieldError message={errors.shippingStreetAddress.message} />
                 )}
 
                 <label htmlFor='shippingUnit' className='col-span-6'>
@@ -296,7 +301,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg bg-slate-50 bg-opacity-60 placeholder:text-gray-300 focus:ring-4 focus:ring-green-300'
                 />
                 {errors.shippingUnit && (
-                  <p role='alert'>{errors.shippingUnit?.message}</p>
+                  <FieldError message={errors.shippingUnit.message} />
                 )}
 
                 <label htmlFor='shippingCity' className='col-span-6'>
@@ -310,7 +315,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingCity && (
-                  <p role='alert'>{errors.shippingCity?.message}</p>
+                  <FieldError message={errors.shippingCity.message} />
                 )}
 
                 <label htmlFor='shippingState' className='col-span-6'>
@@ -326,7 +331,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingState && (
-                  <p role='alert'>{errors.shippingState?.message}</p>
+                  <FieldError message={errors.shippingState.message} />
                 )}
 
                 <label htmlFor='shippingPostalCode' className='col-span-6'>
@@ -340,7 +345,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingPostalCode && (
-                  <p role='alert'>{errors.shippingPostalCode?.message}</p>
+                  <FieldError message={errors.shippingPostalCode.message} />
                 )}
 
                 <label htmlFor='deliveryInstructions' className='col-span-6'>
@@ -354,7 +359,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.deliveryInstructions && (
-                  <p role='alert'>{errors.deliveryInstructions?.message}</p>
+                  <FieldError message={errors.deliveryInstructions.message} />
                 )}
 
                 <label htmlFor='billingStreetAddress' className='col-span-6'>
@@ -368,7 +373,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingStreetAddress && (
-                  <p role='alert'>{errors.billingStreetAddress?.message}</p>
+                  <FieldError message={errors.billingStreetAddress.message} />
                 )}
 
                 <label htmlFor='billingUnit' className='col-span-6'>
@@ -383,7 +388,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg bg-gray-50 bg-opacity-60 placeholder:text-gray-300 focus:ring-4 focus:ring-green-300'
                 />
                 {errors.billingUnit && (
-                  <p role='alert'>{errors.billingUnit?.message}</p>
+                  <FieldError message={errors.billingUnit.message} />
                 )}
 
                 <label htmlFor='billingCity' className='col-span-6'>
@@ -397,7 +402,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingCity && (
-                  <p role='alert'>{errors.billingCity?.message}</p>
+                  <FieldError message={errors.billingCity.message} />
                 )}
 
                 <label htmlFor='billingState' className='col-span-6'>
@@ -411,7 +416,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingState && (
-                  <p role='alert'>{errors.billingState?.message}</p>
+                  <FieldError message={errors.billingState.message} />
                 )}
 
                 <label htmlFor='billingPostalCode' className='col-span-6'>
@@ -425,7 +430,7 @@ export default function SignUp() {
                   className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingPostalCode && (
-                  <p role='alert'>{errors.billingPostalCode?.message}</p>
+                  <FieldError message={errors.billingPostalCode.message} />
                 )}
 
                 <FinalSubmitButton />
