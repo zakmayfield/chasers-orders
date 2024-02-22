@@ -39,6 +39,10 @@ const defaultValues = {
   billingPostalCode: '',
 };
 
+/*
+  TODO: Populate form values from cache if available
+*/
+
 export default function SignUp() {
   const queryClient = useQueryClient();
 
@@ -58,6 +62,7 @@ export default function SignUp() {
       await signIn('sign-up', {
         ...data,
       });
+      queryClient.removeQueries(['form-values']);
     } catch (err) {
       console.error(err);
     } finally {
@@ -75,7 +80,6 @@ export default function SignUp() {
     hasRun.current = true;
   }, []);
 
-  // TODO: Caching is not complete
   function nextStepCallback() {
     // Increment step
     let stepToNumber = Number(step);
@@ -484,7 +488,6 @@ function FinalSubmitButton() {
   return (
     <button
       type='submit'
-      onClick={() => {}}
       className='col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg mt-12'
     >
       Create Account
@@ -507,6 +510,7 @@ function NextStepButton({
   nextStepCallback: () => void;
   getFieldState: UseFormGetFieldState<SignUpFormData>;
 }) {
+  const queryClient = useQueryClient();
   const { notify } = useToast();
   const [isDisabled, setIsDisabled] = useState(true);
 
@@ -560,7 +564,19 @@ function NextStepButton({
       notify('Please complete all required fields', 'info');
     }
 
-    isStepComplete(step) ? nextStepCallback() : handleNotComplete();
+    function handleComplete() {
+      // define current form state
+      const formValues = getValues();
+      // spread all values except for password
+      const { password, ...secureFormValues } = formValues;
+      // set form state to cache
+      queryClient.setQueryData(['form-values'], secureFormValues);
+
+      // evoke callback from parent
+      nextStepCallback();
+    }
+
+    isStepComplete(step) ? handleComplete() : handleNotComplete();
   };
 
   return (

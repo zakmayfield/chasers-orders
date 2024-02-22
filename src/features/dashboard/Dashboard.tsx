@@ -5,6 +5,14 @@ import { DashboardUserData } from '@/types/types.dashboard';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
+/*
+  TODO: Check for url query param with a `newAccount` flag which shows a modal indicating their account must be approved and email verified in order to access the store
+    - This also means that the URL will need to be set, so some how have to find the redirect for sign up and redirect with a query param
+*/
+/*
+  TODO: When new account is created notify User of email verification.
+*/
+
 const Dashboard = () => {
   const router = useRouter();
   const { data, isLoading, error, isError } = useQuery<
