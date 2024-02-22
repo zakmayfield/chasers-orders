@@ -58,7 +58,7 @@ export default function SignUp() {
     defaultValues,
   });
 
-  const credentialSignUp = async (data: SignUpFormData) => {
+  const signUpWithCredentials = async (data: SignUpFormData) => {
     try {
       await signIn('sign-up', {
         ...data,
@@ -94,12 +94,12 @@ export default function SignUp() {
 
   return (
     <div className='border col-start-5 col-span-4 py-6 px-12 font-extralight'>
-      <h2 className='font-light text-2xl mb-12'>Sign Up</h2>
+      <h2 className='text-2xl mb-12'>Create an account</h2>
 
       {/* STEPS */}
       <SignUpStepTracker activeStep={step} />
 
-      <form onSubmit={handleSubmit(credentialSignUp)}>
+      <form onSubmit={handleSubmit(signUpWithCredentials)}>
         <div className='flex flex-col gap-24'>
           {/* "LOAD" STEP SKELETON*/}
           {!step && (
@@ -141,9 +141,7 @@ export default function SignUp() {
                 <NextStepButton
                   content='contact'
                   step={step}
-                  isDirty={isDirty}
                   getValues={getValues}
-                  getFieldState={getFieldState}
                   nextStepCallback={nextStepCallback}
                 />
               </GridContainer>
@@ -200,9 +198,7 @@ export default function SignUp() {
                 <NextStepButton
                   content='contact'
                   step={step}
-                  isDirty={isDirty}
                   getValues={getValues}
-                  getFieldState={getFieldState}
                   nextStepCallback={nextStepCallback}
                 />
               </GridContainer>
@@ -263,9 +259,7 @@ export default function SignUp() {
                 <NextStepButton
                   content='contact'
                   step={step}
-                  isDirty={isDirty}
                   getValues={getValues}
-                  getFieldState={getFieldState}
                   nextStepCallback={nextStepCallback}
                 />
               </GridContainer>
@@ -501,21 +495,16 @@ function FinalSubmitButton() {
 function NextStepButton({
   content,
   step,
-  isDirty,
   getValues,
   nextStepCallback,
-  getFieldState,
 }: {
   content: string;
   step: Steps;
-  isDirty: boolean;
   getValues: UseFormGetValues<SignUpFormData>;
   nextStepCallback: () => void;
-  getFieldState: UseFormGetFieldState<SignUpFormData>;
 }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const [isDisabled, setIsDisabled] = useState(true);
 
   type Key =
     | 'email'

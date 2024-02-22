@@ -1,41 +1,48 @@
 'use client';
-import { FormEvent, useState } from 'react';
 import { signIn } from 'next-auth/react';
-import Link from 'next/link';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import GridContainer from '../ui/layout/GridContainer';
 import FormSwitchLink from './ui/FormSwitchLink';
+import { SignInFormData } from '@/types/types.auth-forms';
+import { AuthSignInValidator } from '@/lib/validators/validator.auth-form';
+import { useToast } from '@/hooks/general.hooks';
 
 export default function SignIn() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { notify } = useToast();
+  const {
+    formState: { errors, isValid },
+    register,
+    handleSubmit,
+  } = useForm<SignInFormData>({
+    resolver: zodResolver(AuthSignInValidator),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
 
-  const credLogin = async (email: string, password: string) => {
-    setIsLoading(true);
+  function submitHandler(data: SignInFormData) {
+    const signInWithCredentials = async () => {
+      try {
+        await signIn('sign-in', {
+          ...data,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    };
 
-    try {
-      await signIn('sign-in', {
-        email,
-        password,
-      });
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await credLogin(email, password);
-  };
+    signInWithCredentials();
+  }
 
   // TODO: NEED TO HANDLE LOG IN ERRORS
 
   return (
-    <div className='border col-start-5 col-span-4 py-6 px-12 font-extralight'>
-      <h2 className='font-light text-2xl mb-12'>Log In</h2>
-      <form onSubmit={handleSubmit} className=''>
+    <div className='shadow rounded-lg border border-gray-100 col-start-5 col-span-4 row-start-3 py-6 px-12 font-extralight'>
+      <h2 className='text-2xl mb-12'>Chasers Juice</h2>
+
+      <form onSubmit={handleSubmit(submitHandler)}>
         <GridContainer cols={6}>
           <label htmlFor='email' className='col-span-6'>
             Email
@@ -44,11 +51,11 @@ export default function SignIn() {
           <input
             type='email'
             id='email'
-            value={email}
+            {...register('email')}
             className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
             placeholder='geralt@rivia.com'
-            onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <p role='alert'>{errors.email?.message}</p>}
 
           <label htmlFor='password' className='col-span-6'>
             Password
@@ -57,11 +64,11 @@ export default function SignIn() {
           <input
             type='password'
             id='password'
-            value={password}
+            {...register('password')}
             className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
             placeholder='Password'
-            onChange={(e) => setPassword(e.target.value)}
           />
+          {errors.password && <p role='alert'>{errors.password?.message}</p>}
 
           <button
             type='submit'
