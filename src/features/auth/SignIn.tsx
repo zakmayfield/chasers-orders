@@ -37,8 +37,6 @@ export default function SignIn() {
     signInWithCredentials();
   }
 
-  // TODO: NEED TO HANDLE LOG IN ERRORS
-
   return (
     <div className='shadow rounded-lg border border-gray-100 col-start-5 col-span-4 row-start-3 py-6 px-12 font-extralight'>
       <h2 className='text-2xl mb-12'>Chasers Juice</h2>
