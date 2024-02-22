@@ -227,8 +227,7 @@ export default function SignUp() {
                 {errors.companyName && (
                   <FieldError message={errors.companyName.message} />
                 )}
-
-                {/* TODO: allow input or N/A */}
+                // TODO: allow input or N/A
                 <label htmlFor='accountPayableEmail' className='col-span-6'>
                   Account Payable Email{' '}
                   <span className='text-gray-400 text-sm'>
@@ -246,12 +245,10 @@ export default function SignUp() {
                 {errors.accountPayableEmail && (
                   <FieldError message={errors.accountPayableEmail.message} />
                 )}
-
                 <label htmlFor='paymentMethod' className='col-span-6'>
                   Payment Method:
                 </label>
-
-                {/* TODO: Select dropdown */}
+                // TODO: Implement select dropdown for payment methods
                 <input
                   type='paymentMethod'
                   id='paymentMethod'
