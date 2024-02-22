@@ -119,7 +119,7 @@ export default function SignUp() {
                   id='email'
                   placeholder='email@email.com'
                   {...register('email')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.email && <p role='alert'>{errors.email?.message}</p>}
 
@@ -129,8 +129,9 @@ export default function SignUp() {
                 <input
                   type='password'
                   id='password'
+                  placeholder='Password'
                   {...register('password')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.password && (
                   <p role='alert'>{errors.password?.message}</p>
@@ -153,42 +154,43 @@ export default function SignUp() {
             <div>
               <GridContainer cols={6}>
                 <label htmlFor='contactName' className='col-span-6'>
-                  Contact Name:
+                  Delivery Contact's Name:
                 </label>
                 <input
                   type='contactName'
                   id='contactName'
                   placeholder='John'
                   {...register('contactName')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.contactName && (
                   <p role='alert'>{errors.contactName?.message}</p>
                 )}
 
                 <label htmlFor='contactPosition' className='col-span-6'>
-                  Contact Position (optional):
+                  Contact's Position{' '}
+                  <span className='text-gray-400 font-light'>(Optional)</span>:
                 </label>
                 <input
                   type='contactPosition'
                   id='contactPosition'
-                  placeholder='Bartender'
+                  placeholder='Optional'
                   {...register('contactPosition')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 bg-slate-50 bg-opacity-60 focus:ring-4 focus:ring-green-300'
                 />
                 {errors.contactPosition && (
                   <p role='alert'>{errors.contactPosition?.message}</p>
                 )}
 
                 <label htmlFor='contactPhoneNumber' className='col-span-6'>
-                  Contact Phone Number:
+                  Contact's Phone Number
                 </label>
                 <input
                   type='contactPhoneNumber'
                   id='contactPhoneNumber'
                   placeholder='8412238765'
                   {...register('contactPhoneNumber')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.contactPhoneNumber && (
                   <p role='alert'>{errors.contactPhoneNumber?.message}</p>
@@ -218,21 +220,26 @@ export default function SignUp() {
                   id='companyName'
                   placeholder='Acme'
                   {...register('companyName')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.companyName && (
                   <p role='alert'>{errors.companyName?.message}</p>
                 )}
 
+                {/* TODO: allow input or N/A */}
                 <label htmlFor='accountPayableEmail' className='col-span-6'>
-                  Account Payable Email:
+                  Account Payable Email{' '}
+                  <span className='text-gray-400 text-sm'>
+                    (Please write N/A if not applicable)
+                  </span>
+                  :
                 </label>
                 <input
                   type='accountPayableEmail'
                   id='accountPayableEmail'
                   placeholder='payable@email.com'
                   {...register('accountPayableEmail')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.accountPayableEmail && (
                   <p role='alert'>{errors.accountPayableEmail?.message}</p>
@@ -247,7 +254,7 @@ export default function SignUp() {
                   type='paymentMethod'
                   id='paymentMethod'
                   {...register('paymentMethod')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.paymentMethod && (
                   <p role='alert'>{errors.paymentMethod?.message}</p>
@@ -276,21 +283,22 @@ export default function SignUp() {
                   id='shippingStreetAddress'
                   placeholder='123 Main St'
                   {...register('shippingStreetAddress')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingStreetAddress && (
                   <p role='alert'>{errors.shippingStreetAddress?.message}</p>
                 )}
 
                 <label htmlFor='shippingUnit' className='col-span-6'>
-                  Shipping Unit (optional):
+                  Shipping Unit{' '}
+                  <span className='text-gray-400 font-light'>(Optional)</span>:
                 </label>
                 <input
                   type='shippingUnit'
                   id='shippingUnit'
                   placeholder='Optional'
                   {...register('shippingUnit')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg bg-slate-50 bg-opacity-60 placeholder:text-gray-300 focus:ring-4 focus:ring-green-300'
                 />
                 {errors.shippingUnit && (
                   <p role='alert'>{errors.shippingUnit?.message}</p>
@@ -304,7 +312,7 @@ export default function SignUp() {
                   id='shippingCity'
                   placeholder='Toronto'
                   {...register('shippingCity')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingCity && (
                   <p role='alert'>{errors.shippingCity?.message}</p>
@@ -320,7 +328,7 @@ export default function SignUp() {
                   id='shippingState'
                   placeholder='ON'
                   {...register('shippingState')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingState && (
                   <p role='alert'>{errors.shippingState?.message}</p>
@@ -334,7 +342,7 @@ export default function SignUp() {
                   id='shippingPostalCode'
                   placeholder='X2X 2X2'
                   {...register('shippingPostalCode')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.shippingPostalCode && (
                   <p role='alert'>{errors.shippingPostalCode?.message}</p>
@@ -348,7 +356,7 @@ export default function SignUp() {
                   id='deliveryInstructions'
                   placeholder='Deliver to side door...'
                   {...register('deliveryInstructions')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.deliveryInstructions && (
                   <p role='alert'>{errors.deliveryInstructions?.message}</p>
@@ -362,21 +370,22 @@ export default function SignUp() {
                   id='billingStreetAddress'
                   placeholder='123 Main St'
                   {...register('billingStreetAddress')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingStreetAddress && (
                   <p role='alert'>{errors.billingStreetAddress?.message}</p>
                 )}
 
                 <label htmlFor='billingUnit' className='col-span-6'>
-                  Billing Unit (optional):
+                  Billing Unit{' '}
+                  <span className='text-gray-400 font-light'>(Optional)</span>:
                 </label>
                 <input
                   type='billingUnit'
                   id='billingUnit'
                   {...register('billingUnit')}
                   placeholder='Optional'
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg bg-gray-50 bg-opacity-60 placeholder:text-gray-300 focus:ring-4 focus:ring-green-300'
                 />
                 {errors.billingUnit && (
                   <p role='alert'>{errors.billingUnit?.message}</p>
@@ -390,7 +399,7 @@ export default function SignUp() {
                   id='billingCity'
                   placeholder='Toronto'
                   {...register('billingCity')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingCity && (
                   <p role='alert'>{errors.billingCity?.message}</p>
@@ -404,7 +413,7 @@ export default function SignUp() {
                   id='billingState'
                   placeholder='ON'
                   {...register('billingState')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingState && (
                   <p role='alert'>{errors.billingState?.message}</p>
@@ -418,7 +427,7 @@ export default function SignUp() {
                   id='billingPostalCode'
                   placeholder='X2X 2X2'
                   {...register('billingPostalCode')}
-                  className='border-2 rounded-lg col-span-6 p-2 font-extralight text-lg placeholder:text-gray-300'
+                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
                 />
                 {errors.billingPostalCode && (
                   <p role='alert'>{errors.billingPostalCode?.message}</p>
@@ -434,7 +443,7 @@ export default function SignUp() {
       <div className='text-center mt-12'>
         <p>
           Prefer to sign in?{' '}
-          <Link href='/' className='underline'>
+          <Link href='/' className='underline focus:ring-2 focus:ring-blue-400'>
             Sign In Here
           </Link>
         </p>
@@ -488,7 +497,7 @@ function FinalSubmitButton() {
   return (
     <button
       type='submit'
-      className='col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg mt-12'
+      className='mt-6 col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400'
     >
       Create Account
     </button>
@@ -582,7 +591,7 @@ function NextStepButton({
   return (
     <button
       onClick={(e) => handleNextStep(e)}
-      className={`active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg`}
+      className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400`}
     >
       <span>{content}</span>
       <span>

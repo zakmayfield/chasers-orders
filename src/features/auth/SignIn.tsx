@@ -44,12 +44,12 @@ export default function SignIn() {
             type='email'
             id='email'
             value={email}
-            className='border-2 rounded col-span-6 p-2 font-extralight text-lg '
-            placeholder='email@example.com'
+            className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
+            placeholder='geralt@rivia.com'
             onChange={(e) => setEmail(e.target.value)}
           />
 
-          <label htmlFor='password' className='col-span-6 mt-6'>
+          <label htmlFor='password' className='col-span-6'>
             Password
           </label>
 
@@ -57,13 +57,14 @@ export default function SignIn() {
             type='password'
             id='password'
             value={password}
-            className='border-2 rounded col-span-6 p-2 font-extralight text-lg'
+            className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
+            placeholder='Password'
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <button
             type='submit'
-            className='border-2 rounded-lg p-2 col-span-6 mt-6'
+            className='border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6'
           >
             Sign In
           </button>
