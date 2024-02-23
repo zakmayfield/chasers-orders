@@ -16,8 +16,11 @@ const Dashboard = () => {
     staleTime: 60 * 1000 * 5,
   });
 
+  // TODO: Create loading skeleton after general layout is established
   const LoadingData = <div>Loading dashboard...</div>;
   const ErrorData = <div>{error && error.message}</div>;
+
+  // TODO: Dashboard Home Component root path layout ( not to be confused with the server dashboard layout for the dashboard path )
   const UserData = data && (
     <div className='flex flex-col gap-6'>
       {/* Account Status */}
@@ -100,13 +103,13 @@ const Dashboard = () => {
 
   return (
     <div>
-      <p className='mb-6'>Dashboard</p>
-
       {isLoading && LoadingData}
       {isError && ErrorData}
       {UserData}
     </div>
   );
 };
+
+function DashboardHomeLayout() {}
 
 export default Dashboard;

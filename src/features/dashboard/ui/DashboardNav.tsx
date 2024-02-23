@@ -39,7 +39,7 @@ export default function DashboardNav() {
   const pathname = usePathname();
   const basePath = '/dashboard';
   return (
-    <div className='flex flex-col gap-3 w-2/3 mx-auto'>
+    <div className='flex flex-col gap-3'>
       {dashboardNavItems.map((item) => {
         const itemPath = item.path;
         const route = basePath + itemPath;
