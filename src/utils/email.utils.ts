@@ -61,7 +61,6 @@ function orderEmailOptions(payload: PayloadType): Record<string, string> {
   const email = userData!.email;
   const companyName = userData!.company!.name;
 
-  // TODO: Configure html template
   const mailOptions = {
     from: 'zakmayfield@gmail.com',
     to: email,

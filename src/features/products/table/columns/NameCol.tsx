@@ -26,8 +26,6 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
     onError,
   });
 
-  // TODO: implement server side logic for the favorites // pull into a hook
-  // temporarily i could just check the loading state of the favorites query - when that query has resolved then the products will show up, ensuring that the UI doesn't flash
   useEffect(() => {
     const juice = favorites?.find(
       (item) => item.juiceId === info.row.original.id
