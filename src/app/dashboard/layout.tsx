@@ -8,9 +8,9 @@ export default function DashboardLayout({
   // TODO: Dashboard path layout UI
   return (
     <div className='w-3/4 mx-auto grid grid-cols-12'>
-      <h2 className='col-span-12 h-20 flex font-extralight text-2xl px-6 items-center border-b'>
+      <h1 className='col-span-12 h-20 flex items-center px-6 border-b'>
         Dashboard
-      </h2>
+      </h1>
 
       <div className='m-6 col-span-9'>{children}</div>
 
