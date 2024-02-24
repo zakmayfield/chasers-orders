@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { DashboardNavItem } from './dashboardNavData';
+import { useEffect, useState } from 'react';
 
 const DashNavItem = ({
   item,
@@ -14,19 +15,36 @@ const DashNavItem = ({
   const isActive =
     pathname === route || (route !== basePath && pathname.startsWith(route));
 
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const isActive =
+      pathname === route || (route !== basePath && pathname.startsWith(route));
+
+    setActive(isActive);
+  }, [pathname]);
+
   return (
-    <div className='text-dark-text tracking-wide'>
-      <Link
-        key={item.content}
-        href={route}
-        className={`rounded-lg py-3 pl-4 flex items-center gap-4 text-sky-200 ${
-          isActive && 'bg-dark-greenish/50'
-        }`}
-      >
-        <span className='text-2xl'>{item.icon}</span>
-        <span className='text-sm'>{item.content}</span>
-      </Link>
-    </div>
+    <Link
+      key={item.content}
+      href={route}
+      id={(!active && 'pulse-animate') || ''}
+      className={`
+        py-3 pl-4
+        rounded-lg 
+        ${active ? 'bg-light-greenish hover:bg-light-greenish/75' : 'hover:bg-light-greenish/20'}`}
+    >
+      <div className='flex items-center gap-4 tracking-wide'>
+        <span>{item.icon}</span>
+        <span
+          className={`
+            ${active ? 'font-normal' : ''}
+        `}
+        >
+          {item.content}
+        </span>
+      </div>
+    </Link>
   );
 };
 

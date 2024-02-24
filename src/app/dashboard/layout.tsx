@@ -5,10 +5,9 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // TODO: Dashboard path layout UI
   return (
     <div className='w-3/4 mx-auto grid grid-cols-12'>
-      <h1 className='col-span-12 h-20 flex items-center px-6 border-b'>
+      <h1 className='col-span-9 h-20 flex items-center px-6 border-b'>
         Dashboard
       </h1>
 

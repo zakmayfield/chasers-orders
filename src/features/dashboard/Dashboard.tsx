@@ -1,11 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
-import GridContainer from '../ui/layout/GridContainer';
 
 const Dashboard = () => {
   const { data, isLoading, error, isError } = useQuery<
@@ -34,7 +32,6 @@ const Dashboard = () => {
 };
 
 function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
-  const router = useRouter();
   const lastOrderCreatedAt =
     data && data.orders.length !== 0 && new Date(data.orders[0].createdAt);
 
@@ -61,7 +58,7 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
             <span className='row-start-2 col-span-3 text-gray-700'>
               Email verification:{' '}
             </span>
-            <span className='row-start-2 col-start-5 col-span-6 text-gray-500 text-sm italic underline'>
+            <span className='row-start-2 col-start-5 col-span-6 text-gray-500 text-sm italic'>
               Verified on {emailVerifiedDateString?.toLocaleDateString()}
             </span>
 
