@@ -42,50 +42,46 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
     data && data.emailVerified && new Date(data.emailVerified);
 
   return (
-    <div className='font-extralight flex flex-col gap-6'>
-      {/* DASHBOARD HOME SECTION ITEM */}
+    <div className='font-extralight flex flex-col gap-12'>
+      {/* //? DASHBOARD HOME SECTION ITEMS */}
 
-      {/* Account Status */}
-      <GridContainer cols={10}>
-        <div className='col-span-3 h-full border-r p-6'>
+      {/* //^ Account Status */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6'>
           <p className='border-b inline-block text-lg text-gray-700'>
             Account Status
           </p>
         </div>
 
         <div className='col-span-6 p-6'>
-          <div className='flex flex-col'>
-            <GridContainer cols={10}>
-              <span className='col-span-3 text-gray-700'>Email: </span>
-              <span className='col-start-5 col-span-6 '>{data.email}</span>
+          <div className='grid grid-cols-10 gap-3'>
+            <span className='col-span-3 text-gray-700'>Email: </span>
+            <span className='col-start-5 col-span-6 '>{data.email}</span>
 
-              <span className='row-start-2 col-span-3 text-gray-700'>
-                Email verification:{' '}
-              </span>
-              <span className='row-start-2 col-start-5 col-span-6 text-gray-500 text-sm italic underline'>
-                Verified on {emailVerifiedDateString?.toLocaleDateString()}
-              </span>
+            <span className='row-start-2 col-span-3 text-gray-700'>
+              Email verification:{' '}
+            </span>
+            <span className='row-start-2 col-start-5 col-span-6 text-gray-500 text-sm italic underline'>
+              Verified on {emailVerifiedDateString?.toLocaleDateString()}
+            </span>
 
-              <span className='col-span-3 text-gray-700'>
-                Account approval:{' '}
-              </span>
-              <span className='col-start-5 col-span-6'>
-                {data.isApproved ? '🟢' : '🔴'}
-              </span>
-            </GridContainer>
+            <span className='col-span-3 text-gray-700'>Account approval: </span>
+            <span className='col-start-5 col-span-6'>
+              {data.isApproved ? '🟢' : '🔴'}
+            </span>
           </div>
         </div>
-      </GridContainer>
+      </div>
 
-      {/* Contact Details */}
-      <GridContainer cols={10}>
-        <div className='col-span-3 border-r p-6 h-full '>
+      {/* //^ Contact Details */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6 h-full'>
           <p className='border-b inline-block text-lg text-gray-700'>Contact</p>
         </div>
 
-        <div className='col-span-7 py-6 px-6 '>
+        <div className='col-span-6 py-6 px-6'>
           <div className='flex flex-col'>
-            <GridContainer cols={10}>
+            <div className='grid grid-cols-10 gap-3'>
               <span className='col-span-3 text-gray-700'>Name: </span>
               <span className='col-start-5 col-span-6'>
                 {data.contact.name}
@@ -113,20 +109,20 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
                   </Link>
                 )}
               </span>
-            </GridContainer>
+            </div>
           </div>
         </div>
-      </GridContainer>
+      </div>
 
-      {/* Company Details */}
-      <GridContainer cols={10}>
-        <div className='col-span-3 border-r p-6 h-full'>
+      {/* //^ Company Details */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6 h-full'>
           <p className='border-b inline-block text-lg text-gray-700'>Company</p>
         </div>
 
-        <div className='col-span-7 pt-6 mx-6'>
+        <div className='col-span-6 pt-6 mx-6'>
           <div className='flex flex-col'>
-            <GridContainer cols={10}>
+            <div className='grid grid-cols-10 gap-3'>
               <span className='col-span-4 text-gray-700'>Name: </span>
               <span className='col-start-5 col-span-6'>
                 {data.company.name}
@@ -145,45 +141,40 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
               <span className='row-start-3 col-start-5 col-span-6'>
                 {data.company.paymentMethod}
               </span>
-            </GridContainer>
+            </div>
           </div>
         </div>
-      </GridContainer>
+      </div>
 
-      {/* Recent Orders */}
-      <GridContainer cols={10}>
-        <div className='col-span-3 border-r p-6 h-full'>
+      {/* //^ Recent Orders */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6 h-full'>
           <p className='border-b inline-block text-lg text-gray-700'>
             Recent Orders
           </p>
         </div>
 
-        <div className='col-span-7 pt-6 mx-6'>
-          <div className='flex flex-col'>
-            <GridContainer cols={10}>
-              <div className='col-span-10'>
-                {data.orders.length !== 0 ? (
-                  <span>
-                    {lastOrderCreatedAt &&
-                      lastOrderCreatedAt.toLocaleDateString()}
-                  </span>
-                ) : (
-                  <span>
-                    first time?{' '}
-                    <Link
-                      href='/products'
-                      className='underline text-purple-800'
-                    >
-                      visit our shop
-                    </Link>{' '}
-                    to get started
-                  </span>
-                )}
-              </div>
-            </GridContainer>
+        <div className='col-span-6 pt-6 mx-6'>
+          <div className='grid grid-cols-10 gap-3'>
+            <div className='col-span-10'>
+              {data.orders.length !== 0 ? (
+                <span>
+                  {lastOrderCreatedAt &&
+                    lastOrderCreatedAt.toLocaleDateString()}
+                </span>
+              ) : (
+                <span>
+                  first time?{' '}
+                  <Link href='/products' className='underline text-purple-800'>
+                    visit our shop
+                  </Link>{' '}
+                  to get started
+                </span>
+              )}
+            </div>
           </div>
         </div>
-      </GridContainer>
+      </div>
     </div>
   );
 }
