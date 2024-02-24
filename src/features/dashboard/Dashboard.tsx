@@ -47,13 +47,13 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
 
       {/* Account Status */}
       <GridContainer cols={10}>
-        <div className='col-span-3 h-full border-r p-6 '>
+        <div className='col-span-3 h-full border-r p-6'>
           <p className='border-b inline-block text-lg text-gray-700'>
             Account Status
           </p>
         </div>
 
-        <div className='col-span-7 p-6'>
+        <div className='col-span-6 p-6'>
           <div className='flex flex-col'>
             <GridContainer cols={10}>
               <span className='col-span-3 text-gray-700'>Email: </span>
