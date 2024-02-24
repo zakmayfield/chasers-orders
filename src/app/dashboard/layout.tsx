@@ -12,11 +12,9 @@ export default function DashboardLayout({
         Dashboard
       </h2>
 
-      <div className='col-span-9 p-6'>{children}</div>
+      <div className='m-6 col-span-9'>{children}</div>
 
-      <div className='col-span-3 p-6 border-l'>
-        <DashboardNav />
-      </div>
+      <DashboardNav />
     </div>
   );
 }

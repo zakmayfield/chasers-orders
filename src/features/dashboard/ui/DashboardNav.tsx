@@ -8,10 +8,12 @@ import DashNavItem from './DashNavItem';
 export default function DashboardNav() {
   const pathname = usePathname();
   return (
-    <div className='flex flex-col gap-3'>
-      {dashboardNavItems.map((item) => (
-        <DashNavItem item={item} pathname={pathname} />
-      ))}
+    <div className='col-span-3 border-l bg-slate-50 pt-6'>
+      <div className='flex flex-col gap-3 p-6'>
+        {dashboardNavItems.map((item) => (
+          <DashNavItem item={item} pathname={pathname} />
+        ))}
+      </div>
     </div>
   );
 }

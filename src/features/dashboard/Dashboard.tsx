@@ -1,12 +1,13 @@
 'use client';
 
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import GridContainer from '../ui/layout/GridContainer';
 
 const Dashboard = () => {
-  const router = useRouter();
   const { data, isLoading, error, isError } = useQuery<
     DashboardUserData,
     Error
@@ -21,85 +22,7 @@ const Dashboard = () => {
   const ErrorData = <div>{error && error.message}</div>;
 
   // TODO: Dashboard Home Component root path layout ( not to be confused with the server dashboard layout for the dashboard path )
-  const UserData = data && (
-    <div className='flex flex-col gap-6'>
-      {/* Account Status */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Account status</h2>
-
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Account approved: </span>
-            <span>{data.isApproved ? '✅' : '🔴'}</span>
-          </p>
-          <p>
-            <span>Email verified: </span>
-            <span>{data.emailVerified ? '✅' : '🔴'}</span>
-          </p>
-        </div>
-      </div>
-      {/* Contact Details */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Contact</h2>
-
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Name: </span>
-            <span>{data.contact.name}</span>
-          </p>
-          <p>
-            <span>Phone number: </span>
-            <span>{data.contact.phoneNumber}</span>
-          </p>
-          <p>
-            <span>Position: </span>
-            <span>{data.contact.position}</span>
-          </p>
-        </div>
-      </div>
-      {/* Company Details */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Company</h2>
-
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Name: </span>
-            <span>{data.company.name}</span>
-          </p>
-          <p>
-            <span>Payment method: </span>
-            <span>{data.company.paymentMethod}</span>
-          </p>
-          <p>
-            <span>Account payable: </span>
-            <span>{data.company.accountPayableEmail}</span>
-          </p>
-        </div>
-      </div>
-      {/* Last order */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Orders</h2>
-
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Last order: </span>
-            {data.orders.length < 1 && <span>N/A</span>}
-            {data.orders.length > 0 &&
-              data.orders.map(({ id, createdAt }) => (
-                <span
-                  key={id}
-                  onClick={() =>
-                    router.push(`/dashboard/recent-orders?orderId=${id}`)
-                  }
-                >
-                  {new Date(createdAt).toDateString()}
-                </span>
-              ))}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
+  const UserData = data && <DashboardHomeLayout data={data} />;
 
   return (
     <div>
@@ -110,6 +33,170 @@ const Dashboard = () => {
   );
 };
 
-function DashboardHomeLayout() {}
+function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
+  const router = useRouter();
+  const lastOrderCreatedAt =
+    data && data.orders.length !== 0 && new Date(data.orders[0].createdAt);
+
+  const emailVerifiedDateString =
+    data && data.emailVerified && new Date(data.emailVerified);
+
+  return (
+    <div className='font-extralight flex flex-col gap-6'>
+      {/* DASHBOARD HOME SECTION ITEM */}
+
+      {/* Account Status */}
+      <GridContainer cols={10}>
+        <div className='col-span-3 h-full border-r p-6 '>
+          <p className='border-b inline-block text-lg text-gray-700'>
+            Account Status
+          </p>
+        </div>
+
+        <div className='col-span-7 p-6'>
+          <div className='flex flex-col'>
+            <GridContainer cols={10}>
+              <span className='col-span-3 text-gray-700'>Email: </span>
+              <span className='col-start-5 col-span-6 '>{data.email}</span>
+
+              <span className='row-start-2 col-span-3 text-gray-700'>
+                Email verification:{' '}
+              </span>
+              <span className='row-start-2 col-start-5 col-span-6 text-gray-500 text-sm italic underline'>
+                Verified on {emailVerifiedDateString?.toLocaleDateString()}
+              </span>
+
+              <span className='col-span-3 text-gray-700'>
+                Account approval:{' '}
+              </span>
+              <span className='col-start-5 col-span-6'>
+                {data.isApproved ? '🟢' : '🔴'}
+              </span>
+            </GridContainer>
+          </div>
+        </div>
+      </GridContainer>
+
+      {/* Contact Details */}
+      <GridContainer cols={10}>
+        <div className='col-span-3 border-r p-6 h-full '>
+          <p className='border-b inline-block text-lg text-gray-700'>Contact</p>
+        </div>
+
+        <div className='col-span-7 py-6 px-6 '>
+          <div className='flex flex-col'>
+            <GridContainer cols={10}>
+              <span className='col-span-3 text-gray-700'>Name: </span>
+              <span className='col-start-5 col-span-6'>
+                {data.contact.name}
+              </span>
+
+              <span className='row-start-2 col-span-4 text-gray-700'>
+                Phone number:{' '}
+              </span>
+              <span className='row-start-2 col-start-5 col-span-6'>
+                {data.contact.phoneNumber}
+              </span>
+
+              <span className='row-start-3 col-span-4 text-gray-700'>
+                Position:{' '}
+              </span>
+              <span className='row-start-3 col-start-5 col-span-6'>
+                {data.contact.position ? (
+                  data.contact.position
+                ) : (
+                  <Link
+                    href='/dashboard/settings/contact/edit'
+                    className='underline text-purple-900'
+                  >
+                    add position
+                  </Link>
+                )}
+              </span>
+            </GridContainer>
+          </div>
+        </div>
+      </GridContainer>
+
+      {/* Company Details */}
+      <GridContainer cols={10}>
+        <div className='col-span-3 border-r p-6 h-full'>
+          <p className='border-b inline-block text-lg text-gray-700'>Company</p>
+        </div>
+
+        <div className='col-span-7 pt-6 mx-6'>
+          <div className='flex flex-col'>
+            <GridContainer cols={10}>
+              <span className='col-span-4 text-gray-700'>Name: </span>
+              <span className='col-start-5 col-span-6'>
+                {data.company.name}
+              </span>
+
+              <span className='row-start-2 col-span-4 text-gray-700'>
+                Account payable email:{' '}
+              </span>
+              <span className='row-start-2 col-start-5 col-span-6'>
+                {data.company.accountPayableEmail}
+              </span>
+
+              <span className='row-start-3 col-span-4 text-gray-700'>
+                Payment method:{' '}
+              </span>
+              <span className='row-start-3 col-start-5 col-span-6'>
+                {data.company.paymentMethod}
+              </span>
+            </GridContainer>
+          </div>
+        </div>
+      </GridContainer>
+
+      {/* Recent Orders */}
+      <GridContainer cols={10}>
+        <div className='col-span-3 border-r p-6 h-full'>
+          <p className='border-b inline-block text-lg text-gray-700'>
+            Recent Orders
+          </p>
+        </div>
+
+        <div className='col-span-7 pt-6 mx-6'>
+          <div className='flex flex-col'>
+            <GridContainer cols={10}>
+              <div className='col-span-10'>
+                {data.orders.length !== 0 ? (
+                  <span>
+                    {lastOrderCreatedAt &&
+                      lastOrderCreatedAt.toLocaleDateString()}
+                  </span>
+                ) : (
+                  <span>
+                    first time?{' '}
+                    <Link
+                      href='/products'
+                      className='underline text-purple-800'
+                    >
+                      visit our shop
+                    </Link>{' '}
+                    to get started
+                  </span>
+                )}
+              </div>
+            </GridContainer>
+          </div>
+        </div>
+      </GridContainer>
+    </div>
+  );
+}
+
+function DashboardHomeSectionItem() {
+  return (
+    <GridContainer cols={10}>
+      <div className='col-span-3 h-24 bg-green-100 px-6 pt-6'>
+        <p className='border-b inline-block'>Title</p>
+      </div>
+      <div className='col-span-7 bg-blue-100 px-6 pt-6'>Content</div>
+    </GridContainer>
+  );
+}
 
 export default Dashboard;
