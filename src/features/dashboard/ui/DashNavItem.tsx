@@ -15,16 +15,16 @@ const DashNavItem = ({
     pathname === route || (route !== basePath && pathname.startsWith(route));
 
   return (
-    <div>
+    <div className='font-light'>
       <Link
         key={item.content}
         href={route}
-        className={`border rounded-lg p-2 flex items-center gap-3 ${
-          isActive && 'bg-slate-200 border-2'
+        className={`rounded-lg py-3 pl-4 flex items-center gap-4 text-sky-200 ${
+          isActive && 'bg-green-500/25'
         }`}
       >
-        {item.icon}
-        <span className={`${isActive && 'font-semibold'}`}>{item.content}</span>
+        <span className='text-2xl'>{item.icon}</span>
+        <span className='text-sm'>{item.content}</span>
       </Link>
     </div>
   );

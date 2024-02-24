@@ -1,8 +1,21 @@
 import React from 'react';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { FaClockRotateLeft } from 'react-icons/fa6';
-import { FaRegHeart } from 'react-icons/fa';
-import { RxDashboard } from 'react-icons/rx';
+
+// Phosphor Icons
+import { PiDiamondsFourLight } from 'react-icons/pi';
+import { PiDiamondsFourDuotone } from 'react-icons/pi';
+import { PiDiamondsFourFill } from 'react-icons/pi';
+
+import { PiHeartStraightLight } from 'react-icons/pi';
+import { PiHeartStraightDuotone } from 'react-icons/pi';
+import { PiHeartStraightFill } from 'react-icons/pi';
+
+import { PiClockCounterClockwiseLight } from 'react-icons/pi';
+import { PiClockCounterClockwiseDuotone } from 'react-icons/pi';
+
+import { PiGearSixLight } from 'react-icons/pi';
+import { PiGearSixDuotone } from 'react-icons/pi';
+import { PiGearSixFill } from 'react-icons/pi';
+
 export type DashboardNavItem = {
   path: string;
   icon?: JSX.Element;
@@ -12,22 +25,22 @@ export type DashboardNavItem = {
 export const dashboardNavItems: DashboardNavItem[] = [
   {
     path: '',
-    content: 'Dashboard Home',
-    icon: React.createElement(RxDashboard),
+    content: 'Dashboard',
+    icon: React.createElement(PiDiamondsFourDuotone),
   },
   {
     path: '/favorites',
-    content: 'Favorite Juice',
-    icon: React.createElement(FaRegHeart),
+    content: 'Favorites',
+    icon: React.createElement(PiHeartStraightDuotone),
   },
   {
     path: '/recent-orders',
     content: 'Recent Orders',
-    icon: React.createElement(FaClockRotateLeft),
+    icon: React.createElement(PiClockCounterClockwiseDuotone),
   },
   {
     path: '/settings',
     content: 'Settings',
-    icon: React.createElement(IoSettingsOutline),
+    icon: React.createElement(PiGearSixDuotone),
   },
 ];

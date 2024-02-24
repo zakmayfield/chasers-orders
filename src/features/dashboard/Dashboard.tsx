@@ -188,15 +188,4 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
   );
 }
 
-function DashboardHomeSectionItem() {
-  return (
-    <GridContainer cols={10}>
-      <div className='col-span-3 h-24 bg-green-100 px-6 pt-6'>
-        <p className='border-b inline-block'>Title</p>
-      </div>
-      <div className='col-span-7 bg-blue-100 px-6 pt-6'>Content</div>
-    </GridContainer>
-  );
-}
-
 export default Dashboard;
