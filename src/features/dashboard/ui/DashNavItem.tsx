@@ -29,15 +29,17 @@ const DashNavItem = ({
       key={item.content}
       href={route}
       className={`
-        py-3 pl-4
+        py-2 px-4
         rounded-lg 
+        2xl:w-full
         ${active ? 'bg-light-greenish hover:bg-light-greenish/75' : 'hover:bg-light-greenish/20'}`}
     >
       <div className='flex items-center gap-4 tracking-wide'>
         <span>{item.icon}</span>
         <span
           className={`
-            ${active ? 'font-normal' : ''}
+          text-sm
+          2xl:text-base
         `}
         >
           {item.content}
