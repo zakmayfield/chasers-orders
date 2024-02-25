@@ -31,6 +31,7 @@ const DashNavItem = ({
       className={`
         py-2 px-4
         rounded-lg 
+        2xl:w-full
         ${active ? 'bg-light-greenish hover:bg-light-greenish/75' : 'hover:bg-light-greenish/20'}`}
     >
       <div className='flex items-center gap-4 tracking-wide'>
@@ -38,7 +39,7 @@ const DashNavItem = ({
         <span
           className={`
           text-sm
-            
+          2xl:text-base
         `}
         >
           {item.content}

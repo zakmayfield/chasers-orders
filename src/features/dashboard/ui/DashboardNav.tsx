@@ -18,9 +18,15 @@ export default function DashboardNav() {
         col-span-12 row-start-2
         flex items-center
         bg-light-primary 
+        2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between
       `}
     >
-      <div className='flex items-center justify-center  gap-3 p-6'>
+      <div
+        className={`
+        flex items-center  gap-3 w-full p-6
+        2xl:justify-center 2xl:flex-col 2xl:items-start
+      `}
+      >
         {dashboardNavItems.map((item) => (
           <DashNavItem key={item.path} item={item} pathname={pathname} />
         ))}
@@ -81,7 +87,7 @@ function DashboardNavFooter() {
     return (
       <div
         className={`
-        h-20 py-3 px-6
+        h-20 py-3 px-6 
         flex items-center gap-3
         bg-light-secondary
       `}
@@ -97,16 +103,16 @@ function DashboardNavFooter() {
   return (
     <div
       className={`
-        hidden px-6
+        hidden 
         bg-light-secondary
-
+        2xl:flex 2xl:items-center 2xl:gap-3 2xl:px-6 2xl:w-full 2xl:h-20
       `}
     >
       {/* "PFP" */}
       <div>
         <p
           className={`
-              rounded-full border w-10 h-10
+              rounded-full w-10 h-10
               flex justify-center
               text-2xl
               bg-light-primary
@@ -117,13 +123,12 @@ function DashboardNavFooter() {
       </div>
 
       {/* CONTACTS EMAIL & POSITION */}
-      <div className='w-full flex flex-col gap-1 '>
+      <div className='flex flex-col gap-1 '>
         {/* Overflow control container */}
         <div>
           <p
             className={`
               overflow-hidden text-ellipsis w-full
-              border
               text-sm
             `}
           >
