@@ -18,13 +18,15 @@ export default function DashboardNav() {
         col-span-12 row-start-2
         flex items-center
         bg-light-primary 
-        2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between
+        2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between 2xl:min-h-[35rem] 2xl:rounded-b-2xl 2xl:overflow-hidden 
       `}
     >
+      {/* <DashboardNavHeader /> */}
+
       <div
         className={`
-        flex items-center  gap-3 w-full p-6
-        2xl:justify-center 2xl:flex-col 2xl:items-start
+        flex items-center  gap-3 w-full p-6 
+        2xl:justify-center 2xl:flex-col 2xl:items-start 2xl:pt-12
       `}
       >
         {dashboardNavItems.map((item) => (
@@ -34,6 +36,17 @@ export default function DashboardNav() {
 
       <DashboardNavFooter />
     </div>
+  );
+}
+
+function DashboardNavHeader() {
+  return (
+    <div
+      className={`
+      h-12 w-full
+      bg-light-secondary
+    `}
+    ></div>
   );
 }
 
