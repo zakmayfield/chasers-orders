@@ -28,7 +28,6 @@ const DashNavItem = ({
     <Link
       key={item.content}
       href={route}
-      id={(!active && 'pulse-animate') || ''}
       className={`
         py-3 pl-4
         rounded-lg 

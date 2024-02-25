@@ -33,13 +33,3 @@ h5,
 h6 {
   @apply text-xl;
 }
-
-/*//? DashNavItem */
-@keyframes pulse {
-  50% {
-    background-color: rgba(34, 188, 87, 0.4);
-  }
-}
-#pulse-animate:hover {
-  animation: pulse 4s cubic-bezier(0.3, 0, 0.7, 1) infinite;
-}
