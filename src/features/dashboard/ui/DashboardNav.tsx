@@ -11,15 +11,16 @@ import { DashboardUserData } from '@/types/types.dashboard';
 
 export default function DashboardNav() {
   const pathname = usePathname();
+  //min-h-[35rem] border-l
   return (
     <div
       className={`
-        col-span-3 min-h-[35rem] pt-6 border-l
-        flex flex-col justify-between
+        col-span-12 row-start-2
+        flex items-center
         bg-light-primary 
       `}
     >
-      <div className='flex flex-col gap-3 p-6'>
+      <div className='flex items-center justify-center  gap-3 p-6'>
         {dashboardNavItems.map((item) => (
           <DashNavItem key={item.path} item={item} pathname={pathname} />
         ))}
@@ -96,9 +97,9 @@ function DashboardNavFooter() {
   return (
     <div
       className={`
-        h-20 py-3 px-6
-        gap-6 flex items-center justify-center
+        hidden px-6
         bg-light-secondary
+
       `}
     >
       {/* "PFP" */}
