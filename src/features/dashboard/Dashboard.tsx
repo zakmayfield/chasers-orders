@@ -12,7 +12,7 @@ const Dashboard = () => {
   >({
     queryKey: ['user-dashboard'],
     queryFn: getDashboardUser,
-    staleTime: 60 * 1000 * 5,
+    staleTime: 60 * 1000 * 10,
   });
 
   // TODO: Create loading skeleton after general layout is established

@@ -4,13 +4,13 @@
 
 * {
   @apply box-border;
-  @apply text-light-text;
   @apply font-light;
 }
 
 p,
 span,
 a {
+  @apply text-light-text;
   @apply text-base;
   @apply leading-relaxed;
 }

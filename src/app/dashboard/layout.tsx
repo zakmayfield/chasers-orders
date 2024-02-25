@@ -1,6 +1,6 @@
 import DashboardNav from '@/features/dashboard/ui/DashboardNav';
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
