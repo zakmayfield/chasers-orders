@@ -3,6 +3,7 @@ interface GridContainerProps {
   view?: View;
   cols?: number;
   gap?: number;
+  border?: boolean;
 }
 
 enum Grids {
@@ -18,11 +19,16 @@ const GridContainer: React.FC<GridContainerProps> = ({
   view = 'desktop',
   cols,
   gap,
+  // for UI testing
+  border = false,
 }) => {
   const columns = getGridView(view, cols);
   const gapData = gap ? 'gap-' + gap : 'gap-4';
+  const hasBorder = border ? 'border' : '';
 
-  return <div className={`grid ${columns} ${gapData}`}>{children}</div>;
+  return (
+    <div className={`grid ${columns} ${gapData} ${hasBorder}`}>{children}</div>
+  );
 };
 
 type Grid = Grids.desktop | Grids.tablet | Grids.mobile | string;
