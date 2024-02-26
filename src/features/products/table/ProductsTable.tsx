@@ -288,24 +288,6 @@ function Pagination({
           )}
         </span>
       </div>
-
-      {/* TODO: Fix this hydration error. Can render this select but don't know if this will have any bug implications. If there is a bug with the show x, then check here. */}
-      {/* Show X Amount */}
-      {/* <div>
-        <select
-          value={reactTable.getState().pagination.pageSize}
-          onChange={(e) => {
-            reactTable.setPageSize(Number(e.target.value));
-          }}
-          className='border rounded p-2 font-extralight'
-        >
-          {[10, 20, 30, 40, 50].map((pageSize) => (
-            <option key={pageSize} value={pageSize}>
-              Show <span className='font-normal'>{pageSize}</span>
-            </option>
-          ))}
-        </select>
-      </div> */}
     </div>
   );
 }

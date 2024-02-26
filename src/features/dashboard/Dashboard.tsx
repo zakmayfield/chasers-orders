@@ -1,120 +1,180 @@
 'use client';
 
+import Link from 'next/link';
+import { useQuery } from '@tanstack/react-query';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-
-/*
-  TODO: Check for url query param with a `newAccount` flag which shows a modal indicating their account must be approved and email verified in order to access the store
-    - This also means that the URL will need to be set, so some how have to find the redirect for sign up and redirect with a query param
-*/
-/*
-  TODO: When new account is created notify User of email verification.
-*/
 
 const Dashboard = () => {
-  const router = useRouter();
   const { data, isLoading, error, isError } = useQuery<
     DashboardUserData,
     Error
   >({
     queryKey: ['user-dashboard'],
     queryFn: getDashboardUser,
-    staleTime: 60 * 1000 * 5,
+    staleTime: 60 * 1000 * 10,
   });
 
+  // TODO: Create loading skeleton after general layout is established
   const LoadingData = <div>Loading dashboard...</div>;
   const ErrorData = <div>{error && error.message}</div>;
-  const UserData = data && (
-    <div className='flex flex-col gap-6'>
-      {/* Account Status */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Account status</h2>
 
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Account approved: </span>
-            <span>{data.isApproved ? '✅' : '🔴'}</span>
-          </p>
-          <p>
-            <span>Email verified: </span>
-            <span>{data.emailVerified ? '✅' : '🔴'}</span>
-          </p>
-        </div>
-      </div>
-      {/* Contact Details */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Contact</h2>
-
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Name: </span>
-            <span>{data.contact.name}</span>
-          </p>
-          <p>
-            <span>Phone number: </span>
-            <span>{data.contact.phoneNumber}</span>
-          </p>
-          <p>
-            <span>Position: </span>
-            <span>{data.contact.position}</span>
-          </p>
-        </div>
-      </div>
-      {/* Company Details */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Company</h2>
-
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Name: </span>
-            <span>{data.company.name}</span>
-          </p>
-          <p>
-            <span>Payment method: </span>
-            <span>{data.company.paymentMethod}</span>
-          </p>
-          <p>
-            <span>Account payable: </span>
-            <span>{data.company.accountPayableEmail}</span>
-          </p>
-        </div>
-      </div>
-      {/* Last order */}
-      <div>
-        <h2 className='font-bold tracking-wide'>Orders</h2>
-
-        <div className='flex items-center gap-3'>
-          <p>
-            <span>Last order: </span>
-            {data.orders.length < 1 && <span>N/A</span>}
-            {data.orders.length > 0 &&
-              data.orders.map(({ id, createdAt }) => (
-                <span
-                  key={id}
-                  onClick={() =>
-                    router.push(`/dashboard/recent-orders?orderId=${id}`)
-                  }
-                >
-                  {new Date(createdAt).toDateString()}
-                </span>
-              ))}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
+  const UserData = data && <DashboardHomeLayout data={data} />;
 
   return (
     <div>
-      <p className='mb-6'>Dashboard</p>
-
       {isLoading && LoadingData}
       {isError && ErrorData}
       {UserData}
     </div>
   );
 };
+
+// TODO: Dashboard home `Recent Orders` section: `user-dashboard` cache is not updated when placing an order.
+
+function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
+  const lastOrderCreatedAt =
+    data && data.orders.length !== 0 && new Date(data.orders[0].createdAt);
+
+  const emailVerifiedDateString =
+    data && data.emailVerified && new Date(data.emailVerified);
+
+  return (
+    <div className='font-extralight flex flex-col gap-12'>
+      {/* //? DASHBOARD HOME SECTION ITEMS */}
+
+      {/* //^ Account Status */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6'>
+          <p className='border-b inline-block text-lg text-gray-700'>
+            Account Status
+          </p>
+        </div>
+
+        <div className='col-span-6 p-6'>
+          <div className='grid grid-cols-10 gap-3'>
+            <span className='col-span-3 text-gray-700'>Email: </span>
+            <span className='col-start-5 col-span-6 '>{data.email}</span>
+
+            <span className='row-start-2 col-span-3 text-gray-700'>
+              Email verification:{' '}
+            </span>
+            <span className='row-start-2 col-start-5 col-span-6 text-gray-500 text-sm italic'>
+              Verified on {emailVerifiedDateString?.toLocaleDateString()}
+            </span>
+
+            <span className='col-span-3 text-gray-700'>Account approval: </span>
+            <span className='col-start-5 col-span-6'>
+              {data.isApproved ? '🟢' : '🔴'}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* //^ Contact Details */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6 h-full'>
+          <p className='border-b inline-block text-lg text-gray-700'>Contact</p>
+        </div>
+
+        <div className='col-span-6 py-6 px-6'>
+          <div className='flex flex-col'>
+            <div className='grid grid-cols-10 gap-3'>
+              <span className='col-span-3 text-gray-700'>Name: </span>
+              <span className='col-start-5 col-span-6'>
+                {data.contact.name}
+              </span>
+
+              <span className='row-start-2 col-span-4 text-gray-700'>
+                Phone number:{' '}
+              </span>
+              <span className='row-start-2 col-start-5 col-span-6'>
+                {data.contact.phoneNumber}
+              </span>
+
+              <span className='row-start-3 col-span-4 text-gray-700'>
+                Position:{' '}
+              </span>
+              <span className='row-start-3 col-start-5 col-span-6'>
+                {data.contact.position ? (
+                  data.contact.position
+                ) : (
+                  <Link
+                    href='/dashboard/settings/contact/edit'
+                    className='underline text-purple-900'
+                  >
+                    add position
+                  </Link>
+                )}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* //^ Company Details */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6 h-full'>
+          <p className='border-b inline-block text-lg text-gray-700'>Company</p>
+        </div>
+
+        <div className='col-span-6 pt-6 mx-6'>
+          <div className='flex flex-col'>
+            <div className='grid grid-cols-10 gap-3'>
+              <span className='col-span-4 text-gray-700'>Name: </span>
+              <span className='col-start-5 col-span-6'>
+                {data.company.name}
+              </span>
+
+              <span className='row-start-2 col-span-4 text-gray-700'>
+                Account payable email:{' '}
+              </span>
+              <span className='row-start-2 col-start-5 col-span-6'>
+                {data.company.accountPayableEmail}
+              </span>
+
+              <span className='row-start-3 col-span-4 text-gray-700'>
+                Payment method:{' '}
+              </span>
+              <span className='row-start-3 col-start-5 col-span-6'>
+                {data.company.paymentMethod}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* //^ Recent Orders */}
+      <div className='grid grid-cols-8 gap-3'>
+        <div className='col-span-2 border-r p-6 h-full'>
+          <p className='border-b inline-block text-lg text-gray-700'>
+            Recent Orders
+          </p>
+        </div>
+
+        <div className='col-span-6 pt-6 mx-6'>
+          <div className='grid grid-cols-10 gap-3'>
+            <div className='col-span-10'>
+              {data.orders.length !== 0 ? (
+                <span>
+                  {lastOrderCreatedAt &&
+                    lastOrderCreatedAt.toLocaleDateString()}
+                </span>
+              ) : (
+                <span>
+                  first time?{' '}
+                  <Link href='/products' className='underline text-purple-800'>
+                    visit our shop
+                  </Link>{' '}
+                  to get started
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default Dashboard;
