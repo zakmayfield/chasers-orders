@@ -19,7 +19,6 @@ const Dashboard = () => {
   const LoadingData = <div>Loading dashboard...</div>;
   const ErrorData = <div>{error && error.message}</div>;
 
-  // TODO: Dashboard Home Component root path layout ( not to be confused with the server dashboard layout for the dashboard path )
   const UserData = data && <DashboardHomeLayout data={data} />;
 
   return (
@@ -30,6 +29,8 @@ const Dashboard = () => {
     </div>
   );
 };
+
+// TODO: Dashboard home `Recent Orders` section: `user-dashboard` cache is not updated when placing an order.
 
 function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
   const lastOrderCreatedAt =

@@ -11,14 +11,13 @@ import { DashboardUserData } from '@/types/types.dashboard';
 
 export default function DashboardNav() {
   const pathname = usePathname();
-  //min-h-[35rem] border-l
   return (
     <div
       className={`
         col-span-12 row-start-2
         flex items-center
         bg-light-primary 
-        2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between 2xl:min-h-[35rem] 2xl:rounded-b-2xl 2xl:overflow-hidden 
+        2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between 2xl:h-[35rem] 2xl:rounded-b-2xl 2xl:overflow-hidden 
       `}
     >
       {/* <DashboardNavHeader /> */}
