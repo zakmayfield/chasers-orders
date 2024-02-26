@@ -1,14 +1,17 @@
 import './globals.css';
+
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Inter, Quicksand } from 'next/font/google';
+
 import Providers from '@/lib/Providers';
 import { ToastContainer } from 'react-toastify';
-
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import Header from '@/features/header/Header';
 import { getAuthSession } from '@/lib/auth/auth.options';
 
 const inter = Inter({ subsets: ['latin'] });
+const quicksand = Quicksand({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -25,7 +28,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <Providers>
-        <body className={inter.className}>
+        <body className={quicksand.className}>
           {isAuth && <Header />}
 
           <div className='py-6'>{children}</div>
