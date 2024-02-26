@@ -2,9 +2,7 @@
 
 import { useState } from 'react';
 import { Order, OrderLineItem } from '@prisma/client';
-import { useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { ThreeDots } from 'react-loader-spinner';
 import { PiSpinnerGapThin } from 'react-icons/pi';
 import { getRecentOrders } from '@/services/queries/orders.getRecentOrders';
 
