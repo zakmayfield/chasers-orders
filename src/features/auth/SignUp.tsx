@@ -480,7 +480,7 @@ function FinalSubmitButton() {
   return (
     <button
       type='submit'
-      className='mt-6 col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400'
+      className='mt-6 col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400 bg-light-greenish/70'
     >
       Create Account
     </button>
