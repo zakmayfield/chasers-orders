@@ -17,7 +17,6 @@ export async function GET() {
     return new Response('Order ID is required');
   }
 
-  // Data try...catch
   try {
     const lineItemProductsOnOrder = await db.order.findUnique({
       where: { id: orderId },
