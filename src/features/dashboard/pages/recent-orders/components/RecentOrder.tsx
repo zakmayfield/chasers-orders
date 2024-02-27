@@ -11,7 +11,6 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
   const {
     data: orderWithLineItemProducts,
     isLoading,
-    error,
     isError,
   } = useQuery<LineItemProducts | null>({
     queryKey: ['line-item-products', order.id],

@@ -1,9 +1,4 @@
-import {
-  LineItemProducts,
-  fetchLineItemsFromOrderId,
-} from '@/services/queries/orders.fetchLineItemsFromOrderId';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 import { OrderType } from '../RecentOrders';
 import { getRecentOrders } from '@/services/queries/orders.getRecentOrders';
 import RecentOrdersSkeleton from './RecentOrdersSkeleton';
