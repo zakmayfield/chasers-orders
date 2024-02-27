@@ -1,21 +1,24 @@
 'use client';
 
 import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
-import Favorite from './Favorite';
+import Favorite from './components/Favorite';
+import FavoritesLoadingSkeleton from './components/FavoritesLoadingSkeleton';
+import EmptyFavorites from './components/EmptyFavorites';
 
 export default function Favorites() {
-  const { favorites } = useFavoritesQuery();
+  const { favorites, isLoading } = useFavoritesQuery();
 
-  const OnNoFavorites = favorites && favorites.length === 0 && (
-    <div>
-      <p>No favorites yet</p>
-    </div>
-  );
+  if (isLoading) {
+    return <FavoritesLoadingSkeleton />;
+  }
+
+  if (favorites && favorites.length === 0) {
+    return <EmptyFavorites />;
+  }
 
   return (
     <div>
       <div>Favorites</div>
-      {OnNoFavorites}
       {favorites &&
         favorites.length > 0 &&
         favorites.map((fav) => <Favorite key={fav.id} fav={fav} />)}
