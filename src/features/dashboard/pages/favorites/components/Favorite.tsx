@@ -66,6 +66,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const productCategory = fav.juice.category;
 
   async function handleAddUnitToCart() {
+    // server function
     const firstUnitId = await fetchFirstUnitId(productId);
     addToCart(firstUnitId!);
   }
