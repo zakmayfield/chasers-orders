@@ -50,7 +50,11 @@ function DashboardNavHeader() {
 }
 
 function DashboardNavFooter() {
-  const { data: user, isLoading } = useQuery<DashboardUserData>({
+  const {
+    data: user,
+    isLoading,
+    isError,
+  } = useQuery<DashboardUserData>({
     queryKey: ['user-dashboard'],
     queryFn: getDashboardUser,
     staleTime: 60 * 1000 * 10,
@@ -95,7 +99,7 @@ function DashboardNavFooter() {
     );
   }
 
-  if (!user) {
+  if (isError && !user) {
     return (
       <div
         className={`
