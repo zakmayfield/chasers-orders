@@ -6,8 +6,6 @@ import { useMutation } from '@tanstack/react-query';
 import { verifyEmail } from '@/services/mutations/auth.verifyEmail';
 import { useEffect, useRef, useState } from 'react';
 
-// TODO: Handle errors/success and routing
-
 export default function VerifyEmail({ session }: { session: Session | null }) {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');

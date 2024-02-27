@@ -41,10 +41,6 @@ const defaultValues = {
   billingPostalCode: '',
 };
 
-/*
-  TODO: Populate form values from cache if available
-*/
-
 export default function SignUp() {
   const queryClient = useQueryClient();
 
@@ -227,7 +223,6 @@ export default function SignUp() {
                 {errors.companyName && (
                   <FieldError message={errors.companyName.message} />
                 )}
-                // TODO: allow input or N/A
                 <label htmlFor='accountPayableEmail' className='col-span-6'>
                   Account Payable Email{' '}
                   <span className='text-gray-400 text-sm'>
@@ -248,7 +243,6 @@ export default function SignUp() {
                 <label htmlFor='paymentMethod' className='col-span-6'>
                   Payment Method:
                 </label>
-                // TODO: Implement select dropdown for payment methods
                 <input
                   type='paymentMethod'
                   id='paymentMethod'
@@ -319,7 +313,6 @@ export default function SignUp() {
                   Shipping State:
                 </label>
 
-                {/* TODO: refactor to dropdown select */}
                 <input
                   type='shippingState'
                   id='shippingState'
@@ -487,7 +480,7 @@ function FinalSubmitButton() {
   return (
     <button
       type='submit'
-      className='mt-6 col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400'
+      className='mt-6 col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400 bg-light-greenish/70'
     >
       Create Account
     </button>

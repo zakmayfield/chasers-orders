@@ -79,7 +79,7 @@ export default function SignIn() {
 
           <button
             type='submit'
-            className='border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6'
+            className='border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6 bg-light-greenish/70 text-lg'
           >
             Sign In
           </button>

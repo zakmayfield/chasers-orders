@@ -28,7 +28,13 @@ export default function OrderButton() {
       queryClient.setQueryData(
         ['recent-orders'],
         (oldData: OrderType[] | undefined) => {
-          return oldData ? [data, ...oldData] : oldData;
+          // Limit to 5
+          let x = oldData;
+          if (x && x.length <= 5) {
+            x.pop();
+            x = [data, ...x];
+          }
+          return oldData ? x : oldData;
         }
       );
 
