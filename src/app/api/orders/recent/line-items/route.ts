@@ -25,6 +25,7 @@ export async function GET() {
         lineItems: {
           select: {
             id: true,
+            quantity: true,
             unit: {
               select: {
                 id: true,

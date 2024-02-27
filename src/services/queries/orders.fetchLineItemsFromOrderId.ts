@@ -6,6 +6,7 @@ export type LineItemProducts = {
   id: string;
   lineItems: {
     id: string;
+    quantity: number;
     unit: {
       id: string;
       product: {

@@ -9,6 +9,7 @@ import {
   LineItemProducts,
   fetchLineItemsFromOrderId,
 } from '@/services/queries/orders.fetchLineItemsFromOrderId';
+import Link from 'next/link';
 
 export type OrderType = Order & {
   lineItems: OrderLineItem[];
@@ -52,8 +53,6 @@ function RecentOrdersHeader({ isLoading }: { isLoading: boolean }) {
 }
 
 function RecentOrdersContent() {
-  const [expanded, setExpanded] = useState<OrderType | null>();
-
   const {
     data: orders,
     error,
@@ -92,37 +91,55 @@ function RecentOrdersContent() {
     return <p>No recent orders</p>;
   }
 
-  const handleExpanded = (order: OrderType) => {
-    if (expanded) {
-      setExpanded(null);
-    } else {
-      setExpanded(order);
-    }
-  };
-
   // TODO: Create line item products endpoint - dont bug it out this time
   const RecentOrder = ({ order }: { order: OrderType }) => {
-    const { data } = useQuery<LineItemProducts | null>({
-      queryKey: ['line-item-products', order.id],
-      queryFn: () => fetchLineItemsFromOrderId(order.id),
-      staleTime: Infinity,
-    });
+    const { data: orderWithLineItemProducts } =
+      useQuery<LineItemProducts | null>({
+        queryKey: ['line-item-products', order.id],
+        queryFn: () => fetchLineItemsFromOrderId(order.id),
+        staleTime: Infinity,
+      });
 
     const createdAtDate = new Date(order.createdAt).toDateString();
 
+    if (!orderWithLineItemProducts) {
+      return <div>Could not locate order.</div>;
+    }
+
     return (
       <div key={order.id}>
-        <p onClick={() => handleExpanded(order)}>{createdAtDate}</p>
+        <div className='mb-2 w-full flex items-center gap-3'>
+          <h5>{createdAtDate}</h5>
+          <Link href='#' className='underline text-purple-800 text-sm'>
+            order again
+          </Link>
+        </div>
 
-        {expanded && expanded.id === order.id && (
-          <pre>{JSON.stringify(expanded.lineItems, null, 2)}</pre>
-        )}
+        <div className='px-6'>
+          {orderWithLineItemProducts.lineItems.map(
+            ({ quantity, unit: { product } }) => {
+              return (
+                <div className='flex items-center gap-6'>
+                  <div>
+                    <span className='text-sm text-gray-600 mr-3'>
+                      x{quantity}
+                    </span>
+                    <span>{product.name}</span>
+                  </div>
+                  <span className='text-sm text-gray-600 lowercase'>
+                    {product.category}
+                  </span>
+                </div>
+              );
+            }
+          )}
+        </div>
       </div>
     );
   };
 
   return (
-    <div>
+    <div className='flex flex-col gap-12'>
       {orders &&
         orders.map((order) => <RecentOrder key={order.id} order={order} />)}
     </div>
