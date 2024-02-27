@@ -5,6 +5,10 @@ import { Order, OrderLineItem } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { PiSpinnerGapThin } from 'react-icons/pi';
 import { getRecentOrders } from '@/services/queries/orders.getRecentOrders';
+import {
+  LineItemProducts,
+  fetchLineItemsFromOrderId,
+} from '@/services/queries/orders.fetchLineItemsFromOrderId';
 
 export type OrderType = Order & {
   lineItems: OrderLineItem[];
@@ -97,22 +101,30 @@ function RecentOrdersContent() {
   };
 
   // TODO: Create line item products endpoint - dont bug it out this time
+  const RecentOrder = ({ order }: { order: OrderType }) => {
+    const { data } = useQuery<LineItemProducts | null>({
+      queryKey: ['line-item-products', order.id],
+      queryFn: () => fetchLineItemsFromOrderId(order.id),
+      staleTime: Infinity,
+    });
+
+    const createdAtDate = new Date(order.createdAt).toDateString();
+
+    return (
+      <div key={order.id}>
+        <p onClick={() => handleExpanded(order)}>{createdAtDate}</p>
+
+        {expanded && expanded.id === order.id && (
+          <pre>{JSON.stringify(expanded.lineItems, null, 2)}</pre>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div>
       {orders &&
-        orders.map((order) => {
-          const createdAtDate = new Date(order.createdAt).toDateString();
-          return (
-            <div key={order.id}>
-              <p onClick={() => handleExpanded(order)}>{createdAtDate}</p>
-
-              {expanded && expanded.id === order.id && (
-                <pre>{JSON.stringify(expanded.lineItems, null, 2)}</pre>
-              )}
-            </div>
-          );
-        })}
+        orders.map((order) => <RecentOrder key={order.id} order={order} />)}
     </div>
   );
 }
