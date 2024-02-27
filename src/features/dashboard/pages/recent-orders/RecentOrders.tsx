@@ -96,6 +96,8 @@ function RecentOrdersContent() {
     }
   };
 
+  // TODO: Create line item products endpoint - dont bug it out this time
+
   return (
     <div>
       {orders &&
