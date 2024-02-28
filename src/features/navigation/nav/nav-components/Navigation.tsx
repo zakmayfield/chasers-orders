@@ -8,7 +8,7 @@ interface NavigationProps {
   isApproved: boolean;
 }
 
-const Navigation: FC<NavigationProps> = ({ isAuth, isApproved }) => {
+export const Navigation: FC<NavigationProps> = ({ isAuth, isApproved }) => {
   return (
     <div className='flex items-center gap-6'>
       {!isAuth ? (
@@ -19,5 +19,3 @@ const Navigation: FC<NavigationProps> = ({ isAuth, isApproved }) => {
     </div>
   );
 };
-
-export default Navigation;

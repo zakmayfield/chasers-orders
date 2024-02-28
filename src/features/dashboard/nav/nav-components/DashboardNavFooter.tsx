@@ -4,7 +4,7 @@ import { PiWarningDuotone } from 'react-icons/pi';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
 
-const DashboardNavFooter = () => {
+export const DashboardNavFooter = () => {
   const {
     data: user,
     isLoading,
@@ -127,5 +127,3 @@ const DashboardNavFooter = () => {
     </div>
   );
 };
-
-export default DashboardNavFooter;

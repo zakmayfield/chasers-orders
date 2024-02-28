@@ -1,8 +1,7 @@
 'use server';
 
 import { FC } from 'react';
-
-import Nav from '../nav/Nav';
+import Navbar from '../nav/Navbar';
 
 interface HeaderProps {}
 
@@ -14,7 +13,7 @@ const Header: FC<HeaderProps> = async ({}) => {
         <div>{'{{logo}}'}</div>
 
         {/* Nav Bar */}
-        <Nav />
+        <Navbar />
       </div>
     </header>
   );

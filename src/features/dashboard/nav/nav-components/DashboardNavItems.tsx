@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { dashboardNavItems } from './dashboardNavData';
-import DashNavItem from './DashboardNavItem';
 import { usePathname } from 'next/navigation';
+import { navData } from '../navData';
+import DashNavItem from './DashboardNavItem';
 
 interface DashboardNavItemsProps {}
 
-const DashboardNavItems: FC<DashboardNavItemsProps> = ({}) => {
+export const DashboardNavItems: FC<DashboardNavItemsProps> = ({}) => {
   const pathname = usePathname();
 
   return (
@@ -15,11 +15,9 @@ const DashboardNavItems: FC<DashboardNavItemsProps> = ({}) => {
         2xl:justify-center 2xl:flex-col 2xl:items-start 2xl:pt-12
       `}
     >
-      {dashboardNavItems.map((item) => (
+      {navData.map((item) => (
         <DashNavItem key={item.path} item={item} pathname={pathname} />
       ))}
     </div>
   );
 };
-
-export default DashboardNavItems;

@@ -22,7 +22,7 @@ export type DashboardNavItem = {
   content: string;
 };
 
-export const dashboardNavItems: DashboardNavItem[] = [
+export const navData: DashboardNavItem[] = [
   {
     path: '',
     content: 'Dashboard',

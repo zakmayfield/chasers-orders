@@ -1,13 +1,9 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { dashboardNavItems } from './dashboardNavData';
-import DashboardNavFooter from './DashboardNavFooter';
-import DashNavItem from './DashboardNavItem';
-import DashboardNavHeader from './DashboardNavHeader';
-import DashboardNavItems from './DashboardNavItems';
+import { DashboardNavItems, DashboardNavFooter } from './nav-components';
 
-export default function DashboardNav() {
+export const DashboardNav = () => {
   const pathname = usePathname();
   return (
     <div
@@ -18,9 +14,8 @@ export default function DashboardNav() {
         2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between 2xl:h-[35rem] 2xl:rounded-b-2xl 2xl:overflow-hidden 
       `}
     >
-      {/* <DashboardNavHeader /> */}
       <DashboardNavItems />
       <DashboardNavFooter />
     </div>
   );
-}
+};
