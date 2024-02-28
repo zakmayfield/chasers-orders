@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { DashboardNavItem } from './dashboardNavData';
+import { DashboardNavItem } from '../navData';
 import { useEffect, useState } from 'react';
 
 const DashNavItem = ({

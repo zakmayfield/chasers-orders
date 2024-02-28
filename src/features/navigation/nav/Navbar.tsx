@@ -3,11 +3,11 @@
 import { FC } from 'react';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import type { Session } from 'next-auth';
-import Navigation from './Navigation';
+import { Navigation } from './nav-components';
 
 interface NavProps {}
 
-const Nav: FC<NavProps> = async ({}) => {
+const Navbar: FC<NavProps> = async ({}) => {
   const session = await getAuthSession();
 
   const checkAuth = (data: unknown): data is Session => {
@@ -24,4 +24,4 @@ const Nav: FC<NavProps> = async ({}) => {
   );
 };
 
-export default Nav;
+export default Navbar;

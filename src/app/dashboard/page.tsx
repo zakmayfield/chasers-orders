@@ -1,4 +1,4 @@
-import Dashboard from '@/features/dashboard/Dashboard';
+import Dashboard from '@/features/dashboard/home/Dashboard';
 
 export default async function Page() {
   return (

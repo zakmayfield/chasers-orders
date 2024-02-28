@@ -1,43 +1,21 @@
-'use client';
-
+import { FC } from 'react';
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
-import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
 
-const Dashboard = () => {
-  const { data, isLoading, error, isError } = useQuery<
-    DashboardUserData,
-    Error
-  >({
-    queryKey: ['user-dashboard'],
-    queryFn: getDashboardUser,
-    staleTime: 60 * 1000 * 10,
-  });
-
-  // TODO: Create loading skeleton after general layout is established
-  const LoadingData = <div>Loading dashboard...</div>;
-  const ErrorData = <div>{error && error.message}</div>;
-
-  const UserData = data && <DashboardHomeLayout data={data} />;
-
-  return (
-    <div>
-      {isLoading && LoadingData}
-      {isError && ErrorData}
-      {UserData}
-    </div>
-  );
-};
+interface DashboardHomeProps {
+  userData: DashboardUserData;
+}
 
 // TODO: Dashboard home `Recent Orders` section: `user-dashboard` cache is not updated when placing an order.
 
-function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
+export const DashboardHome: FC<DashboardHomeProps> = ({ userData }) => {
   const lastOrderCreatedAt =
-    data && data.orders.length !== 0 && new Date(data.orders[0].createdAt);
+    userData &&
+    userData.orders.length !== 0 &&
+    new Date(userData.orders[0].createdAt);
 
   const emailVerifiedDateString =
-    data && data.emailVerified && new Date(data.emailVerified);
+    userData && userData.emailVerified && new Date(userData.emailVerified);
 
   return (
     <div className='font-extralight flex flex-col gap-12'>
@@ -54,7 +32,7 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
         <div className='col-span-6 p-6'>
           <div className='grid grid-cols-10 gap-3'>
             <span className='col-span-3 text-gray-700'>Email: </span>
-            <span className='col-start-5 col-span-6 '>{data.email}</span>
+            <span className='col-start-5 col-span-6 '>{userData.email}</span>
 
             <span className='row-start-2 col-span-3 text-gray-700'>
               Email verification:{' '}
@@ -65,7 +43,7 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
 
             <span className='col-span-3 text-gray-700'>Account approval: </span>
             <span className='col-start-5 col-span-6'>
-              {data.isApproved ? '🟢' : '🔴'}
+              {userData.isApproved ? '🟢' : '🔴'}
             </span>
           </div>
         </div>
@@ -82,22 +60,22 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
             <div className='grid grid-cols-10 gap-3'>
               <span className='col-span-3 text-gray-700'>Name: </span>
               <span className='col-start-5 col-span-6'>
-                {data.contact.name}
+                {userData.contact.name}
               </span>
 
               <span className='row-start-2 col-span-4 text-gray-700'>
                 Phone number:{' '}
               </span>
               <span className='row-start-2 col-start-5 col-span-6'>
-                {data.contact.phoneNumber}
+                {userData.contact.phoneNumber}
               </span>
 
               <span className='row-start-3 col-span-4 text-gray-700'>
                 Position:{' '}
               </span>
               <span className='row-start-3 col-start-5 col-span-6'>
-                {data.contact.position ? (
-                  data.contact.position
+                {userData.contact.position ? (
+                  userData.contact.position
                 ) : (
                   <Link
                     href='/dashboard/settings/contact/edit'
@@ -123,21 +101,21 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
             <div className='grid grid-cols-10 gap-3'>
               <span className='col-span-4 text-gray-700'>Name: </span>
               <span className='col-start-5 col-span-6'>
-                {data.company.name}
+                {userData.company.name}
               </span>
 
               <span className='row-start-2 col-span-4 text-gray-700'>
                 Account payable email:{' '}
               </span>
               <span className='row-start-2 col-start-5 col-span-6'>
-                {data.company.accountPayableEmail}
+                {userData.company.accountPayableEmail}
               </span>
 
               <span className='row-start-3 col-span-4 text-gray-700'>
                 Payment method:{' '}
               </span>
               <span className='row-start-3 col-start-5 col-span-6'>
-                {data.company.paymentMethod}
+                {userData.company.paymentMethod}
               </span>
             </div>
           </div>
@@ -155,7 +133,7 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
         <div className='col-span-6 pt-6 mx-6'>
           <div className='grid grid-cols-10 gap-3'>
             <div className='col-span-10'>
-              {data.orders.length !== 0 ? (
+              {userData.orders.length !== 0 ? (
                 <span>
                   {lastOrderCreatedAt &&
                     lastOrderCreatedAt.toLocaleDateString()}
@@ -175,6 +153,4 @@ function DashboardHomeLayout({ data }: { data: DashboardUserData }) {
       </div>
     </div>
   );
-}
-
-export default Dashboard;
+};

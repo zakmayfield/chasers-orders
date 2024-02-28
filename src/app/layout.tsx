@@ -7,7 +7,7 @@ import Providers from '@/lib/Providers';
 import { ToastContainer } from 'react-toastify';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import Header from '@/features/header/Header';
+import Header from '@/features/navigation/header/Header';
 import { getAuthSession } from '@/lib/auth/auth.options';
 
 const inter = Inter({ subsets: ['latin'] });
