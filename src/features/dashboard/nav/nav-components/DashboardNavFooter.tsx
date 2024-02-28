@@ -19,7 +19,7 @@ export const DashboardNavFooter = () => {
     return (
       <div
         className={`
-        h-20 py-3 px-6
+        h-20 py-3 px-6 w-full
         flex items-center gap-6
         bg-light-secondary
       `}
