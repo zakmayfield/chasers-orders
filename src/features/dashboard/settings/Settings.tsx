@@ -1,23 +1,17 @@
 'use client';
 
+import Link from 'next/link';
 import { useDashboardQuery } from '@/hooks/query.hooks';
 import { DashboardUserData } from '@/types/types.dashboard';
-import Link from 'next/link';
 
 export default function Settings() {
   const { fetchState, isLoading, isData, isError } =
     useDashboardQuery<DashboardUserData>();
 
-  const OnLoad = isLoading && (
-    <div>
-      <div>Loading...</div>
-    </div>
-  );
+  const LoadingData = isLoading && <div>Loading...</div>;
 
-  const OnError = fetchState && isError(fetchState) && (
-    <div>
-      <p>{fetchState.error}</p>
-    </div>
+  const ErrorData = fetchState && isError(fetchState) && (
+    <div>{fetchState.error}</div>
   );
 
   const SettingsData = fetchState && isData(fetchState) && (
@@ -43,10 +37,8 @@ export default function Settings() {
 
   return (
     <div>
-      <div className='mb-3'>Settings</div>
-
-      {OnLoad}
-      {OnError}
+      {LoadingData}
+      {ErrorData}
       {SettingsData}
     </div>
   );
