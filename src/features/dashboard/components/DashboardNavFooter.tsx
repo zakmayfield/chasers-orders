@@ -1,55 +1,10 @@
-'use client';
-
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import { usePathname } from 'next/navigation';
 import { PiWarningDuotone } from 'react-icons/pi';
-import { dashboardNavItems } from './dashboardNavData';
-import DashNavItem from './DashNavItem';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
 
-export default function DashboardNav() {
-  const pathname = usePathname();
-  return (
-    <div
-      className={`
-        col-span-12 row-start-2
-        flex items-center
-        bg-light-primary 
-        2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between 2xl:h-[35rem] 2xl:rounded-b-2xl 2xl:overflow-hidden 
-      `}
-    >
-      {/* <DashboardNavHeader /> */}
-
-      <div
-        className={`
-        flex items-center  gap-3 w-full p-6 
-        2xl:justify-center 2xl:flex-col 2xl:items-start 2xl:pt-12
-      `}
-      >
-        {dashboardNavItems.map((item) => (
-          <DashNavItem key={item.path} item={item} pathname={pathname} />
-        ))}
-      </div>
-
-      <DashboardNavFooter />
-    </div>
-  );
-}
-
-function DashboardNavHeader() {
-  return (
-    <div
-      className={`
-      h-12 w-full
-      bg-light-secondary
-    `}
-    ></div>
-  );
-}
-
-function DashboardNavFooter() {
+const DashboardNavFooter = () => {
   const {
     data: user,
     isLoading,
@@ -171,4 +126,6 @@ function DashboardNavFooter() {
       </div>
     </div>
   );
-}
+};
+
+export default DashboardNavFooter;
