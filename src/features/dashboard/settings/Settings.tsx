@@ -18,7 +18,7 @@ export default function Settings() {
     fetchState && isData(fetchState) && fetchState.emailVerified;
 
   const SettingsData = fetchState && isData(fetchState) && (
-    <div className='flex flex-col gap-6'>
+    <div className='flex flex-col gap-12'>
       {/* //^ Account Status */}
       <div className='grid grid-cols-8 gap-3'>
         <div className='col-span-2 border-r p-6'>
@@ -50,7 +50,7 @@ export default function Settings() {
 
       {/* //^ Contact Details */}
       <div className='grid grid-cols-8 gap-3'>
-        <div className='col-span-2 border-r p-6 h-full'>
+        <div className='col-span-2 border-r p-6'>
           <p className='border-b inline-block text-lg text-gray-700'>Contact</p>
         </div>
 
@@ -87,6 +87,13 @@ export default function Settings() {
             </div>
           </div>
         </div>
+
+        <Link
+          href='/dashboard/settings/contact/edit'
+          className='underline text-purple-800 col-start-7 col-span-2'
+        >
+          edit
+        </Link>
       </div>
 
       {/* //^ Company Details */}
@@ -119,6 +126,13 @@ export default function Settings() {
             </div>
           </div>
         </div>
+
+        <Link
+          href='/dashboard/settings/company/edit'
+          className='underline text-purple-800 col-start-7 col-span-2'
+        >
+          edit
+        </Link>
       </div>
     </div>
   );
