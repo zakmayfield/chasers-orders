@@ -90,7 +90,7 @@ export default function Settings() {
 
         <Link
           href='/dashboard/settings/contact/edit'
-          className='underline text-purple-800 col-start-7 col-span-2'
+          className='underline text-purple-800 col-start-7 text-center'
         >
           edit
         </Link>
@@ -129,7 +129,7 @@ export default function Settings() {
 
         <Link
           href='/dashboard/settings/company/edit'
-          className='underline text-purple-800 col-start-7 col-span-2'
+          className='underline text-purple-800 col-start-7 text-center'
         >
           edit
         </Link>
