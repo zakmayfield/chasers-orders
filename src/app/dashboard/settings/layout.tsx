@@ -7,7 +7,7 @@ export default function SettingsLayout({
 }) {
   return (
     <div>
-      <div>
+      <div className='mb-6'>
         <h2 className='flex items-center mb-6'>
           Settings
           {/* {isLoading && <LoadingSpinner />} */}
