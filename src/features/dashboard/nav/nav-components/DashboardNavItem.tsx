@@ -24,6 +24,8 @@ const DashNavItem = ({
     setActive(isActive);
   }, [pathname]);
 
+  // TODO: active state needs to track all dashboard pages, including `account-pending` and `verify-email`
+
   return (
     <Link
       key={item.content}
