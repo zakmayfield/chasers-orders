@@ -1,8 +1,10 @@
 import { DashboardUserData } from '@/types/types.dashboard';
 import { Dispatch, FC, SetStateAction } from 'react';
+import { EditButton } from '../Buttons';
 
 interface DetailBodyProps {
   userData: DashboardUserData;
+  isEdit: boolean;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -27,7 +29,7 @@ export const DetailBody: FC<DetailBodyProps> = ({ userData, setIsEdit }) => {
         <span className='row-start-3 col-span-4 text-gray-700 flex items-center h-8'>
           Position:{' '}
         </span>
-        <span className='row-start-3 col-start-5 col-span-6 flex items-center h-8'>
+        <span className='row-start-3 col-start-5 col-span-3 flex items-center h-8'>
           {userData.contact.position ? (
             userData.contact.position
           ) : (
@@ -39,6 +41,8 @@ export const DetailBody: FC<DetailBodyProps> = ({ userData, setIsEdit }) => {
             </button>
           )}
         </span>
+
+        <EditButton setIsEdit={setIsEdit} />
       </div>
     </div>
   );

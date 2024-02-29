@@ -1,13 +1,26 @@
 import { FC } from 'react';
 import { DashboardUserData } from '@/types/types.dashboard';
+import { UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
+import { CompanyFormData } from './validator/company.validator';
+import { SaveButton } from '../Buttons';
 
 interface CompanyEditProps {
   userData: DashboardUserData;
+  handleSubmit: UseFormHandleSubmit<CompanyFormData, undefined>;
+  register: UseFormRegister<CompanyFormData>;
 }
 
-export const CompanyEdit: FC<CompanyEditProps> = ({ userData }) => {
+export const CompanyEdit: FC<CompanyEditProps> = ({
+  userData,
+  handleSubmit,
+  register,
+}) => {
+  const onFormSubmit = () => {
+    console.log('submitted');
+  };
+
   return (
-    <form className='flex flex-col'>
+    <form onSubmit={handleSubmit(onFormSubmit)} className='flex flex-col'>
       <div className='grid grid-cols-10 gap-3'>
         <label className='col-span-3 text-gray-700 flex items-center h-8'>
           Name:{' '}
@@ -16,7 +29,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({ userData }) => {
           id='companyName'
           type='text'
           placeholder={userData.company.name}
-          value={''}
+          {...register('companyName')}
           className='col-start-5 col-span-5 placeholder:text-gray-500 bg-light-primary rounded-t h-8 pl-3 border-b'
         />
 
@@ -27,7 +40,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({ userData }) => {
           id='accountPayableEmail'
           type='text'
           placeholder={userData.company.accountPayableEmail}
-          value={''}
+          {...register('accountPayableEmail')}
           className='col-start-5 col-span-5 placeholder:text-gray-500 bg-light-primary rounded-t h-8 pl-3 border-b'
         />
 
@@ -38,9 +51,10 @@ export const CompanyEdit: FC<CompanyEditProps> = ({ userData }) => {
           id='paymentMethod'
           type='text'
           placeholder={userData.company.paymentMethod}
-          value={''}
+          {...register('paymentMethod')}
           className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t pl-3 h-8 border-b'
         />
+        <SaveButton />
       </div>
     </form>
   );
