@@ -3,12 +3,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
-import {
-  AccountStatus,
-  CompanyDetails,
-  RecentOrderDetails,
-} from './components/ui-components';
+import { AccountStatus } from './components/account';
 import { ContactDetails } from './components/contact';
+import { CompanyDetails } from './components/company';
+import { RecentOrderDetails } from './components/recent';
 
 const DashboardHome = () => {
   const { data, isLoading, error, isError } = useQuery<

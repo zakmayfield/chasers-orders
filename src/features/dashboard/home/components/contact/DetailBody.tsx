@@ -1,13 +1,12 @@
 import { DashboardUserData } from '@/types/types.dashboard';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 
-function DetailBody({
-  userData,
-  setIsEdit,
-}: {
+interface DetailBodyProps {
   userData: DashboardUserData;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-}) {
+}
+
+export const DetailBody: FC<DetailBodyProps> = ({ userData, setIsEdit }) => {
   return (
     <div className='flex flex-col'>
       <div className='grid grid-cols-10 gap-3'>
@@ -37,4 +36,4 @@ function DetailBody({
       </div>
     </div>
   );
-}
+};
