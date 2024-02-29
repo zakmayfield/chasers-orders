@@ -3,23 +3,39 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 export const ContactValidator = z.object({
-  contactName: z
-    .string()
-    .min(1, { message: 'Contact Name is a required field' }),
-  contactPosition: z.string(), // optional
-  contactPhoneNumber: z
+  name: z.string().min(1, { message: 'Contact Name is a required field' }),
+  position: z.string(), // optional
+  phoneNumber: z
     .string()
     .min(1, { message: 'Contact Phone Number is a required field' }),
 });
 
-export type ContactFormData = z.infer<typeof ContactValidator>;
+type AdjustedFormType = z.ZodObject<
+  {
+    name: z.ZodString;
+    position: z.ZodString;
+    phoneNumber: z.ZodString;
+  },
+  'strip',
+  z.ZodTypeAny,
+  {
+    name: string;
+    position: string | null;
+    phoneNumber: string;
+  },
+  {
+    name: string;
+    position: string | null;
+    phoneNumber: string;
+  }
+>;
+export type ContactFormData = z.infer<AdjustedFormType>;
 
 export const getDefaultValues = (userData: DashboardUserData) => {
   return {
-    contactName: userData.contact.name,
-    contactPhoneNumber: userData.contact.phoneNumber,
-    contactPosition:
-      (userData.contact.position && userData.contact.position) || '',
+    name: userData.contact.name,
+    phoneNumber: userData.contact.phoneNumber,
+    position: (userData.contact.position && userData.contact.position) || '',
   };
 };
 
