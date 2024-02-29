@@ -18,13 +18,19 @@ export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
 
   // EDIT FORM STUFF
   const {
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
     register,
     handleSubmit,
+    getValues,
+    reset,
   } = useForm<ContactFormData>({
     resolver,
     defaultValues: getDefaultValues(userData),
   });
+
+  function handleSwitchEditCallback() {
+    setIsEdit(false);
+  }
   // end of edit stuff
 
   return (
@@ -39,6 +45,12 @@ export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
             userData={userData}
             handleSubmit={handleSubmit}
             register={register}
+            getValues={getValues}
+            errors={errors}
+            handleSwitchEditCallback={handleSwitchEditCallback}
+            isDirty={isDirty}
+            setIsEdit={setIsEdit}
+            reset={reset}
           />
         ) : (
           <DetailBody

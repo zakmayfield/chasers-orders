@@ -1,5 +1,4 @@
 import { FC, useState } from 'react';
-import Link from 'next/link';
 import { DashboardUserData } from '@/types/types.dashboard';
 import DetailBody from './DetailBody';
 import { CompanyEdit } from './CompanyEdit';

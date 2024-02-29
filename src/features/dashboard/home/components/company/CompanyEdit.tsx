@@ -3,6 +3,7 @@ import { DashboardUserData } from '@/types/types.dashboard';
 import { UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
 import { CompanyFormData } from './validator/company.validator';
 import { SaveButton } from '../Buttons';
+import { useDashboardEdit } from '@/hooks/mutation.hooks';
 
 interface CompanyEditProps {
   userData: DashboardUserData;
@@ -15,8 +16,11 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
   handleSubmit,
   register,
 }) => {
+  // const { edit } = useDashboardEdit();
+
   const onFormSubmit = () => {
     console.log('submitted');
+    // edit();
   };
 
   return (
