@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { DashboardUserData } from '@/types/types.dashboard';
-import { EditButton, SaveButton } from '../Buttons';
+import { CancelEditButton, EditButton, SaveButton } from '../Buttons';
 import { ContactEdit } from './ContactEdit';
 import { DetailBody } from './DetailBody';
 
@@ -25,11 +25,16 @@ export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
         )}
       </div>
 
-      {isEdit ? (
-        <SaveButton isEdit={isEdit} setIsEdit={setIsEdit} />
-      ) : (
-        <EditButton isEdit={isEdit} setIsEdit={setIsEdit} />
-      )}
+      <div className='col-start-7'>
+        {isEdit ? (
+          <div className='flex items-center gap-3'>
+            <SaveButton isEdit={isEdit} setIsEdit={setIsEdit} />
+            <CancelEditButton isEdit={isEdit} setIsEdit={setIsEdit} />
+          </div>
+        ) : (
+          <EditButton isEdit={isEdit} setIsEdit={setIsEdit} />
+        )}
+      </div>
     </div>
   );
 };
