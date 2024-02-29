@@ -117,7 +117,7 @@ export const DashboardNavFooter = () => {
           </p>
         ) : (
           <Link
-            href='/dashboard/settings/account/edit'
+            href='/dashboard'
             className=' text-sm underline text-purple-800'
           >
             add position

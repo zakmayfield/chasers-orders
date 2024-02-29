@@ -77,10 +77,7 @@ export const DashboardHome: FC<DashboardHomeProps> = ({ userData }) => {
                 {userData.contact.position ? (
                   userData.contact.position
                 ) : (
-                  <Link
-                    href='/dashboard/settings/contact/edit'
-                    className='underline text-purple-900'
-                  >
+                  <Link href='/dashboard' className='underline text-purple-900'>
                     add position
                   </Link>
                 )}
@@ -88,6 +85,13 @@ export const DashboardHome: FC<DashboardHomeProps> = ({ userData }) => {
             </div>
           </div>
         </div>
+
+        <Link
+          href='/dashboard'
+          className='underline text-purple-800 col-start-7 text-center'
+        >
+          edit
+        </Link>
       </div>
 
       {/* //^ Company Details */}
@@ -120,6 +124,13 @@ export const DashboardHome: FC<DashboardHomeProps> = ({ userData }) => {
             </div>
           </div>
         </div>
+
+        <Link
+          href='/dashboard'
+          className='underline text-purple-800 col-start-7 text-center'
+        >
+          edit
+        </Link>
       </div>
 
       {/* //^ Recent Orders */}
