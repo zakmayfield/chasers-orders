@@ -41,7 +41,7 @@ export const ContactEdit: FC<ContactEditProps> = ({ userData }) => {
             userData.contact.position ? userData.contact.position : 'optional'
           }
           value={''}
-          className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t pl-3 h-8 border-b'
+          className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t h-8 pl-3 border-b'
         />
       </div>
     </form>
