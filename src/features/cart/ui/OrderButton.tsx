@@ -1,4 +1,4 @@
-import { OrderType } from '@/features/dashboard/pages/recent-orders/RecentOrders';
+import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
 import { useToast } from '@/hooks/general.hooks';
 import {
   CreateOrderPayload,

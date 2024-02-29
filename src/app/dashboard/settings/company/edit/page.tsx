@@ -1,4 +1,4 @@
-import EditCompanyForm from '@/features/dashboard/pages/settings/company/EditCompanyForm';
+import EditCompanyForm from '@/features/dashboard/settings/company/EditCompanyForm';
 
 export default function Page() {
   return (

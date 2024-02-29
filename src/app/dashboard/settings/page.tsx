@@ -1,4 +1,4 @@
-import Settings from '@/features/dashboard/pages/settings/Settings';
+import Settings from '@/features/dashboard/settings/Settings';
 
 export default function Page() {
   return (

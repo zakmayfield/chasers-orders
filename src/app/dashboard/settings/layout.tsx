@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import SettingsNavbar from '@/features/dashboard/settings/nav/SettingsNavbar';
 
 export default function SettingsLayout({
   children,
@@ -7,13 +7,12 @@ export default function SettingsLayout({
 }) {
   return (
     <div>
-      <div>
-        <nav className='flex items-center gap-3 justify-center'>
-          <Link href='/dashboard/settings'>Settings</Link>
-          <Link href='/dashboard/settings/account'>Account</Link>
-          <Link href='/dashboard/settings/contact'>Contact</Link>
-          <Link href='/dashboard/settings/company'>Company</Link>
-        </nav>
+      <div className='mb-6'>
+        <h2 className='flex items-center mb-6'>
+          Settings
+          {/* {isLoading && <LoadingSpinner />} */}
+        </h2>
+        <SettingsNavbar />
       </div>
 
       <div>{children}</div>

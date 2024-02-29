@@ -1,4 +1,4 @@
-import Account from '@/features/dashboard/pages/settings/account/Account';
+import Account from '@/features/dashboard/settings/account/Account';
 
 export default function Page() {
   return (
