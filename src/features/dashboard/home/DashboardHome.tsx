@@ -5,10 +5,10 @@ import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 import { DashboardUserData } from '@/types/types.dashboard';
 import {
   AccountStatus,
-  ContactDetails,
   CompanyDetails,
   RecentOrderDetails,
 } from './components/ui-components';
+import { ContactDetails } from './components/contact';
 
 const DashboardHome = () => {
   const { data, isLoading, error, isError } = useQuery<
