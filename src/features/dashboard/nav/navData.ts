@@ -38,9 +38,9 @@ export const navData: DashboardNavItem[] = [
     content: 'Recent Orders',
     icon: React.createElement(PiClockCounterClockwiseDuotone),
   },
-  {
-    path: '/settings',
-    content: 'Settings',
-    icon: React.createElement(PiGearSixDuotone),
-  },
+  // {
+  //   path: '/settings',
+  //   content: 'Settings',
+  //   icon: React.createElement(PiGearSixDuotone),
+  // },
 ];

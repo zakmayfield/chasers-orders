@@ -66,7 +66,7 @@ const ShippingDetails = () => {
             <div className='mt-3'>
               <div className='mb-3 flex items-center justify-between underline'>
                 <h5 className='font-light'>Delivery Instructions:</h5>
-                <Link href='/dashboard/settings/company/edit'>edit</Link>
+                <Link href='/dashboard'>edit</Link>
               </div>
               <p className='px-3'>{shippingAddress?.deliveryInstructions}</p>
             </div>
