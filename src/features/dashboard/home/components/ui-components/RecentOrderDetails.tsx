@@ -6,7 +6,9 @@ interface RecentOrderDetailsProps {
   userData: DashboardUserData;
 }
 
-const RecentOrderDetails: FC<RecentOrderDetailsProps> = ({ userData }) => {
+export const RecentOrderDetails: FC<RecentOrderDetailsProps> = ({
+  userData,
+}) => {
   const lastOrderCreatedAt =
     userData &&
     userData.orders.length !== 0 &&
@@ -41,5 +43,3 @@ const RecentOrderDetails: FC<RecentOrderDetailsProps> = ({ userData }) => {
     </div>
   );
 };
-
-export default RecentOrderDetails;

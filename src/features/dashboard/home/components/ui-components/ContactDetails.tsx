@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { DashboardUserData } from '@/types/types.dashboard';
+import { ContactEdit } from '../form-components';
 
 interface ContactDetailsProps {
   userData: DashboardUserData;
