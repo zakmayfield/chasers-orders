@@ -1,6 +1,5 @@
-import { Dispatch, FC, SetStateAction } from 'react';
+import { FC } from 'react';
 import { DashboardUserData } from '@/types/types.dashboard';
-import Link from 'next/link';
 
 interface ContactEditProps {
   userData: DashboardUserData;
