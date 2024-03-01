@@ -32,15 +32,15 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
   }
 
   return (
-    <div key={order.id}>
-      <div className='mb-2 w-full flex items-center gap-3'>
+    <div key={order.id} className=''>
+      <div className='mb-2 w-full flex items-center gap-3 '>
         <h5>{createdAtDate}</h5>
         <Link href='#' className='underline text-purple-800 text-sm'>
           order again
         </Link>
       </div>
 
-      <div className='px-6'>
+      <div className='px-6 py-3'>
         {isLoading ? (
           <PiSpinnerGapThin className='animate-spin' />
         ) : (
@@ -48,16 +48,23 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
             {orderWithLineItemProducts?.lineItems.map(
               ({ quantity, unit: { product } }) => {
                 return (
-                  <div className='flex items-center gap-6'>
-                    <div>
-                      <span className='text-sm text-gray-600 mr-3'>
-                        x{quantity}
-                      </span>
-                      <span>{product.name}</span>
-                    </div>
-                    <span className='text-sm text-gray-600 lowercase'>
+                  <div className='grid grid-cols-10 mb-6 w-full'>
+                    <span className='col-span-1 text-sm w-full text-center text-gray-600 mr-3 font-normal underline'>
+                      x{quantity}
+                    </span>
+
+                    <span className='col-start-2 col-span-full w-full'>
+                      {product.name}
+                    </span>
+
+                    <span className='row-start-2 col-start-2 w-full text-sm italic text-gray-600 lowercase'>
                       {product.category}
                     </span>
+
+                    <div
+                      aria-label='style div'
+                      className='h-1 w-2/3 mx-auto mt-3 rounded row-start-3 col-span-full bg-light-secondary'
+                    ></div>
                   </div>
                 );
               }
