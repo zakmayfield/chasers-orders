@@ -19,9 +19,10 @@ export const DashboardNavFooter = () => {
     return (
       <div
         className={`
+        hidden
         h-20 py-3 px-6 w-full
-        flex items-center gap-6
         bg-light-secondary
+        2xl:flex 2xl:items-center 2xl:gap-3 2xl:px-6 2xl:w-full 2xl:h-20
       `}
       >
         <div>
