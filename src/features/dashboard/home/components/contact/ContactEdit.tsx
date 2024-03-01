@@ -1,20 +1,21 @@
-import { Dispatch, FC, SetStateAction, useEffect } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
 import {
   FieldErrors,
   UseFormGetValues,
   UseFormHandleSubmit,
   UseFormRegister,
   UseFormReset,
+  UseFormSetFocus,
 } from 'react-hook-form';
 import { DashboardUserData } from '@/types/types.dashboard';
 import {
   ContactFormData,
   ContactValidator,
+  getDefaultValues,
 } from './validator/contact.validator';
-import { CancelButton, SaveButton } from '../Buttons';
 import { useDashboardEdit } from '@/hooks/mutation.hooks';
 import { useToast } from '@/hooks/general.hooks';
-import { PiWarningCircle, PiWarningCircleDuotone } from 'react-icons/pi';
+import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 
 interface ContactEditProps {
   userData: DashboardUserData;
@@ -26,6 +27,7 @@ interface ContactEditProps {
   handleSwitchEditCallback: () => void;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
   reset: UseFormReset<ContactFormData>;
+  setFocus: UseFormSetFocus<ContactFormData>;
 }
 
 export const ContactEdit: FC<ContactEditProps> = ({
@@ -39,11 +41,12 @@ export const ContactEdit: FC<ContactEditProps> = ({
   setIsEdit,
   reset,
 }) => {
+  const { notify } = useToast();
+
   const { edit, isSuccess } = useDashboardEdit({
     handleSwitchEditCallback,
     handleResetFormCB,
   });
-  const { notify } = useToast();
 
   const onFormSubmit = () => {
     console.log('submitted');
@@ -61,16 +64,16 @@ export const ContactEdit: FC<ContactEditProps> = ({
     }
   };
 
-  type AdjustedContactFormType = {
-    name: string;
-    position: string;
-    phoneNumber: string;
-  };
-
   function handleResetFormCB(data: ContactFormData) {
     reset(data, {
       keepDirty: false,
     });
+  }
+
+  function resetFormOnCancel() {
+    const defaultValues = getDefaultValues(userData);
+    setIsEdit(false);
+    reset(defaultValues);
   }
 
   return (
@@ -120,7 +123,30 @@ export const ContactEdit: FC<ContactEditProps> = ({
           className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t h-8 pl-3 border-b'
         />
 
-        {!isDirty ? <CancelButton setIsEdit={setIsEdit} /> : <SaveButton />}
+        {/* BUTTONs */}
+        <div className='col-start-9 col-span-2'>
+          {isDirty && (
+            <div className='flex items-center gap-1 h-full'>
+              <button
+                onClick={resetFormOnCancel}
+                className='w-1/3 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
+              >
+                <PiXBold />
+              </button>
+              <button className='w-2/3 h-full rounded-lg bg-light-greenish text-white hover:ring-2 hover:ring-sky-500'>
+                save
+              </button>
+            </div>
+          )}
+          {!isDirty && (
+            <button
+              onClick={() => setIsEdit(false)}
+              className='col-span-1 w-1/2 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
+            >
+              <PiXBold />
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );

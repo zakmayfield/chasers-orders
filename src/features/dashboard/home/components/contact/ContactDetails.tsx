@@ -23,6 +23,7 @@ export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
     handleSubmit,
     getValues,
     reset,
+    setFocus,
   } = useForm<ContactFormData>({
     resolver,
     defaultValues: getDefaultValues(userData),
@@ -51,6 +52,7 @@ export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
             isDirty={isDirty}
             setIsEdit={setIsEdit}
             reset={reset}
+            setFocus={setFocus}
           />
         ) : (
           <DetailBody
