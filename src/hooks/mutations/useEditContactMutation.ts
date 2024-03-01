@@ -18,6 +18,7 @@ export const useDashboardEdit = ({
   const { notify } = useToast();
 
   const { mutate: edit, isSuccess } = useMutation({
+    // TODO: do this for company (remove the fetch from the hook)
     mutationFn: updateContact,
     onSuccess(data) {
       // will need to make this a bit more modular for `company` to use it without error
