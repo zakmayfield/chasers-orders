@@ -9,7 +9,8 @@
 
 p,
 span,
-a {
+a,
+input {
   @apply text-light-text;
   @apply text-base;
   @apply leading-relaxed;
