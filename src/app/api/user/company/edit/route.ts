@@ -1,33 +1,34 @@
-import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import { EditCompanyValidator } from '@/lib/validators/validator.company';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { CompanyFormData } from '@/features/dashboard/home/components/company/validator/company.validator';
 
-export async function PATCH(req: Request) {
+export async function PUT(req: Request) {
   const session = await getAuthSession();
 
   if (!session?.user) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  try {
-    const id = session.user.id;
-    const body = await req.json();
-    const { name } = EditCompanyValidator.parse(body);
+  type ReqBody = CompanyFormData;
+  const body: ReqBody = await req.json();
 
-    await db.company.update({
+  try {
+    const updatedCompany = await db.company.update({
       where: {
-        userId: id,
+        userId: session.user.id,
       },
-      data: {
-        name,
-      },
+      data: body,
     });
 
-    return new Response('OK');
-  } catch (err) {
-    return new Response(
-      'Could not update company at this time. Please try later',
-      { status: 500 }
-    );
+    return new Response(JSON.stringify(updatedCompany));
+  } catch (error) {
+    if (error instanceof Error) {
+      return (
+        new Response(error.message),
+        {
+          status: 500,
+        }
+      );
+    }
   }
 }

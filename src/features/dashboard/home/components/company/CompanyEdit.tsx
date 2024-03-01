@@ -1,27 +1,79 @@
-import { FC } from 'react';
+'use client';
+import { Dispatch, FC, SetStateAction } from 'react';
 import { DashboardUserData } from '@/types/types.dashboard';
-import { UseFormHandleSubmit, UseFormRegister } from 'react-hook-form';
-import { CompanyFormData } from './validator/company.validator';
-import { SaveButton } from '../Buttons';
-import { useDashboardEdit } from '@/hooks/mutation.hooks';
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormReset,
+} from 'react-hook-form';
+import {
+  CompanyFormData,
+  CompanyValidator,
+  getDefaultValues,
+} from './validator/company.validator';
+import { useCompanyEditMutation } from '@/hooks/mutation.hooks';
+import { useToast } from '@/hooks/general.hooks';
+import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 
 interface CompanyEditProps {
   userData: DashboardUserData;
+  isDirty: boolean;
+  errors: FieldErrors<CompanyFormData>;
   handleSubmit: UseFormHandleSubmit<CompanyFormData, undefined>;
   register: UseFormRegister<CompanyFormData>;
+  reset: UseFormReset<CompanyFormData>;
+  handleSwitchEditCallback: () => void;
+  getValues: UseFormGetValues<CompanyFormData>;
+  setIsEdit: Dispatch<SetStateAction<boolean>>;
 }
 
 export const CompanyEdit: FC<CompanyEditProps> = ({
   userData,
+  isDirty,
+  errors,
   handleSubmit,
   register,
+  reset,
+  getValues,
+  setIsEdit,
+  handleSwitchEditCallback,
 }) => {
-  // const { edit } = useDashboardEdit();
+  const { notify } = useToast();
+
+  const { edit } = useCompanyEditMutation({
+    handleSwitchEditCallback,
+    handleResetFormCB,
+  });
 
   const onFormSubmit = () => {
     console.log('submitted');
-    // edit();
+    const formValues = getValues();
+    // if validated: run `edit(formValues)`
+    try {
+      CompanyValidator.parse(formValues);
+      edit(formValues);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+        notify(error.message, 'error');
+      }
+      return;
+    }
   };
+
+  function handleResetFormCB(data: CompanyFormData) {
+    reset(data, {
+      keepDirty: false,
+    });
+  }
+
+  function resetFormOnCancel() {
+    const defaultValues = getDefaultValues(userData);
+    setIsEdit(false);
+    reset(defaultValues);
+  }
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className='flex flex-col'>
@@ -29,17 +81,23 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
         <label className='col-span-3 text-gray-700 flex items-center h-8'>
           Name:{' '}
         </label>
+        <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
+          {errors.name && <PiWarningCircleDuotone />}
+        </span>
         <input
-          id='companyName'
+          id='name'
           type='text'
           placeholder={userData.company.name}
-          {...register('companyName')}
+          {...register('name')}
           className='col-start-5 col-span-5 placeholder:text-gray-500 bg-light-primary rounded-t h-8 pl-3 border-b'
         />
 
-        <label className='row-start-2 col-span-4 text-gray-700 flex items-center h-8'>
+        <label className='row-start-2 col-span-3 text-gray-700 flex items-center h-8'>
           Account payable email:{' '}
         </label>
+        <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
+          {errors.accountPayableEmail && <PiWarningCircleDuotone />}
+        </span>
         <input
           id='accountPayableEmail'
           type='text'
@@ -48,9 +106,12 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
           className='col-start-5 col-span-5 placeholder:text-gray-500 bg-light-primary rounded-t h-8 pl-3 border-b'
         />
 
-        <label className='row-start-3 col-span-4 text-gray-700 flex items-center h-8'>
+        <label className='row-start-3 col-span-3 text-gray-700 flex items-center h-8'>
           Payment method:{' '}
         </label>
+        <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
+          {errors.paymentMethod && <PiWarningCircleDuotone />}
+        </span>
         <input
           id='paymentMethod'
           type='text'
@@ -58,7 +119,31 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
           {...register('paymentMethod')}
           className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t pl-3 h-8 border-b'
         />
-        <SaveButton />
+
+        {/* BUTTONs */}
+        <div className='col-start-9 col-span-2'>
+          {isDirty && (
+            <div className='flex items-center gap-1 h-full'>
+              <button
+                onClick={resetFormOnCancel}
+                className='w-1/3 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
+              >
+                <PiXBold />
+              </button>
+              <button className='w-2/3 h-full rounded-lg bg-light-greenish text-white hover:ring-2 hover:ring-sky-500'>
+                save
+              </button>
+            </div>
+          )}
+          {!isDirty && (
+            <button
+              onClick={() => setIsEdit(false)}
+              className='col-span-1 w-1/2 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
+            >
+              <PiXBold />
+            </button>
+          )}
+        </div>
       </div>
     </form>
   );

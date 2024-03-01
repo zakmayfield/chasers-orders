@@ -3,9 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
 export const CompanyValidator = z.object({
-  companyName: z
-    .string()
-    .min(1, { message: 'Company Name is a required field' }),
+  name: z.string().min(1, { message: 'Company Name is a required field' }),
   accountPayableEmail: z.string().min(1, {
     message:
       'Account Payable Email is a required field. Please write "N/A" if you do not have one',
@@ -19,7 +17,7 @@ export type CompanyFormData = z.infer<typeof CompanyValidator>;
 
 export const getDefaultValues = (userData: DashboardUserData) => {
   return {
-    companyName: userData.company.name,
+    name: userData.company.name,
     accountPayableEmail: userData.company.accountPayableEmail,
     paymentMethod: userData.company.paymentMethod,
   };

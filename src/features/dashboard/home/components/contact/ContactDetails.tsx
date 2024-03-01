@@ -1,3 +1,4 @@
+'use client';
 import { FC, useState } from 'react';
 import { DashboardUserData } from '@/types/types.dashboard';
 import { ContactEdit } from './ContactEdit';

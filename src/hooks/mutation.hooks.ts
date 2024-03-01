@@ -1,2 +1,3 @@
 export * from './mutations/useToggleFavoriteMutation';
-export * from './mutations/useDashboardEdit';
+export * from './mutations/useEditContactMutation';
+export * from './mutations/useCompanyEditMutation';

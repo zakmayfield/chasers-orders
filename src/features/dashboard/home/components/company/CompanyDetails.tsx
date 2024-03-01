@@ -1,3 +1,5 @@
+'use client';
+
 import { FC, useState } from 'react';
 import { DashboardUserData } from '@/types/types.dashboard';
 import DetailBody from './DetailBody';
@@ -18,13 +20,19 @@ export const CompanyDetails: FC<CompanyDetailsProps> = ({ userData }) => {
 
   // EDIT FORM STUFF
   const {
-    formState: { errors, isValid },
+    formState: { errors, isDirty },
     register,
     handleSubmit,
+    reset,
+    getValues,
   } = useForm<CompanyFormData>({
     resolver,
     defaultValues: getDefaultValues(userData),
   });
+
+  function handleSwitchEditCallback() {
+    setIsEdit(false);
+  }
   // end of edit stuff
 
   return (
@@ -37,8 +45,14 @@ export const CompanyDetails: FC<CompanyDetailsProps> = ({ userData }) => {
         {isEdit ? (
           <CompanyEdit
             userData={userData}
+            errors={errors}
+            isDirty={isDirty}
             handleSubmit={handleSubmit}
             register={register}
+            reset={reset}
+            handleSwitchEditCallback={handleSwitchEditCallback}
+            setIsEdit={setIsEdit}
+            getValues={getValues}
           />
         ) : (
           <DetailBody
