@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { OrderType } from '../RecentOrders';
 import { PiSpinnerGapThin, PiWarningDuotone } from 'react-icons/pi';
+import OrderAgainButton from './OrderAgainButton';
 
 const RecentOrder = ({ order }: { order: OrderType }) => {
   const {
@@ -31,13 +32,30 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
     );
   }
 
+  /** 
+    "order again":
+      goal: when clicked, add items from order to the cart and redirect user to the cart, 
+            or a tool tip sort of 'notice' that pops up with a link to the cart, in case the user isn't ready to check out?? not sure.
+      Flow:
+        - click order again
+        - add order items to the cart
+          - will need:
+            - handleAddToCart mutation
+            - ability to fetch the cart API to POST new cart records (from the recent order)
+        - on add to cart success:
+          - redirect user to /cart |OR| the tool tip thing
+
+      TODO:
+        - handleAddToCart mutation
+        - ability to fetch the cart API
+        - redirect on success
+  */
+
   return (
     <div key={order.id} className=''>
       <div className='mb-2 w-full flex items-center gap-3 '>
         <h5>{createdAtDate}</h5>
-        <Link href='#' className='underline text-purple-800 text-sm'>
-          order again
-        </Link>
+        <OrderAgainButton />
       </div>
 
       <div className='px-6 py-3'>
