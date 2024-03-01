@@ -3,6 +3,7 @@ import { DashboardUserData } from '@/types/types.dashboard';
 import { Contact } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
+import { updateContact } from '@/services/mutations/contact.update';
 
 // TODO: Change this
 // kinda configured it only towards ContactFormData isntead of both Contact and Company
@@ -17,33 +18,7 @@ export const useDashboardEdit = ({
   const { notify } = useToast();
 
   const { mutate: edit, isSuccess } = useMutation({
-    mutationFn: async (formData: ContactFormData) => {
-      const updateUser = async (): Promise<Contact | undefined> => {
-        try {
-          const url = `/api/user/contact/edit`;
-          const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-
-          if (!response.ok) {
-            throw new Error(await response.text());
-          }
-
-          return response.json();
-        } catch (error) {
-          if (error instanceof Error) {
-            throw new Error(error.message);
-          }
-        }
-      };
-
-      const apiResponse = updateUser();
-      return apiResponse;
-    },
+    mutationFn: updateContact,
     onSuccess(data) {
       // will need to make this a bit more modular for `company` to use it without error
       queryClient.setQueryData(
