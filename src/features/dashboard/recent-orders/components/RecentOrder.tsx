@@ -3,7 +3,6 @@ import {
   fetchLineItemsFromOrderId,
 } from '@/services/queries/orders.fetchLineItemsFromOrderId';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 import { OrderType } from '../RecentOrders';
 import { PiSpinnerGapThin, PiWarningDuotone } from 'react-icons/pi';
 import OrderAgainButton from './OrderAgainButton';
@@ -46,16 +45,17 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
           - redirect user to /cart |OR| the tool tip thing
 
       TODO:
-        - handleAddToCart mutation
-        - ability to fetch the cart API
-        - redirect on success
+        - ✅ handleAddToCart mutation
+        - ✅ ability to fetch the cart API
+        - ⏳ set cart cache with new data from order items
+        - ⏳ redirect on success
   */
 
   return (
     <div key={order.id} className=''>
       <div className='mb-2 w-full flex items-center gap-3 '>
         <h5>{createdAtDate}</h5>
-        <OrderAgainButton />
+        <OrderAgainButton order={order} />
       </div>
 
       <div className='px-6 py-3'>
@@ -64,9 +64,9 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
         ) : (
           <div>
             {orderWithLineItemProducts?.lineItems.map(
-              ({ quantity, unit: { product } }) => {
+              ({ id, quantity, unit: { product } }) => {
                 return (
-                  <div className='grid grid-cols-10 mb-6 w-full'>
+                  <div className='grid grid-cols-10 mb-6 w-full' key={id}>
                     <span className='col-span-1 text-sm w-full text-center text-gray-600 mr-3 font-normal underline'>
                       x{quantity}
                     </span>
