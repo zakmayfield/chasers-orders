@@ -1,5 +1,5 @@
 type FetchLineItemProducts = {
-  (orderId: string): Promise<LineItemProducts | null>;
+  (orderId: string): Promise<LineItemProducts>;
 };
 
 export type LineItemProducts = {

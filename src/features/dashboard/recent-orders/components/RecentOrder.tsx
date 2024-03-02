@@ -1,18 +1,19 @@
+import { useQuery } from '@tanstack/react-query';
+import { PiSpinnerGapThin, PiWarningDuotone } from 'react-icons/pi';
 import {
   LineItemProducts,
   fetchLineItemsFromOrderId,
 } from '@/services/queries/orders.fetchLineItemsFromOrderId';
-import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 import { OrderType } from '../RecentOrders';
-import { PiSpinnerGapThin, PiWarningDuotone } from 'react-icons/pi';
+import OrderAgainButton from './OrderAgainButton';
+import { RecentOrderItems } from './RecentOrderItems';
 
 const RecentOrder = ({ order }: { order: OrderType }) => {
   const {
-    data: orderWithLineItemProducts,
+    data: orderWithLineItems,
     isLoading,
     isError,
-  } = useQuery<LineItemProducts | null>({
+  } = useQuery<LineItemProducts | undefined>({
     queryKey: ['line-item-products', order.id],
     queryFn: () => fetchLineItemsFromOrderId(order.id),
     staleTime: Infinity,
@@ -32,37 +33,17 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
   }
 
   return (
-    <div key={order.id}>
-      <div className='mb-2 w-full flex items-center gap-3'>
+    <div key={order.id} className=''>
+      <div className='mb-2 w-full flex items-center gap-3 '>
         <h5>{createdAtDate}</h5>
-        <Link href='#' className='underline text-purple-800 text-sm'>
-          order again
-        </Link>
+        <OrderAgainButton order={order} />
       </div>
 
-      <div className='px-6'>
+      <div className='px-6 py-3'>
         {isLoading ? (
           <PiSpinnerGapThin className='animate-spin' />
         ) : (
-          <div>
-            {orderWithLineItemProducts?.lineItems.map(
-              ({ quantity, unit: { product } }) => {
-                return (
-                  <div className='flex items-center gap-6'>
-                    <div>
-                      <span className='text-sm text-gray-600 mr-3'>
-                        x{quantity}
-                      </span>
-                      <span>{product.name}</span>
-                    </div>
-                    <span className='text-sm text-gray-600 lowercase'>
-                      {product.category}
-                    </span>
-                  </div>
-                );
-              }
-            )}
-          </div>
+          <RecentOrderItems order={orderWithLineItems} />
         )}
       </div>
     </div>
