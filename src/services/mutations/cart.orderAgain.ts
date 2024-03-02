@@ -1,4 +1,5 @@
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
+import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { Prisma, OrderLineItem } from '@prisma/client';
 
 type OrderAgainProps = {
@@ -6,9 +7,10 @@ type OrderAgainProps = {
 };
 
 export type OrderAgainResponse = {
-  createdRecordsCount: Prisma.BatchPayload;
-  records: OrderLineItem[];
+  batchPayload: Prisma.BatchPayload;
+  cartPayload: CartCache;
 };
+
 export const orderAgain: OrderAgainProps = async (order) => {
   try {
     const response = await fetch('/api/cart/order-again', {

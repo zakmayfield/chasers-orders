@@ -1,28 +1,47 @@
 'use client';
-import { orderAgain } from '@/services/mutations/cart.orderAgain';
-import { useMutation } from '@tanstack/react-query';
+import {
+  OrderAgainResponse,
+  orderAgain,
+} from '@/services/mutations/cart.orderAgain';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { OrderType } from '../RecentOrders';
 import { CartCache } from '@/types/types.cart';
+import { useRouter } from 'next/navigation';
+import { Prisma } from '@prisma/client';
+import { useToast } from '@/hooks/general.hooks';
 
 interface OrderAgainButtonProps {
   order: OrderType;
 }
 
 const OrderAgainButton: FC<OrderAgainButtonProps> = ({ order }) => {
+  const router = useRouter();
+  const { notify } = useToast();
+  const queryClient = useQueryClient();
+
   const { mutate: orderAgainMutation } = useMutation({
     mutationFn: orderAgain,
     onSuccess(data) {
-      console.log('~~~order again mutation data~~~', data);
+      const { batchPayload, cartPayload } = data;
 
-      // TODO: set cart cache items to items from order, will need to be formatted or more data fetched from the API
-      const records = data;
-      let x: CartCache;
+      handleSetCache(cartPayload);
+      handleNotify(batchPayload);
+      router.push('/cart');
     },
   });
 
+  function handleSetCache(cartPayload: CartCache) {
+    queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+      oldData ? cartPayload : oldData
+    );
+  }
+
+  function handleNotify(batchPayload: Prisma.BatchPayload) {
+    notify(`Added (${batchPayload.count}) items to cart`);
+  }
+
   const handleOrderAgain = () => {
-    console.log('~~~order~~~', order);
     orderAgainMutation(order);
   };
 
