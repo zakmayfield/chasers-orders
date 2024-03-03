@@ -37,11 +37,11 @@ const DashNavItem = ({
         ${active ? 'bg-light-greenish hover:bg-light-greenish/75' : 'hover:bg-light-greenish/20'}`}
     >
       <div className='flex items-center gap-4 tracking-wide'>
-        <span>{item.icon}</span>
+        <span className='text-2xl 2xl:text-lg'>{item.icon}</span>
         <span
           className={`
-          text-sm
-          2xl:text-base
+          hidden text-sm
+          2xl:inline-block 2xl:text-base
         `}
         >
           {item.content}
