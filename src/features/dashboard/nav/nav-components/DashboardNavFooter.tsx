@@ -74,10 +74,9 @@ export const DashboardNavFooter = () => {
 
   return (
     <div
-      className={`
-        hidden 
-        bg-light-secondary
-        2xl:flex 2xl:items-center 2xl:gap-3 2xl:px-6 2xl:w-full 2xl:h-20
+      className={` 
+        h-20 w-full px-3 flex items-center justify-center bg-light-secondary
+        2xl:flex 2xl:items-center 2xl:justify-start 2xl:gap-3 2xl:px-6
       `}
     >
       {/* "PFP" */}
@@ -95,7 +94,7 @@ export const DashboardNavFooter = () => {
       </div>
 
       {/* CONTACTS EMAIL & POSITION */}
-      <div className='flex flex-col gap-1 '>
+      <div className='hidden 2xl:flex 2xl:flex-col 2xl:gap-1'>
         {/* Overflow control container */}
         <div>
           <p

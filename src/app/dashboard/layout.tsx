@@ -11,8 +11,7 @@ export default async function DashboardLayout({
         Dashboard
       </h1>
 
-      {/* TODO: MAKE COL-SPAN-12 FOR BASE -- NEW BRANCH FOR THIS -- OUT OF SCOPE  */}
-      <div className='m-6 col-span-12 2xl:col-span-9'>{children}</div>
+      <div className='m-6 col-span-11 2xl:col-span-9'>{children}</div>
 
       <DashboardNav />
     </div>

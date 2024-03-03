@@ -2,19 +2,23 @@
 
 import { usePathname } from 'next/navigation';
 import { DashboardNavItems, DashboardNavFooter } from './nav-components';
+import { DashboardNavHeader } from './nav-components/DashboardNavHeader';
 
 export const DashboardNav = () => {
   const pathname = usePathname();
   return (
     <div
       className={`
-        col-span-12 row-start-2
-        flex items-center
-        bg-light-primary 
-        2xl:col-span-3 2xl:row-auto 2xl:flex-col 2xl:justify-between 2xl:h-[35rem] 2xl:rounded-b-2xl 2xl:overflow-hidden 
+        col-start-12 col-span-1 row-start-2 rounded-2xl overflow-hidden bg-light-primary mt-6
+        flex flex-col justify-between h-[35rem] min-w-[5rem]
+        sticky top-6
+        2xl:border-b-0 2xl:col-span-3 2xl:row-auto
       `}
     >
-      <DashboardNavItems />
+      <div>
+        <DashboardNavHeader />
+        <DashboardNavItems />
+      </div>
       <DashboardNavFooter />
     </div>
   );

@@ -11,8 +11,8 @@ export const DashboardNavItems: FC<DashboardNavItemsProps> = ({}) => {
   return (
     <div
       className={`
-        flex items-center  gap-3 w-full p-6 
-        2xl:justify-center 2xl:flex-col 2xl:items-start 2xl:pt-12
+        flex flex-col items-center gap-6 w-full p-6
+        2xl:justify-center 2xl:flex-col 2xl:items-start 2xl:gap-3
       `}
     >
       {navData.map((item) => (
