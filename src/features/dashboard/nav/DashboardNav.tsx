@@ -1,11 +1,10 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
 import { DashboardNavItems, DashboardNavFooter } from './nav-components';
 import { DashboardNavHeader } from './nav-components/DashboardNavHeader';
 
 export const DashboardNav = () => {
-  const pathname = usePathname();
+  // TODO: Implement footer loading state
   return (
     <div
       className={`
@@ -19,6 +18,7 @@ export const DashboardNav = () => {
         <DashboardNavHeader />
         <DashboardNavItems />
       </div>
+
       <DashboardNavFooter />
     </div>
   );
