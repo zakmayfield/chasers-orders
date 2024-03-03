@@ -23,7 +23,7 @@ const RecentOrders = () => {
 
   return (
     <div>
-      <RecentOrdersHeader isLoading={isLoading} />
+      <RecentOrdersHeader isLoading={isLoading} orderCount={orders?.length} />
       <RecentOrdersContent />
     </div>
   );
