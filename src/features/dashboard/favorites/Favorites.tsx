@@ -16,7 +16,12 @@ export default function Favorites() {
   return (
     <div>
       <h2 className='flex items-center mb-6'>
-        Favorites {isLoading && <LoadingSpinner />}
+        Favorites{' '}
+        {isLoading && (
+          <span className='ml-3'>
+            <LoadingSpinner />
+          </span>
+        )}
       </h2>
 
       {isLoading ? (
