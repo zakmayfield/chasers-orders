@@ -1,5 +1,5 @@
 import SignUp from '@/features/auth/SignUp';
-import GridContainer from '@/features/ui/layout/GridContainer';
+import GridContainer from '@/features/shared/GridContainer';
 
 export default function Page() {
   return (

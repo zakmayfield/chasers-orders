@@ -9,7 +9,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import type { SignUpFormData } from '@/types/types.auth-forms';
 import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
-import GridContainer from '../ui/layout/GridContainer';
+import GridContainer from '../shared/GridContainer';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { IoIosReturnRight } from 'react-icons/io';
 import { useEffect, useRef, useState } from 'react';

@@ -2,7 +2,7 @@
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import GridContainer from '../ui/layout/GridContainer';
+import GridContainer from '../shared/GridContainer';
 import FormSwitchLink from './ui/FormSwitchLink';
 import { SignInFormData } from '@/types/types.auth-forms';
 import { AuthSignInValidator } from '@/lib/validators/validator.auth-form';
