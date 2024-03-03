@@ -1,6 +1,6 @@
 'use client';
 
-import GridContainer from '@/features/ui/layout/GridContainer';
+import GridContainer from '@/features/shared/GridContainer';
 import SummaryDetails from './SummaryDetail';
 import OrderButton from './OrderButton';
 import ShippingDetails from './ShippingDetails';

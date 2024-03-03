@@ -1,5 +1,5 @@
 import SignIn from '@/features/auth/SignIn';
-import GridContainer from '@/features/ui/layout/GridContainer';
+import GridContainer from '@/features/shared/GridContainer';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { redirect } from 'next/navigation';
 

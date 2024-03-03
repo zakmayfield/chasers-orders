@@ -1,6 +1,6 @@
 'use client';
 
-import GridContainer from '../ui/layout/GridContainer';
+import GridContainer from '../shared/GridContainer';
 import CartItemContainer from './ui/CartItemContainer';
 import OrderSummary from './ui/OrderSummary';
 
