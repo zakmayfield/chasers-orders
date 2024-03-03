@@ -1,7 +1,6 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 
 import Image from 'next/image';
-import logoBase from '@/assets/logo-base.png';
 import logoSm from '@/assets/logo-sm.png';
 import { merge } from '@/utils/styles.utils';
 
