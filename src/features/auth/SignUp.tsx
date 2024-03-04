@@ -17,6 +17,7 @@ import { ImSpinner2 } from 'react-icons/im';
 import { useToast } from '@/hooks/general.hooks';
 import FormSwitchLink from './ui/FormSwitchLink';
 import FieldError from './ui/FieldError';
+import { paymentMethodOptions } from '@/utils/paymentMethods';
 
 type Steps = '1' | '2' | '3' | '4';
 const defaultValues = {
@@ -67,7 +68,7 @@ export default function SignUp() {
     }
   };
 
-  const [step, setStep] = useState<Steps>();
+  const [step, setStep] = useState<Steps>('1');
   const hasRun = useRef(false);
 
   useEffect(() => {
@@ -209,7 +210,7 @@ export default function SignUp() {
           {/* STEP THREE */}
           {step === '3' && (
             <div>
-              <GridContainer cols={6}>
+              <div className='grid grid-cols-6 gap-4'>
                 <label htmlFor='companyName' className='col-span-6'>
                   Company Name:
                 </label>
@@ -223,6 +224,7 @@ export default function SignUp() {
                 {errors.companyName && (
                   <FieldError message={errors.companyName.message} />
                 )}
+
                 <label htmlFor='accountPayableEmail' className='col-span-6'>
                   Account Payable Email{' '}
                   <span className='text-gray-400 text-sm'>
@@ -240,25 +242,31 @@ export default function SignUp() {
                 {errors.accountPayableEmail && (
                   <FieldError message={errors.accountPayableEmail.message} />
                 )}
+
                 <label htmlFor='paymentMethod' className='col-span-6'>
                   Payment Method:
                 </label>
-                <input
-                  type='paymentMethod'
+                <select
                   id='paymentMethod'
                   {...register('paymentMethod')}
-                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-                />
+                  className='border-2 rounded-lg col-span-5 p-2 text-lg focus:ring-4 focus:ring-blue-400'
+                >
+                  <option value=''>{paymentMethodOptions.default}</option>
+                  {paymentMethodOptions.methods.map((method) => (
+                    <option key={method.key}>{method.value}</option>
+                  ))}
+                </select>
                 {errors.paymentMethod && (
                   <FieldError message={errors.paymentMethod.message} />
                 )}
+
                 <NextStepButton
                   content='contact'
                   step={step}
                   getValues={getValues}
                   nextStepCallback={nextStepCallback}
                 />
-              </GridContainer>
+              </div>
             </div>
           )}
 
