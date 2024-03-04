@@ -13,7 +13,12 @@ interface LogoProps {
 
 export const LogoBase: FC<LogoProps> = ({ className = '' }) => {
   return (
-    <Image alt={altText} src={logoBase} className={merge(`${className}`)} />
+    <Image
+      alt={altText}
+      src={logoBase}
+      width={150}
+      className={merge(`${className}`)}
+    />
   );
 };
 
