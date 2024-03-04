@@ -6,7 +6,7 @@ interface LogoLinkProps {}
 
 export const LogoLink: FC<LogoLinkProps> = ({}) => {
   return (
-    <Link href='/products'>
+    <Link href='/products' className='w-28'>
       <LogoBase />
     </Link>
   );
