@@ -16,6 +16,7 @@ import {
 import { useCompanyEditMutation } from '@/hooks/mutation.hooks';
 import { useToast } from '@/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
+import { paymentMethodOptions } from '@/utils/paymentMethods';
 
 interface CompanyEditProps {
   userData: DashboardUserData;
@@ -112,13 +113,28 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
           {errors.paymentMethod && <PiWarningCircleDuotone />}
         </span>
-        <input
+        {/* <input
           id='paymentMethod'
           type='text'
           placeholder={userData.company.paymentMethod}
           {...register('paymentMethod')}
           className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t pl-3 h-8 border-b'
-        />
+        /> */}
+        <select
+          id='paymentMethod'
+          {...register('paymentMethod')}
+          className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t pl-3 h-8 border-b'
+        >
+          <option value={userData.company.paymentMethod}>
+            {userData.company.paymentMethod}
+          </option>
+          {paymentMethodOptions.methods.map(
+            (method) =>
+              method.value !== userData.company.paymentMethod && (
+                <option key={method.key}>{method.value}</option>
+              )
+          )}
+        </select>
 
         {/* BUTTONs */}
         <div className='col-start-9 col-span-2'>
