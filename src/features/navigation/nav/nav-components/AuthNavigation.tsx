@@ -1,11 +1,9 @@
 'use client';
-import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import { signOut } from 'next-auth/react';
-import { getFavorites } from '@/services/queries/favorite.getFavorites';
+import { usePathname } from 'next/navigation';
 import { navData } from '../navData';
 import { AuthNavItem } from './AuthNavItem';
-import { usePathname } from 'next/navigation';
 
 export default function AuthNavigation({
   isApproved,
@@ -16,12 +14,14 @@ export default function AuthNavigation({
   const pathname = usePathname();
 
   return (
-    <div className='flex items-center gap-6'>
+    <div className='flex items-center gap-3'>
       {navData.map((item) => (
         <AuthNavItem key={item.path} navItem={item} pathname={pathname} />
       ))}
 
-      <button onClick={() => signOut()}>Logout</button>
+      <button onClick={() => signOut()} className='rounded px-1 hover:ring-2'>
+        Logout
+      </button>
     </div>
   );
 }

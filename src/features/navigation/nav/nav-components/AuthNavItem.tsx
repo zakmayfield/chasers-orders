@@ -1,9 +1,9 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
-import { NavItem } from '../navData';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
+import { NavItem } from '../navData';
 import { getFavorites } from '@/services/queries/favorite.getFavorites';
 
 interface AuthNavItemProps {
@@ -47,7 +47,7 @@ export const AuthNavItem: FC<AuthNavItemProps> = ({ navItem, pathname }) => {
     <Link
       href={itemPath}
       onMouseEnter={() => handlePrefetch(itemPath)}
-      className={`${active ? 'underline' : 'hover:text-light-greenish'}`}
+      className={`rounded px-1 ${active ? 'underline' : 'hover:ring-2'}`}
     >
       {navItem.content}
     </Link>
