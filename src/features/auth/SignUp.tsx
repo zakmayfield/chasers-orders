@@ -1,11 +1,8 @@
 'use client';
-import Link from 'next/link';
 import { signIn } from 'next-auth/react';
 import {
   FieldErrors,
-  UseFormGetFieldState,
   UseFormGetValues,
-  UseFormHandleSubmit,
   UseFormRegister,
   useForm,
 } from 'react-hook-form';
@@ -13,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import type { SignUpFormData } from '@/types/types.auth-forms';
 import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
 import GridContainer from '../shared/GridContainer';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { IoIosReturnRight } from 'react-icons/io';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
@@ -54,7 +51,7 @@ export default function SignUp() {
     handleSubmit,
     register,
     getValues,
-    getFieldState,
+    setValue,
   } = useForm<SignUpFormData>({
     resolver: zodResolver(AuthSignUpValidator),
     defaultValues,
@@ -100,7 +97,22 @@ export default function SignUp() {
   }
 
   function handleCheckbox(event: ChangeEvent<HTMLInputElement>) {
+    const formValues = getValues();
     setIsChecked(event.target.checked);
+
+    if (event.target.checked) {
+      setValue('billingStreetAddress', formValues.shippingStreetAddress);
+      setValue('billingUnit', formValues.shippingUnit);
+      setValue('billingCity', formValues.shippingCity);
+      setValue('billingState', formValues.shippingState);
+      setValue('billingPostalCode', formValues.shippingPostalCode);
+    } else {
+      setValue('billingStreetAddress', '');
+      setValue('billingUnit', '');
+      setValue('billingCity', '');
+      setValue('billingState', '');
+      setValue('billingPostalCode', '');
+    }
   }
 
   return (
@@ -389,7 +401,7 @@ export default function SignUp() {
                   </label>
                 </div>
 
-                {/* Populate with shipping details if checked */}
+                {/* BILLING */}
                 <label htmlFor='billingStreetAddress' className='col-span-6'>
                   Billing Address:
                 </label>
