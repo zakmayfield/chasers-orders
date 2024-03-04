@@ -113,13 +113,6 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
           {errors.paymentMethod && <PiWarningCircleDuotone />}
         </span>
-        {/* <input
-          id='paymentMethod'
-          type='text'
-          placeholder={userData.company.paymentMethod}
-          {...register('paymentMethod')}
-          className='col-start-5 col-span-3 placeholder:text-gray-500 bg-light-primary rounded-t pl-3 h-8 border-b'
-        /> */}
         <select
           id='paymentMethod'
           {...register('paymentMethod')}
