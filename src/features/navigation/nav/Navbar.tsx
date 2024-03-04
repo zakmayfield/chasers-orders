@@ -1,8 +1,8 @@
 'use server';
 
 import { FC } from 'react';
-import { getAuthSession } from '@/lib/auth/auth.options';
 import type { Session } from 'next-auth';
+import { getAuthSession } from '@/lib/auth/auth.options';
 import { Navigation } from './nav-components';
 
 interface NavProps {}
