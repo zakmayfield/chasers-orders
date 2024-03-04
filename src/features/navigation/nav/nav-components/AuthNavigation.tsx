@@ -1,8 +1,11 @@
 'use client';
-import { getFavorites } from '@/services/queries/favorite.getFavorites';
+import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import { signOut } from 'next-auth/react';
-import Link from 'next/link';
+import { getFavorites } from '@/services/queries/favorite.getFavorites';
+import { navData } from '../navData';
+import { AuthNavItem } from './AuthNavItem';
+import { usePathname } from 'next/navigation';
 
 export default function AuthNavigation({
   isApproved,
@@ -10,22 +13,14 @@ export default function AuthNavigation({
   isApproved: boolean;
 }) {
   const queryClient = useQueryClient();
+  const pathname = usePathname();
 
   return (
     <div className='flex items-center gap-6'>
-      <Link
-        href='/products'
-        onMouseEnter={() =>
-          queryClient.prefetchQuery(['favorites'], {
-            queryFn: getFavorites,
-            staleTime: 60 * 1000 * 5,
-          })
-        }
-      >
-        Shop
-      </Link>
-      <Link href='/cart'>Cart</Link>
-      <Link href='/dashboard'>Dashboard</Link>
+      {navData.map((item) => (
+        <AuthNavItem key={item.path} navItem={item} pathname={pathname} />
+      ))}
+
       <button onClick={() => signOut()}>Logout</button>
     </div>
   );
