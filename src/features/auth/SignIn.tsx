@@ -2,11 +2,12 @@
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import GridContainer from '../ui/layout/GridContainer';
+import GridContainer from '../shared/GridContainer';
 import FormSwitchLink from './ui/FormSwitchLink';
 import { SignInFormData } from '@/types/types.auth-forms';
 import { AuthSignInValidator } from '@/lib/validators/validator.auth-form';
 import { useToast } from '@/hooks/general.hooks';
+import FieldError from './ui/FieldError';
 
 export default function SignIn() {
   const { notify } = useToast();
@@ -36,8 +37,6 @@ export default function SignIn() {
     signInWithCredentials();
   }
 
-  // TODO: NEED TO HANDLE LOG IN ERRORS
-
   return (
     <div className='shadow rounded-lg border border-gray-100 col-start-5 col-span-4 row-start-3 py-6 px-12 font-extralight'>
       <h2 className='text-2xl mb-12'>Chasers Juice</h2>
@@ -55,7 +54,11 @@ export default function SignIn() {
             className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
             placeholder='geralt@rivia.com'
           />
-          {errors.email && <p role='alert'>{errors.email?.message}</p>}
+          {errors.email && (
+            <div className='col-span-6'>
+              <FieldError message={errors.email.message} />
+            </div>
+          )}
 
           <label htmlFor='password' className='col-span-6'>
             Password
@@ -68,11 +71,15 @@ export default function SignIn() {
             className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
             placeholder='Password'
           />
-          {errors.password && <p role='alert'>{errors.password?.message}</p>}
+          {errors.password && (
+            <div className='col-span-6'>
+              <FieldError message={errors.password.message} />
+            </div>
+          )}
 
           <button
             type='submit'
-            className='border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6'
+            className='border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6 bg-light-greenish/70 text-lg'
           >
             Sign In
           </button>

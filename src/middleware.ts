@@ -3,6 +3,10 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { userStatus } from './utils/auth.utils';
 
+/*
+  TODO: Implement wrapped middleware: https://next-auth.js.org/configuration/nextjs#advanced-usage
+*/
+
 export async function middleware(req: NextRequest) {
   const token: JWT | null = await getToken({ req });
 

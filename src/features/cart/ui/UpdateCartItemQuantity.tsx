@@ -58,7 +58,7 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
       <p className='text-sm text-gray-500'>Quantity</p>
       <select
         name='quantity'
-        id='quantity'
+        id={unitId + '-quantity'}
         value={quantity}
         disabled={isLoading}
         onChange={handleQuantityChange}

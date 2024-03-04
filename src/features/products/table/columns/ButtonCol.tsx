@@ -56,7 +56,6 @@ export default function ButtonCol({
     return;
   };
 
-  // TODO: Fix duplicate children keys issue
   return (
     <div>
       <button
