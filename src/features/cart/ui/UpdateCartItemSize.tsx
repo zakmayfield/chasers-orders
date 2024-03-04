@@ -74,7 +74,7 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
         ) : (
           <select
             name='size'
-            id='size'
+            id={unitId + '-size'}
             value={size}
             onChange={handleSizeChange}
             className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-24'

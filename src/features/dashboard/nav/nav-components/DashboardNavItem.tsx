@@ -12,8 +12,6 @@ const DashNavItem = ({
   const basePath = '/dashboard';
   const itemPath = item.path;
   const route = basePath + itemPath;
-  const isActive =
-    pathname === route || (route !== basePath && pathname.startsWith(route));
 
   const [active, setActive] = useState(false);
 
@@ -23,8 +21,6 @@ const DashNavItem = ({
 
     setActive(isActive);
   }, [pathname]);
-
-  // TODO: active state needs to track all dashboard pages, including `account-pending` and `verify-email`
 
   return (
     <Link
