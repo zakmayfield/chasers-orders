@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer';
 
+// TODO: refresh token
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
