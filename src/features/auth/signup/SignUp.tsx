@@ -1,7 +1,4 @@
 'use client';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { signIn } from 'next-auth/react';
 import {
   FieldErrors,
   UseFormGetValues,
@@ -17,34 +14,21 @@ import FormSwitchLink from '../components/FormSwitchLink';
 import FieldError from '../components/FieldError';
 import { paymentMethodOptions } from '@/utils/paymentMethods';
 import type { SignUpFormData } from '@/types/types.auth-forms';
-
-type Steps = '1' | '2' | '3' | '4';
-const defaultValues = {
-  email: '',
-  password: '',
-  contactName: '',
-  contactPosition: '',
-  contactPhoneNumber: '',
-  companyName: '',
-  accountPayableEmail: '',
-  paymentMethod: '',
-  shippingStreetAddress: '',
-  shippingUnit: '',
-  shippingCity: '',
-  shippingState: '',
-  shippingPostalCode: '',
-  deliveryInstructions: '',
-  billingStreetAddress: '',
-  billingUnit: '',
-  billingCity: '',
-  billingState: '',
-  billingPostalCode: '',
-};
+import {
+  Steps,
+  defaultValues,
+  getQueryClient,
+  requiredStepFields,
+  handleStepChange,
+  useCheckedState,
+  useStepTracker,
+  signUpWithCredentials,
+} from './helpers.signup';
+import { FormEvent, useEffect } from 'react';
+import { signIn } from 'next-auth/react';
 
 export const SignUp = () => {
-  const queryClient = useQueryClient();
   const { notify } = useToast();
-  const [isChecked, setIsChecked] = useState(false);
 
   const {
     formState: { errors },
@@ -57,99 +41,23 @@ export const SignUp = () => {
     defaultValues,
   });
 
-  const signUpWithCredentials = async (data: SignUpFormData) => {
-    try {
-      await signIn('sign-up', {
-        ...data,
-      });
-      queryClient.removeQueries(['form-values']);
-    } catch (err) {
-      console.error(err);
-    } finally {
-    }
-  };
+  const { step, setStep } = useStepTracker();
 
-  function signUpCallback() {
-    handleSubmit(signUpWithCredentials);
-  }
+  const { isChecked, handleCheckbox } = useCheckedState({
+    getValues,
+    setValue,
+  });
 
-  const [step, setStep] = useState<Steps>('1');
-  const hasRun = useRef(false);
-  useEffect(() => {
-    if (!hasRun.current) {
-      setStep('1');
-    }
-
-    hasRun.current = true;
-  }, []);
-
-  function nextStepCallback() {
-    // Increment step
-    let stepToNumber = Number(step);
-    if (stepToNumber >= 4) {
-      return;
-    }
-    const nextStep = (stepToNumber = stepToNumber + 1);
-
-    setStep(nextStep.toString() as Steps);
-  }
-
-  function handleCheckbox(event: ChangeEvent<HTMLInputElement>) {
-    const formValues = getValues();
-    setIsChecked(event.target.checked);
-
-    if (event.target.checked) {
-      setValue('billingStreetAddress', formValues.shippingStreetAddress);
-      setValue('billingUnit', formValues.shippingUnit);
-      setValue('billingCity', formValues.shippingCity);
-      setValue('billingState', formValues.shippingState);
-      setValue('billingPostalCode', formValues.shippingPostalCode);
-    } else {
-      setValue('billingStreetAddress', '');
-      setValue('billingUnit', '');
-      setValue('billingCity', '');
-      setValue('billingState', '');
-      setValue('billingPostalCode', '');
-    }
-  }
-
-  function isValidStep() {
-    type Key =
-      | 'shippingStreetAddress'
-      | 'shippingCity'
-      | 'shippingState'
-      | 'shippingPostalCode'
-      | 'billingStreetAddress'
-      | 'billingCity'
-      | 'billingState'
-      | 'billingPostalCode';
-
-    const required: Key[] = [
-      'shippingStreetAddress',
-      'shippingCity',
-      'shippingState',
-      'shippingPostalCode',
-      'billingStreetAddress',
-      'billingCity',
-      'billingState',
-      'billingPostalCode',
-    ];
-
-    const formValues = getValues();
-    return required.every((field) => !!formValues[field]);
-  }
-
-  function handleClick() {
-    const isValid = isValidStep();
-    !isValid ? notify('Please complete all required fields', 'info') : null;
+  function handleStepChangeCallback() {
+    handleStepChange({ step, setStep });
   }
 
   return (
     <div className='border col-start-5 col-span-4 py-6 px-12 font-extralight'>
       <h2 className='text-2xl mb-12'>Create an account</h2>
-
       <SignUpStepTracker activeStep={step} />
-      <form onSubmit={signUpCallback}>
+
+      <form onSubmit={handleSubmit(signUpWithCredentials)}>
         {!step && (
           <div className='w-full flex justify-center items-center'>
             <ImSpinner2 className='animate-spin' />
@@ -194,7 +102,7 @@ export const SignUp = () => {
                   content='contact'
                   step={step}
                   getValues={getValues}
-                  nextStepCallback={nextStepCallback}
+                  handleStepChange={handleStepChangeCallback}
                 />
               </div>
             </div>
@@ -251,7 +159,7 @@ export const SignUp = () => {
                   content='contact'
                   step={step}
                   getValues={getValues}
-                  nextStepCallback={nextStepCallback}
+                  handleStepChange={handleStepChangeCallback}
                 />
               </div>
             </div>
@@ -314,7 +222,7 @@ export const SignUp = () => {
                   content='contact'
                   step={step}
                   getValues={getValues}
-                  nextStepCallback={nextStepCallback}
+                  handleStepChange={handleStepChangeCallback}
                 />
               </div>
             </div>
@@ -516,6 +424,7 @@ export const SignUp = () => {
           )}
         </div>
       </form>
+
       <FormSwitchLink formType='sign-up' />
     </div>
   );
@@ -968,60 +877,20 @@ function NextStepButton({
   content,
   step,
   getValues,
-  nextStepCallback,
+  handleStepChange,
 }: {
   content: string;
   step: Steps;
   getValues: UseFormGetValues<SignUpFormData>;
-  nextStepCallback: () => void;
+  handleStepChange(): void;
 }) {
-  const queryClient = useQueryClient();
+  const { queryClient } = getQueryClient();
   const { notify } = useToast();
-
-  type Key =
-    | 'email'
-    | 'password'
-    | 'contactName'
-    | 'contactPhoneNumber'
-    | 'companyName'
-    | 'accountPayableEmail'
-    | 'paymentMethod'
-    | 'shippingStreetAddress'
-    | 'shippingCity'
-    | 'shippingState'
-    | 'shippingPostalCode'
-    | 'billingStreetAddress'
-    | 'billingCity'
-    | 'billingState'
-    | 'billingPostalCode';
-
-  interface IRequiredFields {
-    [step: string]: Key[];
-  }
-
-  const requiredFields: IRequiredFields = {
-    '1': ['email', 'password'],
-    '2': ['contactName', 'contactPhoneNumber'],
-    '3': ['companyName', 'paymentMethod', 'accountPayableEmail'],
-    '4': [
-      'shippingStreetAddress',
-      'shippingCity',
-      'shippingState',
-      'shippingPostalCode',
-      'billingStreetAddress',
-      'billingCity',
-      'billingState',
-      'billingPostalCode',
-    ],
-  };
 
   function isStepComplete(currentStep: Steps) {
     const formValues = getValues();
-
-    // define required fields via the current step
-    const required = requiredFields[currentStep];
-
-    return required.every((field) => !!formValues[field]);
+    const requiredFields = requiredStepFields[currentStep];
+    return requiredFields.every((field) => !!formValues[field]);
   }
 
   const handleNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -1041,7 +910,7 @@ function NextStepButton({
       queryClient.setQueryData(['form-values'], secureFormValues);
 
       // evoke callback from parent
-      nextStepCallback();
+      handleStepChange();
     }
 
     isStepComplete(step) ? handleComplete() : handleNotComplete();
@@ -1049,7 +918,7 @@ function NextStepButton({
 
   return (
     <button
-      onClick={(e) => handleNextStep(e)}
+      onClick={handleNextStep}
       className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400`}
     >
       <span>{content}</span>
