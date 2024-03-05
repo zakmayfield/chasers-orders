@@ -4,7 +4,7 @@ import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
 import Favorite from './components/Favorite';
 import FavoritesLoadingSkeleton from './components/FavoritesLoadingSkeleton';
 import EmptyFavorites from './components/EmptyFavorites';
-import LoadingSpinner from '@/features/spinner/LoadingSpinner';
+import LoadingSpinner from '@/features/shared/LoadingSpinner';
 
 export default function Favorites() {
   const { favorites, isLoading } = useFavoritesQuery();
