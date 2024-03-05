@@ -1,6 +1,3 @@
-import { SignUpFormData } from '@/types/types.auth-forms';
-import { useQueryClient } from '@tanstack/react-query';
-import { signIn } from 'next-auth/react';
 import {
   ChangeEvent,
   Dispatch,
@@ -9,12 +6,9 @@ import {
   useRef,
   useState,
 } from 'react';
+import { signIn } from 'next-auth/react';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-
-export const getQueryClient = () => {
-  const queryClient = useQueryClient();
-  return { queryClient };
-};
+import type { SignUpFormData } from '../types/index';
 
 export type Steps = '1' | '2' | '3' | '4';
 
