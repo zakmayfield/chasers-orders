@@ -2,14 +2,14 @@
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthSignInValidator } from '@/lib/validators/validator.auth-form';
+import { AuthSignInValidator } from './validator/validator.signin';
 import { useToast } from '@/hooks/general.hooks';
 import GridContainer from '../../shared/GridContainer';
 import FormSwitchLink from '../components/FormSwitchLink';
 import FieldError from '../components/FieldError';
 import type { SignInFormData } from '../types/index';
 
-export default function SignIn() {
+export const SignIn = () => {
   const { notify } = useToast();
   const {
     formState: { errors, isValid },
@@ -89,4 +89,4 @@ export default function SignIn() {
       <FormSwitchLink formType='sign-in' />
     </div>
   );
-}
+};
