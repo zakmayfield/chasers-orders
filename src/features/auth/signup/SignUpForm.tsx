@@ -5,7 +5,6 @@ import { IoIosReturnRight } from 'react-icons/io';
 import { ImSpinner2 } from 'react-icons/im';
 import {
   Steps,
-  getQueryClient,
   requiredStepFields,
   defaultValues,
   signUpWithCredentials,
@@ -455,7 +454,7 @@ function NextStepButton({
   getValues: UseFormGetValues<SignUpFormData>;
   handleStepChange(): void;
 }) {
-  const { queryClient } = getQueryClient();
+  const queryClient = useQueryClient();
   const { notify } = useToast();
 
   function isStepComplete(currentStep: Steps) {
