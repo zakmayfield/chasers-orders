@@ -173,7 +173,7 @@ export default function SignUp() {
           {/* STEP TWO */}
           {step === '2' && (
             <div>
-              <GridContainer cols={6}>
+              <div className='grid grid-cols-6 gap-4'>
                 <label htmlFor='contactName' className='col-span-6'>
                   Delivery Contact's Name:
                 </label>
@@ -223,7 +223,7 @@ export default function SignUp() {
                   getValues={getValues}
                   nextStepCallback={nextStepCallback}
                 />
-              </GridContainer>
+              </div>
             </div>
           )}
 
