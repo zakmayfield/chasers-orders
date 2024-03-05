@@ -13,9 +13,9 @@ import {
   handleStepChange,
 } from './helpers.signup';
 import { useToast } from '@/hooks/general.hooks';
-import { SignUpFormData } from '@/types/types.auth-forms';
+import { SignUpFormData } from '../types/index';
 import FieldError from '../components/FieldError';
-import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
+import { AuthSignUpValidator } from './validator/validator.signup';
 import { paymentMethodOptions } from '@/utils/paymentMethods';
 import { useQueryClient } from '@tanstack/react-query';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';

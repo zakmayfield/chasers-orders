@@ -2,12 +2,12 @@
 import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import GridContainer from '../../shared/GridContainer';
-import FormSwitchLink from '../components/FormSwitchLink';
-import { SignInFormData } from '@/types/types.auth-forms';
 import { AuthSignInValidator } from '@/lib/validators/validator.auth-form';
 import { useToast } from '@/hooks/general.hooks';
+import GridContainer from '../../shared/GridContainer';
+import FormSwitchLink from '../components/FormSwitchLink';
 import FieldError from '../components/FieldError';
+import type { SignInFormData } from '../types/index';
 
 export default function SignIn() {
   const { notify } = useToast();
