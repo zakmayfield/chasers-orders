@@ -1,4 +1,6 @@
 'use client';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { signIn } from 'next-auth/react';
 import {
   FieldErrors,
@@ -7,17 +9,14 @@ import {
   useForm,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { SignUpFormData } from '@/types/types.auth-forms';
-import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
-import GridContainer from '../shared/GridContainer';
-import { useQueryClient } from '@tanstack/react-query';
 import { IoIosReturnRight } from 'react-icons/io';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { ImSpinner2 } from 'react-icons/im';
 import { useToast } from '@/hooks/general.hooks';
-import FormSwitchLink from './ui/FormSwitchLink';
-import FieldError from './ui/FieldError';
+import { ImSpinner2 } from 'react-icons/im';
+import { AuthSignUpValidator } from '@/lib/validators/validator.auth-form';
+import FormSwitchLink from '../components/FormSwitchLink';
+import FieldError from '../components/FieldError';
 import { paymentMethodOptions } from '@/utils/paymentMethods';
+import type { SignUpFormData } from '@/types/types.auth-forms';
 
 type Steps = '1' | '2' | '3' | '4';
 const defaultValues = {
@@ -42,12 +41,13 @@ const defaultValues = {
   billingPostalCode: '',
 };
 
-export default function SignUp() {
+export const SignUp = () => {
   const queryClient = useQueryClient();
+  const { notify } = useToast();
   const [isChecked, setIsChecked] = useState(false);
 
   const {
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
     handleSubmit,
     register,
     getValues,
@@ -75,7 +75,6 @@ export default function SignUp() {
 
   const [step, setStep] = useState<Steps>('1');
   const hasRun = useRef(false);
-
   useEffect(() => {
     if (!hasRun.current) {
       setStep('1');
@@ -112,6 +111,37 @@ export default function SignUp() {
       setValue('billingState', '');
       setValue('billingPostalCode', '');
     }
+  }
+
+  function isValidStep() {
+    type Key =
+      | 'shippingStreetAddress'
+      | 'shippingCity'
+      | 'shippingState'
+      | 'shippingPostalCode'
+      | 'billingStreetAddress'
+      | 'billingCity'
+      | 'billingState'
+      | 'billingPostalCode';
+
+    const required: Key[] = [
+      'shippingStreetAddress',
+      'shippingCity',
+      'shippingState',
+      'shippingPostalCode',
+      'billingStreetAddress',
+      'billingCity',
+      'billingState',
+      'billingPostalCode',
+    ];
+
+    const formValues = getValues();
+    return required.every((field) => !!formValues[field]);
+  }
+
+  function handleClick() {
+    const isValid = isValidStep();
+    !isValid ? notify('Please complete all required fields', 'info') : null;
   }
 
   return (
@@ -479,6 +509,7 @@ export default function SignUp() {
                     <FieldError message={errors.billingPostalCode.message} />
                   )}
                 </div>
+
                 <FinalSubmitButton />
               </div>
             </div>
@@ -488,7 +519,7 @@ export default function SignUp() {
       <FormSwitchLink formType='sign-up' />
     </div>
   );
-}
+};
 
 type SignUpFormParams = {
   signUpParams: {
@@ -918,11 +949,15 @@ function SignUpStepTracker({ activeStep }: { activeStep: Steps | undefined }) {
   );
 }
 
-function FinalSubmitButton() {
+function FinalSubmitButton({}: {}) {
   return (
     <button
       type='submit'
-      className='mt-6 col-span-6 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400 bg-light-greenish/70'
+      className={`
+        border-2 rounded-lg mt-6 col-span-6 p-2
+        flex items-center justify-center gap-3
+        focus:ring-4 focus:ring-blue-400 bg-light-greenish/70
+      `}
     >
       Create Account
     </button>
@@ -973,6 +1008,10 @@ function NextStepButton({
       'shippingCity',
       'shippingState',
       'shippingPostalCode',
+      'billingStreetAddress',
+      'billingCity',
+      'billingState',
+      'billingPostalCode',
     ],
   };
 
