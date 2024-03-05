@@ -73,17 +73,16 @@ export default function SignUp() {
     handleSubmit(signUpWithCredentials);
   }
 
-  // TODO: replace with '1' and uncomment useEffect after development
-  const [step, setStep] = useState<Steps>('4');
+  const [step, setStep] = useState<Steps>('1');
   const hasRun = useRef(false);
 
-  // useEffect(() => {
-  //   if (!hasRun.current) {
-  //     setStep('1');
-  //   }
+  useEffect(() => {
+    if (!hasRun.current) {
+      setStep('1');
+    }
 
-  //   hasRun.current = true;
-  // }, []);
+    hasRun.current = true;
+  }, []);
 
   function nextStepCallback() {
     // Increment step
@@ -130,7 +129,7 @@ export default function SignUp() {
           {/* STEP ONE */}
           {step === '1' && (
             <div>
-              <GridContainer cols={6}>
+              <div className='grid grid-cols-6 gap-4'>
                 <label htmlFor='email' className='col-span-6'>
                   Email:
                 </label>
@@ -167,7 +166,7 @@ export default function SignUp() {
                   getValues={getValues}
                   nextStepCallback={nextStepCallback}
                 />
-              </GridContainer>
+              </div>
             </div>
           )}
 
