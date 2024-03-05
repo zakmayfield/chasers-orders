@@ -1,13 +1,14 @@
+import { merge } from '@/utils/styles.utils';
 import { FC } from 'react';
 import { PiSpinnerGapThin } from 'react-icons/pi';
 
-interface LoadingSpinnerProps {}
+interface LoadingSpinnerProps {
+  className?: string;
+}
 
-const LoadingSpinner: FC<LoadingSpinnerProps> = ({}) => {
+const LoadingSpinner: FC<LoadingSpinnerProps> = ({ className }) => {
   return (
-    <span>
-      <PiSpinnerGapThin className='text-xl animate-spin' />
-    </span>
+    <PiSpinnerGapThin className={merge(`text-xl animate-spin ${className}`)} />
   );
 };
 

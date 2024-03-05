@@ -123,16 +123,16 @@ interface UseStepTracker {
 }
 
 export const useStepTracker: UseStepTracker = () => {
-  const [step, setStep] = useState<Steps>('4');
+  const [step, setStep] = useState<Steps>('1');
   const hasRun = useRef(false);
 
-  // useEffect(() => {
-  //   if (!hasRun.current) {
-  //     setStep('1');
-  //   }
+  useEffect(() => {
+    if (!hasRun.current) {
+      setStep('1');
+    }
 
-  //   hasRun.current = true;
-  // }, []);
+    hasRun.current = true;
+  }, []);
 
   return { step, setStep };
 };
@@ -155,14 +155,18 @@ export const handleStepChange = ({
 };
 
 export const signUpWithCredentials = async (data: SignUpFormData) => {
-  const { queryClient } = getQueryClient();
-
   try {
     await signIn('sign-up', {
       ...data,
     });
-    queryClient.removeQueries(['form-values']);
+
+    return {
+      isSuccess: true,
+    };
   } catch (err) {
     console.error(err);
+    return {
+      isSuccess: false,
+    };
   }
 };
