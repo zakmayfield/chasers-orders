@@ -445,34 +445,41 @@ export default function SignUp() {
                   <FieldError message={errors.billingCity.message} />
                 )}
 
-                <label htmlFor='billingState' className='col-span-6'>
-                  Billing State:
-                </label>
-                <input
-                  type='billingState'
-                  id='billingState'
-                  placeholder='ON'
-                  {...register('billingState')}
-                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-                />
-                {errors.billingState && (
-                  <FieldError message={errors.billingState.message} />
-                )}
+                <div className='col-span-full grid grid-cols-12 gap-4'>
+                  <label
+                    htmlFor='billingState'
+                    className='row-start-1 col-span-4'
+                  >
+                    Billing Province:
+                  </label>
+                  <input
+                    type='billingState'
+                    id='billingState'
+                    placeholder='ON'
+                    {...register('billingState')}
+                    className='row-start-2 col-span-4 border-2 rounded-lg p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
+                  />
+                  {errors.billingState && (
+                    <FieldError message={errors.billingState.message} />
+                  )}
 
-                <label htmlFor='billingPostalCode' className='col-span-6'>
-                  Billing Postal Code:
-                </label>
-                <input
-                  type='billingPostalCode'
-                  id='billingPostalCode'
-                  placeholder='X2X 2X2'
-                  {...register('billingPostalCode')}
-                  className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-                />
-                {errors.billingPostalCode && (
-                  <FieldError message={errors.billingPostalCode.message} />
-                )}
-
+                  <label
+                    htmlFor='billingPostalCode'
+                    className='row-start-1 col-start-6 col-span-6'
+                  >
+                    Billing Postal Code:
+                  </label>
+                  <input
+                    type='billingPostalCode'
+                    id='billingPostalCode'
+                    placeholder='X2X 2X2'
+                    {...register('billingPostalCode')}
+                    className='row-start-2 col-start-6 col-span-6 border-2 rounded-lg p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
+                  />
+                  {errors.billingPostalCode && (
+                    <FieldError message={errors.billingPostalCode.message} />
+                  )}
+                </div>
                 <FinalSubmitButton />
               </div>
             </div>
