@@ -8,7 +8,7 @@ import {
   requiredStepFields,
   defaultValues,
   signUpWithCredentials,
-  useCheckedState,
+  useBillingAddressSync,
   handleStepChange,
   useSignUpForm,
 } from './helpers.signup';
@@ -36,7 +36,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
     formState: { errors, isSubmitted },
   } = useSignUpForm();
 
-  const { isChecked, handleCheckbox } = useCheckedState({
+  const { isChecked, handleCheckbox } = useBillingAddressSync({
     getValues,
     setValue,
   });

@@ -108,26 +108,29 @@ export const requiredStepFields: IRequiredFields = {
   ],
 };
 
-interface UseCheckedState {
-  ({ getValues, setValue }: UseCheckedStateProps): {
+interface UseBillingAddressSync {
+  ({ getValues, setValue }: UseBillingAddressSyncProps): {
     isChecked: boolean;
     handleCheckbox(event: ChangeEvent<HTMLInputElement>): void;
   };
 }
 
-type UseCheckedStateProps = {
+type UseBillingAddressSyncProps = {
   getValues: UseFormGetValues<SignUpFormData>;
   setValue: UseFormSetValue<SignUpFormData>;
 };
 
-export const useCheckedState: UseCheckedState = ({ getValues, setValue }) => {
+export const useBillingAddressSync: UseBillingAddressSync = ({
+  getValues,
+  setValue,
+}) => {
   const [isChecked, setIsChecked] = useState(false);
 
   function handleCheckbox(event: ChangeEvent<HTMLInputElement>) {
-    const checked = event.target.checked;
-    const formValues = getValues();
+    const checked: boolean = event.target.checked;
+    const formValues: SignUpFormData = getValues();
 
-    setIsChecked(event.target.checked);
+    setIsChecked(checked);
 
     const fields: { shipping: string; billing: Key }[] = [
       {
