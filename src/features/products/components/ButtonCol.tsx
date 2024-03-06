@@ -2,7 +2,11 @@
 import { FC } from 'react';
 import { UnitsOnCartCacheType } from '@/features/cart/types';
 import { ProductWithUnits } from '@/features/products/types';
-import { getRowPayload } from '@/features/products/helpers.products';
+import {
+  getRowPayload,
+  useColumnSizeMutation,
+  useSizeCacheQuery,
+} from '@/features/products/helpers.products';
 import { Unit } from '@prisma/client';
 import {
   UseMutateFunction,
@@ -28,24 +32,25 @@ export const ButtonCol: FC<ButtonColProps> = ({ info, addToCartMutation }) => {
   const { rowPayload } = getRowPayload(info);
   const { defaultUnit, units, product } = rowPayload;
 
-  const { mutate: setColumnSizeCache } = useMutation({
-    mutationFn: async (value: string) => {
+  const { setColumnSizeCache } = useColumnSizeMutation({
+    cb: async (value: string) => {
       queryClient.setQueryData(['size', product.id], value);
     },
   });
 
-  const sizeCache: string | undefined = queryClient.getQueryData([
-    'size',
-    product.id,
-  ]);
-
-  function setToCacheAndReturnUnit(size: string) {
-    setColumnSizeCache(size);
-    const unit = units[0];
-    return unit;
-  }
+  const { getSizeCache } = useSizeCacheQuery({
+    productId: product.id,
+  });
 
   const handleAddToCart = async () => {
+    const { sizeCache }: { sizeCache: string | undefined } = getSizeCache();
+
+    function setToCacheAndReturnUnit(size: string) {
+      setColumnSizeCache(size);
+      const unit = units[0];
+      return unit;
+    }
+
     if (!sizeCache) {
       const unit = setToCacheAndReturnUnit(defaultUnit.size);
       addToCartMutation(unit.id);

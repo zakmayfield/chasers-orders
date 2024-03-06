@@ -2,6 +2,7 @@ import {
   UseMutateFunction,
   useMutation,
   useQuery,
+  useQueryClient,
 } from '@tanstack/react-query';
 import {
   CellContext,
@@ -155,4 +156,31 @@ export const useColumnSizeMutation: UseColumnSizeMutationProps = ({ cb }) => {
   });
 
   return { setColumnSizeCache };
+};
+
+interface UseSizeCacheQueryProps {
+  ({ productId }: { productId: string }): {
+    getSizeCache(): {
+      sizeCache: string | undefined;
+    };
+  };
+}
+
+export const useSizeCacheQuery: UseSizeCacheQueryProps = ({ productId }) => {
+  const queryClient = useQueryClient();
+
+  function getSizeCache() {
+    const sizeCache: string | undefined = queryClient.getQueryData([
+      'size',
+      productId,
+    ]);
+
+    return {
+      sizeCache,
+    };
+  }
+
+  return {
+    getSizeCache,
+  };
 };

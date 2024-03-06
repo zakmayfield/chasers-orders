@@ -7,6 +7,7 @@ import { CellContext } from '@tanstack/react-table';
 import {
   getRowPayload,
   useColumnSizeMutation,
+  useSizeCacheQuery,
 } from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
 
@@ -24,10 +25,11 @@ export const UnitCol: React.FC<UnitColumnProps> = ({ info }) => {
     cb: mutateSizeCacheCallback,
   });
 
-  const sizeCache: string | undefined = queryClient.getQueryData([
-    'size',
-    product.id,
-  ]);
+  const { getSizeCache } = useSizeCacheQuery({
+    productId: product.id,
+  });
+
+  const { sizeCache }: { sizeCache: string | undefined } = getSizeCache();
 
   const handleSizeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
