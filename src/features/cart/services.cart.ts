@@ -1,8 +1,8 @@
 import { Prisma, Unit, UnitsOnCart } from '@prisma/client';
-import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { CartCache, UnitsOnCartCacheType } from '@/features/cart/types';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
-import { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
+import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
+import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
 
 /*
   ----- QUERIES -----
