@@ -7,8 +7,17 @@ import {
   useState,
 } from 'react';
 import { signIn } from 'next-auth/react';
-import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
+import {
+  FormState,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormSetValue,
+  useForm,
+} from 'react-hook-form';
 import type { SignUpFormData } from '../types/index';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { AuthSignUpValidator } from './validator/validator.signup';
 
 export type Steps = '1' | '2' | '3' | '4';
 
@@ -34,6 +43,32 @@ export const defaultValues = {
   billingPostalCode: '',
 };
 
+interface UseSignUpForm {
+  (): {
+    getValues: UseFormGetValues<SignUpFormData>;
+    setValue: UseFormSetValue<SignUpFormData>;
+    register: UseFormRegister<SignUpFormData>;
+    handleSubmit: UseFormHandleSubmit<SignUpFormData>;
+    formState: FormState<SignUpFormData>;
+  };
+}
+
+export const useSignUpForm: UseSignUpForm = () => {
+  const { formState, handleSubmit, register, getValues, setValue } =
+    useForm<SignUpFormData>({
+      resolver: zodResolver(AuthSignUpValidator),
+      defaultValues,
+    });
+
+  return {
+    getValues,
+    setValue,
+    register,
+    handleSubmit,
+    formState,
+  };
+};
+
 type Key =
   | 'email'
   | 'password'
@@ -43,10 +78,12 @@ type Key =
   | 'accountPayableEmail'
   | 'paymentMethod'
   | 'shippingStreetAddress'
+  | 'shippingUnit'
   | 'shippingCity'
   | 'shippingState'
   | 'shippingPostalCode'
   | 'billingStreetAddress'
+  | 'billingUnit'
   | 'billingCity'
   | 'billingState'
   | 'billingPostalCode';
@@ -87,23 +124,39 @@ export const useCheckedState: UseCheckedState = ({ getValues, setValue }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   function handleCheckbox(event: ChangeEvent<HTMLInputElement>) {
+    const checked = event.target.checked;
     const formValues = getValues();
 
     setIsChecked(event.target.checked);
 
-    if (event.target.checked) {
-      setValue('billingStreetAddress', formValues.shippingStreetAddress);
-      setValue('billingUnit', formValues.shippingUnit);
-      setValue('billingCity', formValues.shippingCity);
-      setValue('billingState', formValues.shippingState);
-      setValue('billingPostalCode', formValues.shippingPostalCode);
-    } else {
-      setValue('billingStreetAddress', '');
-      setValue('billingUnit', '');
-      setValue('billingCity', '');
-      setValue('billingState', '');
-      setValue('billingPostalCode', '');
-    }
+    const fields: { shipping: string; billing: Key }[] = [
+      {
+        shipping: formValues.shippingStreetAddress,
+        billing: 'billingStreetAddress',
+      },
+      {
+        shipping: formValues.shippingUnit,
+        billing: 'billingUnit',
+      },
+      {
+        shipping: formValues.shippingState,
+        billing: 'billingState',
+      },
+      {
+        shipping: formValues.shippingCity,
+        billing: 'billingCity',
+      },
+      {
+        shipping: formValues.shippingPostalCode,
+        billing: 'billingPostalCode',
+      },
+    ];
+
+    fields.forEach((field) =>
+      checked
+        ? setValue(field.billing, field.shipping)
+        : setValue(field.billing, '')
+    );
   }
 
   return { isChecked, handleCheckbox };

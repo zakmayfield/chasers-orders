@@ -10,6 +10,7 @@ import {
   signUpWithCredentials,
   useCheckedState,
   handleStepChange,
+  useSignUpForm,
 } from './helpers.signup';
 import { useToast } from '@/hooks/general.hooks';
 import { SignUpFormData } from '../types/index';
@@ -28,15 +29,12 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
   const queryClient = useQueryClient();
 
   const {
-    formState: { errors, isSubmitted },
-    handleSubmit,
-    register,
     getValues,
     setValue,
-  } = useForm<SignUpFormData>({
-    resolver: zodResolver(AuthSignUpValidator),
-    defaultValues,
-  });
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitted },
+  } = useSignUpForm();
 
   const { isChecked, handleCheckbox } = useCheckedState({
     getValues,
