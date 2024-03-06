@@ -12,10 +12,10 @@ import { ImSpinner2 } from 'react-icons/im';
 import { useTableConfig } from '@/utils/products.table.utils';
 import { getProducts } from '@/services/queries/products.getProducts';
 import { useFavoritesQuery } from '@/hooks/query.hooks';
-import { NameCol, CategoryCol, UnitCol, ButtonCol } from './columns';
+import { NameCol, CategoryCol, UnitCol, ButtonCol } from './table/columns';
 import { useToast } from '@/hooks/general.hooks';
 import { addItem } from '@/features/cart/services.cart';
-import { categoryData as categories } from '../categories';
+import { categoryData as categories } from '@/features/products/helpers.products';
 import type { ProductWithUnits } from '@/types/types.product';
 import type { CartCache } from '@/features/cart/types';
 
