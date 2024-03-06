@@ -2,11 +2,10 @@ import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 import { useToast } from '@/hooks/general.hooks';
 import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { GoHeartFill } from 'react-icons/go';
 import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
-import { addItem } from '@/services/mutations/cart.addItem';
+import { addItem } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
 import { fetchFirstUnitId } from '@/utils/favorites.utils';
 

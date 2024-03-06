@@ -1,8 +1,5 @@
 'use client';
-import {
-  OrderAgainResponse,
-  orderAgain,
-} from '@/services/mutations/cart.orderAgain';
+import { orderAgain } from '@/features/cart/services.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { OrderType } from '../RecentOrders';

@@ -11,7 +11,7 @@ import {
 import { CellContext } from '@tanstack/react-table';
 import { BsCartPlus } from 'react-icons/bs';
 
-export default function ButtonCol({
+export const ButtonCol = ({
   info,
   addToCartMutation,
 }: {
@@ -22,7 +22,7 @@ export default function ButtonCol({
     string,
     unknown
   >;
-}) {
+}) => {
   const queryClient = useQueryClient();
 
   const { rowPayload } = getRowPayload(info);
@@ -66,4 +66,4 @@ export default function ButtonCol({
       </button>
     </div>
   );
-}
+};

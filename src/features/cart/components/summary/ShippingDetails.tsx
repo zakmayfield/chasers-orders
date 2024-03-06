@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { ImSpinner2 } from 'react-icons/im';
 import { FaChevronDown } from 'react-icons/fa';
 import { CiWarning } from 'react-icons/ci';
-import { getShipping } from '@/services/queries/cart.getShipping';
+import { getShipping } from '@/features/cart/services.cart';
 import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 
 export const ShippingDetails = () => {

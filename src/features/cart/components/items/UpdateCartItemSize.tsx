@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { CartCache } from '@/features/cart/types';
 import { useToast } from '@/hooks/general.hooks';
-import { SizesData, getItemSizes } from '@/services/queries/cart.getItemSizes';
-import { updateItemSize } from '@/services/mutations/cart.updateItemSize';
+import { SizesData, getItemSizes } from '@/features/cart/services.cart';
+import { updateItemSize } from '@/features/cart/services.cart';
 
 type UpdateCartItemSizeProps = {
   payload: {
