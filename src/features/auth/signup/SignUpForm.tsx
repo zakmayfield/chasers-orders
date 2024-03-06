@@ -1,12 +1,10 @@
 import { Dispatch, FC, SetStateAction } from 'react';
-import { UseFormGetValues, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { UseFormGetValues } from 'react-hook-form';
 import { IoIosReturnRight } from 'react-icons/io';
 import { ImSpinner2 } from 'react-icons/im';
 import {
   Steps,
   requiredStepFields,
-  defaultValues,
   signUpWithCredentials,
   useBillingAddressSync,
   handleStepChange,
@@ -15,7 +13,6 @@ import {
 import { useToast } from '@/hooks/general.hooks';
 import { SignUpFormData } from '../types/index';
 import FieldError from '../components/FieldError';
-import { AuthSignUpValidator } from './validator/validator.signup';
 import { paymentMethodOptions } from '@/utils/paymentMethods';
 import { useQueryClient } from '@tanstack/react-query';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
