@@ -1,5 +1,5 @@
 import { UnitsOnCart } from '@prisma/client';
-import { RemoveCartItemProps } from '@/features/cart/components/RemoveCartItemButton';
+import { RemoveCartItemProps } from '@/features/cart/components/items/RemoveCartItemButton';
 
 type RemoveCartItemStore = {
   (payload: RemoveCartItemProps['payload']): Promise<DeletedItemID>;

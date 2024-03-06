@@ -1,11 +1,9 @@
 'use client';
 
 import { UnitsOnCartCacheType } from '@/features/cart/types';
-import {
-  RemoveCartItemButton,
-  UpdateCartItemQuantity,
-  UpdateCartItemSize,
-} from './index';
+import { RemoveCartItemButton } from './RemoveCartItemButton';
+import { UpdateCartItemSize } from './UpdateCartItemSize';
+import { UpdateCartItemQuantity } from './UpdateCartItemQuantity';
 
 type CartItemProps = {
   payload: {

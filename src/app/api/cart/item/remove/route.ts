@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import { RemoveCartItemProps } from '@/features/cart/components/RemoveCartItemButton';
+import { RemoveCartItemProps } from '@/features/cart/components/items/RemoveCartItemButton';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
