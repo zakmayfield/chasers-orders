@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCart } from '@/services/queries/cart.getCart';
+import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
 
 interface UseFetchCartQuery {
