@@ -1,10 +1,7 @@
 'use client';
 
 import { getCart } from '@/services/queries/cart.getCart';
-import {
-  CartCache,
-  UnitsOnCartCacheType,
-} from '@/features/cart/types/types.cart';
+import { CartCache, UnitsOnCartCacheType } from '@/features/cart/types';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { CiShop } from 'react-icons/ci';

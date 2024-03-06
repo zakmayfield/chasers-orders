@@ -6,7 +6,7 @@ import {
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { OrderType } from '../RecentOrders';
-import { CartCache } from '@/features/cart/types/types.cart';
+import { CartCache } from '@/features/cart/types';
 import { useRouter } from 'next/navigation';
 import { Prisma } from '@prisma/client';
 import { useToast } from '@/hooks/general.hooks';

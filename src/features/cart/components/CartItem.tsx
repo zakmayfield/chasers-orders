@@ -1,6 +1,6 @@
 'use client';
 
-import { UnitsOnCartCacheType } from '@/features/cart/types/types.cart';
+import { UnitsOnCartCacheType } from '@/features/cart/types';
 import {
   RemoveCartItemButton,
   UpdateCartItemQuantity,
