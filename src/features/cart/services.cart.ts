@@ -5,7 +5,7 @@ import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
 
 /*
-  ----- QUERIES -----
+  ^ ----- QUERIES -----
 */
 
 interface GetCartProps {
@@ -80,7 +80,7 @@ export const getShipping: GetShippingProps = async () => {
 };
 
 /*
-  ----- MUTATIONS -----
+  ^ ----- MUTATIONS -----
 */
 
 interface AddItemToCartParams {
