@@ -1,4 +1,4 @@
-import Cart from '@/features/cart/Cart';
+import { Cart } from '@/features/cart';
 
 export default async function Page() {
   return <Cart />;
