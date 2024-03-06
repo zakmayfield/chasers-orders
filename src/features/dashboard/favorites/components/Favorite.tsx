@@ -1,6 +1,6 @@
 import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 import { useToast } from '@/hooks/general.hooks';
-import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
+import { useToggleFavoriteMutation } from '@/features/products/helpers.products';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';

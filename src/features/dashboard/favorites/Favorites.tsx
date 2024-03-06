@@ -1,6 +1,6 @@
 'use client';
 
-import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
+import { useFavoritesQuery } from '@/features/products/helpers.products';
 import Favorite from './components/Favorite';
 import FavoritesLoadingSkeleton from './components/FavoritesLoadingSkeleton';
 import EmptyFavorites from './components/EmptyFavorites';

@@ -4,8 +4,10 @@ import React from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useToast } from '@/hooks/general.hooks';
-import { useFavoritesQuery } from '@/hooks/query.hooks';
-import { useTableConfig } from '@/features/products/helpers.products';
+import {
+  useTableConfig,
+  useFavoritesQuery,
+} from '@/features/products/helpers.products';
 
 import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
 import {

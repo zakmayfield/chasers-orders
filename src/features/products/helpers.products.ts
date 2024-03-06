@@ -15,9 +15,12 @@ import {
 } from '@tanstack/react-table';
 import { getProducts } from '@/features/products/services.products';
 import { addItem } from '@/features/cart/services.cart';
-import type { Unit } from '@prisma/client';
+import type { Favorite, Product, Unit } from '@prisma/client';
 import type { ProductWithUnits } from '@/features/products/types';
 import type { UnitsOnCartCacheType } from '@/features/cart/types';
+import { toggleFavorite } from '@/services/mutations/favorite.toggleFavorite';
+import { ActionTypes } from '@/features/products/types';
+import { getFavorites } from '@/services/queries/favorite.getFavorites';
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 
@@ -183,4 +186,75 @@ export const useSizeCacheQuery: UseSizeCacheQueryProps = ({ productId }) => {
   return {
     getSizeCache,
   };
+};
+
+export const checkFavorite = (
+  favorites: ExtendedFavorite[] | undefined,
+  productId: string
+) => {
+  const favorite = favorites!.find((juice) => juice.juiceId === productId);
+
+  return { favorite };
+};
+
+interface UseToggleFavorite {
+  ({ onSuccess, onError }: ToggleFavoriteProps): {
+    mutate: MutateType;
+  };
+}
+
+type ToggleFavoriteProps = {
+  onSuccess?: (data: ExtendedFavorite) => void;
+  onError?: (error: unknown) => void;
+};
+
+type MutateType = UseMutateFunction<
+  ExtendedFavorite,
+  unknown,
+  ActionTypes,
+  unknown
+>;
+
+export const useToggleFavoriteMutation: UseToggleFavorite = ({
+  onSuccess,
+  onError,
+}) => {
+  const { mutate } = useMutation({
+    mutationFn: ({ action, id }: ActionTypes) => toggleFavorite(action, id),
+    onSuccess(data) {
+      onSuccess?.(data);
+    },
+    onError(error) {
+      onError?.(error);
+    },
+  });
+
+  return { mutate };
+};
+
+interface UseFavoritesQuery {
+  (options?: Options): UseFavoritesQueryReturn;
+}
+
+type Options = {
+  extended: boolean;
+};
+
+type UseFavoritesQueryReturn = {
+  favorites: ExtendedFavorite[] | undefined;
+  isLoading: boolean;
+};
+export type FavoriteWithoutUserID = Omit<Favorite, 'userId'>;
+export type ExtendedFavorite = FavoriteWithoutUserID & {
+  juice: Product;
+};
+
+export const useFavoritesQuery: UseFavoritesQuery = () => {
+  const { data: favorites, isLoading } = useQuery<ExtendedFavorite[], Error>({
+    queryKey: ['favorites'],
+    queryFn: getFavorites,
+    staleTime: Infinity,
+  });
+
+  return { favorites, isLoading };
 };

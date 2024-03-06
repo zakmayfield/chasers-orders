@@ -1,13 +1,16 @@
 'use client';
 import { useToast } from '@/hooks/general.hooks';
-import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
+import {
+  useToggleFavoriteMutation,
+  checkFavorite,
+} from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FaRegHeart, FaHeart } from 'react-icons/fa';
-import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
-import { ActionTypes } from '@/types/types.favorite.actions';
+import { ActionTypes } from '@/features/products/types';
+import type { ExtendedFavorite } from '@/features/products/helpers.products';
 
 export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
@@ -15,13 +18,14 @@ export type NameColProps = {
   isLoading: boolean;
 };
 
-export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
+export const NameCol: FC<NameColProps> = ({ info, favorites }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const [actionState, setActionState] = useState<'add' | 'remove'>('add');
-  const [isFav, setIsFav] = useState(false);
 
-  const { mutate } = useToggleFavoriteMutation({
+  const [isFav, setIsFav] = useState(false);
+  const [actionState, setActionState] = useState<'add' | 'remove'>('add');
+
+  const { mutate: toggleFavorite } = useToggleFavoriteMutation({
     onSuccess,
     onError,
   });
@@ -58,13 +62,7 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
   }
 
   const handleMutation = () => {
-    const checkFavorite = (productId: string) => {
-      const favorite = favorites!.find((juice) => juice.juiceId === productId);
-
-      return { favorite };
-    };
-
-    const { favorite } = checkFavorite(info.row.original.id);
+    const { favorite } = checkFavorite(favorites, info.row.original.id);
     let action: ActionTypes;
 
     if (favorite) {
@@ -74,8 +72,7 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
     }
 
     setActionState(action.action);
-
-    mutate(action);
+    toggleFavorite(action);
   };
 
   useEffect(() => {
