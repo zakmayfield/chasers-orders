@@ -26,16 +26,6 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
     onError,
   });
 
-  useEffect(() => {
-    const juice = favorites?.find(
-      (item) => item.juiceId === info.row.original.id
-    )
-      ? true
-      : false;
-
-    setIsFav(juice);
-  }, [favorites, info.row.original.id]);
-
   function onSuccess(data: ExtendedFavorite) {
     queryClient.setQueryData(
       ['favorites'],
@@ -87,6 +77,16 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
 
     mutate(action);
   };
+
+  useEffect(() => {
+    const juice = favorites?.find(
+      (item) => item.juiceId === info.row.original.id
+    )
+      ? true
+      : false;
+
+    setIsFav(juice);
+  }, [favorites, info.row.original.id]);
 
   return (
     <div className='w-80 flex items-center'>
