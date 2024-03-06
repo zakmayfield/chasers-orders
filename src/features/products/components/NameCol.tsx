@@ -9,7 +9,7 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 import { ActionTypes } from '@/types/types.favorite.actions';
 
-type NameColProps = {
+export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
   favorites: ExtendedFavorite[] | undefined;
   isLoading: boolean;

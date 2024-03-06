@@ -1,7 +1,8 @@
 'use client';
+import { FC } from 'react';
 import { UnitsOnCartCacheType } from '@/features/cart/types';
 import { ProductWithUnits } from '@/features/products/types';
-import { getRowPayload } from '@/utils/products.table.utils';
+import { getRowPayload } from '@/features/products/helpers.products';
 import { Unit } from '@prisma/client';
 import {
   UseMutateFunction,
@@ -11,10 +12,7 @@ import {
 import { CellContext } from '@tanstack/react-table';
 import { BsCartPlus } from 'react-icons/bs';
 
-export const ButtonCol = ({
-  info,
-  addToCartMutation,
-}: {
+export interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
   addToCartMutation: UseMutateFunction<
     UnitsOnCartCacheType,
@@ -22,7 +20,9 @@ export const ButtonCol = ({
     string,
     unknown
   >;
-}) => {
+}
+
+export const ButtonCol: FC<ButtonColProps> = ({ info, addToCartMutation }) => {
   const queryClient = useQueryClient();
 
   const { rowPayload } = getRowPayload(info);

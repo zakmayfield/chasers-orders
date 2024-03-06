@@ -4,10 +4,10 @@ import React from 'react';
 import { Unit } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
-import { getRowPayload } from '@/utils/products.table.utils';
+import { getRowPayload } from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
 
-interface UnitColumnProps {
+export interface UnitColumnProps {
   info: CellContext<ProductWithUnits, Unit[]>;
 }
 

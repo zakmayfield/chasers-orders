@@ -1,41 +1,34 @@
 'use client';
 
 import React from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  Table as ReactTable,
-  Column,
-  createColumnHelper,
-  flexRender,
-} from '@tanstack/react-table';
+import { useQueryClient } from '@tanstack/react-query';
 import { ImSpinner2 } from 'react-icons/im';
+import { Table as ReactTable, Column, flexRender } from '@tanstack/react-table';
+
 import { useToast } from '@/hooks/general.hooks';
 import { useFavoritesQuery } from '@/hooks/query.hooks';
-import { useTableConfig } from '@/utils/products.table.utils';
+import { useTableConfig } from '@/features/products/helpers.products';
+
 import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
-import { getProducts } from '@/features/products/services.products';
-import { addItem } from '@/features/cart/services.cart';
-import { categoryData as categories } from '@/features/products/helpers.products';
+import {
+  categoryData as categories,
+  getColumnHelper,
+  useAddToCartMutation,
+  useFetchProductsQuery,
+} from '@/features/products/helpers.products';
+
 import type { ProductWithUnits } from '@/features/products/types';
 import type { CartCache } from '@/features/cart/types';
 
 export const ProductsTable = () => {
-  // tools
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  // data
   const { favorites } = useFavoritesQuery();
+  const { data, isLoading, isFetching } = useFetchProductsQuery();
 
-  const { data, isLoading, isFetching } = useQuery<ProductWithUnits[], Error>({
-    queryKey: ['products'],
-    queryFn: getProducts,
-    staleTime: Infinity,
-  });
-
-  const { mutate: addToCartMutation } = useMutation({
-    mutationFn: addItem,
-    onSuccess(data) {
+  const { addToCartMutation } = useAddToCartMutation({
+    onSuccessCallback(data) {
       notify('Item added to cart');
 
       // Update `cart` items cache with data from response
@@ -48,15 +41,14 @@ export const ProductsTable = () => {
           : oldData
       );
     },
-    onError(error) {
+    onErrorCallback(error) {
       if (error instanceof Error) {
         notify(error.message, 'error');
       }
     },
   });
 
-  // table config
-  const columnHelper = createColumnHelper<ProductWithUnits>();
+  const columnHelper = getColumnHelper();
 
   const columns = [
     columnHelper.accessor('name', {
