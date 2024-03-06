@@ -142,3 +142,17 @@ export const useAddToCartMutation: UseAddToCartMutationProps = ({
 
   return { addToCartMutation };
 };
+
+interface UseColumnSizeMutationProps {
+  ({ cb }: { cb(value: string): Promise<void> }): {
+    setColumnSizeCache: UseMutateFunction<void, unknown, string, unknown>;
+  };
+}
+
+export const useColumnSizeMutation: UseColumnSizeMutationProps = ({ cb }) => {
+  const { mutate: setColumnSizeCache } = useMutation({
+    mutationFn: cb,
+  });
+
+  return { setColumnSizeCache };
+};
