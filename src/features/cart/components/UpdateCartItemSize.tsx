@@ -13,7 +13,9 @@ type UpdateCartItemSizeProps = {
   };
 };
 
-const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
+export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
+  props
+) => {
   const {
     payload: { cartId, unitId, sizeData },
   } = props;
@@ -91,5 +93,3 @@ const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (props) => {
     </div>
   );
 };
-
-export default UpdateCartItemSize;

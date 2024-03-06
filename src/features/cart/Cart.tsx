@@ -1,11 +1,11 @@
 'use client';
 
-import CartLayout from './CartLayout';
+import { CartLayout } from './CartLayout';
 
-export default function Cart() {
+export const Cart = () => {
   return (
     <div>
       <CartLayout />
     </div>
   );
-}
+};

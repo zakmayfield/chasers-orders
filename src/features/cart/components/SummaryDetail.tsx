@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { CiShop } from 'react-icons/ci';
 
-const SummaryDetails = () => {
+export const SummaryDetails = () => {
   const { data, isFetching } = useQuery<CartCache | undefined, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
@@ -84,5 +84,3 @@ function Detail({ item }: { item?: UnitsOnCartCacheType }) {
     </div>
   );
 }
-
-export default SummaryDetails;

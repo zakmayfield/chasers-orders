@@ -1,14 +1,14 @@
 'use client';
 
 import { CartCache } from '@/types/types.cart';
-import CartItem from './CartItem';
+import { CartItem } from './CartItem';
 import { useQuery } from '@tanstack/react-query';
 import { getCart } from '@/services/queries/cart.getCart';
 import { ImSpinner2 } from 'react-icons/im';
-import CartItemLoadingSkeleton from './CartItemLoadingSkeleton';
+import { CartItemLoadingSkeleton } from './index';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
-export default function CartItemContainer() {
+export const CartItemContainer = () => {
   const { data, isFetching } = useQuery<CartCache | undefined, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
@@ -65,4 +65,4 @@ export default function CartItemContainer() {
       )}
     </div>
   );
-}
+};

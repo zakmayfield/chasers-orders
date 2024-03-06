@@ -2,7 +2,9 @@ import { FC } from 'react';
 
 interface CartItemLoadingSkeletonProps {}
 
-const CartItemLoadingSkeleton: FC<CartItemLoadingSkeletonProps> = ({}) => {
+export const CartItemLoadingSkeleton: FC<
+  CartItemLoadingSkeletonProps
+> = ({}) => {
   return (
     <div className='w-full h-24 pb-3 border-b flex items-center gap-10 rounded-md animate-pulse'>
       <div className='w-4 h-4 bg-slate-200 rounded'></div>
@@ -21,5 +23,3 @@ const CartItemLoadingSkeleton: FC<CartItemLoadingSkeletonProps> = ({}) => {
     </div>
   );
 };
-
-export default CartItemLoadingSkeleton;

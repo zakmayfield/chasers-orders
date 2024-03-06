@@ -12,7 +12,7 @@ type UpdateCartItemQuantityProps = {
   };
 };
 
-const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
+export const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
   props
 ) => {
   const {
@@ -73,5 +73,3 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
     </div>
   );
 };
-
-export default UpdateCartItemQuantity;

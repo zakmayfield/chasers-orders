@@ -1,14 +1,14 @@
 'use client';
-import { FaChevronDown } from 'react-icons/fa';
+import { Dispatch, SetStateAction, useState } from 'react';
+import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
+import { ImSpinner2 } from 'react-icons/im';
+import { FaChevronDown } from 'react-icons/fa';
 import { CiWarning } from 'react-icons/ci';
 import { getShipping } from '@/services/queries/cart.getShipping';
 import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
-import { Dispatch, SetStateAction, useState } from 'react';
-import Link from 'next/link';
-import { ImSpinner2 } from 'react-icons/im';
 
-const ShippingDetails = () => {
+export const ShippingDetails = () => {
   const { data, isFetching, error } = useQuery<
     GetShippingPayload | undefined,
     Error
@@ -109,5 +109,3 @@ function ContainerHeader({
     </div>
   );
 }
-
-export default ShippingDetails;

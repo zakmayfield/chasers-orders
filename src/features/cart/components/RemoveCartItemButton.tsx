@@ -1,8 +1,8 @@
-import { useToast } from '@/hooks/general.hooks';
-import { removeItem } from '@/services/mutations/cart.removeItem';
-import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { LuTrash2 } from 'react-icons/lu';
+import { removeItem } from '@/services/mutations/cart.removeItem';
+import { useToast } from '@/hooks/general.hooks';
+import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
 
 export interface RemoveCartItemProps {
   payload: RemoveItemPayloadData;
@@ -13,7 +13,7 @@ type RemoveItemPayloadData = {
   unitId: string;
 };
 
-const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
+export const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
   const {
@@ -57,5 +57,3 @@ const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     </button>
   );
 };
-
-export default RemoveCartItemButton;

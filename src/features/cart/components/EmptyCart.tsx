@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const EmptyCart = () => {
+export const EmptyCart = () => {
   return (
     <div>
       <Link href='/products' className='underline'>
@@ -9,5 +9,3 @@ const EmptyCart = () => {
     </div>
   );
 };
-
-export default EmptyCart;

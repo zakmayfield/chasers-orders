@@ -1,17 +1,15 @@
 'use client';
 
-import GridContainer from '../shared/GridContainer';
-import CartItemContainer from './ui/CartItemContainer';
-import OrderSummary from './ui/OrderSummary';
+import { CartItemContainer, OrderSummary } from './components';
 
-export default function CartLayout() {
+export const CartLayout = () => {
   return (
-    <GridContainer cols={12}>
+    <div className='grid grid-cols-12 gap-4'>
       {/* Review cart and edit */}
       <CartItemContainer />
 
       {/* Order summary */}
       <OrderSummary />
-    </GridContainer>
+    </div>
   );
-}
+};

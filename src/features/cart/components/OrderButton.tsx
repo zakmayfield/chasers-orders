@@ -1,3 +1,4 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
 import { useToast } from '@/hooks/general.hooks';
 import {
@@ -6,9 +7,8 @@ import {
 } from '@/services/mutations/orders.create';
 import { getCart } from '@/services/queries/cart.getCart';
 import { CartCache } from '@/types/types.cart';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export default function OrderButton() {
+export const OrderButton = () => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
@@ -75,4 +75,4 @@ export default function OrderButton() {
       )}
     </button>
   );
-}
+};
