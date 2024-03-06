@@ -5,7 +5,7 @@ import { Unit } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import { getRowPayload } from '@/utils/products.table.utils';
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 
 interface UnitColumnProps {
   info: CellContext<ProductWithUnits, Unit[]>;

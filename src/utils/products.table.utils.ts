@@ -1,4 +1,4 @@
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 import { Unit } from '@prisma/client';
 import { CellContext } from '@tanstack/react-table';
 import {

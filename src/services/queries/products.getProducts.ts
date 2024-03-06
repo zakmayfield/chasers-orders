@@ -1,4 +1,4 @@
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 
 type GetProductsParams = {
   (): Promise<ProductWithUnits[]>;

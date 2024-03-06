@@ -1,6 +1,6 @@
 'use client';
 import { UnitsOnCartCacheType } from '@/features/cart/types';
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 import { getRowPayload } from '@/utils/products.table.utils';
 import { Unit } from '@prisma/client';
 import {

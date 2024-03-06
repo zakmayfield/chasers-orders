@@ -16,7 +16,7 @@ import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
 import { useToast } from '@/hooks/general.hooks';
 import { addItem } from '@/features/cart/services.cart';
 import { categoryData as categories } from '@/features/products/helpers.products';
-import type { ProductWithUnits } from '@/types/types.product';
+import type { ProductWithUnits } from '@/features/products/types';
 import type { CartCache } from '@/features/cart/types';
 
 export const ProductsTable = () => {

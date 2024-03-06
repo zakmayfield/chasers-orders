@@ -1,5 +1,5 @@
 import { CellContext } from '@tanstack/react-table';
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 
 type CategoryColProps = {
   info: CellContext<ProductWithUnits, string>;
