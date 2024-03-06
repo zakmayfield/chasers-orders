@@ -1,7 +1,12 @@
 'use client';
+import { FC } from 'react';
 import { UnitsOnCartCacheType } from '@/features/cart/types';
-import { ProductWithUnits } from '@/types/types.product';
-import { getRowPayload } from '@/utils/products.table.utils';
+import { ProductWithUnits } from '@/features/products/types';
+import {
+  getRowPayload,
+  useColumnSizeMutation,
+  useSizeCacheQuery,
+} from '@/features/products/helpers.products';
 import { Unit } from '@prisma/client';
 import {
   UseMutateFunction,
@@ -11,10 +16,7 @@ import {
 import { CellContext } from '@tanstack/react-table';
 import { BsCartPlus } from 'react-icons/bs';
 
-export const ButtonCol = ({
-  info,
-  addToCartMutation,
-}: {
+export interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
   addToCartMutation: UseMutateFunction<
     UnitsOnCartCacheType,
@@ -22,30 +24,33 @@ export const ButtonCol = ({
     string,
     unknown
   >;
-}) => {
+}
+
+export const ButtonCol: FC<ButtonColProps> = ({ info, addToCartMutation }) => {
   const queryClient = useQueryClient();
 
   const { rowPayload } = getRowPayload(info);
   const { defaultUnit, units, product } = rowPayload;
 
-  const { mutate: setColumnSizeCache } = useMutation({
-    mutationFn: async (value: string) => {
+  const { setColumnSizeCache } = useColumnSizeMutation({
+    cb: async (value: string) => {
       queryClient.setQueryData(['size', product.id], value);
     },
   });
 
-  const sizeCache: string | undefined = queryClient.getQueryData([
-    'size',
-    product.id,
-  ]);
-
-  function setToCacheAndReturnUnit(size: string) {
-    setColumnSizeCache(size);
-    const unit = units[0];
-    return unit;
-  }
+  const { getSizeCache } = useSizeCacheQuery({
+    productId: product.id,
+  });
 
   const handleAddToCart = async () => {
+    const { sizeCache }: { sizeCache: string | undefined } = getSizeCache();
+
+    function setToCacheAndReturnUnit(size: string) {
+      setColumnSizeCache(size);
+      const unit = units[0];
+      return unit;
+    }
+
     if (!sizeCache) {
       const unit = setToCacheAndReturnUnit(defaultUnit.size);
       addToCartMutation(unit.id);

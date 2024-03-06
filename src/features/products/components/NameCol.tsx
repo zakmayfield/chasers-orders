@@ -1,7 +1,7 @@
 'use client';
 import { useToast } from '@/hooks/general.hooks';
 import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import { useEffect, useState } from 'react';
@@ -9,7 +9,7 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa';
 import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
 import { ActionTypes } from '@/types/types.favorite.actions';
 
-type NameColProps = {
+export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
   favorites: ExtendedFavorite[] | undefined;
   isLoading: boolean;
@@ -25,16 +25,6 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
     onSuccess,
     onError,
   });
-
-  useEffect(() => {
-    const juice = favorites?.find(
-      (item) => item.juiceId === info.row.original.id
-    )
-      ? true
-      : false;
-
-    setIsFav(juice);
-  }, [favorites, info.row.original.id]);
 
   function onSuccess(data: ExtendedFavorite) {
     queryClient.setQueryData(
@@ -87,6 +77,16 @@ export const NameCol: React.FC<NameColProps> = ({ info, favorites }) => {
 
     mutate(action);
   };
+
+  useEffect(() => {
+    const juice = favorites?.find(
+      (item) => item.juiceId === info.row.original.id
+    )
+      ? true
+      : false;
+
+    setIsFav(juice);
+  }, [favorites, info.row.original.id]);
 
   return (
     <div className='w-80 flex items-center'>

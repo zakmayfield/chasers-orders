@@ -1,8 +1,12 @@
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 
-type GetProductsParams = {
+/*
+  ^ ----- QUERIES -----
+*/
+
+interface GetProductsParams {
   (): Promise<ProductWithUnits[]>;
-};
+}
 
 export const getProducts: GetProductsParams = async () => {
   try {
@@ -19,3 +23,7 @@ export const getProducts: GetProductsParams = async () => {
     }
   }
 };
+
+/*
+  ^ ----- MUTATIONS -----
+*/
