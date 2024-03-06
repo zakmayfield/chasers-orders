@@ -9,11 +9,11 @@ import {
   flexRender,
 } from '@tanstack/react-table';
 import { ImSpinner2 } from 'react-icons/im';
-import { useTableConfig } from '@/utils/products.table.utils';
-import { getProducts } from '@/services/queries/products.getProducts';
-import { useFavoritesQuery } from '@/hooks/query.hooks';
-import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
 import { useToast } from '@/hooks/general.hooks';
+import { useFavoritesQuery } from '@/hooks/query.hooks';
+import { useTableConfig } from '@/utils/products.table.utils';
+import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
+import { getProducts } from '@/features/products/services.products';
 import { addItem } from '@/features/cart/services.cart';
 import { categoryData as categories } from '@/features/products/helpers.products';
 import type { ProductWithUnits } from '@/features/products/types';
