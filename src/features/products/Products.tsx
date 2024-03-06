@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import ProductsTable from './ProductsTable';
+import { ProductsTable } from './ProductsTable';
 
 interface ProductsProps {}
 
