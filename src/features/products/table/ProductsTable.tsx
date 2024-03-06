@@ -8,17 +8,16 @@ import {
   createColumnHelper,
   flexRender,
 } from '@tanstack/react-table';
-import { useTableConfig, getRowPayload } from '@/utils/products.table.utils';
-import { NameCol, CategoryCol, UnitCol } from './columns';
+import { ImSpinner2 } from 'react-icons/im';
+import { useTableConfig } from '@/utils/products.table.utils';
+import { getProducts } from '@/services/queries/products.getProducts';
+import { useFavoritesQuery } from '@/hooks/query.hooks';
+import { NameCol, CategoryCol, UnitCol, ButtonCol } from './columns';
+import { useToast } from '@/hooks/general.hooks';
+import { addItem } from '@/features/cart/services.cart';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
-import { CartCache } from '@/types/types.cart';
-import { addItem } from '@/services/mutations/cart.addItem';
-import { useToast } from '@/hooks/general.hooks';
-import { useFavoritesQuery } from '@/hooks/query.hooks';
-import { getProducts } from '@/services/queries/products.getProducts';
-import { ImSpinner2 } from 'react-icons/im';
-import ButtonCol from './columns/ButtonCol';
+import type { CartCache } from '@/features/cart/types';
 
 export default function ProductsTable() {
   // tools

@@ -1,9 +1,9 @@
 'use client';
 
-import { UnitsOnCartCacheType } from '@/types/types.cart';
-import RemoveCartItemButton from './RemoveCartItemButton';
-import UpdateCartItemQuantity from './UpdateCartItemQuantity';
-import UpdateCartItemSize from './UpdateCartItemSize';
+import { UnitsOnCartCacheType } from '@/features/cart/types';
+import { RemoveCartItemButton } from './RemoveCartItemButton';
+import { UpdateCartItemSize } from './UpdateCartItemSize';
+import { UpdateCartItemQuantity } from './UpdateCartItemQuantity';
 
 type CartItemProps = {
   payload: {
@@ -12,7 +12,7 @@ type CartItemProps = {
   };
 };
 
-const CartItem: React.FC<CartItemProps> = (props) => {
+export const CartItem: React.FC<CartItemProps> = (props) => {
   const {
     payload: { cartId, cartItem },
   } = props;
@@ -56,5 +56,3 @@ const CartItem: React.FC<CartItemProps> = (props) => {
     </div>
   );
 };
-
-export default CartItem;

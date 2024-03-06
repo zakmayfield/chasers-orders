@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateItemQuantity } from '@/services/mutations/cart.updateItemQuantity';
-import { CartCache } from '@/types/types.cart';
+import { updateItemQuantity } from '@/features/cart/services.cart';
+import { CartCache } from '@/features/cart/types';
 import { useToast } from '@/hooks/general.hooks';
 
 type UpdateCartItemQuantityProps = {
@@ -12,7 +12,7 @@ type UpdateCartItemQuantityProps = {
   };
 };
 
-const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
+export const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
   props
 ) => {
   const {
@@ -73,5 +73,3 @@ const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
     </div>
   );
 };
-
-export default UpdateCartItemQuantity;
