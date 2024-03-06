@@ -6,7 +6,7 @@ import {
   createOrder,
 } from '@/services/mutations/orders.create';
 import { getCart } from '@/services/queries/cart.getCart';
-import { CartCache } from '@/types/types.cart';
+import { CartCache } from '@/features/cart/types/types.cart';
 
 export const OrderButton = () => {
   const queryClient = useQueryClient();

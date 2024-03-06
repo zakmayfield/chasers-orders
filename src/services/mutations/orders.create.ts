@@ -1,4 +1,4 @@
-import { CartCache } from '@/types/types.cart';
+import { CartCache } from '@/features/cart/types/types.cart';
 import { Order, OrderLineItem } from '@prisma/client';
 
 type CreateOrderType = {

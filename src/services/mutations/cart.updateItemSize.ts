@@ -1,4 +1,4 @@
-import { UnitsOnCartCacheType } from '@/types/types.cart';
+import { UnitsOnCartCacheType } from '@/features/cart/types/types.cart';
 
 type UpdateItemSizeProps = {
   (params: {

@@ -12,7 +12,7 @@ import { useTableConfig, getRowPayload } from '@/utils/products.table.utils';
 import { NameCol, CategoryCol, UnitCol } from './columns';
 import { categoryData as categories } from '../categories';
 import type { ProductWithUnits } from '@/types/types.product';
-import { CartCache } from '@/types/types.cart';
+import { CartCache } from '@/features/cart/types/types.cart';
 import { addItem } from '@/services/mutations/cart.addItem';
 import { useToast } from '@/hooks/general.hooks';
 import { useFavoritesQuery } from '@/hooks/query.hooks';

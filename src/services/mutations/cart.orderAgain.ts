@@ -1,5 +1,8 @@
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
+import {
+  CartCache,
+  UnitsOnCartCacheType,
+} from '@/features/cart/types/types.cart';
 import { Prisma, OrderLineItem } from '@prisma/client';
 
 type OrderAgainProps = {

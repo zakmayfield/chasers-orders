@@ -7,7 +7,7 @@ import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
 import { addItem } from '@/services/mutations/cart.addItem';
-import { CartCache } from '@/types/types.cart';
+import { CartCache } from '@/features/cart/types/types.cart';
 import { fetchFirstUnitId } from '@/utils/favorites.utils';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {

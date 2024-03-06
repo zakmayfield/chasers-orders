@@ -1,4 +1,4 @@
-import type { UnitsOnCartCacheType } from '@/types/types.cart';
+import type { UnitsOnCartCacheType } from '@/features/cart/types/types.cart';
 
 type UpdateItemQuantityType = {
   (params: {

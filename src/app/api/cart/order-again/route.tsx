@@ -1,7 +1,10 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
+import {
+  CartCache,
+  UnitsOnCartCacheType,
+} from '@/features/cart/types/types.cart';
 import { Prisma } from '@prisma/client';
 
 export async function POST(req: Request) {
