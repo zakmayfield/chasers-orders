@@ -1,27 +1,38 @@
 'use client';
 
-import { CartItem } from './CartItem';
 import { ImSpinner2 } from 'react-icons/im';
-import { CartItemLoadingSkeleton } from './index';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { useFetchCartQuery } from '../helpers.cart';
-import { CartCache } from '../types';
+import { useFetchCartQuery } from './helpers.cart';
+import { CartItem, LoadingItem } from './components';
+import type { CartCache } from './types';
 
-export const CartItemContainer = () => {
+export const CartItems = () => {
   const { data, isFetching } = useFetchCartQuery();
 
+  if (isFetching) {
+    return <LoadingSkelly />;
+  }
+
+  if (data && data.items.length === 0) {
+    return (
+      <div>
+        <ItemsHeader isFetching={isFetching} cart={data} />
+        <EmptyItems />
+      </div>
+    );
+  }
+
   return (
-    <div className='col-start-3 col-span-4'>
-      <CartItemsContainerHeader isFetching={isFetching} cart={data} />
-      {data && data.items.length === 0 && <EmptyItemContainer />}
-      {isFetching ? <ContainerLoadingSkelly /> : <CartItems cart={data} />}
+    <div>
+      <ItemsHeader isFetching={isFetching} cart={data} />
+      <ItemsContainer cart={data} />
     </div>
   );
 };
 
-function EmptyItemContainer() {
+function EmptyItems() {
   return (
-    <div className='border-t py-6 font-light flex items-center gap-3  '>
+    <div className='py-6 font-light flex items-center gap-3  '>
       <span>
         <MdOutlineRemoveShoppingCart />
       </span>
@@ -30,30 +41,25 @@ function EmptyItemContainer() {
   );
 }
 
-function ContainerLoadingSkelly() {
+function LoadingSkelly() {
   return (
     <div>
       {[1, 2].map((item) => (
-        <CartItemLoadingSkeleton key={item} />
+        <LoadingItem key={item} />
       ))}
     </div>
   );
 }
 
-type CartItemsContainerHeaderProps = {
+type ItemsHeaderProps = {
   isFetching: boolean;
   cart: CartCache | undefined;
 };
 
-function CartItemsContainerHeader({
-  isFetching,
-  cart,
-}: CartItemsContainerHeaderProps) {
+function ItemsHeader({ isFetching, cart }: ItemsHeaderProps) {
   return (
     <div className='flex items-center gap-3'>
-      <h4 className=' text-2xl font-extralight'>
-        <span>Cart</span>
-      </h4>
+      <h4>Cart</h4>
 
       {isFetching ? (
         <ImSpinner2 className='animate-spin' />
@@ -66,11 +72,11 @@ function CartItemsContainerHeader({
   );
 }
 
-type CartItemsProps = {
+type ItemsContainerProps = {
   cart: CartCache | undefined;
 };
 
-function CartItems({ cart }: CartItemsProps) {
+function ItemsContainer({ cart }: ItemsContainerProps) {
   return (
     <div>
       {cart &&

@@ -1,11 +1,7 @@
 export * from './CartItem';
-export * from './CartItemContainer';
-export * from './CartItemLoadingSkeleton';
-
-export * from './EmptyCart';
+export * from './LoadingItem';
 
 export * from './OrderButton';
-export * from './OrderSummary';
 export * from './SummaryDetail';
 
 export * from './ShippingDetails';
