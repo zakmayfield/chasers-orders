@@ -49,7 +49,6 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
   });
 
   const onFormSubmit = () => {
-    console.log('submitted');
     const formValues = getValues();
     // if validated: run `edit(formValues)`
     try {

@@ -25,7 +25,7 @@ export const AuthNavItem: FC<AuthNavItemProps> = ({ navItem, pathname }) => {
       pathname === route || (route !== basePath && pathname.startsWith(route));
 
     setActive(isActive);
-  }, [pathname]);
+  }, [route, pathname]);
 
   function handlePrefetch(path: string) {
     const pathname = path.split('/')[1];

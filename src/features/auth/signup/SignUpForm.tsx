@@ -107,7 +107,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
           <div>
             <div className='grid grid-cols-6 gap-4'>
               <label htmlFor='contactName' className='col-span-6'>
-                Delivery Contact's Name:
+                Delivery Contact&apos;s Name:
               </label>
               <input
                 type='contactName'
@@ -121,7 +121,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
               )}
 
               <label htmlFor='contactPosition' className='col-span-6'>
-                Contact's Position{' '}
+                Contact&apos;s Position{' '}
                 <span className='text-gray-400 font-light'>(Optional)</span>:
               </label>
               <input
@@ -136,7 +136,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
               )}
 
               <label htmlFor='contactPhoneNumber' className='col-span-6'>
-                Contact's Phone Number
+                Contact&apos;s Phone Number
               </label>
               <input
                 type='contactPhoneNumber'

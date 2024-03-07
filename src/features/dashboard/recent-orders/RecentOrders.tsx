@@ -11,11 +11,7 @@ export type OrderType = Order & {
 };
 
 const RecentOrders = () => {
-  const {
-    data: orders,
-    error,
-    isLoading,
-  } = useQuery<OrderType[]>({
+  const { data: orders, isLoading } = useQuery<OrderType[]>({
     queryKey: ['recent-orders'],
     queryFn: getRecentOrders,
     staleTime: Infinity,

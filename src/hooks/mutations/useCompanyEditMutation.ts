@@ -1,4 +1,4 @@
-import { Contact, Company } from '@prisma/client';
+import { Company } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DashboardUserData } from '@/types/types.dashboard';
 import { useToast } from '../general.hooks';

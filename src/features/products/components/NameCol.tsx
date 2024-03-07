@@ -8,7 +8,7 @@ import {
 import { ProductWithUnits } from '@/features/products/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import type { ExtendedFavorite } from '@/features/products/helpers.products';
 import { PiHeartDuotone, PiHeart } from 'react-icons/pi';
 

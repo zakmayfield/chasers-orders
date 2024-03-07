@@ -1,6 +1,5 @@
 import { ContactFormData } from '@/features/dashboard/home/components/contact/validator/contact.validator';
 import { DashboardUserData } from '@/types/types.dashboard';
-import { Contact } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
 import { updateContact } from '@/services/mutations/contact.update';

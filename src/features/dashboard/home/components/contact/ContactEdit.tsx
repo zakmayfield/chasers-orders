@@ -44,13 +44,12 @@ export const ContactEdit: FC<ContactEditProps> = ({
 }) => {
   const { notify } = useToast();
 
-  const { edit, isSuccess } = useDashboardEdit({
+  const { edit } = useDashboardEdit({
     handleSwitchEditCallback,
     handleResetFormCB,
   });
 
   const onFormSubmit = () => {
-    console.log('submitted');
     const formValues = getValues();
     // if validated: run `edit(formValues)`
     try {
