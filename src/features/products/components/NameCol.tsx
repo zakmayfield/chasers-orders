@@ -26,46 +26,40 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
 
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
   const { favorites, isLoading } = useFavoritesQuery();
-  const { isProductFavorited, setIsProductFavorited } = useIsFavorite({
+  const { isProductFavorited } = useIsFavorite({
     favorites,
     id: info.row.original.id,
   });
 
   const { mutate: toggleFavorite } = useToggleFavoriteMutation({
-    onSuccess,
-    onError,
-  });
+    onSuccess(data: ExtendedFavorite) {
+      queryClient.setQueryData(
+        ['favorites'],
+        (oldData: ExtendedFavorite[] | undefined) => {
+          const newData = oldData && [data, ...oldData];
+          const filteredData =
+            oldData && oldData.filter((item) => item.id !== data.id);
 
-  function onSuccess(data: ExtendedFavorite) {
-    queryClient.setQueryData(
-      ['favorites'],
-      (oldData: ExtendedFavorite[] | undefined) => {
-        const newData = oldData && [data, ...oldData];
-        const filteredData =
-          oldData && oldData.filter((item) => item.id !== data.id);
+          return oldData
+            ? actionState === 'add'
+              ? newData
+              : filteredData
+            : oldData;
+        }
+      );
 
-        return oldData
-          ? actionState === 'add'
-            ? newData
-            : filteredData
-          : oldData;
+      notify(
+        actionState === 'add' ? `Added to favorites` : `Removed from favorites`
+      );
+    },
+    onError(error: unknown) {
+      if (error instanceof Error) {
+        notify(error.message, 'error');
+      } else {
+        notify('Error favoriting', 'error');
       }
-    );
-
-    notify(
-      actionState === 'add'
-        ? `Added to favorites ❤️`
-        : `Removed from favorites 💔`
-    );
-  }
-
-  function onError(error: unknown) {
-    if (error instanceof Error) {
-      notify(error.message, 'error');
-    } else {
-      notify('Error favoriting', 'error');
-    }
-  }
+    },
+  });
 
   const handleMutation = () => {
     const { favorite } = checkFavorite(favorites, info.row.original.id);
@@ -110,7 +104,7 @@ function LoadingFavorite() {
 function Favorited() {
   return (
     <div>
-      <PiHeartFill />
+      <PiHeartDuotone className='text-light-greenish' />
     </div>
   );
 }

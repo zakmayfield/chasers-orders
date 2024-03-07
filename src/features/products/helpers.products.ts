@@ -269,7 +269,6 @@ interface UseIsFavoriteProps {
     id: string;
   }): {
     isProductFavorited: boolean;
-    setIsProductFavorited: Dispatch<SetStateAction<boolean>>;
   };
 }
 
@@ -284,6 +283,5 @@ export const useIsFavorite: UseIsFavoriteProps = ({ favorites, id }) => {
 
   return {
     isProductFavorited,
-    setIsProductFavorited,
   };
 };
