@@ -148,32 +148,21 @@ export const useAddToCartMutation: UseAddToCartMutationProps = ({
   return { addToCartMutation };
 };
 
-interface UseColumnSizeMutationProps {
-  ({ cb }: { cb(value: string): Promise<void> }): {
-    setColumnSizeCache: UseMutateFunction<void, unknown, string, unknown>;
-  };
-}
-
-export const useColumnSizeMutation: UseColumnSizeMutationProps = ({ cb }) => {
-  const { mutate: setColumnSizeCache } = useMutation({
-    mutationFn: cb,
-  });
-
-  return { setColumnSizeCache };
-};
-
-interface UseSizeCacheQueryProps {
+interface UseSizeCache {
   ({ productId }: { productId: string }): {
-    getSizeCache(): {
-      sizeCache: string | undefined;
+    sizeQuery: () => {
+      sizeCache: SizeCache;
     };
+    sizeMutation: UseMutateFunction<void, unknown, string, unknown>;
   };
 }
 
-export const useSizeCacheQuery: UseSizeCacheQueryProps = ({ productId }) => {
+type SizeCache = string | undefined;
+
+export const useSizeCache: UseSizeCache = ({ productId }) => {
   const queryClient = useQueryClient();
 
-  function getSizeCache() {
+  function sizeQuery() {
     const sizeCache: string | undefined = queryClient.getQueryData([
       'size',
       productId,
@@ -184,18 +173,16 @@ export const useSizeCacheQuery: UseSizeCacheQueryProps = ({ productId }) => {
     };
   }
 
+  const { mutate: sizeMutation } = useMutation({
+    mutationFn: async (value: string) => {
+      queryClient.setQueryData(['size', productId], value);
+    },
+  });
+
   return {
-    getSizeCache,
+    sizeQuery,
+    sizeMutation,
   };
-};
-
-export const checkFavorite = (
-  favorites: ExtendedFavorite[] | undefined,
-  productId: string
-) => {
-  const favorite = favorites!.find((juice) => juice.juiceId === productId);
-
-  return { favorite };
 };
 
 interface UseToggleFavorite {

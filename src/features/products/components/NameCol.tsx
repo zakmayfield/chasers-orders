@@ -2,7 +2,6 @@
 import { useToast } from '@/hooks/general.hooks';
 import {
   useToggleFavoriteMutation,
-  checkFavorite,
   useFavoritesQuery,
   useIsFavorite,
   getActionToggle,

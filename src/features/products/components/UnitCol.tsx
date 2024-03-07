@@ -6,8 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import {
   getRowPayload,
-  useColumnSizeMutation,
-  useSizeCacheQuery,
+  useSizeCache,
 } from '@/features/products/helpers.products';
 import type { ProductWithUnits } from '@/features/products/types';
 
@@ -22,19 +21,15 @@ export const UnitCol: FC<UnitColProps> = ({ info }) => {
     rowPayload: { defaultUnit, units, product },
   } = getRowPayload(info);
 
-  const { setColumnSizeCache } = useColumnSizeMutation({
-    cb: mutateSizeCacheCallback,
-  });
-
-  const { getSizeCache } = useSizeCacheQuery({
+  const { sizeQuery, sizeMutation } = useSizeCache({
     productId: product.id,
   });
 
-  const { sizeCache } = getSizeCache();
+  const { sizeCache } = sizeQuery();
 
   const handleSizeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    setColumnSizeCache(value);
+    sizeMutation(value);
   };
 
   async function mutateSizeCacheCallback(value: string) {
