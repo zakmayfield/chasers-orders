@@ -3,7 +3,6 @@ import { useToast } from '@/hooks/general.hooks';
 import {
   useToggleFavoriteMutation,
   useFavoritesQuery,
-  useIsFavorite,
   getActionToggle,
 } from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
@@ -16,22 +15,23 @@ import { PiHeartDuotone, PiHeart, PiHeartFill } from 'react-icons/pi';
 
 export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
-  favorites: ExtendedFavorite[] | undefined;
-  isLoading: boolean;
 };
 
 export const NameCol: FC<NameColProps> = ({ info }) => {
-  const queryClient = useQueryClient();
   const { notify } = useToast();
+  const queryClient = useQueryClient();
+  const productId = info.row.original.id;
 
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
-  const { favorites, isLoading } = useFavoritesQuery();
-  const { isProductFavorited, favoriteId } = useIsFavorite({
-    favorites,
-    id: info.row.original.id,
+
+  const {
+    query: { isLoading },
+    currentProduct: { isProductFavorited, favoriteId },
+  } = useFavoritesQuery({
+    productId,
   });
 
-  const { mutate: toggleFavorite } = useToggleFavoriteMutation({
+  const { toggleFavoriteMutation } = useToggleFavoriteMutation({
     onSuccess(data: ExtendedFavorite) {
       queryClient.setQueryData(
         ['favorites'],
@@ -73,7 +73,7 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
     const { action } = actionPayload;
 
     setActionState(action);
-    toggleFavorite(actionPayload);
+    toggleFavoriteMutation(actionPayload);
   };
 
   return (

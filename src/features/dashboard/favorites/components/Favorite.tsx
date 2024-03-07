@@ -1,18 +1,20 @@
-import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
-import { useToast } from '@/hooks/general.hooks';
-import { useToggleFavoriteMutation } from '@/features/products/helpers.products';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
+import { fetchFirstUnitId } from '@/utils/favorites.utils';
+import { useToast } from '@/hooks/general.hooks';
 import { addItem } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
-import { fetchFirstUnitId } from '@/utils/favorites.utils';
+import {
+  useToggleFavoriteMutation,
+  ExtendedFavorite,
+} from '@/features/products/helpers.products';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const { mutate: toggleFavorite } = useToggleFavoriteMutation({
+  const { toggleFavoriteMutation } = useToggleFavoriteMutation({
     onSuccess,
     onError,
   });
@@ -91,7 +93,11 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
           <PiShoppingCartSimpleDuotone className='text-2xl hover:text-light-greenish' />
         </button>
 
-        <button onClick={() => toggleFavorite({ action: 'remove', id: favId })}>
+        <button
+          onClick={() =>
+            toggleFavoriteMutation({ action: 'remove', id: favId })
+          }
+        >
           <PiXCircleThin className='text-lg text-gray-500 hover:text-light-text' />
         </button>
       </div>

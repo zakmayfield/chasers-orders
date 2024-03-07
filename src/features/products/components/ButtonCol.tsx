@@ -1,34 +1,41 @@
 'use client';
 
 import { FC } from 'react';
-import { UnitsOnCartCacheType } from '@/features/cart/types';
 import { ProductWithUnits } from '@/features/products/types';
 import {
   getRowPayload,
+  useAddToCartMutation,
   useSizeCache,
 } from '@/features/products/helpers.products';
 import { Unit } from '@prisma/client';
-import { UseMutateFunction } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import { BsCartPlus } from 'react-icons/bs';
+import { useToast } from '@/hooks/general.hooks';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
-  addToCartMutation: UseMutateFunction<
-    UnitsOnCartCacheType,
-    unknown,
-    string,
-    unknown
-  >;
 }
 
-export const ButtonCol: FC<ButtonColProps> = ({ info, addToCartMutation }) => {
+export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
+  const { notify } = useToast();
+
   const {
     rowPayload: { defaultUnit, units, product },
   } = getRowPayload(info);
 
   const { sizeQuery, sizeMutation } = useSizeCache({
     productId: product.id,
+  });
+
+  const { addToCartMutation } = useAddToCartMutation({
+    onSuccessCallback() {
+      notify('Item added to cart');
+    },
+    onErrorCallback(error) {
+      if (error instanceof Error) {
+        notify(error.message, 'error');
+      }
+    },
   });
 
   const handleAddToCart = async () => {

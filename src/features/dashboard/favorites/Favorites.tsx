@@ -7,7 +7,9 @@ import EmptyFavorites from './components/EmptyFavorites';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
 
 export default function Favorites() {
-  const { favorites, isLoading } = useFavoritesQuery();
+  const {
+    query: { favorites, isLoading },
+  } = useFavoritesQuery({});
 
   if (favorites && favorites.length === 0) {
     return <EmptyFavorites />;

@@ -1,51 +1,16 @@
 'use client';
 
 import React from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-
-import { useToast } from '@/hooks/general.hooks';
 import {
-  useTableConfig,
-  useFavoritesQuery,
-} from '@/features/products/helpers.products';
-
-import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
-import {
-  getColumnHelper,
-  useAddToCartMutation,
   useFetchProductsQuery,
+  getColumnHelper,
+  useTableConfig,
 } from '@/features/products/helpers.products';
-
-import type { CartCache } from '@/features/cart/types';
+import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
 import { Pagination, Table, TableLoadingSkeleton } from './components/table';
 
 export const ProductsTable = () => {
-  const queryClient = useQueryClient();
-  const { notify } = useToast();
-
-  const { favorites } = useFavoritesQuery();
-  const { data, isLoading, isFetching } = useFetchProductsQuery();
-
-  const { addToCartMutation } = useAddToCartMutation({
-    onSuccessCallback(data) {
-      notify('Item added to cart');
-
-      // Update `cart` items cache with data from response
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              items: [data, ...oldData.items],
-            }
-          : oldData
-      );
-    },
-    onErrorCallback(error) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
-    },
-  });
+  const { data, isFetching } = useFetchProductsQuery();
 
   const columnHelper = getColumnHelper();
 
@@ -53,9 +18,7 @@ export const ProductsTable = () => {
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => (
-        <NameCol favorites={favorites} info={info} isLoading={isLoading} />
-      ),
+      cell: (info) => <NameCol info={info} />,
     }),
     columnHelper.accessor('category', {
       header: 'Category',
@@ -71,9 +34,7 @@ export const ProductsTable = () => {
       id: 'cta',
       header: '',
       enableColumnFilter: false,
-      cell: (info) => (
-        <ButtonCol info={info} addToCartMutation={addToCartMutation} />
-      ),
+      cell: (info) => <ButtonCol info={info} />,
     }),
   ];
 

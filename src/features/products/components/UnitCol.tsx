@@ -2,7 +2,6 @@
 
 import { FC } from 'react';
 import { Unit } from '@prisma/client';
-import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import {
   getRowPayload,
@@ -15,8 +14,6 @@ interface UnitColProps {
 }
 
 export const UnitCol: FC<UnitColProps> = ({ info }) => {
-  const queryClient = useQueryClient();
-
   const {
     rowPayload: { defaultUnit, units, product },
   } = getRowPayload(info);
@@ -31,10 +28,6 @@ export const UnitCol: FC<UnitColProps> = ({ info }) => {
     const value = e.target.value;
     sizeMutation(value);
   };
-
-  async function mutateSizeCacheCallback(value: string) {
-    queryClient.setQueryData(['size', product.id], value);
-  }
 
   const unitOptions = units.map((unitInfo) => (
     <option key={unitInfo.id} value={unitInfo.size}>
