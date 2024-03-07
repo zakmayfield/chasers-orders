@@ -6,7 +6,7 @@ type ReturnType = {
   (productId: string): Promise<string | undefined>;
 };
 
-export const fetchFirstUnitId: ReturnType = async (productId) => {
+export const getFirstUnitOfProduct: ReturnType = async (productId) => {
   const product = await db.product.findUnique({
     where: { id: productId },
     select: {

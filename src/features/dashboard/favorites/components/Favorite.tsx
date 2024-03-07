@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
-import { fetchFirstUnitId } from '@/utils/favorites.utils';
+import { getFirstUnitOfProduct } from '@/features/products/utils.products';
 import { useToast } from '@/hooks/general.hooks';
 import { addItem } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
@@ -63,7 +63,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
 
   async function handleAddUnitToCart() {
     // server function
-    const firstUnitId = await fetchFirstUnitId(productId);
+    const firstUnitId = await getFirstUnitOfProduct(productId);
     addToCart(firstUnitId!);
   }
 
