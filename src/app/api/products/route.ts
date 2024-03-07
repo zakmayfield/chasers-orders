@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import { ProductWithUnits } from '@/types/types.product';
+import { ProductWithUnits } from '@/features/products/types';
 
 export async function GET() {
   const session = await getAuthSession();

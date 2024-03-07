@@ -23,12 +23,9 @@ export async function PUT(req: Request) {
     return new Response(JSON.stringify(updatedCompany));
   } catch (error) {
     if (error instanceof Error) {
-      return (
-        new Response(error.message),
-        {
-          status: 500,
-        }
-      );
+      return new Response(error.message, {
+        status: 500,
+      });
     }
   }
 }

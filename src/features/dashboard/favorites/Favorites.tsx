@@ -1,13 +1,15 @@
 'use client';
 
-import { useFavoritesQuery } from '@/hooks/queries/useFavoritesQuery';
+import { useFavorites } from '@/features/products/helpers.products';
 import Favorite from './components/Favorite';
 import FavoritesLoadingSkeleton from './components/FavoritesLoadingSkeleton';
 import EmptyFavorites from './components/EmptyFavorites';
-import LoadingSpinner from '@/features/spinner/LoadingSpinner';
+import LoadingSpinner from '@/features/shared/LoadingSpinner';
 
 export default function Favorites() {
-  const { favorites, isLoading } = useFavoritesQuery();
+  const {
+    query: { favorites, isLoading },
+  } = useFavorites({});
 
   if (favorites && favorites.length === 0) {
     return <EmptyFavorites />;

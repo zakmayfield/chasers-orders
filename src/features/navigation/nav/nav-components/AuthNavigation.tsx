@@ -1,16 +1,10 @@
 'use client';
-import { useQueryClient } from '@tanstack/react-query';
 import { signOut } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { navData } from '../navData';
 import { AuthNavItem } from './AuthNavItem';
 
-export default function AuthNavigation({
-  isApproved,
-}: {
-  isApproved: boolean;
-}) {
-  const queryClient = useQueryClient();
+export default function AuthNavigation() {
   const pathname = usePathname();
 
   return (

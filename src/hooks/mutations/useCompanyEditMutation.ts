@@ -1,4 +1,4 @@
-import { Contact, Company } from '@prisma/client';
+import { Company } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DashboardUserData } from '@/types/types.dashboard';
 import { useToast } from '../general.hooks';
@@ -46,7 +46,12 @@ export const useCompanyEditMutation = ({
       queryClient.setQueryData(
         ['user-dashboard'],
         (oldData: DashboardUserData | undefined) => {
-          const { userId, ...company } = data!;
+          const company = {
+            id: data!.id,
+            name: data!.name,
+            accountPayableEmail: data!.accountPayableEmail,
+            paymentMethod: data!.paymentMethod,
+          };
           return oldData
             ? { ...oldData, company: { ...oldData.company, ...company } }
             : oldData;

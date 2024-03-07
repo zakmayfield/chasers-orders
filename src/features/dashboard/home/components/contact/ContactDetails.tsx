@@ -19,7 +19,7 @@ export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
 
   // EDIT FORM STUFF
   const {
-    formState: { errors, isValid, isDirty },
+    formState: { errors, isDirty },
     register,
     handleSubmit,
     getValues,

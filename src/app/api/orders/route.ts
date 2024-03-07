@@ -22,7 +22,7 @@ export async function GET() {
     return new Response(JSON.stringify(orders), { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message), { status: 500 };
+      return new Response(error.message, { status: 500 });
     }
   }
 }

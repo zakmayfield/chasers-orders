@@ -1,7 +1,7 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { CartCache, UnitsOnCartCacheType } from '@/types/types.cart';
+import { CartCache } from '@/features/cart/types';
 import { Prisma } from '@prisma/client';
 
 export async function POST(req: Request) {
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(returnPayload), { status: 200 });
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message), { status: 500 };
+      return new Response(error.message, { status: 500 });
     }
   }
 }

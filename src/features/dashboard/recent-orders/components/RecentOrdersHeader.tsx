@@ -1,5 +1,4 @@
-import LoadingSpinner from '@/features/spinner/LoadingSpinner';
-import { PiSpinnerGapThin } from 'react-icons/pi';
+import LoadingSpinner from '@/features/shared/LoadingSpinner';
 
 function RecentOrdersHeader({
   isLoading,

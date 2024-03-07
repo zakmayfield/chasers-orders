@@ -20,7 +20,7 @@ const DashNavItem = ({
       pathname === route || (route !== basePath && pathname.startsWith(route));
 
     setActive(isActive);
-  }, [pathname]);
+  }, [route, pathname]);
 
   return (
     <Link

@@ -5,6 +5,8 @@ interface RecentOrderItemsProps {
   order: LineItemProducts | undefined;
 }
 
+// TODO: add the `size` to UI, will need to change data a bit
+
 export const RecentOrderItems: FC<RecentOrderItemsProps> = ({ order }) => {
   return (
     <div>
