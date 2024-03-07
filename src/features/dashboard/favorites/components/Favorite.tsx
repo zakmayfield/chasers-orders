@@ -14,30 +14,25 @@ import {
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
+
   const { toggleFavoriteMutation } = useToggleFavoriteMutation({
-    onSuccess,
-    onError,
-  });
+    onSuccess() {
+      queryClient.setQueryData(
+        ['favorites'],
+        (oldData: ExtendedFavorite[] | undefined) => {
+          const filtered = oldData && oldData.filter(({ id }) => id !== fav.id);
+          return oldData ? filtered : oldData;
+        }
+      );
 
-  function onSuccess() {
-    queryClient.setQueryData(
-      ['favorites'],
-      (oldData: ExtendedFavorite[] | undefined) => {
-        const filtered = oldData && oldData.filter(({ id }) => id !== fav.id);
-        return oldData ? filtered : oldData;
+      notify('Removed from favorites');
+    },
+    onError(error: unknown) {
+      if (error instanceof Error) {
+        notify(error.message, 'error');
       }
-    );
-
-    notify('Removed from favorites');
-  }
-
-  function onError(error: unknown) {
-    if (error instanceof Error) {
-      notify(error.message, 'error');
-    } else {
-      notify('Error toggling favorite', 'error');
-    }
-  }
+    },
+  });
 
   const { mutate: addToCart } = useMutation({
     mutationFn: addItem,

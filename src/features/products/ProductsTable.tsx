@@ -5,12 +5,14 @@ import {
   useFetchProductsQuery,
   getColumnHelper,
   useTableConfig,
+  useFavoritesQuery,
 } from '@/features/products/helpers.products';
 import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
 import { Pagination, Table, TableLoadingSkeleton } from './components/table';
 
 export const ProductsTable = () => {
   const { data, isFetching } = useFetchProductsQuery();
+  const { isLoading, favorites } = useFavoritesQuery();
 
   const columnHelper = getColumnHelper();
 
@@ -18,7 +20,9 @@ export const ProductsTable = () => {
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => <NameCol info={info} />,
+      cell: (info) => (
+        <NameCol info={info} isLoading={isLoading} favorites={favorites} />
+      ),
     }),
     columnHelper.accessor('category', {
       header: 'Category',

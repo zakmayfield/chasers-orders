@@ -2,32 +2,31 @@
 import { useToast } from '@/hooks/general.hooks';
 import {
   useToggleFavoriteMutation,
-  useFavoritesQuery,
   getActionToggle,
+  useIsFavorite,
 } from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
-import { FC, useState } from 'react';
-import { ActionTypes } from '@/features/products/types';
+import { FC, useEffect, useState } from 'react';
 import type { ExtendedFavorite } from '@/features/products/helpers.products';
-import { PiHeartDuotone, PiHeart, PiHeartFill } from 'react-icons/pi';
+import { PiHeartDuotone, PiHeart } from 'react-icons/pi';
 
 export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
+  favorites: ExtendedFavorite[] | undefined;
+  isLoading: boolean;
 };
 
-export const NameCol: FC<NameColProps> = ({ info }) => {
+export const NameCol: FC<NameColProps> = ({ info, favorites, isLoading }) => {
   const { notify } = useToast();
   const queryClient = useQueryClient();
   const productId = info.row.original.id;
 
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
 
-  const {
-    query: { isLoading },
-    currentProduct: { isProductFavorited, favoriteId },
-  } = useFavoritesQuery({
+  const { isProductFavorited, favoriteId } = useIsFavorite({
+    favorites,
     productId,
   });
 
@@ -55,15 +54,11 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
     onError(error: unknown) {
       if (error instanceof Error) {
         notify(error.message, 'error');
-      } else {
-        notify('Error favoriting', 'error');
       }
     },
   });
 
   const handleToggleFavorite = () => {
-    const productId = info.row.original.id;
-
     const { actionPayload } = getActionToggle({
       favoriteId,
       productId,

@@ -18,7 +18,7 @@ import {
 
 import { getProducts } from '@/features/products/services.products';
 import { addItem } from '@/features/cart/services.cart';
-import { toggleFavorite } from '@/services/mutations/favorite.toggleFavorite';
+import { toggleFavorite } from '@/features/products/services.products';
 import { getFavorites } from '@/services/queries/favorite.getFavorites';
 
 import type { Favorite, Product, Unit } from '@prisma/client';
@@ -201,6 +201,38 @@ export const useSizeCache: UseSizeCache = ({ productId }) => {
   };
 };
 
+interface GetActionToggle {
+  ({
+    favoriteId,
+    productId,
+    isProductFavorited,
+  }: {
+    favoriteId?: string;
+    productId: string;
+    isProductFavorited: boolean;
+  }): {
+    actionPayload: ActionTypes;
+  };
+}
+
+export const getActionToggle: GetActionToggle = ({
+  favoriteId,
+  productId,
+  isProductFavorited,
+}) => {
+  let actionPayload: ActionTypes;
+
+  if (isProductFavorited && favoriteId) {
+    // remove favorite by id
+    actionPayload = { action: 'remove', id: favoriteId! };
+  } else {
+    // favorite product by id
+    actionPayload = { action: 'add', id: productId };
+  }
+
+  return { actionPayload };
+};
+
 interface UseToggleFavorite {
   ({ onSuccess, onError }: ToggleFavoriteProps): {
     toggleFavoriteMutation: UseMutateFunction<
@@ -235,88 +267,58 @@ export const useToggleFavoriteMutation: UseToggleFavorite = ({
 };
 
 interface UseFavoritesQuery {
-  ({ productId }: { productId?: string }): UseFavoritesQueryReturn;
-}
-
-type UseFavoritesQueryReturn = {
-  query: {
+  (): {
     favorites: ExtendedFavorite[] | undefined;
     isLoading: boolean;
   };
-  currentProduct: {
-    isProductFavorited: boolean;
-    favoriteId: string | undefined;
-  };
-};
+}
 
 export type ExtendedFavorite = Omit<Favorite, 'userId'> & {
   juice: Product;
 };
 
-export const useFavoritesQuery: UseFavoritesQuery = ({ productId }) => {
-  const [isProductFavorited, setIsProductFavorited] = useState(false);
-  const [favoriteId, setFavoriteId] = useState<string | undefined>(undefined);
-
+export const useFavoritesQuery: UseFavoritesQuery = () => {
   const { data: favorites, isLoading } = useQuery<ExtendedFavorite[], Error>({
     queryKey: ['favorites'],
     queryFn: getFavorites,
     staleTime: Infinity,
   });
 
+  return {
+    favorites,
+    isLoading,
+  };
+};
+
+interface UseIsFavoritProps {
+  ({
+    favorites,
+    productId,
+  }: {
+    favorites: ExtendedFavorite[] | undefined;
+    productId: string;
+  }): {
+    isProductFavorited: boolean;
+    favoriteId: string | undefined;
+  };
+}
+
+export const useIsFavorite: UseIsFavoritProps = ({ favorites, productId }) => {
+  const [isProductFavorited, setIsProductFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState<string | undefined>(undefined);
+
   useEffect(() => {
     const favorite =
-      favorites &&
-      productId &&
-      favorites.find((item) => item.juiceId === productId);
+      favorites && favorites.find((item) => item.juiceId === productId);
 
     if (favorite) {
       setFavoriteId(favorite.id);
       setIsProductFavorited(!!favorite);
     }
-  }, [favorites]);
+  }, [favorites, productId]);
 
-  const returnPayload = {
-    query: {
-      favorites,
-      isLoading,
-    },
-    currentProduct: {
-      isProductFavorited,
-      favoriteId,
-    },
-  };
-
-  return returnPayload;
-};
-
-interface GetActionToggle {
-  ({
-    favoriteId,
-    productId,
+  return {
     isProductFavorited,
-  }: {
-    favoriteId?: string;
-    productId: string;
-    isProductFavorited: boolean;
-  }): {
-    actionPayload: ActionTypes;
+    favoriteId: isProductFavorited ? favoriteId : undefined,
   };
-}
-
-export const getActionToggle: GetActionToggle = ({
-  favoriteId,
-  productId,
-  isProductFavorited,
-}) => {
-  let actionPayload: ActionTypes;
-
-  if (isProductFavorited && favoriteId) {
-    // remove favorite by id
-    actionPayload = { action: 'remove', id: favoriteId };
-  } else {
-    // favorite product by id
-    actionPayload = { action: 'add', id: productId };
-  }
-
-  return { actionPayload };
 };

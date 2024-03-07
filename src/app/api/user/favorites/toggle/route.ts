@@ -2,7 +2,7 @@ import { getAuthSession } from '@/lib/auth/auth.options';
 import { NextRequest } from 'next/server';
 import { headers } from 'next/headers';
 import { db } from '@/lib/prisma';
-import { Actions } from '@/services/mutations/favorite.toggleFavorite';
+import { Actions } from '@/features/products/types';
 
 const handler = async (req: NextRequest) => {
   const session = await getAuthSession();
@@ -32,6 +32,8 @@ const handler = async (req: NextRequest) => {
   } else {
     return new Response('Invalid action', { status: 400 });
   }
+
+  console.log({ actionFlag, action });
 
   // ACTION TYPES
   type AddAction = { juiceId: string };
