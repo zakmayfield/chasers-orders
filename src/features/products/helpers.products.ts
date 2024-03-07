@@ -29,6 +29,7 @@ export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 
 export const useTableConfig = (
   data: ProductWithUnits[] | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<ProductWithUnits, any>[]
 ) => {
   const options = {

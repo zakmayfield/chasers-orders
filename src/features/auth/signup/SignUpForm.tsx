@@ -470,6 +470,7 @@ function NextStepButton({
       // define current form state
       const formValues = getValues();
       // spread all values except for password
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...secureFormValues } = formValues;
       // set form state to cache
       queryClient.setQueryData(['form-values'], secureFormValues);

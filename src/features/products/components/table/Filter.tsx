@@ -7,6 +7,7 @@ export const Filter = ({
   column,
 }: {
   reactTable: ReactTable<ProductWithUnits>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   column: Column<any, any>;
 }) => {
   const firstValue = reactTable

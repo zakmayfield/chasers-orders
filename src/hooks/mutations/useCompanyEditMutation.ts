@@ -46,7 +46,12 @@ export const useCompanyEditMutation = ({
       queryClient.setQueryData(
         ['user-dashboard'],
         (oldData: DashboardUserData | undefined) => {
-          const { userId, ...company } = data!;
+          const company = {
+            id: data!.id,
+            name: data!.name,
+            accountPayableEmail: data!.accountPayableEmail,
+            paymentMethod: data!.paymentMethod,
+          };
           return oldData
             ? { ...oldData, company: { ...oldData.company, ...company } }
             : oldData;
