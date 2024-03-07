@@ -1,41 +1,38 @@
-import { ExtendedFavorite } from '@/hooks/queries/useFavoritesQuery';
-import { useToast } from '@/hooks/general.hooks';
-import { useToggleFavoriteMutation } from '@/hooks/mutation.hooks';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
+import { getFirstUnitOfProduct } from '@/features/products/utils.products';
+import { useToast } from '@/hooks/general.hooks';
 import { addItem } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
-import { fetchFirstUnitId } from '@/utils/favorites.utils';
+import {
+  useToggleFavoriteMutation,
+  ExtendedFavorite,
+} from '@/features/products/helpers.products';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const { mutate: toggleFavorite } = useToggleFavoriteMutation({
-    onSuccess,
-    onError,
-  });
 
-  function onSuccess() {
-    queryClient.setQueryData(
-      ['favorites'],
-      (oldData: ExtendedFavorite[] | undefined) => {
-        const filtered = oldData && oldData.filter(({ id }) => id !== fav.id);
-        return oldData ? filtered : oldData;
+  const { toggleFavoriteMutation } = useToggleFavoriteMutation({
+    onSuccess() {
+      queryClient.setQueryData(
+        ['favorites'],
+        (oldData: ExtendedFavorite[] | undefined) => {
+          const filtered = oldData && oldData.filter(({ id }) => id !== fav.id);
+          return oldData ? filtered : oldData;
+        }
+      );
+
+      notify('Removed from favorites');
+    },
+    onError(error: unknown) {
+      if (error instanceof Error) {
+        notify(error.message, 'error');
       }
-    );
-
-    notify('Removed from favorites');
-  }
-
-  function onError(error: unknown) {
-    if (error instanceof Error) {
-      notify(error.message, 'error');
-    } else {
-      notify('Error toggling favorite', 'error');
-    }
-  }
+    },
+  });
 
   const { mutate: addToCart } = useMutation({
     mutationFn: addItem,
@@ -66,7 +63,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
 
   async function handleAddUnitToCart() {
     // server function
-    const firstUnitId = await fetchFirstUnitId(productId);
+    const firstUnitId = await getFirstUnitOfProduct(productId);
     addToCart(firstUnitId!);
   }
 
@@ -91,7 +88,11 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
           <PiShoppingCartSimpleDuotone className='text-2xl hover:text-light-greenish' />
         </button>
 
-        <button onClick={() => toggleFavorite({ action: 'remove', id: favId })}>
+        <button
+          onClick={() =>
+            toggleFavoriteMutation({ action: 'remove', id: favId })
+          }
+        >
           <PiXCircleThin className='text-lg text-gray-500 hover:text-light-text' />
         </button>
       </div>

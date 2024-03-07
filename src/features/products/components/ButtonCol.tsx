@@ -1,52 +1,48 @@
 'use client';
+
 import { FC } from 'react';
-import { UnitsOnCartCacheType } from '@/features/cart/types';
 import { ProductWithUnits } from '@/features/products/types';
 import {
   getRowPayload,
-  useColumnSizeMutation,
-  useSizeCacheQuery,
+  useAddToCartMutation,
+  useSizeCache,
 } from '@/features/products/helpers.products';
 import { Unit } from '@prisma/client';
-import {
-  UseMutateFunction,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import { BsCartPlus } from 'react-icons/bs';
+import { useToast } from '@/hooks/general.hooks';
 
-export interface ButtonColProps {
+interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
-  addToCartMutation: UseMutateFunction<
-    UnitsOnCartCacheType,
-    unknown,
-    string,
-    unknown
-  >;
 }
 
-export const ButtonCol: FC<ButtonColProps> = ({ info, addToCartMutation }) => {
-  const queryClient = useQueryClient();
+export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
+  const { notify } = useToast();
 
-  const { rowPayload } = getRowPayload(info);
-  const { defaultUnit, units, product } = rowPayload;
+  const {
+    rowPayload: { defaultUnit, units, product },
+  } = getRowPayload(info);
 
-  const { setColumnSizeCache } = useColumnSizeMutation({
-    cb: async (value: string) => {
-      queryClient.setQueryData(['size', product.id], value);
-    },
-  });
-
-  const { getSizeCache } = useSizeCacheQuery({
+  const { sizeQuery, sizeMutation } = useSizeCache({
     productId: product.id,
   });
 
+  const { addToCartMutation } = useAddToCartMutation({
+    onSuccessCallback() {
+      notify('Item added to cart');
+    },
+    onErrorCallback(error) {
+      if (error instanceof Error) {
+        notify(error.message, 'error');
+      }
+    },
+  });
+
   const handleAddToCart = async () => {
-    const { sizeCache }: { sizeCache: string | undefined } = getSizeCache();
+    const { sizeCache } = sizeQuery();
 
     function setToCacheAndReturnUnit(size: string) {
-      setColumnSizeCache(size);
+      sizeMutation(size);
       const unit = units[0];
       return unit;
     }
