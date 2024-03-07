@@ -4,7 +4,7 @@ import { DashboardNavItems } from './nav-components';
 import { DashboardNavHeader } from './nav-components/DashboardNavHeader';
 
 export const DashboardNav = () => {
-  // TODO: Implement footer loading state
+  // TODO: add footer back and implement loading state
   return (
     <div
       className={`
@@ -18,7 +18,6 @@ export const DashboardNav = () => {
         <DashboardNavHeader />
         <DashboardNavItems />
       </div>
-      // Todo add footer back
     </div>
   );
 };
