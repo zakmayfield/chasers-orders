@@ -36,9 +36,6 @@ yarn-error.log*
 next-env.d.ts
 
 # db/prisma related stuff
-products.json
-products-original.json
-products-final.json
 
 todos.ts
 
