@@ -15,11 +15,10 @@ const Navbar: FC<NavProps> = async ({}) => {
   };
 
   const isAuth = checkAuth(session);
-  const isApproved = !!session?.user.isApproved;
 
   return (
     <nav className='flex items-center gap-6'>
-      <Navigation isAuth={isAuth} isApproved={isApproved} />
+      <Navigation isAuth={isAuth} />
     </nav>
   );
 };

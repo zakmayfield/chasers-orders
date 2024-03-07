@@ -5,17 +5,12 @@ import AuthNavigation from './AuthNavigation';
 
 interface NavigationProps {
   isAuth: boolean;
-  isApproved: boolean;
 }
 
-export const Navigation: FC<NavigationProps> = ({ isAuth, isApproved }) => {
+export const Navigation: FC<NavigationProps> = ({ isAuth }) => {
   return (
     <div className='flex items-center gap-6'>
-      {!isAuth ? (
-        <Link href='/'>Sign In</Link>
-      ) : (
-        <AuthNavigation isApproved={isApproved} />
-      )}
+      {!isAuth ? <Link href='/'>Sign In</Link> : <AuthNavigation />}
     </div>
   );
 };
