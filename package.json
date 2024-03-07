@@ -3,15 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   },
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma:migrate": "prisma migrate deploy",
-    "prisma:seed": "node ./node_modules/ts-node/dist/bin.js prisma/seed.ts"
+    "prisma:migrate": "prisma migrate deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
