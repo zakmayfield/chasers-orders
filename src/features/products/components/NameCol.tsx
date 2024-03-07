@@ -61,7 +61,7 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
     },
   });
 
-  const handleMutation = () => {
+  const handleToggleFavorite = () => {
     const { favorite } = checkFavorite(favorites, info.row.original.id);
     let action: ActionTypes;
 
@@ -77,7 +77,7 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
 
   return (
     <div className='w-80 flex items-center'>
-      <div className='cursor-pointer px-1' onClick={handleMutation}>
+      <div className='cursor-pointer px-1' onClick={handleToggleFavorite}>
         {isLoading ? (
           <LoadingFavorite />
         ) : isProductFavorited ? (
