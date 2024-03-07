@@ -3,14 +3,16 @@ import { useToast } from '@/hooks/general.hooks';
 import {
   useToggleFavoriteMutation,
   checkFavorite,
+  useFavoritesQuery,
+  useIsFavorite,
 } from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
-import { FC, useEffect, useState } from 'react';
-import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import { FC, useState } from 'react';
 import { ActionTypes } from '@/features/products/types';
 import type { ExtendedFavorite } from '@/features/products/helpers.products';
+import { PiHeartDuotone, PiHeart, PiHeartFill } from 'react-icons/pi';
 
 export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
@@ -18,12 +20,16 @@ export type NameColProps = {
   isLoading: boolean;
 };
 
-export const NameCol: FC<NameColProps> = ({ info, favorites }) => {
+export const NameCol: FC<NameColProps> = ({ info }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  const [isFav, setIsFav] = useState(false);
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
+  const { favorites, isLoading } = useFavoritesQuery();
+  const { isProductFavorited, setIsProductFavorited } = useIsFavorite({
+    favorites,
+    id: info.row.original.id,
+  });
 
   const { mutate: toggleFavorite } = useToggleFavoriteMutation({
     onSuccess,
@@ -75,20 +81,16 @@ export const NameCol: FC<NameColProps> = ({ info, favorites }) => {
     toggleFavorite(action);
   };
 
-  useEffect(() => {
-    const juice = favorites?.find(
-      (item) => item.juiceId === info.row.original.id
-    )
-      ? true
-      : false;
-
-    setIsFav(juice);
-  }, [favorites, info.row.original.id]);
-
   return (
     <div className='w-80 flex items-center'>
       <div className='cursor-pointer px-1' onClick={handleMutation}>
-        {isFav ? <FaHeart /> : <FaRegHeart />}
+        {isLoading ? (
+          <LoadingFavorite />
+        ) : isProductFavorited ? (
+          <Favorited />
+        ) : (
+          <Unfavorited />
+        )}
       </div>
       <div className='overflow-hidden text-ellipsis whitespace-nowrap pl-3'>
         {info.getValue()}
@@ -96,3 +98,27 @@ export const NameCol: FC<NameColProps> = ({ info, favorites }) => {
     </div>
   );
 };
+
+function LoadingFavorite() {
+  return (
+    <div>
+      <PiHeartDuotone className='animate-pulse' />
+    </div>
+  );
+}
+
+function Favorited() {
+  return (
+    <div>
+      <PiHeartFill />
+    </div>
+  );
+}
+
+function Unfavorited() {
+  return (
+    <div>
+      <PiHeart />
+    </div>
+  );
+}

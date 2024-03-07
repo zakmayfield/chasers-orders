@@ -21,6 +21,7 @@ import type { UnitsOnCartCacheType } from '@/features/cart/types';
 import { toggleFavorite } from '@/services/mutations/favorite.toggleFavorite';
 import { ActionTypes } from '@/features/products/types';
 import { getFavorites } from '@/services/queries/favorite.getFavorites';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 
@@ -257,4 +258,32 @@ export const useFavoritesQuery: UseFavoritesQuery = () => {
   });
 
   return { favorites, isLoading };
+};
+
+interface UseIsFavoriteProps {
+  ({
+    favorites,
+    id,
+  }: {
+    favorites: ExtendedFavorite[] | undefined;
+    id: string;
+  }): {
+    isProductFavorited: boolean;
+    setIsProductFavorited: Dispatch<SetStateAction<boolean>>;
+  };
+}
+
+export const useIsFavorite: UseIsFavoriteProps = ({ favorites, id }) => {
+  const [isProductFavorited, setIsProductFavorited] = useState(false);
+
+  useEffect(() => {
+    const juice = favorites?.find((item) => item.juiceId === id) ? true : false;
+
+    setIsProductFavorited(juice);
+  }, [favorites, id]);
+
+  return {
+    isProductFavorited,
+    setIsProductFavorited,
+  };
 };
