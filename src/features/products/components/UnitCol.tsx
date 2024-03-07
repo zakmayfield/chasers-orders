@@ -1,25 +1,26 @@
 'use client';
 
-import React from 'react';
+import { FC } from 'react';
 import { Unit } from '@prisma/client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import {
   getRowPayload,
   useColumnSizeMutation,
   useSizeCacheQuery,
 } from '@/features/products/helpers.products';
-import { ProductWithUnits } from '@/features/products/types';
+import type { ProductWithUnits } from '@/features/products/types';
 
-export interface UnitColumnProps {
+interface UnitColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
 }
 
-export const UnitCol: React.FC<UnitColumnProps> = ({ info }) => {
+export const UnitCol: FC<UnitColProps> = ({ info }) => {
   const queryClient = useQueryClient();
 
-  const { rowPayload } = getRowPayload(info);
-  const { defaultUnit, units, product } = rowPayload;
+  const {
+    rowPayload: { defaultUnit, units, product },
+  } = getRowPayload(info);
 
   const { setColumnSizeCache } = useColumnSizeMutation({
     cb: mutateSizeCacheCallback,
@@ -29,7 +30,7 @@ export const UnitCol: React.FC<UnitColumnProps> = ({ info }) => {
     productId: product.id,
   });
 
-  const { sizeCache }: { sizeCache: string | undefined } = getSizeCache();
+  const { sizeCache } = getSizeCache();
 
   const handleSizeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
