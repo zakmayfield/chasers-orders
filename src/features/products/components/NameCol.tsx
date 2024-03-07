@@ -5,6 +5,7 @@ import {
   checkFavorite,
   useFavoritesQuery,
   useIsFavorite,
+  getActionToggle,
 } from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
 import { useQueryClient } from '@tanstack/react-query';
@@ -26,7 +27,7 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
 
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
   const { favorites, isLoading } = useFavoritesQuery();
-  const { isProductFavorited } = useIsFavorite({
+  const { isProductFavorited, favoriteId } = useIsFavorite({
     favorites,
     id: info.row.original.id,
   });
@@ -62,17 +63,18 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
   });
 
   const handleToggleFavorite = () => {
-    const { favorite } = checkFavorite(favorites, info.row.original.id);
-    let action: ActionTypes;
+    const productId = info.row.original.id;
 
-    if (favorite) {
-      action = { action: 'remove', id: favorite.id };
-    } else {
-      action = { action: 'add', id: info.row.original.id };
-    }
+    const { actionPayload } = getActionToggle({
+      favoriteId,
+      productId,
+      isProductFavorited,
+    });
 
-    setActionState(action.action);
-    toggleFavorite(action);
+    const { action } = actionPayload;
+
+    setActionState(action);
+    toggleFavorite(actionPayload);
   };
 
   return (

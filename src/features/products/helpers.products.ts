@@ -269,19 +269,57 @@ interface UseIsFavoriteProps {
     id: string;
   }): {
     isProductFavorited: boolean;
+    favoriteId: string | null;
   };
 }
 
 export const useIsFavorite: UseIsFavoriteProps = ({ favorites, id }) => {
   const [isProductFavorited, setIsProductFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState<string | null>(null);
 
   useEffect(() => {
-    const juice = favorites?.find((item) => item.juiceId === id) ? true : false;
+    const juice = favorites?.find((item) => item.juiceId === id);
 
-    setIsProductFavorited(juice);
+    if (juice) {
+      setFavoriteId(juice.id);
+      setIsProductFavorited(!!juice);
+    }
   }, [favorites, id]);
 
   return {
     isProductFavorited,
+    favoriteId: isProductFavorited ? favoriteId : null,
   };
+};
+
+interface GetActionToggle {
+  ({
+    favoriteId,
+    productId,
+    isProductFavorited,
+  }: {
+    favoriteId: string | null;
+    productId: string;
+    isProductFavorited: boolean;
+  }): {
+    actionPayload: ActionTypes;
+  };
+}
+
+export const getActionToggle: GetActionToggle = ({
+  favoriteId,
+  productId,
+  isProductFavorited,
+}) => {
+  let actionPayload: ActionTypes;
+
+  if (isProductFavorited && favoriteId) {
+    // remove favorite by id
+    actionPayload = { action: 'remove', id: favoriteId };
+  } else {
+    // favorite product by id
+    actionPayload = { action: 'add', id: productId };
+  }
+
+  return { actionPayload };
 };
