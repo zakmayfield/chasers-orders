@@ -1,6 +1,6 @@
 'use client';
 
-import { DashboardNavItems, DashboardNavFooter } from './nav-components';
+import { DashboardNavItems } from './nav-components';
 import { DashboardNavHeader } from './nav-components/DashboardNavHeader';
 
 export const DashboardNav = () => {
@@ -18,8 +18,8 @@ export const DashboardNav = () => {
         <DashboardNavHeader />
         <DashboardNavItems />
       </div>
-
-      <DashboardNavFooter />
+      // Todo add footer back
+      {/* <DashboardNavFooter /> */}
     </div>
   );
 };
