@@ -33,8 +33,6 @@ const handler = async (req: NextRequest) => {
     return new Response('Invalid action', { status: 400 });
   }
 
-  console.log({ actionFlag, action });
-
   // ACTION TYPES
   type AddAction = { juiceId: string };
   type RemoveAction = { favoriteId: string };

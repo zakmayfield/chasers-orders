@@ -19,7 +19,7 @@ import {
 import { getProducts } from '@/features/products/services.products';
 import { addItem } from '@/features/cart/services.cart';
 import { toggleFavorite } from '@/features/products/services.products';
-import { getFavorites } from '@/services/queries/favorite.getFavorites';
+import { getFavorites } from '@/features/products/services.products';
 
 import type { Favorite, Product, Unit } from '@prisma/client';
 import type { ProductWithUnits, ActionTypes } from '@/features/products/types';
@@ -266,10 +266,16 @@ export const useToggleFavoriteMutation: UseToggleFavorite = ({
   return { toggleFavoriteMutation };
 };
 
-interface UseFavoritesQuery {
-  (): {
-    favorites: ExtendedFavorite[] | undefined;
-    isLoading: boolean;
+interface UseFavorites {
+  ({ productId }: { productId?: string }): {
+    query: {
+      favorites: ExtendedFavorite[] | undefined;
+      isLoading: boolean;
+    };
+    favorite: {
+      isProductFavorited: boolean;
+      favoriteId: string | undefined;
+    };
   };
 }
 
@@ -277,35 +283,15 @@ export type ExtendedFavorite = Omit<Favorite, 'userId'> & {
   juice: Product;
 };
 
-export const useFavoritesQuery: UseFavoritesQuery = () => {
+export const useFavorites: UseFavorites = ({ productId }) => {
+  const [isProductFavorited, setIsProductFavorited] = useState(false);
+  const [favoriteId, setFavoriteId] = useState<string | undefined>(undefined);
+
   const { data: favorites, isLoading } = useQuery<ExtendedFavorite[], Error>({
     queryKey: ['favorites'],
     queryFn: getFavorites,
     staleTime: Infinity,
   });
-
-  return {
-    favorites,
-    isLoading,
-  };
-};
-
-interface UseIsFavoritProps {
-  ({
-    favorites,
-    productId,
-  }: {
-    favorites: ExtendedFavorite[] | undefined;
-    productId: string;
-  }): {
-    isProductFavorited: boolean;
-    favoriteId: string | undefined;
-  };
-}
-
-export const useIsFavorite: UseIsFavoritProps = ({ favorites, productId }) => {
-  const [isProductFavorited, setIsProductFavorited] = useState(false);
-  const [favoriteId, setFavoriteId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     const favorite =
@@ -318,7 +304,13 @@ export const useIsFavorite: UseIsFavoritProps = ({ favorites, productId }) => {
   }, [favorites, productId]);
 
   return {
-    isProductFavorited,
-    favoriteId: isProductFavorited ? favoriteId : undefined,
+    query: {
+      favorites,
+      isLoading,
+    },
+    favorite: {
+      isProductFavorited,
+      favoriteId: isProductFavorited ? favoriteId : undefined,
+    },
   };
 };

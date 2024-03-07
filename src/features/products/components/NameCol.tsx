@@ -3,7 +3,7 @@ import { useToast } from '@/hooks/general.hooks';
 import {
   useToggleFavoriteMutation,
   getActionToggle,
-  useIsFavorite,
+  useFavorites,
 } from '@/features/products/helpers.products';
 import { ProductWithUnits } from '@/features/products/types';
 import { useQueryClient } from '@tanstack/react-query';
@@ -14,19 +14,19 @@ import { PiHeartDuotone, PiHeart } from 'react-icons/pi';
 
 export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
-  favorites: ExtendedFavorite[] | undefined;
-  isLoading: boolean;
 };
 
-export const NameCol: FC<NameColProps> = ({ info, favorites, isLoading }) => {
+export const NameCol: FC<NameColProps> = ({ info }) => {
   const { notify } = useToast();
   const queryClient = useQueryClient();
   const productId = info.row.original.id;
 
   const [actionState, setActionState] = useState<'add' | 'remove'>('add');
 
-  const { isProductFavorited, favoriteId } = useIsFavorite({
-    favorites,
+  const {
+    query: { isLoading },
+    favorite: { isProductFavorited, favoriteId },
+  } = useFavorites({
     productId,
   });
 

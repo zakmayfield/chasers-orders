@@ -5,14 +5,16 @@ import {
   useFetchProductsQuery,
   getColumnHelper,
   useTableConfig,
-  useFavoritesQuery,
+  useFavorites,
 } from '@/features/products/helpers.products';
 import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
 import { Pagination, Table, TableLoadingSkeleton } from './components/table';
 
 export const ProductsTable = () => {
   const { data, isFetching } = useFetchProductsQuery();
-  const { isLoading, favorites } = useFavoritesQuery();
+
+  // evoke here because remove favorite (NameCol) is broken without it
+  const {} = useFavorites({});
 
   const columnHelper = getColumnHelper();
 
@@ -20,9 +22,7 @@ export const ProductsTable = () => {
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      cell: (info) => (
-        <NameCol info={info} isLoading={isLoading} favorites={favorites} />
-      ),
+      cell: (info) => <NameCol info={info} />,
     }),
     columnHelper.accessor('category', {
       header: 'Category',
