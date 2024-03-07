@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "prisma:migrate": "prisma migrate deploy",
-    "prisma:seed": "ts-node prisma/seed.ts"
+    "prisma:seed": "node ./node_modules/ts-node/dist/bin.js prisma/seed.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
