@@ -19,7 +19,6 @@ export const DashboardNav = () => {
         <DashboardNavItems />
       </div>
       // Todo add footer back
-      {/* <DashboardNavFooter /> */}
     </div>
   );
 };
