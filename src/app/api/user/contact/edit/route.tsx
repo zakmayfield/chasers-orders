@@ -26,12 +26,9 @@ export async function PUT(req: NextRequest) {
     });
   } catch (error) {
     if (error instanceof Error) {
-      return (
-        new Response(error.message),
-        {
-          status: 500,
-        }
-      );
+      return new Response(error.message, {
+        status: 500,
+      });
     }
   }
 }

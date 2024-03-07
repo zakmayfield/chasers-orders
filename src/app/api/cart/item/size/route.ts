@@ -50,17 +50,12 @@ async function handler(req: Request) {
       },
     });
 
-    return new Response(JSON.stringify(u), {
-      status: 200,
-    });
+    return new Response(JSON.stringify(u));
   } catch (error) {
     if (error instanceof Error) {
-      return (
-        new Response(error.message),
-        {
-          status: 500,
-        }
-      );
+      return new Response(error.message, {
+        status: 500,
+      });
     }
   }
 }
