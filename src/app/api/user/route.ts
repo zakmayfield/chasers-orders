@@ -4,9 +4,9 @@ import { db } from '@/lib/prisma';
 export async function GET() {
   const session = await getAuthSession();
 
-  // if (!session?.user) {
-  //   return new Response('Unauthorized', { status: 401 });
-  // }
+  if (!session?.user) {
+    return new Response('Unauthorized', { status: 401 });
+  }
 
   const id = session?.user.id ?? '';
 
