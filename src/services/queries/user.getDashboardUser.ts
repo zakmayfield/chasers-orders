@@ -9,7 +9,6 @@ const prodBaseUrl = process.env.PROD_BASE_URL;
 
 export const getDashboardUser: GetDashboardUserDataProps = async () => {
   try {
-    // const fetchUrl = new URL(`/api/user`, process.env.NEXT_PUBLIC_BASE_URL);
     const fetchUrl = new URL(`/api/user`, process.env.NEXT_PUBLIC_BASE_URL);
     const response = await fetch(fetchUrl);
 
