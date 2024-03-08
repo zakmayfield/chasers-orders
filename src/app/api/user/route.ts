@@ -8,7 +8,7 @@ export async function GET() {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const { id } = session.user;
+  const id = session?.user.id ?? '';
 
   try {
     const user = await db.user.findUnique({
