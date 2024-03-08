@@ -7,9 +7,9 @@ import { userStatus } from './utils/auth.utils';
 */
 
 const allowedOrigins = [
-  'https://chasers-orders-git-dev-mayfieldcreates.vercel.app/',
-  'https://chasers-orders.vercel.app/',
-  'http://localhost:3000/',
+  'https://chasers-orders-git-dev-mayfieldcreates.vercel.app',
+  'https://chasers-orders.vercel.app',
+  'http://localhost:3000',
 ];
 
 const corsOptions = {
@@ -25,7 +25,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // Check the origin from the request
-  const origin = req.headers.get('origin') ?? '';
+  const origin = req.headers.get('origin') ?? ''; // todo: fix : returns '' for now
   const isAllowedOrigin = allowedOrigins.includes(origin);
 
   // Handle preflighted requests
@@ -62,7 +62,7 @@ export const config = {
     '/api/orders/:path*',
     '/api/products/:path*',
     '/api/trigger/:path*',
-    '/api/user/:path*',
+    // '/api/user/:path*', //todo: test commenting this out
     '/api/auth/email/verify',
   ],
 };
