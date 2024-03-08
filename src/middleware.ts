@@ -9,6 +9,7 @@ import { userStatus } from './utils/auth.utils';
 const allowedOrigins = [
   'https://chasers-orders-git-dev-mayfieldcreates.vercel.app/',
   'https://chasers-orders.vercel.app/',
+  'http://localhost:3000/',
 ];
 
 const corsOptions = {
@@ -53,5 +54,15 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/products', '/cart/:path*', '/dashboard/:path*'],
+  matcher: [
+    '/products',
+    '/cart/:path*',
+    '/dashboard/:path*',
+    '/api/cart/:path*',
+    '/api/orders/:path*',
+    '/api/products/:path*',
+    '/api/trigger/:path*',
+    '/api/user/:path*',
+    '/api/auth/email/verify',
+  ],
 };
