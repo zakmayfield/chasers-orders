@@ -18,12 +18,8 @@ type ResolvedVerificationCheck = {
 
 export const userStatus: ResolvedVerificationCheck = async (token) => {
   if (token && (!token.isApproved || !token.emailVerified)) {
-    const envURL =
-      process.env.NODE_ENV === 'development'
-        ? process.env.NEXT_PUBLIC_DEV_BASE_URL
-        : process.env.NEXT_PUBLIC_BASE_URL;
-
-    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, envURL);
+    const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, baseURL);
 
     try {
       const response = await fetch(apiUrl);
