@@ -7,11 +7,10 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && prisma migrate deploy && next build && npm run prisma:seed",
+    "build": "prisma generate && prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "prisma:migrate": "prisma migrate deploy",
-    "prisma:seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+    "prisma:migrate": "prisma migrate deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.1",
