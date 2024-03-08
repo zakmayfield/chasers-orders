@@ -21,10 +21,14 @@ async function main() {
     }
   } catch (error) {
     throw new Error(`Error seeding: ${error}`);
-  } finally {
-    await prisma.$disconnect();
-    process.exit(1);
   }
 }
 
-main();
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
