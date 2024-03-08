@@ -9,7 +9,7 @@ export default async function Home() {
   const user = session?.user;
 
   if (user) {
-    redirect('/products');
+    redirect('/dashboard');
   }
 
   return (

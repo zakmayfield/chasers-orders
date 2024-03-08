@@ -1,6 +1,5 @@
 import { JWT, getToken } from 'next-auth/jwt';
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { userStatus } from './utils/auth.utils';
 
 /*
@@ -14,8 +13,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
+  // Fetch user account status from token
   const { isApproved, emailVerified } = await userStatus(token);
 
+  // All routes except /dashboard will redirect conditionally
   if (
     !req.nextUrl.pathname.includes('/dashboard') &&
     (!isApproved || !emailVerified)
@@ -25,7 +26,7 @@ export async function middleware(req: NextRequest) {
     );
   }
 }
-// See "Matching Paths" below to learn more
+
 export const config = {
   matcher: ['/products', '/cart/:path*', '/dashboard/:path*'],
 };
