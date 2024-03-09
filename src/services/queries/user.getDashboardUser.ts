@@ -4,15 +4,9 @@ type GetDashboardUserDataProps = {
   (): Promise<DashboardUserData>;
 };
 
-// TODO: testing with line 10-16
 export const getDashboardUser: GetDashboardUserDataProps = async () => {
   try {
-    const envURL =
-      process.env.VERCEL_ENV === 'development'
-        ? process.env.NEXT_PUBLIC_DEV_BASE_URL
-        : process.env.NEXT_PUBLIC_BASE_URL;
-
-    const fetchUrl = new URL(`/api/user`, envURL);
+    const fetchUrl = new URL(`/api/user`, process.env.NEXT_PUBLIC_BASE_URL);
     const response = await fetch(fetchUrl);
 
     if (!response.ok) {
