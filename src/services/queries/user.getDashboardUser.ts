@@ -8,7 +8,7 @@ type GetDashboardUserDataProps = {
 export const getDashboardUser: GetDashboardUserDataProps = async () => {
   try {
     const envURL =
-      process.env.NODE_ENV === 'development'
+      process.env.VERCEL_ENV === 'development'
         ? process.env.NEXT_PUBLIC_DEV_BASE_URL
         : process.env.NEXT_PUBLIC_BASE_URL;
 
