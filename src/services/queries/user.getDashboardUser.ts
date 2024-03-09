@@ -4,9 +4,15 @@ type GetDashboardUserDataProps = {
   (): Promise<DashboardUserData>;
 };
 
+// TODO: testing with line 10-16
 export const getDashboardUser: GetDashboardUserDataProps = async () => {
   try {
-    const fetchUrl = new URL(`/api/user`, process.env.NEXT_PUBLIC_BASE_URL);
+    const envURL =
+      process.env.NODE_ENV === 'development'
+        ? process.env.NEXT_PUBLIC_DEV_BASE_URL
+        : process.env.NEXT_PUBLIC_BASE_URL;
+
+    const fetchUrl = new URL(`/api/user`, envURL);
     const response = await fetch(fetchUrl);
 
     if (!response.ok) {
