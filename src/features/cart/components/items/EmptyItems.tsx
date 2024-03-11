@@ -5,11 +5,11 @@ interface EmptyItemsProps {}
 
 export const EmptyItems: FC<EmptyItemsProps> = ({}) => {
   return (
-    <div className='py-6 font-light flex items-center gap-3  '>
-      <span>
+    <div className='font-light flex items-center justify-center min-h-[164px] bg-light-primary rounded-lg'>
+      <p className='flex items-center gap-3'>
         <MdOutlineRemoveShoppingCart />
-      </span>
-      <span>Your cart is empty</span>
+        <span>Your cart is empty</span>
+      </p>
     </div>
   );
 };

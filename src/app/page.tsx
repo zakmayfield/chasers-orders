@@ -1,5 +1,4 @@
 import { SignIn } from '@/features/auth/signin/SignIn';
-import GridContainer from '@/features/shared/GridContainer';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { redirect } from 'next/navigation';
 
@@ -13,8 +12,8 @@ export default async function Home() {
   }
 
   return (
-    <GridContainer cols={12}>
+    <div className='grid grid-cols-12 gap-4'>
       <SignIn />
-    </GridContainer>
+    </div>
   );
 }

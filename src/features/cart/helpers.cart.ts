@@ -10,7 +10,7 @@ interface UseFetchCartQuery {
 }
 
 export const useFetchCartQuery: UseFetchCartQuery = () => {
-  const { data, isFetching } = useQuery<CartCache | undefined, Error>({
+  const { data, isFetching } = useQuery<CartCache, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
     staleTime: Infinity,
