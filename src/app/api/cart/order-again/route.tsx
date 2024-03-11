@@ -45,21 +45,12 @@ export async function POST(req: Request) {
     });
 
     // Fetch cart cache units
-    const unitsOnCartPayload = await db.unitsOnCart.findMany({
+    const cartItems = await db.unitsOnCart.findMany({
       where: { cartId: cartId.id },
-      select: {
-        unitId: true,
-        quantity: true,
+      include: {
         unit: {
-          select: {
-            size: true,
-            code: true,
-            product: {
-              select: {
-                name: true,
-                category: true,
-              },
-            },
+          include: {
+            product: true,
           },
         },
       },
@@ -73,7 +64,7 @@ export async function POST(req: Request) {
       cartPayload: {
         id: cartId.id,
         userId: session.user.id,
-        items: unitsOnCartPayload,
+        items: cartItems,
       },
     };
 

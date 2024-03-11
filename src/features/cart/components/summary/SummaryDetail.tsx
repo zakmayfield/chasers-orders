@@ -1,7 +1,7 @@
 'use client';
 
 import { getCart } from '@/features/cart/services.cart';
-import { CartCache, UnitsOnCartCacheType } from '@/features/cart/types';
+import { CartCache, CartItem } from '@/features/cart/types';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { CiShop } from 'react-icons/ci';
@@ -67,7 +67,7 @@ function LoadingDetail() {
   );
 }
 
-function Detail({ item }: { item?: UnitsOnCartCacheType }) {
+function Detail({ item }: { item?: CartItem }) {
   const unit = item?.unit;
   const quantity = item?.quantity;
   const product = unit?.product;
