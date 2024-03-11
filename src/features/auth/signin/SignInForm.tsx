@@ -55,7 +55,6 @@ const SignInForm: FC<SignInFormProps> = ({}) => {
 
         <SignInButton
           isSubmitted={isSubmitted}
-          isValid={isValid}
           isSubmitSuccessful={isSubmitSuccessful}
         />
       </div>

@@ -3,13 +3,11 @@ import { FC } from 'react';
 
 interface SignInButtonProps {
   isSubmitted: boolean;
-  isValid: boolean;
   isSubmitSuccessful: boolean;
 }
 
 export const SignInButton: FC<SignInButtonProps> = ({
   isSubmitted,
-  isValid,
   isSubmitSuccessful,
 }) => {
   return (
