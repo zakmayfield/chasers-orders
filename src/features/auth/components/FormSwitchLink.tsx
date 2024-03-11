@@ -33,9 +33,9 @@ type SwitchLinkProps = {
 function SwitchLink({ label, content, path }: SwitchLinkProps) {
   return (
     <div className='text-center mt-12'>
-      <p>
+      <p className='text-sm'>
         {label}{' '}
-        <Link href={path} className='underline'>
+        <Link href={path} className='text-sm underline'>
           {content}
         </Link>
       </p>
