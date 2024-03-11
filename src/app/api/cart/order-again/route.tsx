@@ -1,7 +1,7 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { CartCache2 } from '@/features/cart/types';
+import { CartCache } from '@/features/cart/types';
 import { Prisma } from '@prisma/client';
 
 export async function POST(req: Request) {
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
 
     const returnPayload: {
       batchPayload: Prisma.BatchPayload;
-      cartPayload: CartCache2;
+      cartPayload: CartCache;
     } = {
       batchPayload,
       cartPayload: {

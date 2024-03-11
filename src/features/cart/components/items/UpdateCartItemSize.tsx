@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { CartCache2 } from '@/features/cart/types';
+import { CartCache } from '@/features/cart/types';
 import { useToast } from '@/hooks/general.hooks';
 import { SizesData, getItemSizes } from '@/features/cart/services.cart';
 import { updateItemSize } from '@/features/cart/services.cart';
@@ -37,7 +37,7 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
     onSuccess: (data) => {
       setSize(data?.unit.size);
 
-      queryClient.setQueryData(['cart'], (oldData: CartCache2 | undefined) =>
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
         oldData
           ? {
               ...oldData,

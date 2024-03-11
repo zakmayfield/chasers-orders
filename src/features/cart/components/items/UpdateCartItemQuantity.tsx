@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateItemQuantity } from '@/features/cart/services.cart';
-import { CartCache2 } from '@/features/cart/types';
+import { CartCache } from '@/features/cart/types';
 import { useToast } from '@/hooks/general.hooks';
 
 type UpdateCartItemQuantityProps = {
@@ -28,7 +28,7 @@ export const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
     onSuccess: (data) => {
       setQuantity(data.quantity);
 
-      queryClient.setQueryData(['cart'], (oldData: CartCache2 | undefined) =>
+      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
         oldData
           ? {
               ...oldData,

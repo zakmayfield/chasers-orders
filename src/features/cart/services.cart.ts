@@ -1,5 +1,5 @@
 import { Prisma, Unit, UnitsOnCart } from '@prisma/client';
-import type { CartCache2, CartItem } from '@/features/cart/types';
+import type { CartCache, CartItem } from '@/features/cart/types';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
 import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
@@ -8,11 +8,11 @@ import type { RemoveCartItemProps } from './components/items/RemoveCartItemButto
   ^ ----- QUERIES -----
 */
 
-interface GetCartCache2 {
-  (): Promise<CartCache2>;
+interface GetCartCache {
+  (): Promise<CartCache>;
 }
 
-export const getCart: GetCartCache2 = async () => {
+export const getCart: GetCartCache = async () => {
   try {
     const response = await fetch('/api/cart');
 
@@ -116,7 +116,7 @@ interface OrderAgainProps {
 
 export type OrderAgainResponse = {
   batchPayload: Prisma.BatchPayload;
-  cartPayload: CartCache2;
+  cartPayload: CartCache;
 };
 
 export const orderAgain: OrderAgainProps = async (order) => {

@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import type { CartCache2 } from '@/features/cart/types';
+import type { CartCache } from '@/features/cart/types';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
 
 interface ItemsHeaderProps {
   isFetching: boolean;
-  cart: CartCache2 | undefined;
+  cart: CartCache | undefined;
 }
 
 export const ItemsHeader: FC<ItemsHeaderProps> = ({ isFetching, cart }) => {
