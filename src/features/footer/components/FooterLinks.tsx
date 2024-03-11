@@ -9,14 +9,14 @@ interface FooterLinksProps {}
 
 export const FooterLinks: FC<FooterLinksProps> = ({}) => {
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-4 w-full'>
       <div>
         <h6 className='mb-1'>Chasers Fresh Juice</h6>
         <FooterNav />
       </div>
 
       <div>
-        <h6 className='mb-1'>Follow us</h6>
+        <h6 className='mb-1'>Socials</h6>
         <FooterSocials />
       </div>
     </div>
@@ -41,7 +41,6 @@ function FooterSocials() {
         <Link
           href='https://www.facebook.com/chasersjuicetoronto/'
           target='_blank'
-          className='text-lg'
         >
           <PiFacebookLogoDuotone />
         </Link>
@@ -49,7 +48,7 @@ function FooterSocials() {
           href='https://www.instagram.com/chasersjuicetoronto/'
           target='_blank'
         >
-          <PiInstagramLogoDuotone className='text-lg' />
+          <PiInstagramLogoDuotone />
         </Link>
       </div>
     </div>

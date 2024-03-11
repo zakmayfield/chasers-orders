@@ -4,8 +4,8 @@ interface FooterContactProps {}
 
 export const FooterContact: FC<FooterContactProps> = ({}) => {
   return (
-    <div>
-      <h6 className='mb-1'>Contact</h6>
+    <div className='w-full lg:self-start'>
+      <h6 className='mb-1'>Contact Us</h6>
       <ContactDetails />
     </div>
   );

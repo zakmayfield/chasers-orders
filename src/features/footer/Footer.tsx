@@ -6,9 +6,9 @@ interface FooterProps {}
 
 export const Footer: FC<FooterProps> = ({}) => {
   return (
-    <div className='min-h-[275px] bg-light-primary flex items-start w-full'>
-      <div className='w-full py-12'>
-        <div className='flex items-start gap-20 justify-center'>
+    <div className='min-h-[275px] bg-light-primary flex items-start w-full  py-6 '>
+      <div className='max-w-xs w-full mx-auto lg:max-w-max lg:w-full py-12 bg-white px-6 mb-6 lg:mb-0 rounded-2xl'>
+        <div className='flex flex-col lg:flex-row lgitems-start gap-4 lg:gap-20'>
           <FooterLogo />
           <FooterLinks />
           <FooterContact />
