@@ -61,19 +61,10 @@ async function handler(req: Request) {
       data: {
         ...payload,
       },
-      select: {
-        unitId: true,
-        quantity: true,
+      include: {
         unit: {
-          select: {
-            size: true,
-            code: true,
-            product: {
-              select: {
-                name: true,
-                category: true,
-              },
-            },
+          include: {
+            product: true,
           },
         },
       },

@@ -1,4 +1,4 @@
-import { CartCache } from '@/features/cart/types';
+import { CartItem } from '@/features/cart/types';
 import { Order, OrderLineItem } from '@prisma/client';
 
 type CreateOrderType = {
@@ -10,7 +10,7 @@ type OrderData = Order & {
 };
 
 export type CreateOrderPayload = {
-  items: CartCache['items'];
+  items: CartItem[];
   cartId: string;
 };
 
