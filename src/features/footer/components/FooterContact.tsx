@@ -13,7 +13,7 @@ export const FooterContact: FC<FooterContactProps> = ({}) => {
 
 function ContactDetails() {
   return (
-    <div className='bg-light-secondary rounded-lg p-2'>
+    <div className='bg-light-secondary rounded-lg py-2 px-4'>
       <p>(416) 259-1557</p>
       <p>orders@chasersjuice.com</p>
     </div>

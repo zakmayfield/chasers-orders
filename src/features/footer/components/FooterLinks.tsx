@@ -24,28 +24,22 @@ export const FooterLinks: FC<FooterLinksProps> = ({}) => {
 
 function FooterNav() {
   return (
-    <nav className='flex gap-3 bg-light-secondary rounded-lg p-2'>
-      <Link href='/products' className='underline'>
-        Shop
-      </Link>
-      <Link href='/cart' className='underline'>
-        Cart
-      </Link>
-      <Link href='/dashboard' className='underline'>
-        Dashboard
-      </Link>
-      <button onClick={() => signOut()} className='underline'>
-        Logout
-      </button>
+    <nav className='flex gap-3 bg-light-secondary rounded-lg py-2 px-4'>
+      <Link href='/products'>Shop</Link>
+      <Link href='/cart'>Cart</Link>
+      <Link href='/dashboard'>Dashboard</Link>
+      <button onClick={() => signOut()}>Logout</button>
     </nav>
   );
 }
 
 function FooterSocials() {
   return (
-    <div className='flex gap-3 bg-light-secondary rounded-lg p-2 '>
-      <a href='#'>x</a>
-      <a href='#'>y</a>
+    <div className='flex'>
+      <div className='flex gap-3 bg-light-secondary py-2 px-4 rounded-lg'>
+        <a href='#'>x</a>
+        <a href='#'>y</a>
+      </div>
     </div>
   );
 }
