@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import Header from '@/features/navigation/header/Header';
 import { getAuthSession } from '@/lib/auth/auth.options';
+import { Footer } from '@/features/footer';
 
 const quicksand = Quicksand({ subsets: ['latin'] });
 
@@ -30,9 +31,11 @@ export default async function RootLayout({
         <body className={quicksand.className}>
           {isAuth && <Header />}
 
-          <div className='py-6'>{children}</div>
+          <div className='py-6 min-h-screen'>{children}</div>
           <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer limit={4} autoClose={3000} position='bottom-right' />
+
+          {isAuth && <Footer />}
         </body>
       </Providers>
     </html>
