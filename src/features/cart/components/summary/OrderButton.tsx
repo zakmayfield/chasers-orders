@@ -47,10 +47,7 @@ export const OrderButton = () => {
         return oldData ? { ...oldData, items: [] } : oldData;
       });
 
-      {
-        /* TODO: implent routing on success */
-      }
-      // router.push('/dashboard/recent-orders');
+      router.push('/dashboard');
     },
     onError(error) {
       if (error instanceof Error) {
@@ -74,10 +71,12 @@ export const OrderButton = () => {
         col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm 
         ${cartData?.items.length === 0 && 'bg-slate-50'}
       `}
-      disabled={isSuccess || !cartData || cartData.items.length === 0}
+      disabled={
+        isSuccess || isLoading || !cartData || cartData.items.length === 0
+      }
     >
       {isLoading ? (
-        <LoadingSpinner />
+        <LoadingSpinner className='mx-auto' />
       ) : (
         <span
           className={`font-light ${cartData?.items.length === 0 && 'opacity-50 font-extralight'}`}
