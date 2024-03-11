@@ -93,7 +93,6 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
               )}
 
               <NextStepButton
-                content='contact'
                 step={step}
                 getValues={getValues}
                 handleStepChange={handleStepChangeCallback}
@@ -150,7 +149,6 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
               )}
 
               <NextStepButton
-                content='contact'
                 step={step}
                 getValues={getValues}
                 handleStepChange={handleStepChangeCallback}
@@ -213,7 +211,6 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
               )}
 
               <NextStepButton
-                content='contact'
                 step={step}
                 getValues={getValues}
                 handleStepChange={handleStepChangeCallback}
@@ -450,12 +447,10 @@ function FinalSubmitButton({
 }
 
 function NextStepButton({
-  content,
   step,
   getValues,
   handleStepChange,
 }: {
-  content: string;
   step: Steps;
   getValues: UseFormGetValues<SignUpFormData>;
   handleStepChange(): void;
