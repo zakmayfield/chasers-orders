@@ -9,7 +9,7 @@ interface FooterLogoProps {}
 const FooterLogo: FC<FooterLogoProps> = ({}) => {
   const router = useRouter();
   return (
-    <div className='self-center'>
+    <div className='self-start'>
       <button
         className='p-2 rounded-lg hover:ring-2'
         onClick={() => router.push('/products')}

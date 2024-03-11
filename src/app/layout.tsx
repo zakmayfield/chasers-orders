@@ -31,7 +31,7 @@ export default async function RootLayout({
         <body className={quicksand.className}>
           {isAuth && <Header />}
 
-          <div className='py-6'>{children}</div>
+          <div className='py-6 min-h-screen'>{children}</div>
           <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer limit={4} autoClose={3000} position='bottom-right' />
 
