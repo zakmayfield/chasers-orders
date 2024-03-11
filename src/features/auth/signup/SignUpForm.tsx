@@ -30,7 +30,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
     setValue,
     register,
     handleSubmit,
-    formState: { errors, isSubmitted },
+    formState: { errors, isSubmitted, isSubmitSuccessful },
   } = useSignUpForm();
 
   const { isChecked, handleCheckbox } = useBillingAddressSync({
@@ -412,7 +412,10 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
                 )}
               </div>
 
-              <FinalSubmitButton isSubmitted={isSubmitted} />
+              <FinalSubmitButton
+                isSubmitted={isSubmitted}
+                isSubmitSuccessful={isSubmitSuccessful}
+              />
             </div>
           </div>
         )}
@@ -423,15 +426,23 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
 
 export default SignUpForm;
 
-function FinalSubmitButton({ isSubmitted }: { isSubmitted: boolean }) {
+function FinalSubmitButton({
+  isSubmitted,
+  isSubmitSuccessful,
+}: {
+  isSubmitted: boolean;
+  isSubmitSuccessful: boolean;
+}) {
   return (
     <button
       type='submit'
       className={`
-        border-2 rounded-lg mt-6 col-span-6 p-2
+        border-2 rounded-lg mt-6 col-span-6 p-2 h-12 font-medium text-white
         flex items-center justify-center gap-3
         focus:ring-4 focus:ring-blue-400 bg-light-greenish/70
+        ${isSubmitted && isSubmitSuccessful && 'bg-light-greenish/50'}
       `}
+      disabled={isSubmitted && isSubmitSuccessful}
     >
       {isSubmitted ? <LoadingSpinner /> : 'Create Account'}
     </button>
@@ -487,7 +498,7 @@ function NextStepButton({
       onClick={handleNextStep}
       className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400`}
     >
-      <span>{content}</span>
+      <span>Next</span>
       <span>
         <IoIosReturnRight />
       </span>
