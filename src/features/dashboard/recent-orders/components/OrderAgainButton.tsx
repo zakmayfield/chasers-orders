@@ -3,7 +3,7 @@ import { orderAgain } from '@/features/cart/services.cart';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { OrderType } from '../RecentOrders';
-import { CartCache } from '@/features/cart/types';
+import { CartCache2 } from '@/features/cart/types';
 import { useRouter } from 'next/navigation';
 import { Prisma } from '@prisma/client';
 import { useToast } from '@/hooks/general.hooks';
@@ -28,8 +28,8 @@ const OrderAgainButton: FC<OrderAgainButtonProps> = ({ order }) => {
     },
   });
 
-  function handleSetCache(cartPayload: CartCache) {
-    queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+  function handleSetCache(cartPayload: CartCache2) {
+    queryClient.setQueryData(['cart'], (oldData: CartCache2 | undefined) =>
       oldData ? cartPayload : oldData
     );
   }

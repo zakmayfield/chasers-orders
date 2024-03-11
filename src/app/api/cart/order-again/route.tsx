@@ -1,7 +1,7 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { CartCache } from '@/features/cart/types';
+import { CartCache2 } from '@/features/cart/types';
 import { Prisma } from '@prisma/client';
 
 export async function POST(req: Request) {
@@ -45,21 +45,12 @@ export async function POST(req: Request) {
     });
 
     // Fetch cart cache units
-    const unitsOnCartPayload = await db.unitsOnCart.findMany({
+    const cartItems = await db.unitsOnCart.findMany({
       where: { cartId: cartId.id },
-      select: {
-        unitId: true,
-        quantity: true,
+      include: {
         unit: {
-          select: {
-            size: true,
-            code: true,
-            product: {
-              select: {
-                name: true,
-                category: true,
-              },
-            },
+          include: {
+            product: true,
           },
         },
       },
@@ -67,13 +58,13 @@ export async function POST(req: Request) {
 
     const returnPayload: {
       batchPayload: Prisma.BatchPayload;
-      cartPayload: CartCache;
+      cartPayload: CartCache2;
     } = {
       batchPayload,
       cartPayload: {
         id: cartId.id,
         userId: session.user.id,
-        items: unitsOnCartPayload,
+        items: cartItems,
       },
     };
 

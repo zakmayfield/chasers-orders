@@ -1,6 +1,6 @@
 'use client';
 
-import { UnitsOnCartCacheType } from '@/features/cart/types';
+import { CartItem as CartItemType } from '@/features/cart/types';
 import { RemoveCartItemButton } from './RemoveCartItemButton';
 import { UpdateCartItemSize } from './UpdateCartItemSize';
 import { UpdateCartItemQuantity } from './UpdateCartItemQuantity';
@@ -8,7 +8,7 @@ import { UpdateCartItemQuantity } from './UpdateCartItemQuantity';
 type CartItemProps = {
   payload: {
     cartId: string;
-    cartItem: UnitsOnCartCacheType;
+    cartItem: CartItemType;
   };
 };
 

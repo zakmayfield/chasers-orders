@@ -6,14 +6,14 @@ import {
   createOrder,
 } from '@/services/mutations/orders.create';
 import { getCart } from '@/features/cart/services.cart';
-import { CartCache } from '@/features/cart/types';
+import { CartCache2 } from '@/features/cart/types';
 
 export const OrderButton = () => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
   // Cart Cache query
-  const { data: cartData } = useQuery<CartCache | undefined, Error>({
+  const { data: cartData } = useQuery<CartCache2 | undefined, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
     staleTime: Infinity,
@@ -39,7 +39,7 @@ export const OrderButton = () => {
       );
 
       // Clear 'cart' items cache after successful order
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
+      queryClient.setQueryData(['cart'], (oldData: CartCache2 | undefined) => {
         return oldData ? { ...oldData, items: [] } : oldData;
       });
     },
@@ -51,7 +51,9 @@ export const OrderButton = () => {
   });
 
   const handlePlaceOrder = async () => {
-    const cartCache: CartCache | undefined = queryClient.getQueryData(['cart']);
+    const cartCache: CartCache2 | undefined = queryClient.getQueryData([
+      'cart',
+    ]);
     const payload: CreateOrderPayload = {
       items: cartCache!.items,
       cartId: cartCache!.id,

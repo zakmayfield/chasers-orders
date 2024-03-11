@@ -5,7 +5,7 @@ import { PiXCircleThin } from 'react-icons/pi';
 import { getFirstUnitOfProduct } from '@/features/products/utils.products';
 import { useToast } from '@/hooks/general.hooks';
 import { addItem } from '@/features/cart/services.cart';
-import { CartCache } from '@/features/cart/types';
+import { CartCache2 } from '@/features/cart/types';
 import {
   useToggleFavoriteMutation,
   ExtendedFavorite,
@@ -40,7 +40,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
       notify('Item added to cart');
 
       // Update `cart` items cache with data from response
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+      queryClient.setQueryData(['cart'], (oldData: CartCache2 | undefined) =>
         oldData
           ? {
               ...oldData,

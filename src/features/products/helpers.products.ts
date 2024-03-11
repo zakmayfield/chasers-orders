@@ -23,7 +23,7 @@ import { getFavorites } from '@/features/products/services.products';
 
 import type { Favorite, Product, Unit } from '@prisma/client';
 import type { ProductWithUnits, ActionTypes } from '@/features/products/types';
-import type { CartCache, UnitsOnCartCacheType } from '@/features/cart/types';
+import type { CartCache2, CartItem } from '@/features/cart/types';
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 
@@ -122,15 +122,10 @@ interface UseAddToCartMutationProps {
     onSuccessCallback,
     onErrorCallback,
   }: {
-    onSuccessCallback: (data: UnitsOnCartCacheType) => void;
+    onSuccessCallback: (data: CartItem) => void;
     onErrorCallback: (error: unknown) => void;
   }): {
-    addToCartMutation: UseMutateFunction<
-      UnitsOnCartCacheType,
-      unknown,
-      string,
-      unknown
-    >;
+    addToCartMutation: UseMutateFunction<CartItem, unknown, string, unknown>;
   };
 }
 
@@ -151,8 +146,8 @@ export const useAddToCartMutation: UseAddToCartMutationProps = ({
     },
   });
 
-  function setDataToCache(data: UnitsOnCartCacheType) {
-    queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+  function setDataToCache(data: CartItem) {
+    queryClient.setQueryData(['cart'], (oldData: CartCache2 | undefined) =>
       oldData
         ? {
             ...oldData,

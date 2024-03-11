@@ -20,26 +20,15 @@ async function handler() {
   try {
     const cart = await db.cart.findUnique({
       where: { userId },
-      select: {
-        id: true,
-        userId: true,
+      include: {
         items: {
           orderBy: {
             createdAt: 'desc',
           },
-          select: {
-            unitId: true,
-            quantity: true,
+          include: {
             unit: {
-              select: {
-                size: true,
-                code: true,
-                product: {
-                  select: {
-                    name: true,
-                    category: true,
-                  },
-                },
+              include: {
+                product: true,
               },
             },
           },

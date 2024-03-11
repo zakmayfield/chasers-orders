@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { LuTrash2 } from 'react-icons/lu';
 import { removeItem } from '@/features/cart/services.cart';
 import { useToast } from '@/hooks/general.hooks';
-import { CartCache, UnitsOnCartCacheType } from '@/features/cart/types';
+import { CartCache2, CartItem } from '@/features/cart/types';
 
 export interface RemoveCartItemProps {
   payload: RemoveItemPayloadData;
@@ -25,10 +25,10 @@ export const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
     onSuccess: (data) => {
       const { unitId } = data;
 
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
+      queryClient.setQueryData(['cart'], (oldData: CartCache2 | undefined) => {
         const items = oldData?.items.filter(
           (item) => item.unitId !== unitId
-        ) as UnitsOnCartCacheType[];
+        ) as CartItem[];
 
         return oldData
           ? {

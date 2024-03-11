@@ -1,5 +1,5 @@
 import { Prisma, Unit, UnitsOnCart } from '@prisma/client';
-import type { CartCache, UnitsOnCartCacheType } from '@/features/cart/types';
+import type { CartCache2, CartItem } from '@/features/cart/types';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
 import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
@@ -8,11 +8,11 @@ import type { RemoveCartItemProps } from './components/items/RemoveCartItemButto
   ^ ----- QUERIES -----
 */
 
-interface GetCartProps {
-  (): Promise<CartCache | undefined>;
+interface GetCartCache2 {
+  (): Promise<CartCache2>;
 }
 
-export const getCart: GetCartProps = async () => {
+export const getCart: GetCartCache2 = async () => {
   try {
     const response = await fetch('/api/cart');
 
@@ -84,7 +84,7 @@ export const getShipping: GetShippingProps = async () => {
 */
 
 interface AddItemToCartParams {
-  (unitId: string): Promise<UnitsOnCartCacheType>;
+  (unitId: string): Promise<CartItem>;
 }
 
 export const addItem: AddItemToCartParams = async (unitId) => {
@@ -116,7 +116,7 @@ interface OrderAgainProps {
 
 export type OrderAgainResponse = {
   batchPayload: Prisma.BatchPayload;
-  cartPayload: CartCache;
+  cartPayload: CartCache2;
 };
 
 export const orderAgain: OrderAgainProps = async (order) => {
@@ -177,7 +177,7 @@ interface UpdateItemQuantityType {
     cartId: string;
     unitId: string;
     quantityPayload: number;
-  }): Promise<UnitsOnCartCacheType>;
+  }): Promise<CartItem>;
 }
 
 export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
@@ -210,7 +210,7 @@ interface UpdateItemSizeProps {
     cartId: string;
     unitId: string;
     selectedUnitId: string | undefined;
-  }): Promise<UnitsOnCartCacheType>;
+  }): Promise<CartItem>;
 }
 
 export const updateItemSize: UpdateItemSizeProps = async (params) => {
