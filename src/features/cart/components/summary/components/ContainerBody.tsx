@@ -1,5 +1,4 @@
 import { FC } from 'react';
-import Link from 'next/link';
 import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import { DeliveryInstructions } from './DeliveryInstructions';
 import { ShippingAddress } from '@prisma/client';
