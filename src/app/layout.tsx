@@ -32,7 +32,7 @@ export default async function RootLayout({
 
           <div className='py-6'>{children}</div>
           <ReactQueryDevtools initialIsOpen={false} />
-          <ToastContainer limit={4} autoClose={3000} />
+          <ToastContainer limit={4} autoClose={3000} position='bottom-right' />
         </body>
       </Providers>
     </html>
