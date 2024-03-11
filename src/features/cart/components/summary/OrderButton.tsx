@@ -7,19 +7,23 @@ import {
 } from '@/services/mutations/orders.create';
 import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
+import { useRouter } from 'next/navigation';
+import LoadingSpinner from '@/features/shared/LoadingSpinner';
 
 export const OrderButton = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  // Cart Cache query
+  // Cart cache query
   const { data: cartData } = useQuery<CartCache | undefined, Error>({
     queryKey: ['cart'],
     queryFn: getCart,
     staleTime: Infinity,
   });
 
-  const { mutate, isSuccess } = useMutation({
+  // Create order mutation
+  const { mutate, isSuccess, isLoading } = useMutation({
     mutationFn: createOrder,
     onSuccess(data) {
       notify(`Order placed`);
@@ -42,6 +46,11 @@ export const OrderButton = () => {
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
         return oldData ? { ...oldData, items: [] } : oldData;
       });
+
+      {
+        /* TODO: implent routing on success */
+      }
+      // router.push('/dashboard/recent-orders');
     },
     onError(error) {
       if (error instanceof Error) {
@@ -61,11 +70,14 @@ export const OrderButton = () => {
   return (
     <button
       onClick={handlePlaceOrder}
-      className={`col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm ${cartData?.items.length === 0 && 'bg-slate-50'}`}
-      disabled={isSuccess || cartData?.items.length === 0}
+      className={`
+        col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm 
+        ${cartData?.items.length === 0 && 'bg-slate-50'}
+      `}
+      disabled={isSuccess || !cartData || cartData.items.length === 0}
     >
-      {isSuccess ? (
-        '👍'
+      {isLoading ? (
+        <LoadingSpinner />
       ) : (
         <span
           className={`font-light ${cartData?.items.length === 0 && 'opacity-50 font-extralight'}`}

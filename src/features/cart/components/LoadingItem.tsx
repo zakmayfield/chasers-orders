@@ -6,7 +6,7 @@ interface LoadingItemProps {}
 
 export const LoadingItem: FC<LoadingItemProps> = ({}) => {
   return (
-    <div className='w-full h-24 pb-3 border-b flex items-center gap-10 rounded-md animate-pulse'>
+    <div className='w-full h-24 pb-3 border-b flex items-center gap-10 animate-pulse'>
       <div className='w-4 h-4 bg-slate-200 rounded'></div>
 
       <div>
