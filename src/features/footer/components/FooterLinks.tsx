@@ -10,12 +10,12 @@ export const FooterLinks: FC<FooterLinksProps> = ({}) => {
   return (
     <div className='flex flex-col gap-3'>
       <div>
-        <p>Navigation</p>
+        <h6 className='mb-1'>Navigation</h6>
         <FooterNav />
       </div>
 
       <div>
-        <p>Socials</p>
+        <h6 className='mb-1'>Socials</h6>
         <FooterSocials />
       </div>
     </div>
