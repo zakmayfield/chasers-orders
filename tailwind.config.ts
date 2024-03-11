@@ -11,7 +11,7 @@ const config: Config = {
           tertiary: '#D0D3D7',
           accent: '#9FADBD',
           text: '#232323',
-          greenish: '#22bc57',
+          greenish: '#1c9f49',
         },
         dark: {
           primary: '#18191e',
