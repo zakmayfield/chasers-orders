@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { CiWarning } from 'react-icons/ci';
 import { getShipping } from '@/features/cart/services.cart';
 import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import { ContainerBody, ContainerError, ContainerHeader } from './components';

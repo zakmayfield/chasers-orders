@@ -3,6 +3,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DeliveryInstructionsValidator } from '@/features/cart/validator/validator.delivery-instructions';
 import { DeliveryInstructionsData } from '@/features/cart/types';
+import {
+  useEditDeliveryInstructionsForm,
+  useEditInstructionsMutation,
+} from '@/features/cart/helpers.cart';
 
 interface DeliveryInstructionsProps {
   content: string | null | undefined;
@@ -57,15 +61,18 @@ function InlineInstructionsEdit({
 }: {
   deliveryInstructions: string;
 }) {
-  const { register } = useForm<DeliveryInstructionsData>({
-    resolver: zodResolver(DeliveryInstructionsValidator),
-    defaultValues: {
-      deliveryInstructions,
-    },
+  const { register, handleSubmit } = useEditDeliveryInstructionsForm({
+    deliveryInstructions,
   });
 
+  const { editDeliveryInstructions } = useEditInstructionsMutation();
+
+  function submitHandler(data: DeliveryInstructionsData) {
+    editDeliveryInstructions(data);
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(submitHandler)}>
       <textarea
         {...register('deliveryInstructions')}
         className='border-l border-b rounded-bl p-3 w-full bg-white min-h-[6rem]'

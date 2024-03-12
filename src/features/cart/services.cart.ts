@@ -236,3 +236,35 @@ export const updateItemSize: UpdateItemSizeProps = async (params) => {
     }
   }
 };
+
+interface DeliveryInstructionsMutationProps {
+  ({ deliveryInstructions }: { deliveryInstructions: string }): Promise<{
+    shippingAddress: {
+      deliveryInstructions: string | null;
+    } | null;
+  }>;
+}
+
+export const deliveryInstructionsMutation: DeliveryInstructionsMutationProps =
+  async ({ deliveryInstructions }) => {
+    try {
+      const response = await fetch(`/api/user/company`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({ deliveryInstructions }),
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  };
