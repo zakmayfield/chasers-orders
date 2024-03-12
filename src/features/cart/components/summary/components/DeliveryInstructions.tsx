@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { UseFormHandleSubmit, UseFormRegister, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DeliveryInstructionsValidator } from '@/features/cart/validator/validator.delivery-instructions';
 import { DeliveryInstructionsData } from '@/features/cart/types';
 import {
-  useEditDeliveryInstructionsForm,
+  useInstructionEditForm,
   useEditInstructionsMutation,
 } from '@/features/cart/helpers.cart';
 
@@ -16,17 +16,34 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   content: deliveryInstructions,
 }) => {
   const [isEdit, setIsEdit] = useState(false);
+
   const toggleEdit = () => {
     setIsEdit(!isEdit);
   };
+
+  const { register, handleSubmit } = useInstructionEditForm({
+    deliveryInstructions: deliveryInstructions,
+  });
+
+  const { editDeliveryInstructions } = useEditInstructionsMutation();
+
+  function submitHandler(data: DeliveryInstructionsData) {
+    editDeliveryInstructions(data);
+  }
+
   return (
     <div className='mt-3'>
-      <DeliveryHeader toggleEdit={toggleEdit} />
+      <DeliveryHeader toggleEdit={toggleEdit} isEdit={isEdit} />
 
       {!deliveryInstructions ? (
         <NoInstructions toggleEdit={toggleEdit} />
       ) : isEdit ? (
-        <InlineInstructionsEdit deliveryInstructions={deliveryInstructions} />
+        <InlineInstructionsEdit
+          deliveryInstructions={deliveryInstructions}
+          handleSubmit={handleSubmit}
+          register={register}
+          submitHandler={submitHandler}
+        />
       ) : (
         <Instructions deliveryInstructions={deliveryInstructions} />
       )}
@@ -34,16 +51,27 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   );
 };
 
-function DeliveryHeader({ toggleEdit }: { toggleEdit: () => void }) {
+function DeliveryHeader({
+  toggleEdit,
+  isEdit,
+}: {
+  toggleEdit: () => void;
+  isEdit: boolean;
+}) {
   return (
     <div className='mb-3 flex items-center justify-between'>
       <h5 className='font-light text-lg'>Delivery Instructions:</h5>
-      <button
-        onClick={toggleEdit}
-        className=' border rounded-md hover:ring-2 px-2'
-      >
-        edit
-      </button>
+
+      {isEdit ? (
+        <button>save</button>
+      ) : (
+        <button
+          onClick={toggleEdit}
+          className=' border rounded-md hover:ring-2 px-2'
+        >
+          edit
+        </button>
+      )}
     </div>
   );
 }
@@ -57,20 +85,15 @@ function Instructions({
 }
 
 function InlineInstructionsEdit({
-  deliveryInstructions,
+  handleSubmit,
+  register,
+  submitHandler,
 }: {
   deliveryInstructions: string;
+  handleSubmit: UseFormHandleSubmit<DeliveryInstructionsData>;
+  register: UseFormRegister<DeliveryInstructionsData>;
+  submitHandler(data: DeliveryInstructionsData): void;
 }) {
-  const { register, handleSubmit } = useEditDeliveryInstructionsForm({
-    deliveryInstructions,
-  });
-
-  const { editDeliveryInstructions } = useEditInstructionsMutation();
-
-  function submitHandler(data: DeliveryInstructionsData) {
-    editDeliveryInstructions(data);
-  }
-
   return (
     <form onSubmit={handleSubmit(submitHandler)}>
       <textarea

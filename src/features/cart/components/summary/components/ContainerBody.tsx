@@ -13,6 +13,7 @@ export const ContainerBody: FC<ContainerBodyProps> = ({ data }) => {
   return (
     <div className='w-full p-4 font-extralight flex flex-col gap-3'>
       <p className='text-lg font-light'>{companyName}</p>
+
       <Address shippingAddress={shippingAddress} />
 
       {/* Special Instructions */}

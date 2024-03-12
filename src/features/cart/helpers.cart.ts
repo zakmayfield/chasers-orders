@@ -29,24 +29,29 @@ export const useFetchCartQuery: UseFetchCartQuery = () => {
   return { data, isFetching };
 };
 
-interface UseEditDeliveryInstructionsFormProps {
-  ({ deliveryInstructions }: { deliveryInstructions: string }): {
+interface UseInstructionEditFormProps {
+  ({
+    deliveryInstructions,
+  }: {
+    deliveryInstructions: string | null | undefined;
+  }): {
     register: UseFormRegister<DeliveryInstructionsData>;
     handleSubmit: UseFormHandleSubmit<DeliveryInstructionsData>;
   };
 }
 
-export const useEditDeliveryInstructionsForm: UseEditDeliveryInstructionsFormProps =
-  ({ deliveryInstructions }) => {
-    const { register, handleSubmit } = useForm<DeliveryInstructionsData>({
-      resolver: zodResolver(DeliveryInstructionsValidator),
-      defaultValues: {
-        deliveryInstructions,
-      },
-    });
+export const useInstructionEditForm: UseInstructionEditFormProps = ({
+  deliveryInstructions,
+}) => {
+  const { register, handleSubmit } = useForm<DeliveryInstructionsData>({
+    resolver: zodResolver(DeliveryInstructionsValidator),
+    defaultValues: {
+      deliveryInstructions: deliveryInstructions ? deliveryInstructions : '',
+    },
+  });
 
-    return { register, handleSubmit };
-  };
+  return { register, handleSubmit };
+};
 
 interface UseEditInstructionsMutation {
   (): {

@@ -14,7 +14,7 @@ export async function PUT(req: Request) {
   const { deliveryInstructions } = body;
 
   try {
-    const updatedShippingInstructions = await db.company.update({
+    const company = await db.company.update({
       where: { userId: session.user.id },
       data: {
         shippingAddress: {
@@ -33,6 +33,12 @@ export async function PUT(req: Request) {
         },
       },
     });
+
+    const updatedShippingInstructions =
+      company &&
+      company.shippingAddress &&
+      company.shippingAddress.deliveryInstructions;
+
     return new Response(JSON.stringify(updatedShippingInstructions));
   } catch (error) {
     if (error instanceof Error) {
