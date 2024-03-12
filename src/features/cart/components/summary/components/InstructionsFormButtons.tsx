@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { DeliveryInstructionsData } from '@/features/cart/types';
 import { FormState } from 'react-hook-form';
+import LoadingSpinner from '@/features/shared/LoadingSpinner';
 
 interface InstructionsFormButtonsProps {
   onSave: () => void;
@@ -27,20 +28,30 @@ export const InstructionsFormButtons: FC<InstructionsFormButtonsProps> = ({
         <div className='flex items-center gap-1 h-full'>
           <CancelButton onCancel={onCancel} />
 
-          <SaveButton onSave={onSave} />
+          <SaveButton onSave={onSave} formState={formState} />
         </div>
       )}
     </div>
   );
 };
 
-function SaveButton({ onSave }: { onSave: () => void }) {
+function SaveButton({
+  onSave,
+  formState,
+}: {
+  onSave: () => void;
+  formState: FormState<DeliveryInstructionsData>;
+}) {
   return (
     <button
       onClick={onSave}
       className='bg-light-greenish rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
     >
-      save
+      {formState.isSubmitted && !formState.isSubmitSuccessful ? (
+        <LoadingSpinner />
+      ) : (
+        'save'
+      )}
     </button>
   );
 }

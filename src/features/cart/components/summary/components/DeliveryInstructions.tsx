@@ -30,6 +30,7 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
     successCallback() {
       setIsEdit(false);
       notify('Updated delivery instructions');
+      resetFormState();
     },
   });
 
