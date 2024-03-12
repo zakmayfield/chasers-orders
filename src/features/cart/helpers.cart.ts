@@ -1,4 +1,3 @@
-import { DeliveryInstructions } from './components/summary/components/DeliveryInstructions';
 import {
   UseMutateFunction,
   useMutation,
@@ -73,7 +72,7 @@ export const useInstructionEditForm: UseInstructionEditFormProps = ({
 };
 
 interface UseEditInstructionsMutation {
-  (): {
+  ({ successCallback }: { successCallback?: () => void }): {
     editDeliveryInstructions: UseMutateFunction<
       DeliveryInstructionsResponse,
       unknown,
@@ -83,24 +82,29 @@ interface UseEditInstructionsMutation {
   };
 }
 
-export const useEditInstructionsMutation: UseEditInstructionsMutation = () => {
+export const useEditInstructionsMutation: UseEditInstructionsMutation = ({
+  successCallback,
+}) => {
   const queryClient = useQueryClient();
 
   const { mutate: editDeliveryInstructions } = useMutation({
     mutationFn: deliveryInstructionsMutation,
     onSuccess(data) {
       setDataToCache(data);
+      successCallback?.();
     },
   });
 
   function setDataToCache(data: DeliveryInstructionsResponse) {
-    queryClient.setQueryData(['shipping-address'], (oldData: any) =>
-      oldData
-        ? {
-            ...oldData,
-            shippingAddress: data.shippingAddress,
-          }
-        : oldData
+    queryClient.setQueryData(
+      ['shipping-address'],
+      (oldData: DeliveryInstructionsResponse | undefined) =>
+        oldData
+          ? {
+              ...oldData,
+              shippingAddress: data.shippingAddress,
+            }
+          : oldData
     );
   }
 

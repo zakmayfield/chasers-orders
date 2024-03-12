@@ -1,15 +1,11 @@
 import { FC, useState } from 'react';
-import {
-  FieldErrors,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from 'react-hook-form';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { DeliveryInstructionsData } from '@/features/cart/types';
 import {
   useInstructionEditForm,
   useEditInstructionsMutation,
 } from '@/features/cart/helpers.cart';
+import { useToast } from '@/hooks/general.hooks';
 
 interface DeliveryInstructionsProps {
   content: string | null | undefined;
@@ -18,6 +14,7 @@ interface DeliveryInstructionsProps {
 export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   content: deliveryInstructions,
 }) => {
+  const { notify } = useToast();
   const [isEdit, setIsEdit] = useState(false);
 
   const toggleEdit = () => {
@@ -28,9 +25,15 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
     deliveryInstructions: deliveryInstructions,
   });
 
-  const { editDeliveryInstructions } = useEditInstructionsMutation();
+  const { editDeliveryInstructions } = useEditInstructionsMutation({
+    successCallback,
+  });
 
-  // How can i submit the form from `DeliveryHeader`... ?
+  function successCallback() {
+    setIsEdit(false);
+    notify('Updated delivery instructions');
+  }
+
   function submitHandler() {
     const formValues = getValues();
     handleSubmit(() => editDeliveryInstructions(formValues))();

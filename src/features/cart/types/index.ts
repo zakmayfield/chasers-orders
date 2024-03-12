@@ -4,7 +4,6 @@ import type {
   UnitsOnCart,
   Unit,
   Product,
-  Company,
   ShippingAddress,
 } from '@prisma/client';
 import { DeliveryInstructionsValidator } from '../validator/validator.delivery-instructions';
