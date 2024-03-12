@@ -1,16 +1,12 @@
 import { DeliveryInstructionsData } from '@/features/cart/types';
 import { FC } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
 
 interface InstructionsEditProps {
-  errors: FieldErrors<DeliveryInstructionsData>;
   register: UseFormRegister<DeliveryInstructionsData>;
 }
 
-export const InstructionsEdit: FC<InstructionsEditProps> = ({
-  register,
-  errors,
-}) => {
+export const InstructionsEdit: FC<InstructionsEditProps> = ({ register }) => {
   return (
     <form>
       <textarea

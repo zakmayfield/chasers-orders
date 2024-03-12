@@ -73,7 +73,7 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
         {!deliveryInstructions ? (
           <InstructionsNotFound toggleEdit={toggleEdit} />
         ) : isEdit ? (
-          <InstructionsEdit register={register} errors={formState.errors} />
+          <InstructionsEdit register={register} />
         ) : (
           <InstructionsContent deliveryInstructions={deliveryInstructions} />
         )}
