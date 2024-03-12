@@ -6,31 +6,18 @@ import { InstructionsFormButtons } from './InstructionsFormButtons';
 interface InstructionsHeaderProps {
   isEdit: boolean;
   formState: FormState<DeliveryInstructionsData>;
-  toggleEdit: () => void;
-  submitHandler(): void;
-  resetFormState: () => void;
+  onSave: () => void;
+  onCancel: () => void;
+  onEdit: () => void;
 }
 
 export const InstructionsHeader: FC<InstructionsHeaderProps> = ({
   isEdit,
   formState,
-  toggleEdit,
-  submitHandler,
-  resetFormState,
+  onSave,
+  onCancel,
+  onEdit,
 }) => {
-  function onEdit() {
-    toggleEdit();
-  }
-
-  function onSave() {
-    submitHandler();
-  }
-
-  function onCancel() {
-    toggleEdit();
-    resetFormState();
-  }
-
   return (
     <div className='mb-3 flex items-center justify-between'>
       <h5 className='font-light text-lg'>Delivery Instructions:</h5>

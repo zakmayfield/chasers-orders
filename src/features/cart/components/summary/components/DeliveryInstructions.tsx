@@ -27,37 +27,45 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
     });
 
   const { editDeliveryInstructions } = useEditInstructionsMutation({
-    successCallback,
+    successCallback() {
+      setIsEdit(false);
+      notify('Updated delivery instructions');
+    },
   });
-
-  function successCallback() {
-    setIsEdit(false);
-    notify('Updated delivery instructions');
-  }
 
   function submitHandler() {
     const formValues = getValues();
     handleSubmit(() => editDeliveryInstructions(formValues))();
   }
+  function onSave() {
+    submitHandler();
+  }
 
   const toggleEdit = () => {
     setIsEdit(!isEdit);
   };
+  function onEdit() {
+    toggleEdit();
+  }
 
   const resetFormState = () => {
     reset({
       deliveryInstructions: deliveryInstructions ? deliveryInstructions : '',
     });
   };
+  function onCancel() {
+    toggleEdit();
+    resetFormState();
+  }
 
   return (
     <div className='mt-3'>
       <InstructionsHeader
         isEdit={isEdit}
-        toggleEdit={toggleEdit}
-        submitHandler={submitHandler}
         formState={formState}
-        resetFormState={resetFormState}
+        onSave={onSave}
+        onEdit={onEdit}
+        onCancel={onCancel}
       />
 
       {!deliveryInstructions ? (
