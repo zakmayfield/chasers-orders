@@ -68,19 +68,21 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
         onCancel={onCancel}
       />
 
-      {!deliveryInstructions ? (
-        <InstructionsNotFound toggleEdit={toggleEdit} />
-      ) : isEdit ? (
-        <InstructionsEdit register={register} errors={formState.errors} />
-      ) : (
-        <InstructionsContent deliveryInstructions={deliveryInstructions} />
-      )}
+      <div className='h-24'>
+        {!deliveryInstructions ? (
+          <InstructionsNotFound toggleEdit={toggleEdit} />
+        ) : isEdit ? (
+          <InstructionsEdit register={register} errors={formState.errors} />
+        ) : (
+          <InstructionsContent deliveryInstructions={deliveryInstructions} />
+        )}
 
-      <p className='h-9 text-red-600'>
-        {formState.errors &&
-          formState.errors.deliveryInstructions &&
-          formState.errors.deliveryInstructions.message}
-      </p>
+        <p className='h-9 text-red-600'>
+          {formState.errors &&
+            formState.errors.deliveryInstructions &&
+            formState.errors.deliveryInstructions.message}
+        </p>
+      </div>
     </div>
   );
 };

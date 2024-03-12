@@ -15,7 +15,7 @@ export const InstructionsEdit: FC<InstructionsEditProps> = ({
     <form>
       <textarea
         {...register('deliveryInstructions')}
-        className='border-l border-b rounded-bl p-3 w-full bg-white min-h-[5rem]'
+        className='border rounded-lg p-3 w-full bg-white min-h-[5rem]'
       />
     </form>
   );
