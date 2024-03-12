@@ -28,7 +28,7 @@ function Address({
   shippingAddress: ShippingAddress | null | undefined;
 }) {
   return (
-    <div className='ml-3 flex flex-col gap-2'>
+    <div className=' bg-light-primary p-3 rounded-lg flex flex-col gap-2'>
       <p className=''>{shippingAddress?.streetAddress}</p>
       <p>
         <span>{shippingAddress?.city}</span>,{' '}

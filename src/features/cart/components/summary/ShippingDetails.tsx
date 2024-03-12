@@ -31,7 +31,7 @@ export const ShippingDetails = () => {
 
       {/* Dropdown */}
       {expanded && (
-        <div className='bg-light-primary rounded-lg'>
+        <div>
           <ContainerBody data={data} />
         </div>
       )}
