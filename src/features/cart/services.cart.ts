@@ -1,5 +1,9 @@
 import { Prisma, Unit, UnitsOnCart } from '@prisma/client';
-import type { CartCache, CartItem } from '@/features/cart/types';
+import type {
+  CartCache,
+  CartItem,
+  DeliveryInstructionsResponse,
+} from '@/features/cart/types';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
 import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
@@ -238,22 +242,20 @@ export const updateItemSize: UpdateItemSizeProps = async (params) => {
 };
 
 interface DeliveryInstructionsMutationProps {
-  ({ deliveryInstructions }: { deliveryInstructions: string }): Promise<{
-    shippingAddress: {
-      deliveryInstructions: string | null;
-    } | null;
-  }>;
+  (payload: {
+    deliveryInstructions: string;
+  }): Promise<DeliveryInstructionsResponse>;
 }
 
 export const deliveryInstructionsMutation: DeliveryInstructionsMutationProps =
-  async ({ deliveryInstructions }) => {
+  async (payload) => {
     try {
-      const response = await fetch(`/api/user/company`, {
+      const response = await fetch(`/api/user/company/instructions`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ deliveryInstructions }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

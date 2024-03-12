@@ -1,7 +1,15 @@
 import { z } from 'zod';
-import type { Cart, UnitsOnCart, Unit, Product } from '@prisma/client';
+import type {
+  Cart,
+  UnitsOnCart,
+  Unit,
+  Product,
+  Company,
+  ShippingAddress,
+} from '@prisma/client';
 import { DeliveryInstructionsValidator } from '../validator/validator.delivery-instructions';
 
+//^ Cart Cache
 export type CartCache = Cart & {
   items: CartItem[];
 };
@@ -12,7 +20,12 @@ export type CartItem = UnitsOnCart & {
   };
 };
 
-//^ Delivery Instructions Validator
+//^ Delivery Instructions
 export type DeliveryInstructionsData = z.infer<
   typeof DeliveryInstructionsValidator
 >;
+
+export type DeliveryInstructionsResponse = {
+  companyName: string;
+  shippingAddress: ShippingAddress;
+};

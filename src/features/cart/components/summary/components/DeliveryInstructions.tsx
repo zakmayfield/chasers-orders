@@ -1,7 +1,10 @@
 import { FC, useState } from 'react';
-import { UseFormHandleSubmit, UseFormRegister, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { DeliveryInstructionsValidator } from '@/features/cart/validator/validator.delivery-instructions';
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from 'react-hook-form';
 import { DeliveryInstructionsData } from '@/features/cart/types';
 import {
   useInstructionEditForm,
@@ -21,30 +24,30 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
     setIsEdit(!isEdit);
   };
 
-  const { register, handleSubmit } = useInstructionEditForm({
+  const { register, handleSubmit, getValues, errors } = useInstructionEditForm({
     deliveryInstructions: deliveryInstructions,
   });
 
   const { editDeliveryInstructions } = useEditInstructionsMutation();
 
   // How can i submit the form from `DeliveryHeader`... ?
-  function submitHandler(data: DeliveryInstructionsData) {
-    editDeliveryInstructions(data);
+  function submitHandler() {
+    const formValues = getValues();
+    handleSubmit(() => editDeliveryInstructions(formValues))();
   }
 
   return (
     <div className='mt-3'>
-      <DeliveryHeader toggleEdit={toggleEdit} isEdit={isEdit} />
+      <DeliveryHeader
+        isEdit={isEdit}
+        toggleEdit={toggleEdit}
+        submitHandler={submitHandler}
+      />
 
       {!deliveryInstructions ? (
         <NoInstructions toggleEdit={toggleEdit} />
       ) : isEdit ? (
-        <InlineInstructionsEdit
-          deliveryInstructions={deliveryInstructions}
-          handleSubmit={handleSubmit}
-          register={register}
-          submitHandler={submitHandler}
-        />
+        <InlineInstructionsEdit register={register} errors={errors} />
       ) : (
         <Instructions deliveryInstructions={deliveryInstructions} />
       )}
@@ -53,18 +56,20 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
 };
 
 function DeliveryHeader({
-  toggleEdit,
   isEdit,
+  toggleEdit,
+  submitHandler,
 }: {
-  toggleEdit: () => void;
   isEdit: boolean;
+  toggleEdit: () => void;
+  submitHandler(): void;
 }) {
   return (
     <div className='mb-3 flex items-center justify-between'>
       <h5 className='font-light text-lg'>Delivery Instructions:</h5>
 
       {isEdit ? (
-        <button>save</button>
+        <button onClick={submitHandler}>save</button>
       ) : (
         <button
           onClick={toggleEdit}
@@ -86,21 +91,23 @@ function Instructions({
 }
 
 function InlineInstructionsEdit({
-  handleSubmit,
   register,
-  submitHandler,
+  errors,
 }: {
-  deliveryInstructions: string;
-  handleSubmit: UseFormHandleSubmit<DeliveryInstructionsData>;
+  errors: FieldErrors<DeliveryInstructionsData>;
   register: UseFormRegister<DeliveryInstructionsData>;
-  submitHandler(data: DeliveryInstructionsData): void;
 }) {
   return (
-    <form onSubmit={handleSubmit(submitHandler)}>
+    <form>
       <textarea
         {...register('deliveryInstructions')}
         className='border-l border-b rounded-bl p-3 w-full bg-white min-h-[6rem]'
       />
+      <p className='h-9 text-red-600'>
+        {errors &&
+          errors.deliveryInstructions &&
+          errors.deliveryInstructions.message}
+      </p>
     </form>
   );
 }
