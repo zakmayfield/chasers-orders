@@ -7,5 +7,5 @@ interface InstructionsContentProps {
 export const InstructionsContent: FC<InstructionsContentProps> = ({
   deliveryInstructions,
 }) => {
-  return <p className='py-3 min-h-[6rem]'>{deliveryInstructions}</p>;
+  return <p className='p-3 min-h-[5rem] border-t'>{deliveryInstructions}</p>;
 };
