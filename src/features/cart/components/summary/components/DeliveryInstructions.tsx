@@ -21,13 +21,10 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   const { notify } = useToast();
   const [isEdit, setIsEdit] = useState(false);
 
-  const toggleEdit = () => {
-    setIsEdit(!isEdit);
-  };
-
-  const { register, handleSubmit, getValues, errors } = useInstructionEditForm({
-    deliveryInstructions: deliveryInstructions,
-  });
+  const { register, handleSubmit, getValues, reset, formState } =
+    useInstructionEditForm({
+      deliveryInstructions: deliveryInstructions,
+    });
 
   const { editDeliveryInstructions } = useEditInstructionsMutation({
     successCallback,
@@ -43,26 +40,38 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
     handleSubmit(() => editDeliveryInstructions(formValues))();
   }
 
+  const toggleEdit = () => {
+    setIsEdit(!isEdit);
+  };
+
+  const resetFormState = () => {
+    reset({
+      deliveryInstructions: deliveryInstructions ? deliveryInstructions : '',
+    });
+  };
+
   return (
     <div className='mt-3'>
       <InstructionsHeader
         isEdit={isEdit}
         toggleEdit={toggleEdit}
         submitHandler={submitHandler}
+        formState={formState}
+        resetFormState={resetFormState}
       />
 
       {!deliveryInstructions ? (
         <InstructionsNotFound toggleEdit={toggleEdit} />
       ) : isEdit ? (
-        <InstructionsEdit register={register} errors={errors} />
+        <InstructionsEdit register={register} errors={formState.errors} />
       ) : (
         <InstructionsContent deliveryInstructions={deliveryInstructions} />
       )}
 
       <p className='h-9 text-red-600'>
-        {errors &&
-          errors.deliveryInstructions &&
-          errors.deliveryInstructions.message}
+        {formState.errors &&
+          formState.errors.deliveryInstructions &&
+          formState.errors.deliveryInstructions.message}
       </p>
     </div>
   );

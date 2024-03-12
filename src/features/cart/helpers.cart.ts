@@ -16,10 +16,11 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DeliveryInstructionsValidator } from './validator/validator.delivery-instructions';
 import {
-  FieldErrors,
+  FormState,
   UseFormGetValues,
   UseFormHandleSubmit,
   UseFormRegister,
+  UseFormReset,
   useForm,
 } from 'react-hook-form';
 
@@ -46,29 +47,26 @@ interface UseInstructionEditFormProps {
   }: {
     deliveryInstructions: string | null | undefined;
   }): {
-    errors: FieldErrors<DeliveryInstructionsData>;
+    formState: FormState<DeliveryInstructionsData>;
     register: UseFormRegister<DeliveryInstructionsData>;
     handleSubmit: UseFormHandleSubmit<DeliveryInstructionsData>;
     getValues: UseFormGetValues<DeliveryInstructionsData>;
+    reset: UseFormReset<DeliveryInstructionsData>;
   };
 }
 
 export const useInstructionEditForm: UseInstructionEditFormProps = ({
   deliveryInstructions,
 }) => {
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm<DeliveryInstructionsData>({
-    resolver: zodResolver(DeliveryInstructionsValidator),
-    defaultValues: {
-      deliveryInstructions: deliveryInstructions ? deliveryInstructions : '',
-    },
-  });
+  const { register, handleSubmit, getValues, reset, formState } =
+    useForm<DeliveryInstructionsData>({
+      resolver: zodResolver(DeliveryInstructionsValidator),
+      defaultValues: {
+        deliveryInstructions: deliveryInstructions ? deliveryInstructions : '',
+      },
+    });
 
-  return { register, handleSubmit, getValues, errors };
+  return { register, handleSubmit, getValues, reset, formState };
 };
 
 interface UseEditInstructionsMutation {
