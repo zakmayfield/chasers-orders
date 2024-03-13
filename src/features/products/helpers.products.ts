@@ -17,13 +17,11 @@ import {
 } from '@tanstack/react-table';
 
 import { getProducts } from '@/features/products/services.products';
-import { addItem } from '@/features/cart/services.cart';
 import { toggleFavorite } from '@/features/products/services.products';
 import { getFavorites } from '@/features/products/services.products';
 
 import type { Favorite, Product, Unit } from '@prisma/client';
 import type { ProductWithUnits, ActionTypes } from '@/features/products/types';
-import type { CartCache, CartItem } from '@/features/cart/types';
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 

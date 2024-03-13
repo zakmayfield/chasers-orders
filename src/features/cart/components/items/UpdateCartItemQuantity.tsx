@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { updateItemQuantity } from '@/features/cart/services.cart';
+import { useQueryClient } from '@tanstack/react-query';
 import { CartCache, CartItem } from '@/features/cart/types';
 import { useToast } from '@/hooks/general.hooks';
 import { useUpdateQuantity } from '../../helpers.cart';
