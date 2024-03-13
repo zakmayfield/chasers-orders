@@ -154,3 +154,46 @@ export const useAddToCartMutation: UseAddToCartMutationProps = ({
 
   return { addToCartMutation };
 };
+
+interface UseUpdateQuantityProps {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback: (data: CartItem) => void;
+    onErrorCallback: (error: unknown) => void;
+  }): {
+    isLoading: boolean;
+    updateQuantity: UseMutateFunction<
+      CartItem,
+      unknown,
+      UpdateQuantityPayload,
+      unknown
+    >;
+  };
+}
+
+type UpdateQuantityPayload = {
+  cartId: string;
+  unitId: string;
+  quantityPayload: number;
+};
+
+export const useUpdateQuantity: UseUpdateQuantityProps = ({
+  onSuccessCallback,
+  onErrorCallback,
+}) => {
+  const { mutate: updateQuantity, isLoading } = useMutation({
+    mutationFn: updateItemQuantity,
+    onSuccess: (data) => {
+      onSuccessCallback(data);
+    },
+    onError(error) {
+      if (error instanceof Error) {
+        onErrorCallback(error);
+      }
+    },
+  });
+
+  return { updateQuantity, isLoading };
+};

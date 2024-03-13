@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateItemQuantity } from '@/features/cart/services.cart';
-import { CartCache } from '@/features/cart/types';
+import { CartCache, CartItem } from '@/features/cart/types';
 import { useToast } from '@/hooks/general.hooks';
+import { useUpdateQuantity } from '../../helpers.cart';
 
 type UpdateCartItemQuantityProps = {
   payload: {
@@ -23,9 +24,8 @@ export const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
   const { notify } = useToast();
   const [quantity, setQuantity] = useState<number | undefined>(quantityData);
 
-  const { mutate: quantityMutation, isLoading } = useMutation({
-    mutationFn: updateItemQuantity,
-    onSuccess: (data) => {
+  const { updateQuantity, isLoading } = useUpdateQuantity({
+    onSuccessCallback(data: CartItem) {
       setQuantity(data.quantity);
 
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
@@ -41,14 +41,14 @@ export const UpdateCartItemQuantity: React.FC<UpdateCartItemQuantityProps> = (
 
       notify(`Updated quantity to ${data.quantity}`);
     },
-    onError(error) {
-      console.error('~~~error from quantityMutation~~~', error);
+    onErrorCallback(error: unknown) {
+      console.error(error);
     },
   });
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue = Number(e.target.value);
-    quantityMutation({ cartId, unitId, quantityPayload: newValue });
+    updateQuantity({ cartId, unitId, quantityPayload: newValue });
   };
 
   const options = Array.from({ length: 50 }, (_, i) => i + 1);
