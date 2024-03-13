@@ -5,11 +5,14 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
+  addItem,
   deliveryInstructionsMutation,
   getCart,
+  updateItemQuantity,
 } from '@/features/cart/services.cart';
 import {
   CartCache,
+  CartItem,
   DeliveryInstructionsData,
   DeliveryInstructionsResponse,
 } from '@/features/cart/types';
@@ -107,4 +110,47 @@ export const useEditInstructionsMutation: UseEditInstructionsMutation = ({
   }
 
   return { editDeliveryInstructions };
+};
+
+interface UseAddToCartMutationProps {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback: (data: CartItem) => void;
+    onErrorCallback: (error: unknown) => void;
+  }): {
+    addToCartMutation: UseMutateFunction<CartItem, unknown, string, unknown>;
+  };
+}
+
+export const useAddToCartMutation: UseAddToCartMutationProps = ({
+  onSuccessCallback,
+  onErrorCallback,
+}) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: addToCartMutation } = useMutation({
+    mutationFn: addItem,
+    onSuccess(data) {
+      onSuccessCallback(data);
+      setDataToCache(data);
+    },
+    onError(error) {
+      onErrorCallback(error);
+    },
+  });
+
+  function setDataToCache(data: CartItem) {
+    queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+      oldData
+        ? {
+            ...oldData,
+            items: [data, ...oldData.items],
+          }
+        : oldData
+    );
+  }
+
+  return { addToCartMutation };
 };
