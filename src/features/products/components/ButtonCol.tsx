@@ -35,7 +35,6 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
 
   const { updateQuantity } = useUpdateQuantity({
     onSuccessCallback(data) {
-      console.info(data);
       notify(`Updated quantity to (${data.quantity})`);
     },
     onErrorCallback() {
