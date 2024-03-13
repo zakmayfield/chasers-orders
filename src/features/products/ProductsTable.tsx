@@ -7,7 +7,7 @@ import {
   useTableConfig,
   useFavorites,
 } from '@/features/products/helpers.products';
-import { NameCol, CategoryCol, ButtonCol } from './components';
+import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
 import { Pagination, Table, TableLoadingSkeleton } from './components/table';
 
 export const ProductsTable = () => {
@@ -29,6 +29,12 @@ export const ProductsTable = () => {
       enableColumnFilter: true,
       cell: (info) => <CategoryCol info={info} />,
     }),
+    // TODO: re-establish the units col
+    // columnHelper.accessor('units', {
+    //   header: 'Size',
+    //   enableColumnFilter: false,
+    //   cell: (info) => <UnitCol info={info} />,
+    // }),
     columnHelper.accessor('units', {
       id: 'cta',
       header: '',
