@@ -46,6 +46,7 @@ async function handler(req: Request) {
     const unitExistsInCart = cart!.items.find((unit) => unit.unitId === unitId);
 
     if (unitExistsInCart) {
+      // TODO: fix eventually: increase quantity depends on this on add to cart existing item error -- not a very good implementation
       return new Response('item already in cart', {
         status: 409,
       });

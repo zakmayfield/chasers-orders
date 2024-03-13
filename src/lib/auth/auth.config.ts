@@ -14,7 +14,7 @@ import {
 import { sendVerificationEmail } from '@/utils/email.utils';
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
-import { createCart } from '@/utils/cart.utils';
+import { createCart } from '@/features/cart/utils.cart';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];

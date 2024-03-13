@@ -118,7 +118,7 @@ interface UseAddToCartMutationProps {
     onErrorCallback,
   }: {
     onSuccessCallback: (data: CartItem) => void;
-    onErrorCallback: (error: unknown) => void;
+    onErrorCallback: (error: unknown, variables: string) => void;
   }): {
     addToCartMutation: UseMutateFunction<CartItem, unknown, string, unknown>;
   };
@@ -136,8 +136,8 @@ export const useAddToCartMutation: UseAddToCartMutationProps = ({
       onSuccessCallback(data);
       setDataToCache(data);
     },
-    onError(error) {
-      onErrorCallback(error);
+    onError(error, variables) {
+      onErrorCallback(error, variables);
     },
   });
 
