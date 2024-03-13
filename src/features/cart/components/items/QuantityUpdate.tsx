@@ -91,7 +91,7 @@ function QuantityForm({
   return (
     <form className='flex gap-3'>
       <div className='flex items-center'>
-        <label htmlFor='quantity' className='mr-2 text-sm text-gray-600'>
+        <label htmlFor='quantity' className='mr-2 text-sm text-gray-500'>
           Quantity
         </label>
         <input
