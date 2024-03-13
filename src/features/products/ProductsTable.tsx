@@ -7,7 +7,7 @@ import {
   useTableConfig,
   useFavorites,
 } from '@/features/products/helpers.products';
-import { NameCol, CategoryCol, UnitCol, ButtonCol } from './components';
+import { NameCol, CategoryCol, ButtonCol } from './components';
 import { Pagination, Table, TableLoadingSkeleton } from './components/table';
 
 export const ProductsTable = () => {
