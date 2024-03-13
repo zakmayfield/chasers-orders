@@ -29,6 +29,12 @@ export const ProductsTable = () => {
       enableColumnFilter: true,
       cell: (info) => <CategoryCol info={info} />,
     }),
+    // TODO: re-establish the units col
+    // columnHelper.accessor('units', {
+    //   header: 'Size',
+    //   enableColumnFilter: false,
+    //   cell: (info) => <UnitCol info={info} />,
+    // }),
     columnHelper.accessor('units', {
       id: 'cta',
       header: '',
