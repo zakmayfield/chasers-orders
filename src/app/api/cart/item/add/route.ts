@@ -46,7 +46,7 @@ async function handler(req: Request) {
     const unitExistsInCart = cart!.items.find((unit) => unit.unitId === unitId);
 
     if (unitExistsInCart) {
-      return new Response('Item already in cart', {
+      return new Response('item already in cart', {
         status: 409,
       });
     }
