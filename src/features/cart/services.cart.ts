@@ -3,6 +3,7 @@ import type {
   CartCache,
   CartItem,
   DeliveryInstructionsResponse,
+  UpdateQuantity,
 } from '@/features/cart/types';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
 import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
@@ -176,15 +177,11 @@ export const removeItem: RemoveCartItemStore = async (payload) => {
 };
 
 interface UpdateItemQuantityType {
-  (params: {
-    cartId: string;
-    unitId: string;
-    quantityPayload: number;
-  }): Promise<CartItem>;
+  (params: UpdateQuantity): Promise<CartItem>;
 }
 
 export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
-  const { cartId, unitId, quantityPayload } = params;
+  const { cartId, unitId, quantity } = params;
 
   try {
     const response = await fetch('/api/cart/item/quantity', {
@@ -192,7 +189,7 @@ export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({ cartId, unitId, quantityPayload }),
+      body: JSON.stringify({ cartId, unitId, quantity: quantity }),
     });
 
     if (!response.ok) {
@@ -201,7 +198,6 @@ export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
 
     return response.json();
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }

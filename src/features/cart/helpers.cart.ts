@@ -15,10 +15,13 @@ import {
   CartItem,
   DeliveryInstructionsData,
   DeliveryInstructionsResponse,
+  QuantityData,
+  UpdateQuantity,
 } from '@/features/cart/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DeliveryInstructionsValidator } from './validator/validator.delivery-instructions';
 import {
+  FieldErrors,
   FormState,
   UseFormGetValues,
   UseFormHandleSubmit,
@@ -26,6 +29,7 @@ import {
   UseFormReset,
   useForm,
 } from 'react-hook-form';
+import { QuantityValidator } from './validator';
 
 interface UseFetchCartQuery {
   (): {
@@ -167,17 +171,11 @@ interface UseUpdateQuantityProps {
     updateQuantity: UseMutateFunction<
       CartItem,
       unknown,
-      UpdateQuantityPayload,
+      UpdateQuantity,
       unknown
     >;
   };
 }
-
-type UpdateQuantityPayload = {
-  cartId: string;
-  unitId: string;
-  quantityPayload: number;
-};
 
 export const useUpdateQuantity: UseUpdateQuantityProps = ({
   onSuccessCallback,
@@ -196,4 +194,34 @@ export const useUpdateQuantity: UseUpdateQuantityProps = ({
   });
 
   return { updateQuantity, isLoading };
+};
+
+interface IUseQuantityUpdateForm {
+  ({ currentQuantity }: { currentQuantity: string }): {
+    handleSubmit: UseFormHandleSubmit<QuantityData, undefined>;
+    register: UseFormRegister<QuantityData>;
+    getValues: UseFormGetValues<QuantityData>;
+    errors: FieldErrors<QuantityData>;
+    isDirty: boolean;
+    reset: UseFormReset<QuantityData>;
+  };
+}
+
+export const useQuantityUpdateForm: IUseQuantityUpdateForm = ({
+  currentQuantity,
+}) => {
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    reset,
+    formState: { isDirty, errors },
+  } = useForm({
+    resolver: zodResolver(QuantityValidator),
+    defaultValues: {
+      quantity: currentQuantity,
+    },
+  });
+
+  return { handleSubmit, register, getValues, reset, isDirty, errors };
 };

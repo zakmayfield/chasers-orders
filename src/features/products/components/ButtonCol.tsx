@@ -16,6 +16,7 @@ import {
 } from '@/features/cart/helpers.cart';
 import { useSession } from 'next-auth/react';
 import { fetchCart } from '@/features/cart/utils.cart';
+import { UpdateQuantity } from '@/features/cart/types';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
@@ -42,11 +43,7 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     },
   });
 
-  function updateQuantityCallback(updateQuantityPayload: {
-    cartId: string;
-    unitId: string;
-    quantityPayload: number;
-  }) {
+  function updateQuantityCallback(updateQuantityPayload: UpdateQuantity) {
     updateQuantity(updateQuantityPayload);
   }
 
@@ -69,12 +66,12 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
           // evoke update quantity mutation
           if (cart && cartItemToUpdate) {
             const item = cartItemToUpdate as Omit<UnitsOnCart, 'createdAt'>;
-            const updatedQuantity = item.quantity + 1;
+            const updatedQuantity = String(item.quantity + 1);
 
             updateQuantityCallback({
               cartId: cartItemToUpdate.cartId,
               unitId: cartItemToUpdate.unitId,
-              quantityPayload: updatedQuantity,
+              quantity: updatedQuantity,
             });
           }
 
