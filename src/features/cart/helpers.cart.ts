@@ -5,11 +5,14 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
+  addItem,
   deliveryInstructionsMutation,
   getCart,
+  updateItemQuantity,
 } from '@/features/cart/services.cart';
 import {
   CartCache,
+  CartItem,
   DeliveryInstructionsData,
   DeliveryInstructionsResponse,
 } from '@/features/cart/types';
@@ -107,4 +110,90 @@ export const useEditInstructionsMutation: UseEditInstructionsMutation = ({
   }
 
   return { editDeliveryInstructions };
+};
+
+interface UseAddToCartMutationProps {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback: (data: CartItem) => void;
+    onErrorCallback: (error: unknown, variables: string) => void;
+  }): {
+    addToCartMutation: UseMutateFunction<CartItem, unknown, string, unknown>;
+  };
+}
+
+export const useAddToCartMutation: UseAddToCartMutationProps = ({
+  onSuccessCallback,
+  onErrorCallback,
+}) => {
+  const queryClient = useQueryClient();
+
+  const { mutate: addToCartMutation } = useMutation({
+    mutationFn: addItem,
+    onSuccess(data) {
+      onSuccessCallback(data);
+      setDataToCache(data);
+    },
+    onError(error, variables) {
+      onErrorCallback(error, variables);
+    },
+  });
+
+  function setDataToCache(data: CartItem) {
+    queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
+      oldData
+        ? {
+            ...oldData,
+            items: [data, ...oldData.items],
+          }
+        : oldData
+    );
+  }
+
+  return { addToCartMutation };
+};
+
+interface UseUpdateQuantityProps {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback: (data: CartItem) => void;
+    onErrorCallback: (error: unknown) => void;
+  }): {
+    isLoading: boolean;
+    updateQuantity: UseMutateFunction<
+      CartItem,
+      unknown,
+      UpdateQuantityPayload,
+      unknown
+    >;
+  };
+}
+
+type UpdateQuantityPayload = {
+  cartId: string;
+  unitId: string;
+  quantityPayload: number;
+};
+
+export const useUpdateQuantity: UseUpdateQuantityProps = ({
+  onSuccessCallback,
+  onErrorCallback,
+}) => {
+  const { mutate: updateQuantity, isLoading } = useMutation({
+    mutationFn: updateItemQuantity,
+    onSuccess: (data) => {
+      onSuccessCallback(data);
+    },
+    onError(error) {
+      if (error instanceof Error) {
+        onErrorCallback(error);
+      }
+    },
+  });
+
+  return { updateQuantity, isLoading };
 };
