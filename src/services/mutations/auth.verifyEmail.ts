@@ -20,7 +20,6 @@ export const verifyEmail: TokenValidatorReturn = async (
 
     return response.json();
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }
