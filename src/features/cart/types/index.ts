@@ -6,7 +6,10 @@ import type {
   Product,
   ShippingAddress,
 } from '@prisma/client';
-import { DeliveryInstructionsValidator } from '../validator/validator.delivery-instructions';
+import {
+  QuantityValidator,
+  DeliveryInstructionsValidator,
+} from '@/features/cart/validator';
 
 //^ Cart Cache
 export type CartCache = Cart & {
@@ -27,4 +30,12 @@ export type DeliveryInstructionsData = z.infer<
 export type DeliveryInstructionsResponse = {
   companyName: string;
   shippingAddress: ShippingAddress;
+};
+
+export type QuantityData = z.infer<typeof QuantityValidator>;
+
+export type UpdateQuantity = {
+  cartId: string;
+  unitId: string;
+  quantity: number;
 };

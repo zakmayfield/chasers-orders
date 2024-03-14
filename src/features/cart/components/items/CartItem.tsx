@@ -3,7 +3,7 @@
 import { CartItem as CartItemType } from '@/features/cart/types';
 import { RemoveCartItemButton } from './RemoveCartItemButton';
 import { UpdateCartItemSize } from './UpdateCartItemSize';
-import { UpdateCartItemQuantity } from './UpdateCartItemQuantity';
+import { QuantityUpdate } from './QuantityUpdate';
 
 type CartItemProps = {
   payload: {
@@ -44,12 +44,10 @@ export const CartItem: React.FC<CartItemProps> = (props) => {
             }}
           />
 
-          <UpdateCartItemQuantity
-            payload={{
-              cartId,
-              unitId: cartItem.unitId,
-              quantityData: quantity,
-            }}
+          <QuantityUpdate
+            cartId={cartId}
+            unitId={cartItem.unitId}
+            quantity={quantity}
           />
         </div>
       </div>

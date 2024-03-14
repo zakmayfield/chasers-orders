@@ -15,6 +15,8 @@ import {
   CartItem,
   DeliveryInstructionsData,
   DeliveryInstructionsResponse,
+  QuantityData,
+  UpdateQuantity,
 } from '@/features/cart/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DeliveryInstructionsValidator } from './validator/validator.delivery-instructions';
@@ -26,6 +28,8 @@ import {
   UseFormReset,
   useForm,
 } from 'react-hook-form';
+import { QuantityValidator } from './validator';
+import { FormEvent } from 'react';
 
 interface UseFetchCartQuery {
   (): {
@@ -164,26 +168,25 @@ interface UseUpdateQuantityProps {
     onErrorCallback: (error: unknown) => void;
   }): {
     isLoading: boolean;
+    isSuccess: boolean;
     updateQuantity: UseMutateFunction<
       CartItem,
       unknown,
-      UpdateQuantityPayload,
+      UpdateQuantity,
       unknown
     >;
   };
 }
 
-type UpdateQuantityPayload = {
-  cartId: string;
-  unitId: string;
-  quantityPayload: number;
-};
-
 export const useUpdateQuantity: UseUpdateQuantityProps = ({
   onSuccessCallback,
   onErrorCallback,
 }) => {
-  const { mutate: updateQuantity, isLoading } = useMutation({
+  const {
+    mutate: updateQuantity,
+    isLoading,
+    isSuccess,
+  } = useMutation({
     mutationFn: updateItemQuantity,
     onSuccess: (data) => {
       onSuccessCallback(data);
@@ -195,5 +198,55 @@ export const useUpdateQuantity: UseUpdateQuantityProps = ({
     },
   });
 
-  return { updateQuantity, isLoading };
+  return { updateQuantity, isLoading, isSuccess };
+};
+
+interface IUseQuantityUpdateForm {
+  ({ currentQuantity }: { currentQuantity: number }): {
+    handleSubmit: UseFormHandleSubmit<QuantityData, undefined>;
+    register: UseFormRegister<QuantityData>;
+    getValues: UseFormGetValues<QuantityData>;
+    handleReset(): void;
+    handleCancel(): void;
+    isDirty: boolean;
+  };
+}
+
+export const useQuantityUpdateForm: IUseQuantityUpdateForm = ({
+  currentQuantity,
+}) => {
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    reset,
+    formState: { isDirty },
+  } = useForm({
+    resolver: zodResolver(QuantityValidator),
+    defaultValues: {
+      quantity: currentQuantity,
+    },
+  });
+
+  function handleReset(event?: FormEvent) {
+    event && event.preventDefault();
+    const formValues = getValues();
+
+    reset({
+      quantity: formValues.quantity,
+    });
+  }
+
+  function handleCancel() {
+    reset({ quantity: currentQuantity });
+  }
+
+  return {
+    handleSubmit,
+    register,
+    getValues,
+    handleReset,
+    handleCancel,
+    isDirty,
+  };
 };

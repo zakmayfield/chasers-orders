@@ -69,7 +69,7 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
 
   return (
     <div className='flex space-x-2'>
-      <div className='flex items-center space-x-2'>
+      <div className='flex items-start space-x-2'>
         <p className='text-sm text-gray-500'>Size</p>
         {queryIsLoading ? (
           <span className='pl-2'>Loading...</span>
