@@ -9,6 +9,7 @@ import {
   useBillingAddressSync,
   handleStepChange,
   useSignUpForm,
+  newData,
 } from './helpers.signup';
 import { useToast } from '@/hooks/general.hooks';
 import { SignUpFormData } from '../types/index';
@@ -30,6 +31,8 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
     setValue,
     register,
     handleSubmit,
+
+    reset,
     formState: { errors, isSubmitted, isSubmitSuccessful },
   } = useSignUpForm();
 
@@ -43,7 +46,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
   }
 
   async function signupCallback(data: SignUpFormData) {
-    const { isSuccess } = await signUpWithCredentials(data);
+    const { isSuccess } = await signUpWithCredentials(newData);
 
     if (isSuccess) {
       queryClient.removeQueries(['form-values']);
@@ -98,6 +101,16 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
                 handleStepChange={handleStepChangeCallback}
               />
             </div>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                // TODO: remvove 'reset' when done with 'shortcut' button
+                reset(newData);
+                handleSubmit(() => signUpWithCredentials(newData))();
+              }}
+            >
+              shortcut
+            </button>
           </div>
         )}
 
