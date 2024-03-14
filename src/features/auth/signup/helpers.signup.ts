@@ -12,6 +12,7 @@ import {
   UseFormGetValues,
   UseFormHandleSubmit,
   UseFormRegister,
+  UseFormReset,
   UseFormSetValue,
   useForm,
 } from 'react-hook-form';
@@ -50,11 +51,13 @@ interface UseSignUpForm {
     register: UseFormRegister<SignUpFormData>;
     handleSubmit: UseFormHandleSubmit<SignUpFormData>;
     formState: FormState<SignUpFormData>;
+    reset: UseFormReset<SignUpFormData>;
   };
 }
 
 export const useSignUpForm: UseSignUpForm = () => {
-  const { formState, handleSubmit, register, getValues, setValue } =
+  // TODO: remvove 'reset' when done with 'shortcut' button
+  const { formState, handleSubmit, register, getValues, setValue, reset } =
     useForm<SignUpFormData>({
       resolver: zodResolver(AuthSignUpValidator),
       defaultValues,
@@ -66,6 +69,7 @@ export const useSignUpForm: UseSignUpForm = () => {
     register,
     handleSubmit,
     formState,
+    reset,
   };
 };
 
@@ -219,4 +223,26 @@ export const signUpWithCredentials = async (data: SignUpFormData) => {
       isSuccess: false,
     };
   }
+};
+
+export const newData: SignUpFormData = {
+  email: 'zakmayfield@gmail.com',
+  password: '123',
+  contactName: 'x',
+  contactPhoneNumber: 'x',
+  contactPosition: 'x',
+  companyName: 'x',
+  accountPayableEmail: 'x',
+  paymentMethod: 'credit card',
+  shippingStreetAddress: 'x',
+  shippingCity: 'x',
+  shippingPostalCode: 'x',
+  shippingUnit: 'x',
+  shippingState: 'x',
+  deliveryInstructions: 'x',
+  billingCity: 'x',
+  billingPostalCode: 'x',
+  billingState: 'x',
+  billingUnit: 'x',
+  billingStreetAddress: 'x',
 };

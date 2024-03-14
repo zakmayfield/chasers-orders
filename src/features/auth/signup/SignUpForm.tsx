@@ -46,7 +46,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
   }
 
   async function signupCallback(data: SignUpFormData) {
-    const { isSuccess } = await signUpWithCredentials(newData);
+    const { isSuccess } = await signUpWithCredentials(data);
 
     if (isSuccess) {
       queryClient.removeQueries(['form-values']);
