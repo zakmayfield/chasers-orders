@@ -88,7 +88,7 @@ function QuantityForm({
 
   useEffect(() => {
     handleReset();
-  }, [isSuccess, handleReset]);
+  }, [isSuccess]);
 
   return (
     <form className='flex gap-3'>
