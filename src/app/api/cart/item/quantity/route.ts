@@ -24,13 +24,16 @@ export async function PUT(req: Request) {
         return new Response('Quantity is required', {
           status: 400,
         });
-        break;
 
       case quantity <= 0:
-        return new Response('Quantiy should be a value greater than 0', {
+        return new Response('Quantiy should be greater than 0', {
           status: 400,
         });
-        break;
+
+      case quantity > 100:
+        return new Response('Quantiy should be less than 100', {
+          status: 400,
+        });
     }
 
     if (!cartId || !unitId) {

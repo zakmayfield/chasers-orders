@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import {
@@ -23,7 +23,7 @@ export const QuantityUpdate: React.FC<UpdateCartItemQuantityProps> = ({
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  const { updateQuantity } = useUpdateQuantity({
+  const { updateQuantity, isSuccess } = useUpdateQuantity({
     onSuccessCallback(data: CartItem) {
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
         oldData
@@ -45,14 +45,16 @@ export const QuantityUpdate: React.FC<UpdateCartItemQuantityProps> = ({
 
   function submitHandler(data: QuantityData) {
     const payload = { cartId, unitId, quantity: data.quantity };
-    console.log('submit', payload);
-
     updateQuantity(payload);
   }
 
   return (
     <div className='flex items-center space-x-2'>
-      <QuantityForm currentQuantity={quantity} submitHandler={submitHandler} />
+      <QuantityForm
+        currentQuantity={quantity}
+        isSuccess={isSuccess}
+        submitHandler={submitHandler}
+      />
     </div>
   );
 };
@@ -60,35 +62,33 @@ export const QuantityUpdate: React.FC<UpdateCartItemQuantityProps> = ({
 function QuantityForm({
   submitHandler,
   currentQuantity,
+  isSuccess,
 }: {
   currentQuantity: number;
+  isSuccess: boolean;
   submitHandler(data: QuantityData): void;
 }) {
-  const { handleSubmit, register, getValues, reset, isDirty, errors } =
-    useQuantityUpdateForm({
-      currentQuantity,
-    });
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    isDirty,
+    handleReset,
+    handleCancel,
+  } = useQuantityUpdateForm({
+    currentQuantity,
+  });
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const formValues = getValues();
     const quantity = formValues.quantity;
     handleSubmit(() => submitHandler({ quantity }))();
-    handleReset(formValues);
   };
 
-  function handleReset(formValues?: QuantityData) {
-    reset({
-      quantity:
-        formValues && formValues.quantity
-          ? formValues.quantity
-          : currentQuantity,
-    });
-  }
-
   useEffect(() => {
-    console.log(errors.quantity);
-  }, [errors]);
+    handleReset();
+  }, [isSuccess, handleReset]);
 
   return (
     <form className='flex gap-3'>
@@ -100,7 +100,7 @@ function QuantityForm({
           <input
             type='number'
             id='quantity'
-            {...register('quantity')}
+            {...register('quantity', { valueAsNumber: true })}
             className='border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-16'
           />
         </div>
@@ -111,7 +111,7 @@ function QuantityForm({
           <button type='submit' onClick={submit} className=''>
             <PiCheckCircleDuotone className='text-light-greenish text-2xl' />
           </button>
-          <button type='submit' onClick={() => handleReset()}>
+          <button type='submit' onClick={handleCancel}>
             <PiXCircleDuotone className='text-red-600 text-2xl' />
           </button>
         </div>

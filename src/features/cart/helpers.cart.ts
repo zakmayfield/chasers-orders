@@ -21,7 +21,6 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DeliveryInstructionsValidator } from './validator/validator.delivery-instructions';
 import {
-  FieldErrors,
   FormState,
   UseFormGetValues,
   UseFormHandleSubmit,
@@ -30,6 +29,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { QuantityValidator } from './validator';
+import { FormEvent } from 'react';
 
 interface UseFetchCartQuery {
   (): {
@@ -168,6 +168,7 @@ interface UseUpdateQuantityProps {
     onErrorCallback: (error: unknown) => void;
   }): {
     isLoading: boolean;
+    isSuccess: boolean;
     updateQuantity: UseMutateFunction<
       CartItem,
       unknown,
@@ -181,7 +182,11 @@ export const useUpdateQuantity: UseUpdateQuantityProps = ({
   onSuccessCallback,
   onErrorCallback,
 }) => {
-  const { mutate: updateQuantity, isLoading } = useMutation({
+  const {
+    mutate: updateQuantity,
+    isLoading,
+    isSuccess,
+  } = useMutation({
     mutationFn: updateItemQuantity,
     onSuccess: (data) => {
       onSuccessCallback(data);
@@ -193,7 +198,7 @@ export const useUpdateQuantity: UseUpdateQuantityProps = ({
     },
   });
 
-  return { updateQuantity, isLoading };
+  return { updateQuantity, isLoading, isSuccess };
 };
 
 interface IUseQuantityUpdateForm {
@@ -201,9 +206,9 @@ interface IUseQuantityUpdateForm {
     handleSubmit: UseFormHandleSubmit<QuantityData, undefined>;
     register: UseFormRegister<QuantityData>;
     getValues: UseFormGetValues<QuantityData>;
-    errors: FieldErrors<QuantityData>;
+    handleReset(): void;
+    handleCancel(): void;
     isDirty: boolean;
-    reset: UseFormReset<QuantityData>;
   };
 }
 
@@ -215,7 +220,7 @@ export const useQuantityUpdateForm: IUseQuantityUpdateForm = ({
     register,
     getValues,
     reset,
-    formState: { isDirty, errors },
+    formState: { isDirty },
   } = useForm({
     resolver: zodResolver(QuantityValidator),
     defaultValues: {
@@ -223,5 +228,25 @@ export const useQuantityUpdateForm: IUseQuantityUpdateForm = ({
     },
   });
 
-  return { handleSubmit, register, getValues, reset, isDirty, errors };
+  function handleReset(event?: FormEvent) {
+    event && event.preventDefault();
+    const formValues = getValues();
+
+    reset({
+      quantity: formValues.quantity,
+    });
+  }
+
+  function handleCancel() {
+    reset({ quantity: currentQuantity });
+  }
+
+  return {
+    handleSubmit,
+    register,
+    getValues,
+    handleReset,
+    handleCancel,
+    isDirty,
+  };
 };

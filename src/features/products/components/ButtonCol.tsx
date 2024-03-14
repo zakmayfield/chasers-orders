@@ -66,7 +66,7 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
           // evoke update quantity mutation
           if (cart && cartItemToUpdate) {
             const item = cartItemToUpdate as Omit<UnitsOnCart, 'createdAt'>;
-            const updatedQuantity = String(item.quantity + 1);
+            const updatedQuantity = item.quantity + 1;
 
             updateQuantityCallback({
               cartId: cartItemToUpdate.cartId,
