@@ -47,7 +47,7 @@ export const CartItem: React.FC<CartItemProps> = (props) => {
           <QuantityUpdate
             cartId={cartId}
             unitId={cartItem.unitId}
-            quantity={String(quantity)}
+            quantity={quantity}
           />
         </div>
       </div>

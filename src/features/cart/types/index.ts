@@ -37,5 +37,5 @@ export type QuantityData = z.infer<typeof QuantityValidator>;
 export type UpdateQuantity = {
   cartId: string;
   unitId: string;
-  quantity: string;
+  quantity: number;
 };

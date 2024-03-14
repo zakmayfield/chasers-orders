@@ -197,7 +197,7 @@ export const useUpdateQuantity: UseUpdateQuantityProps = ({
 };
 
 interface IUseQuantityUpdateForm {
-  ({ currentQuantity }: { currentQuantity: string }): {
+  ({ currentQuantity }: { currentQuantity: number }): {
     handleSubmit: UseFormHandleSubmit<QuantityData, undefined>;
     register: UseFormRegister<QuantityData>;
     getValues: UseFormGetValues<QuantityData>;
