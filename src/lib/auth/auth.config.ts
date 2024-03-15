@@ -11,7 +11,11 @@ import {
   extractExpiration,
   generateVerificationToken,
 } from '@/utils/token.utils';
-import { sendVerificationEmail } from '@/utils/email.utils';
+import {
+  TransporterResponse,
+  sendEmail,
+  sendVerificationEmail,
+} from '@/utils/email.utils';
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
 import { createCart } from '@/features/cart/utils.cart';
@@ -92,7 +96,7 @@ const providers: NextAuthProviders = [
       email: { label: 'Email', type: 'text' },
       password: { label: 'Password', type: 'password' },
     },
-    async authorize(credentials) {
+    async authorize(credentials, req) {
       // parse credentials
       const parsedCreds = AuthSignUpValidator.safeParse(credentials);
 
@@ -144,7 +148,13 @@ const providers: NextAuthProviders = [
       await createCart(user.id);
 
       // send verification email
-      sendVerificationEmail(verificationToken, email);
+      // sendVerificationEmail(verificationToken, email);
+      const sendEmailResponse: TransporterResponse = await sendEmail({
+        verificationToken,
+        email,
+      })
+        .then((response) => response)
+        .catch((error) => error);
 
       return user;
     },
