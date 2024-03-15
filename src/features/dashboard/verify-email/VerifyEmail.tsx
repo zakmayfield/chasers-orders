@@ -64,6 +64,7 @@ function VerifyEmailContent({
     notify(error.message, 'error');
   }
 
+  // TODO: rebuild this mutation with the `nodemailer` example i created
   useEffect(() => {
     if (!hasRun.current) {
       validateToken(token);

@@ -149,6 +149,7 @@ const providers: NextAuthProviders = [
 
       // send verification email
       // sendVerificationEmail(verificationToken, email);
+      // TODO: unused var
       const sendEmailResponse: TransporterResponse = await sendEmail({
         verificationToken,
         email,
