@@ -11,14 +11,11 @@ import {
   extractExpiration,
   generateVerificationToken,
 } from '@/utils/token.utils';
-import {
-  TransporterResponse,
-  sendEmail,
-  sendVerificationEmail,
-} from '@/utils/email.utils';
+import { TransporterResponse } from '@/features/dashboard/verify-email/utils.verify-email';
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
 import { createCart } from '@/features/cart/utils.cart';
+import { sendEmail } from '@/features/dashboard/verify-email/utils.verify-email';
 
 // adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
@@ -148,7 +145,6 @@ const providers: NextAuthProviders = [
       await createCart(user.id);
 
       // send verification email
-      // sendVerificationEmail(verificationToken, email);
       // TODO: unused var
       const sendEmailResponse: TransporterResponse = await sendEmail({
         verificationToken,
@@ -156,6 +152,10 @@ const providers: NextAuthProviders = [
       })
         .then((response) => response)
         .catch((error) => error);
+
+      console.log({
+        sendEmailResponse,
+      });
 
       return user;
     },

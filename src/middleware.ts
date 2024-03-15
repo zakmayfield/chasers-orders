@@ -36,7 +36,7 @@ export const config = {
     '/api/orders/:path*',
     '/api/products/:path*',
     '/api/trigger/:path*',
+    '/api/auth/verification/:path*',
     // '/api/user/:path*', //todo: test commenting this out
-    '/api/auth/email/verify',
   ],
 };

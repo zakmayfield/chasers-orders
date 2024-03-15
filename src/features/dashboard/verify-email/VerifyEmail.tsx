@@ -3,11 +3,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useMutation } from '@tanstack/react-query';
-import { verifyEmail } from '@/services/mutations/auth.verifyEmail';
 import GoBack from '@/features/shared/GoBack';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { useToast } from '@/hooks/general.hooks';
+import { verifyEmail } from './utils.verify-email';
 
 export default function VerifyEmail({
   email,
@@ -50,7 +50,7 @@ function VerifyEmailContent({
   const { mutate: validateToken, isSuccess } = useMutation({
     mutationFn: verifyEmail,
     onSuccess() {
-      router.push('/dashboard/account-pending');
+      // router.push('/dashboard/account-pending');
     },
     onError(error) {
       if (error instanceof Error) {
@@ -67,7 +67,7 @@ function VerifyEmailContent({
   // TODO: rebuild this mutation with the `nodemailer` example i created
   useEffect(() => {
     if (!hasRun.current) {
-      validateToken(token);
+      // validateToken(token);
       hasRun.current = true;
     }
   }, [token, validateToken]);
@@ -98,11 +98,9 @@ function VerifyEmailContent({
         <div className='mx-auto p-12 bg-light-primary rounded-lg w-full'>
           <p className='mb-3'>Sit tight while we verify your email</p>
           <p className='flex items-center h-11 '>
-            {isSuccess ? (
-              <PiCheckCircleDuotone className='text-light-greenish' />
-            ) : (
-              <LoadingSpinner className={``} />
-            )}
+            <PiXCircleDuotone className='text-red-500' />
+            <PiCheckCircleDuotone className='text-light-greenish' />
+            <LoadingSpinner className={``} />
             <span className='ml-3 text-gray-500 text-sm'>{email}</span>
           </p>
         </div>
