@@ -7,7 +7,7 @@ import GoBack from '@/features/shared/GoBack';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { useToast } from '@/hooks/general.hooks';
-import { verifyEmail } from './utils.verify-email';
+import { verifyEmail } from './services.verify-email';
 
 export default function VerifyEmail({
   email,
@@ -47,13 +47,18 @@ function VerifyEmailContent({
   const router = useRouter();
   const [mutationError, setMutationError] = useState('');
 
+  // TODO: this is broken somewhere along the line. Gotta fix it.
   const { mutate: validateToken, isSuccess } = useMutation({
     mutationFn: verifyEmail,
-    onSuccess() {
+    onSuccess(data) {
+      console.log('from onSucess');
+      console.log('success~~~', data);
       // router.push('/dashboard/account-pending');
     },
     onError(error) {
+      console.log('from error');
       if (error instanceof Error) {
+        console.log('error~~~', error);
         errorCallback(error);
       }
     },
@@ -94,8 +99,9 @@ function VerifyEmailContent({
     <div className='flex justify-center items-center h-[35rem] rounded-lg'>
       <div className='flex flex-col max-w-sm w-full '>
         <h6 className='mb-6 border-b pb-3'>Email verification:</h6>
+        <button onClick={() => verifyEmail({ token })}>trigger</button>
 
-        <div className='mx-auto p-12 bg-light-primary rounded-lg w-full'>
+        {/* <div className='mx-auto p-12 bg-light-primary rounded-lg w-full'>
           <p className='mb-3'>Sit tight while we verify your email</p>
           <p className='flex items-center h-11 '>
             <PiXCircleDuotone className='text-red-500' />
@@ -103,7 +109,7 @@ function VerifyEmailContent({
             <LoadingSpinner className={``} />
             <span className='ml-3 text-gray-500 text-sm'>{email}</span>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
