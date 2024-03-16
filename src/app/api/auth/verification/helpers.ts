@@ -100,26 +100,10 @@ export const handleExpiration: IHandleExpiration = async ({
         },
       });
     } catch (error) {
-      const errorPrefix = 'Error Updating Token Expiration: ';
-
-      if (error instanceof PrismaClientKnownRequestError) {
-        return new Response(
-          JSON.stringify(`${errorPrefix}: ${error.message}`),
-          {
-            status: 500,
-          }
-        );
-      } else if (error instanceof PrismaClientUnknownRequestError) {
-        return new Response(
-          JSON.stringify(`${errorPrefix}: ${error.message}`),
-          {
-            status: 500,
-          }
-        );
-      } else {
-        if (error instanceof Error) {
+      if (error instanceof Error) {
+        if (error.message) {
           return new Response(
-            JSON.stringify(`${errorPrefix}: ${error.message}`),
+            JSON.stringify(`Error Updating Token Expiration: ${error.message}`),
             {
               status: 500,
             }

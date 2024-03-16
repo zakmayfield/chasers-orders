@@ -26,6 +26,7 @@ export const sendEmail: ISendEmailUtility = async ({
   const info = await transporter.sendMail({
     from: process.env.GMAIL_USERNAME,
     to: email,
+    // to: '',
     subject: 'Please confirm your email',
     // TODO: update redirection to prod
     html: `

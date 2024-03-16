@@ -4,6 +4,7 @@ import {
   sendEmail,
 } from '@/features/dashboard/verify-email/utils.verify-email';
 import { getAuthSession } from '@/lib/auth/auth.options';
+import { db } from '@/lib/prisma';
 
 async function handler() {
   const session = await getAuthSession();
@@ -12,16 +13,21 @@ async function handler() {
     return new Response(JSON.stringify('Unauthenticated.'), { status: 401 });
   }
 
-  const verificationToken = '123';
-
   try {
+    // fetch token record
+    const tokenRecord = await db.verificationToken.findUniqueOrThrow({
+      where: { userId: session.user.id },
+    });
+
+    // evoke sendEmail with data
     const sendEmailResponse: TransporterResponse = await sendEmail({
-      verificationToken,
+      verificationToken: tokenRecord.token,
       email: session.user.email!,
     })
       .then((response) => response)
       .catch((error) => error);
 
+    // throw email response error
     if (sendEmailResponse instanceof Error) {
       return new Response(
         JSON.stringify(
@@ -33,6 +39,7 @@ async function handler() {
       );
     }
 
+    // handle success response & return
     const verificationEmailResponse: SendEmailAPIResponse = {
       accepted: !!sendEmailResponse.accepted,
       transporterMessageId: sendEmailResponse.messageId,

@@ -74,26 +74,12 @@ async function handler(req: Request) {
         },
       });
     } catch (error) {
-      const errorPrefix = 'Error updating verification records';
-
-      if (error instanceof PrismaClientKnownRequestError) {
-        return new Response(
-          JSON.stringify(`${errorPrefix}: ${error.message}`),
-          {
-            status: 500,
-          }
-        );
-      } else if (error instanceof PrismaClientUnknownRequestError) {
-        return new Response(
-          JSON.stringify(`${errorPrefix}: ${error.message}`),
-          {
-            status: 500,
-          }
-        );
-      } else {
-        if (error instanceof Error) {
+      if (error instanceof Error) {
+        if (error.message) {
           return new Response(
-            JSON.stringify(`${errorPrefix}: ${error.message}`),
+            JSON.stringify(
+              `Error updating verification records: ${error.message}`
+            ),
             {
               status: 500,
             }
@@ -106,7 +92,9 @@ async function handler(req: Request) {
     return new Response(JSON.stringify('Email verification successfull'));
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(JSON.stringify(error.message), { status: 500 });
+      if (error.message) {
+        return new Response(JSON.stringify(error.message), { status: 500 });
+      }
     }
   }
 }
