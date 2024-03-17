@@ -22,11 +22,23 @@ export const sendVerificationEmail: ISendVerificationEmail = async () => {
   }
 };
 
-interface TokenValidatorReturn {
-  ({ token }: { token: string }): Promise<string>;
+interface ITokenValidator {
+  ({ token }: TokenValidatorProps): Promise<TokenValidatorResponse2>;
 }
 
-export const verifyEmail: TokenValidatorReturn = async ({ token }) => {
+type TokenValidatorProps = {
+  token: string;
+};
+
+//TODO fix this type as well, maybe combine them with the useValidate hook
+export type TokenValidatorResponse = string;
+export type TokenValidatorResponse2 = {
+  response: string;
+  email: string;
+  verifiedOn: string;
+};
+
+export const tokenValidator: ITokenValidator = async ({ token }) => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const url = baseUrl + '/api/auth/verification/verify';

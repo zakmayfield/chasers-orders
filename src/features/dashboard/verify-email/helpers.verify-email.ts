@@ -1,5 +1,10 @@
 import { UseMutateFunction, useMutation } from '@tanstack/react-query';
-import { sendVerificationEmail, verifyEmail } from './services.verify-email';
+import {
+  TokenValidatorResponse,
+  TokenValidatorResponse2,
+  sendVerificationEmail,
+  tokenValidator,
+} from './services.verify-email';
 import { SendEmailAPIResponse } from './utils.verify-email';
 
 interface IUseValidateVerificationToken {
@@ -7,43 +12,47 @@ interface IUseValidateVerificationToken {
     onSuccessCallback,
     onErrorCallback,
   }: {
-    onSuccessCallback?: (data: string) => void;
-    onErrorCallback?: (error: Error) => void;
+    onSuccessCallback?: (data: TokenValidatorResponse2) => void;
+    onErrorCallback?: (error: Error | null) => void;
   }): UseValidateVerificationTokenPayload;
 }
 
 type UseValidateVerificationTokenPayload = {
-  validateToken: ValidateTokenMutation;
+  validateToken: TokenValidatorMutation;
+  isLoading: boolean;
+  isIdle: boolean;
   isSuccess: boolean;
-  data: string | undefined;
+  data: TokenValidatorResponse2 | undefined;
   isError: boolean;
   error: unknown;
 };
 
-type ValidateTokenMutation = UseMutateFunction<
-  ValidateTokenData,
+type TokenValidatorMutation = UseMutateFunction<
+  TokenValidatorResponse2,
   unknown,
-  ValidateTokenProps,
+  TokenValidatorProps,
   unknown
 >;
 
-type ValidateTokenData = string;
-type ValidateTokenProps = {
+type TokenValidatorProps = {
   token: string;
 };
 
+// TODO: fix this type
 export const useValidateVerificationToken: IUseValidateVerificationToken = ({
   onSuccessCallback,
   onErrorCallback,
 }) => {
   const {
     mutate: validateToken,
+    isLoading,
+    isIdle,
     isSuccess,
     isError,
     error,
     data,
   } = useMutation({
-    mutationFn: verifyEmail,
+    mutationFn: tokenValidator,
     onSuccess(data) {
       onSuccessCallback?.(data);
     },
@@ -54,7 +63,15 @@ export const useValidateVerificationToken: IUseValidateVerificationToken = ({
     },
   });
 
-  return { validateToken, isSuccess, isError, error, data };
+  console.log('from helper~~~', {
+    isLoading,
+    isIdle,
+    isSuccess,
+    isError,
+    error,
+    data,
+  });
+  return { validateToken, isSuccess, isError, error, data, isIdle, isLoading };
 };
 
 interface IUseSendVerificationEmail {

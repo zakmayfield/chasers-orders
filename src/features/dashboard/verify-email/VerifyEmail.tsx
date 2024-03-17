@@ -1,13 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import GoBack from '@/features/shared/GoBack';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
-import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { useToast } from '@/hooks/general.hooks';
-import { verifyEmail } from './services.verify-email';
 import {
   useSendVerificationEmail,
   useValidateVerificationToken,
@@ -48,23 +46,24 @@ function VerifyEmailContent({
 }) {
   const { notify } = useToast();
   const hasRun = useRef(false);
-  const router = useRouter();
 
   const {
     validateToken,
+    isLoading: isValidateLoading,
+    isIdle: isValidateIdle,
     isSuccess: isValidateSucess,
     data: validateData,
     isError: isValidateError,
     error: validateError,
   } = useValidateVerificationToken({
     onSuccessCallback(data) {
-      // router.push('/dashboard/account-pending');
+      // TODO: route to account pending
       console.log('success ~~', data);
-      notify(data);
+      notify(data.response);
     },
     onErrorCallback(error) {
       console.log('error ~~', error);
-      notify(error.message, 'error');
+      notify(error?.message!, 'error');
     },
   });
 
@@ -87,7 +86,8 @@ function VerifyEmailContent({
 
   useEffect(() => {
     if (!hasRun.current) {
-      validateToken({ token: '123' });
+      // TODO: remove dev token
+      validateToken({ token });
       hasRun.current = true;
     }
   }, [token, validateToken]);
@@ -98,10 +98,12 @@ function VerifyEmailContent({
         <h6 className='mb-6 border-b pb-3'>Email verification:</h6>
         <div className='mx-auto mb-6 p-12 bg-light-primary rounded-lg w-full'>
           <p className='mb-3'>Sit tight while we verify your email</p>
-          <p className='flex items-center h-11 '>
-            <PiXCircleDuotone className='text-red-500' />
-            <PiCheckCircleDuotone className='text-light-greenish' />
-            <LoadingSpinner className={``} />
+          <p className='flex items-center h-11'>
+            {isValidateLoading && <LoadingSpinner className={``} />}
+            {isValidateSucess && <PiXCircleDuotone className='text-red-500' />}
+            {isValidateError && (
+              <PiCheckCircleDuotone className='text-light-greenish' />
+            )}
             <span className='ml-3 text-gray-500 text-sm'>{email}</span>
           </p>
         </div>

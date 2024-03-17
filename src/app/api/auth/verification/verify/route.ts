@@ -5,6 +5,7 @@ import {
   dateNow,
   validateVerificationToken,
 } from '../helpers';
+import { TokenValidatorResponse2 } from '@/features/dashboard/verify-email/services.verify-email';
 
 async function handler(req: Request) {
   // session
@@ -19,7 +20,7 @@ async function handler(req: Request) {
 
     // URL token
     if (!tokenParam) {
-      return new Response('Missing token', { status: 400 });
+      return new Response(JSON.stringify('Missing token'), { status: 400 });
     }
 
     // DB Verification Record
@@ -52,40 +53,34 @@ async function handler(req: Request) {
     const uniqueIdentifier = `email-verification-${email}`;
 
     // Update user and verification token records
-    try {
-      await db.user.update({
-        where: { id },
-        data: {
-          emailVerified: dateNow(),
-          verificationToken: {
-            update: {
-              where: {
-                identifier: uniqueIdentifier,
-              },
-              data: {
-                valid: false,
-              },
+    const currentDate = dateNow();
+
+    await db.user.update({
+      where: { id },
+      data: {
+        emailVerified: currentDate,
+        verificationToken: {
+          update: {
+            where: {
+              identifier: uniqueIdentifier,
+            },
+            data: {
+              valid: false,
             },
           },
         },
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message) {
-          return new Response(
-            JSON.stringify(
-              `Error updating verification records: ${error.message}`
-            ),
-            {
-              status: 500,
-            }
-          );
-        }
-      }
-    }
+      },
+    });
+
+    // TODO: populate verify response type and object
+    const verifyResponsePayload: TokenValidatorResponse2 = {
+      response: 'Email successfully verified',
+      email,
+      verifiedOn: currentDate,
+    };
 
     // Happy path
-    return new Response(JSON.stringify('Email verification successfull'));
+    return new Response(JSON.stringify(verifyResponsePayload));
   } catch (error) {
     if (error instanceof Error) {
       if (error.message) {
