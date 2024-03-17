@@ -50,10 +50,7 @@ function VerifyEmailContent({
   const {
     validateToken,
     isLoading: isValidateLoading,
-    isIdle: isValidateIdle,
     isSuccess: isValidateSucess,
-    data: validateData,
-    isError: isValidateError,
     error: validateError,
   } = useValidateVerificationToken({
     onSuccessCallback(data) {
@@ -62,8 +59,8 @@ function VerifyEmailContent({
       notify(data.response);
     },
     onErrorCallback(error) {
-      console.log('error ~~', error);
-      notify(error?.message!, 'error');
+      console.log('error ~~', error.message);
+      notify(error.message, 'error');
     },
   });
 
@@ -85,6 +82,10 @@ function VerifyEmailContent({
   });
 
   useEffect(() => {
+    console.log({ validateError });
+  }, [validateError]);
+
+  useEffect(() => {
     if (!hasRun.current) {
       // TODO: remove dev token
       validateToken({ token });
@@ -101,7 +102,7 @@ function VerifyEmailContent({
           <p className='flex items-center h-11'>
             {isValidateLoading && <LoadingSpinner className={``} />}
             {isValidateSucess && <PiXCircleDuotone className='text-red-500' />}
-            {isValidateError && (
+            {validateError instanceof Error && validateError && (
               <PiCheckCircleDuotone className='text-light-greenish' />
             )}
             <span className='ml-3 text-gray-500 text-sm'>{email}</span>

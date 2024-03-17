@@ -13,17 +13,14 @@ interface IUseValidateVerificationToken {
     onErrorCallback,
   }: {
     onSuccessCallback?: (data: TokenValidatorResponse2) => void;
-    onErrorCallback?: (error: Error | null) => void;
+    onErrorCallback?: (error: Error) => void;
   }): UseValidateVerificationTokenPayload;
 }
 
 type UseValidateVerificationTokenPayload = {
   validateToken: TokenValidatorMutation;
   isLoading: boolean;
-  isIdle: boolean;
   isSuccess: boolean;
-  data: TokenValidatorResponse2 | undefined;
-  isError: boolean;
   error: unknown;
 };
 
@@ -46,11 +43,8 @@ export const useValidateVerificationToken: IUseValidateVerificationToken = ({
   const {
     mutate: validateToken,
     isLoading,
-    isIdle,
     isSuccess,
-    isError,
     error,
-    data,
   } = useMutation({
     mutationFn: tokenValidator,
     onSuccess(data) {
@@ -63,15 +57,7 @@ export const useValidateVerificationToken: IUseValidateVerificationToken = ({
     },
   });
 
-  console.log('from helper~~~', {
-    isLoading,
-    isIdle,
-    isSuccess,
-    isError,
-    error,
-    data,
-  });
-  return { validateToken, isSuccess, isError, error, data, isIdle, isLoading };
+  return { validateToken, isSuccess, error, isLoading };
 };
 
 interface IUseSendVerificationEmail {
