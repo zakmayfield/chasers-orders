@@ -15,6 +15,9 @@ interface IUseValidateVerificationToken {
 type UseValidateVerificationTokenPayload = {
   validateToken: ValidateTokenMutation;
   isSuccess: boolean;
+  data: string | undefined;
+  isError: boolean;
+  error: unknown;
 };
 
 type ValidateTokenMutation = UseMutateFunction<
@@ -33,7 +36,13 @@ export const useValidateVerificationToken: IUseValidateVerificationToken = ({
   onSuccessCallback,
   onErrorCallback,
 }) => {
-  const { mutate: validateToken, isSuccess } = useMutation({
+  const {
+    mutate: validateToken,
+    isSuccess,
+    isError,
+    error,
+    data,
+  } = useMutation({
     mutationFn: verifyEmail,
     onSuccess(data) {
       onSuccessCallback?.(data);
@@ -45,7 +54,7 @@ export const useValidateVerificationToken: IUseValidateVerificationToken = ({
     },
   });
 
-  return { validateToken, isSuccess };
+  return { validateToken, isSuccess, isError, error, data };
 };
 
 interface IUseSendVerificationEmail {
@@ -57,6 +66,10 @@ interface IUseSendVerificationEmail {
     onErrorCallback?: (error: Error) => void;
   }): {
     send: UseMutateFunction<SendEmailAPIResponse, Error, void, unknown>;
+    data: SendEmailAPIResponse | undefined;
+    isError: boolean;
+    isSuccess: boolean;
+    error: Error | null;
   };
 }
 
@@ -64,12 +77,13 @@ export const useSendVerificationEmail: IUseSendVerificationEmail = ({
   onSuccessCallback,
   onErrorCallback,
 }) => {
-  const { mutate: send } = useMutation<
-    SendEmailAPIResponse,
-    Error,
-    void,
-    unknown
-  >({
+  const {
+    mutate: send,
+    data,
+    isError,
+    isSuccess,
+    error,
+  } = useMutation<SendEmailAPIResponse, Error, void, unknown>({
     mutationFn: sendVerificationEmail,
     onSuccess(data) {
       onSuccessCallback?.(data);
@@ -80,5 +94,9 @@ export const useSendVerificationEmail: IUseSendVerificationEmail = ({
   });
   return {
     send,
+    data,
+    isError,
+    isSuccess,
+    error,
   };
 };
