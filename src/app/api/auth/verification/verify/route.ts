@@ -1,9 +1,5 @@
 import { db } from '@/lib/prisma';
 import {
-  PrismaClientKnownRequestError,
-  PrismaClientUnknownRequestError,
-} from '@prisma/client/runtime/library';
-import {
   authenticateSession,
   handleExpiration,
   dateNow,
