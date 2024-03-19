@@ -11,29 +11,29 @@ import {
   extractExpiration,
   generateVerificationToken,
 } from '@/utils/token.utils';
-import { sendVerificationEmail } from '@/utils/email.utils';
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
 import { createCart } from '@/features/cart/utils.cart';
+import { sendEmail } from '@/features/verify/utils.verify';
 
-// adapter
+//^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
 const adapter: NextAuthAdapter = PrismaAdapter(db);
 
-// strategy
+//^ strategy
 type NextAuthSessionStrategy = NextAuthOptions['session'];
 const session: NextAuthSessionStrategy = {
   strategy: 'jwt',
 };
 
-// pages
+//^ pages
 type NextAuthPages = NextAuthOptions['pages'];
 const pages: NextAuthPages = {
   signIn: '/',
   error: '/error',
 };
 
-// providers
+//^ providers
 type NextAuthProviders = NextAuthOptions['providers'];
 const providers: NextAuthProviders = [
   GoogleProvider({
@@ -144,14 +144,19 @@ const providers: NextAuthProviders = [
       await createCart(user.id);
 
       // send verification email
-      sendVerificationEmail(verificationToken, email);
+      await sendEmail({
+        verificationToken,
+        email,
+      })
+        .then((response) => response)
+        .catch((error) => error);
 
       return user;
     },
   }),
 ];
 
-// callbacks
+//^ callbacks
 type NextAuthCallbacks = NextAuthOptions['callbacks'];
 const callbacks: NextAuthCallbacks = {
   async session({ token, session }) {
@@ -186,7 +191,7 @@ const callbacks: NextAuthCallbacks = {
   },
 };
 
-// config
+//^ config
 export const authConfig = {
   adapter,
   session,

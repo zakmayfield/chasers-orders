@@ -1,4 +1,4 @@
-import VerifyEmail from '@/features/dashboard/verify-email/VerifyEmail';
+import { Verify } from '@/features/verify';
 import { getAuthSession } from '@/lib/auth/auth.options';
 
 export default async function Page() {
@@ -6,7 +6,10 @@ export default async function Page() {
 
   return (
     <div>
-      <VerifyEmail session={session} />
+      <Verify
+        email={session?.user.email}
+        isVerified={session?.user.emailVerified}
+      />
     </div>
   );
 }
