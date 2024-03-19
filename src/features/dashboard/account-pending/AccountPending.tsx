@@ -1,36 +1,44 @@
 'use client';
 
 import { FC } from 'react';
+import { useUserStatusQuery } from './helpers.account-pending';
+import Link from 'next/link';
 
 interface AccountPendingProps {
   isApproved: boolean;
 }
 
-const AccountPending: FC<AccountPendingProps> = ({ isApproved }) => {
+const AccountPending: FC<AccountPendingProps> = () => {
+  const { status, isLoading } = useUserStatusQuery({});
   return (
     <div>
-      {/* {isApproved ? (
+      <div>
+        <h2>Account status</h2>
+
         <div>
-          <h2>Your account is approved</h2>
-          <p>
-            Visit our{' '}
-            <Link href='/products' className='underline'>
-              Shop
-            </Link>
+          <h3>
+            Your account is{' '}
+            <span className='text-2xl'>
+              {status?.isApproved ? 'approved' : 'pending approval'}
+            </span>
+          </h3>
+
+          <p className='flex items-center gap-1'>
+            Visit the
+            <span>
+              {status?.isApproved ? (
+                <Link href='/products' className='underline text-purple-800'>
+                  shop
+                </Link>
+              ) : (
+                <Link href='/dashboard' className='underline text-purple-800'>
+                  dashboard
+                </Link>
+              )}
+            </span>
           </p>
         </div>
-      ) : (
-        <div>
-          <h2>Your account is pending approval</h2>
-          <p>
-            Visit your{' '}
-            <Link href='/dashboard' className='underline'>
-              Dashboard
-            </Link>{' '}
-            to view your account status.
-          </p>
-        </div>
-      )} */}
+      </div>
     </div>
   );
 };

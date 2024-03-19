@@ -2,6 +2,7 @@ import { UseMutateFunction } from '@tanstack/react-query';
 
 //^ API
 export type UserStatusAPIResponse = {
+  id: string;
   isApproved: boolean;
   emailVerified: Date | null;
 };
@@ -34,3 +35,16 @@ export type UserStatusMutateFunction = UseMutateFunction<
 >;
 
 //^ Queries
+
+export interface IUseUserStatusQuery {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback?: (data: UserStatusAPIResponse) => void;
+    onErrorCallback?: (error: Error) => void;
+  }): {
+    status: UserStatusAPIResponse | undefined;
+    isLoading: boolean;
+  };
+}
