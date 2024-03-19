@@ -27,7 +27,7 @@ export const sendEmail: ISendEmailUtility = async ({
     from: process.env.GMAIL_USERNAME,
     to: email,
     // to: '',
-    subject: 'Please confirm your email',
+    subject: 'Email Confirmation: Chasers Fresh Juice',
     // TODO: update redirection to prod
     html: `
     <!DOCTYPE html>
@@ -36,7 +36,7 @@ export const sendEmail: ISendEmailUtility = async ({
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Confirm Your Email - AuthJS Test</title>
+    <title>Confirm Your Email - Chasers Fresh Juice</title>
 
     <style>
       h1 {
@@ -83,7 +83,7 @@ export const sendEmail: ISendEmailUtility = async ({
       
       <p>If you didn't create an account with us, please ignore this email.</p>
       
-      <p>Thanks,<br>The AuthJS Test Team</p>
+      <p>Thanks,<br>Chasers Fresh Juice</p>
     </body>
     </html>
     `,

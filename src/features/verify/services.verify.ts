@@ -46,7 +46,7 @@ interface ISendVerificationEmail {
 export const sendVerificationEmail: ISendVerificationEmail = async () => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const url = baseUrl + '/api/auth/verification/send';
+    const url = baseUrl + '/api/verify/send';
     const response = await fetch(url);
 
     if (!response.ok) {
