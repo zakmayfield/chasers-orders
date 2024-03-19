@@ -3,7 +3,7 @@ import {
   authenticateSession,
   dateNow,
   handleExpiration,
-  validateVerificationToken,
+  validateVerificationRecord,
 } from './helpers';
 import { VerifyAPIResponse, VerifyMutationArgs } from '@/features/verify/types';
 import { db } from '@/lib/prisma';
@@ -27,24 +27,24 @@ async function handler(req: NextRequest) {
   const { token } = requestPayload;
 
   try {
-    // DB Verification Record
+    //* Database Verification Record
     const verificationTokenRecord = await db.verificationToken.findUnique({
       where: { token },
     });
 
-    // Validate DB Record token
-    const validateTokenResponse = await validateVerificationToken({
-      token: verificationTokenRecord,
+    //* Validate database record token
+    const validateRecordResponse = await validateVerificationRecord({
+      record: verificationTokenRecord,
       id,
     });
-    if (validateTokenResponse instanceof Response) {
-      return validateTokenResponse;
+    if (validateRecordResponse instanceof Response) {
+      return validateRecordResponse;
     }
-    const { validTokenRecord } = validateTokenResponse;
+    const { validRecord } = validateRecordResponse;
 
-    // Expiration validation
+    //* Expiration validation
     const expirationResponse = await handleExpiration({
-      verificationRecord: validTokenRecord,
+      verificationRecord: validRecord,
       token,
       email,
       id,
@@ -53,10 +53,10 @@ async function handler(req: NextRequest) {
       return expirationResponse;
     }
 
-    // Unique identifier
+    //* Unique identifier
     const uniqueIdentifier = `email-verification-${email}`;
 
-    // Update user and verification token records
+    //* Update user and verification token records
     const currentDate = dateNow();
 
     await db.user.update({

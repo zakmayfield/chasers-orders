@@ -122,43 +122,45 @@ export const handleExpiration: IHandleExpiration = async ({
 
 // ^ Validation
 
-interface IValidateVerificationToken {
+interface IValidateVerificationRecord {
   ({
-    token,
+    record,
     id,
   }: {
-    token: VerificationToken | null;
+    record: VerificationToken | null;
     id: string;
-  }): Promise<ValidateVerificationTokenResponse | Response>;
+  }): Promise<ValidateVerificationRecordResponse | Response>;
 }
 
-type ValidateVerificationTokenResponse = {
-  validTokenRecord: VerificationToken;
+type ValidateVerificationRecordResponse = {
+  validRecord: VerificationToken;
 };
 
-export const validateVerificationToken: IValidateVerificationToken = async ({
-  token,
+export const validateVerificationRecord: IValidateVerificationRecord = async ({
+  record,
   id,
 }) => {
-  if (!token) {
-    return new Response('Invalid token: no token found', {
+  if (!record) {
+    return new Response('Invalid token: resource not found', {
       status: 400,
     });
   }
 
-  if (token.userId !== id) {
-    return new Response('Unauthorized attempt', {
+  const { userId, valid } = record;
+
+  if (userId !== id) {
+    return new Response('Unauthorized attempt: please log in to continue', {
       status: 401,
     });
   }
 
-  if (!token.valid) {
+  if (!valid) {
     return new Response('Invalid token: a valid token is required', {
       status: 400,
     });
   }
 
   return {
-    validTokenRecord: token,
+    validRecord: record,
   };
 };
