@@ -1,28 +1,28 @@
+import { db } from '@/lib/prisma';
+import { authenticateSession } from '@/features/auth/helpers.api';
 import {
   SendEmailAPIResponse,
   TransporterResponse,
   sendEmail,
 } from '@/features/verify/utils.verify';
-import { getAuthSession } from '@/lib/auth/auth.options';
-import { db } from '@/lib/prisma';
 
 async function handler() {
-  const session = await getAuthSession();
-
-  if (!session || !session.user) {
-    return new Response(JSON.stringify('Unauthenticated.'), { status: 401 });
+  const session = await authenticateSession();
+  if (session instanceof Response) {
+    return session;
   }
+  const { id, email } = session;
 
   try {
     //^ fetch token record
     const tokenRecord = await db.verificationToken.findUniqueOrThrow({
-      where: { userId: session.user.id },
+      where: { userId: id },
     });
 
     //^ evoke sendEmail with data
     const sendEmailResponse: TransporterResponse = await sendEmail({
       verificationToken: tokenRecord.token,
-      email: session.user.email!,
+      email: email,
     })
       .then((response) => response)
       .catch((error) => error);

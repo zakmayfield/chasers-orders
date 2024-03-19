@@ -1,10 +1,10 @@
 import { NextRequest } from 'next/server';
 import {
-  authenticateSession,
   dateNow,
   handleExpiration,
   validateVerificationRecord,
-} from './helpers';
+} from '@/features/verify/helpers.api';
+import { authenticateSession } from '@/features/auth/helpers.api';
 import { VerifyAPIResponse, VerifyMutationArgs } from '@/features/verify/types';
 import { db } from '@/lib/prisma';
 
