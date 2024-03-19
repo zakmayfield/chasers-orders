@@ -21,8 +21,12 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
   const token = useSearchParams().get('token') ?? undefined;
   const { verifyEmail, error, isLoading, isError, isSuccess, data } = useVerify(
     {
-      onSuccessCallback({ data }) {},
-      onErrorCallback({ error }) {},
+      onSuccessCallback({ data }) {
+        notify(`${data.email} verified on: ${getDateString(data.verifiedOn)}`);
+      },
+      onErrorCallback({ error }) {
+        notify(error.message, 'error');
+      },
     }
   );
 
@@ -76,7 +80,6 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
           </p>
         )}
       </div>
-
       <div className='min-h-[3rem] px-12 mt-6 rounded-md'>
         {isError && (
           <div className='flex items-center gap-6 '>
@@ -90,6 +93,19 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
             <p className='text-sm text-red-400'>
               Verified on: {getDateString(data!.verifiedOn)}
             </p>
+          </div>
+        )}
+      </div>
+      {/* // TODO: set up send email button */}
+      <div className='min-h-[3rem] px-12 mt-6 rounded-md'>
+        {isError && (
+          <div className='flex items-center gap-6 '>
+            <button
+              className='text-sm text-purple-700 underline'
+              onClick={() => console.log('evoke send email mutation')}
+            >
+              Need a new verification email?
+            </button>
           </div>
         )}
       </div>
