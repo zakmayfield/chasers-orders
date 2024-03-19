@@ -25,6 +25,7 @@ export const ResendVerification: FC<ResendVerificationProps> = ({
     <div className={merge(`flex items-center gap-6 ${className}`)}>
       <button
         className='text-sm text-purple-700 underline'
+        // TODO: configure the proper guard for anti abuse
         onClick={() => send()}
       >
         Need a new verification email?
