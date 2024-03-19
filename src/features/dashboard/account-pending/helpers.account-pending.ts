@@ -35,6 +35,7 @@ export const useUserStatusQuery: IUseUserStatusQuery = ({
   >({
     queryKey: ['account-status'],
     queryFn: userStatus,
+    staleTime: Infinity,
     onSuccess(data) {
       onSuccessCallback?.(data);
     },
