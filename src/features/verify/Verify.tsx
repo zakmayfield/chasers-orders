@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { Heading, VerificationResults } from './components';
 
 interface VerifyProps {
-  email: string;
+  email: string | null | undefined;
   isVerified: Date | null | undefined;
 }
 

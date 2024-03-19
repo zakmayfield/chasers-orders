@@ -7,7 +7,7 @@ export default async function Page() {
   return (
     <div>
       <Verify
-        email={session?.user.email!}
+        email={session?.user.email}
         isVerified={session?.user.emailVerified}
       />
     </div>

@@ -9,7 +9,7 @@ import { ResendVerification } from './ResendVerification';
 
 interface VerificationResultsProps {
   className?: string;
-  email: string;
+  email: string | null | undefined;
   isVerified: Date | null | undefined;
 }
 
@@ -53,7 +53,7 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
       verifyEmail({ token });
       hasRun.current = true;
     }
-  }, [token, verifyEmail]);
+  }, [token, verifyEmail, isVerified]);
 
   const convertDate = (date: string) => {
     const x = new Date(date).toDateString();
