@@ -11,7 +11,7 @@ export const ResendVerification: FC<ResendVerificationProps> = ({
   className,
 }) => {
   const { notify } = useToast();
-  const { send, data, error, isSuccess, isError } = useSendVerificationEmail({
+  const { send } = useSendVerificationEmail({
     onSuccessCallback(data) {
       notify(data.responseMessage);
     },

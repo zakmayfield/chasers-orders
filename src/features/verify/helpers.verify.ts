@@ -2,7 +2,7 @@ import { UseMutateFunction, useMutation } from '@tanstack/react-query';
 import { sendVerificationEmail, verifyEmailWithToken } from './services.verify';
 import { VerifyAPIResponse, VerifyMutation, VerifyMutationArgs } from './types';
 import type { SendEmailAPIResponse } from './utils.verify';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 //^ Verification
 
