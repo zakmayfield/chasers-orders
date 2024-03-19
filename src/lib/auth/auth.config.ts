@@ -17,24 +17,24 @@ import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
 import { createCart } from '@/features/cart/utils.cart';
 import { sendEmail } from '@/features/dashboard/verify-email/utils.verify-email';
 
-// adapter
+//^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
 const adapter: NextAuthAdapter = PrismaAdapter(db);
 
-// strategy
+//^ strategy
 type NextAuthSessionStrategy = NextAuthOptions['session'];
 const session: NextAuthSessionStrategy = {
   strategy: 'jwt',
 };
 
-// pages
+//^ pages
 type NextAuthPages = NextAuthOptions['pages'];
 const pages: NextAuthPages = {
   signIn: '/',
   error: '/error',
 };
 
-// providers
+//^ providers
 type NextAuthProviders = NextAuthOptions['providers'];
 const providers: NextAuthProviders = [
   GoogleProvider({
@@ -162,7 +162,7 @@ const providers: NextAuthProviders = [
   }),
 ];
 
-// callbacks
+//^ callbacks
 type NextAuthCallbacks = NextAuthOptions['callbacks'];
 const callbacks: NextAuthCallbacks = {
   async session({ token, session }) {
@@ -197,7 +197,7 @@ const callbacks: NextAuthCallbacks = {
   },
 };
 
-// config
+//^ config
 export const authConfig = {
   adapter,
   session,
