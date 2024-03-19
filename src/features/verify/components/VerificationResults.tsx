@@ -3,7 +3,7 @@ import { FC, useEffect, useRef } from 'react';
 import { useVerify } from '../helpers.verify';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/general.hooks';
 import { ResendVerification } from './ResendVerification';
 
@@ -18,24 +18,39 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
   email,
   isVerified,
 }) => {
+  const router = useRouter();
   const { notify } = useToast();
   const token = useSearchParams().get('token') ?? undefined;
-  const { verifyEmail, error, isLoading, isError, isSuccess, data } = useVerify(
-    {
-      onSuccessCallback({ data }) {
-        // TODO: route to account pending or dashboard
-        notify(`${data.email} verified on: ${getDateString(data.verifiedOn)}`);
-      },
-      onErrorCallback({ error }) {
-        notify(error.message, 'error');
-      },
-    }
-  );
+  const {
+    verifyEmail,
+    error,
+    isLoading,
+    isError,
+    isSuccess,
+    data,
+    isRedirecting,
+    userIsApproved,
+  } = useVerify({
+    onSuccessCallback({ data: user }) {
+      const successNotification = `Email verification successful: ${user.email}`;
+      notify(successNotification);
+
+      if (user.isApproved) {
+        router.push('/products');
+        return;
+      }
+      router.push('/dashboard/account-pending');
+      return;
+    },
+    onErrorCallback({ error }) {
+      notify(error.message, 'error');
+    },
+  });
 
   const hasRun = useRef(false);
   useEffect(() => {
     if (!hasRun.current && !isVerified) {
-      setTimeout(() => verifyEmail({ token }), 1000);
+      verifyEmail({ token });
       hasRun.current = true;
     }
   }, [token, verifyEmail]);
@@ -50,7 +65,11 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
   };
 
   return (
-    <div className={merge(`mx-auto mb-6 w-full ${className}`)}>
+    <div
+      className={merge(
+        `mx-auto w-full min-h-[35rem] flex flex-col gap-6 ${className}`
+      )}
+    >
       <div className='bg-light-primary p-12 rounded-lg w-full'>
         <p className='mb-3'>
           {isVerified
@@ -81,7 +100,12 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
           </p>
         )}
       </div>
-      <div className='min-h-[3rem] px-12 mt-6 rounded-md'>
+      <div
+        className='min-h-[3rem] px-12 rounded-md'
+        //* aria-hidden for screen readers
+        aria-hidden={isSuccess || isError}
+        aria-describedby='response information containter'
+      >
         {isError && (
           <div className='flex items-center gap-6 '>
             <div className='h-12 w-5 rounded-sm bg-red-300'></div>
@@ -98,10 +122,25 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
         )}
       </div>
 
-      {/* // TODO: set up send email button */}
-      <div className='min-h-[3rem] px-12 mt-6 rounded-md'>
+      <div
+        className='min-h-[3rem] px-12 rounded-md'
+        aria-hidden={isError}
+        aria-describedby='response information containter'
+      >
         {isError && <ResendVerification />}
       </div>
+
+      {isRedirecting && (
+        <div className=' bg-slate-50 rounded-lg p-2 mt-6'>
+          <div className='flex items-center justify-center gap-6'>
+            <LoadingSpinner className='text-3xl' />
+            <p className='text-gray-500'>
+              redirecting to:{' '}
+              <span>{userIsApproved ? 'shop' : 'dashboard'}</span>
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

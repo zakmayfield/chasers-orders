@@ -59,7 +59,10 @@ async function handler(req: NextRequest) {
     //* Update user and verification token records
     const currentDate = dateNow();
 
-    await db.user.update({
+    const user: {
+      id: string;
+      isApproved: boolean;
+    } = await db.user.update({
       where: { id },
       data: {
         emailVerified: currentDate,
@@ -74,13 +77,20 @@ async function handler(req: NextRequest) {
           },
         },
       },
+      select: {
+        id: true,
+        isApproved: true,
+      },
     });
+
+    const { isApproved } = user;
 
     const verifyPayload: VerifyAPIResponse = {
       accepted: true,
       id,
       email,
       verifiedOn: currentDate,
+      isApproved,
     };
 
     return new Response(JSON.stringify(verifyPayload));

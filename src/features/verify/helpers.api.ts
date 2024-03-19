@@ -119,7 +119,7 @@ export const validateVerificationRecord: IValidateVerificationRecord = async ({
 
   const { userId, valid } = record;
 
-  if (userId !== id + 'x') {
+  if (userId !== id) {
     return new Response('Unauthorized attempt: please log in to continue', {
       status: 401,
     });

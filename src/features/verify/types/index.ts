@@ -5,6 +5,7 @@ export type VerifyAPIResponse = {
   id: string;
   email: string;
   verifiedOn: string;
+  isApproved: boolean;
 };
 
 export type VerifyMutation = UseMutateFunction<
