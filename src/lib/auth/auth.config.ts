@@ -15,7 +15,7 @@ import { TransporterResponse } from '@/features/dashboard/verify-email/utils.ver
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
 import { createCart } from '@/features/cart/utils.cart';
-import { sendEmail } from '@/features/dashboard/verify-email/utils.verify-email';
+import { sendEmail } from '@/features/verify/utils.verify';
 
 //^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];

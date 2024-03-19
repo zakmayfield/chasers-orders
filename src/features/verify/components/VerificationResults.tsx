@@ -5,6 +5,7 @@ import LoadingSpinner from '@/features/shared/LoadingSpinner';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { useSearchParams } from 'next/navigation';
 import { useToast } from '@/hooks/general.hooks';
+import { ResendVerification } from './ResendVerification';
 
 interface VerificationResultsProps {
   className?: string;
@@ -40,7 +41,6 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
 
   const convertDate = (date: string) => {
     const x = new Date(date).toDateString();
-    console.log({ x });
     return x;
   };
 
@@ -96,18 +96,10 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
           </div>
         )}
       </div>
+
       {/* // TODO: set up send email button */}
       <div className='min-h-[3rem] px-12 mt-6 rounded-md'>
-        {isError && (
-          <div className='flex items-center gap-6 '>
-            <button
-              className='text-sm text-purple-700 underline'
-              onClick={() => console.log('evoke send email mutation')}
-            >
-              Need a new verification email?
-            </button>
-          </div>
-        )}
+        {isError && <ResendVerification />}
       </div>
     </div>
   );

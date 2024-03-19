@@ -1,4 +1,7 @@
 import { VerifyServiceResponse } from './types';
+import { SendEmailAPIResponse } from '@/features/verify/utils.verify';
+
+//^ Verify Email with Token
 
 interface IVerifyEmailWithToken {
   ({ token }: { token?: string }): Promise<VerifyServiceResponse>;
@@ -27,6 +30,30 @@ export const verifyEmailWithToken: IVerifyEmailWithToken = async ({
     const verifyPayload = response.json();
 
     return verifyPayload;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
+
+//^ Send Verification Email
+
+interface ISendVerificationEmail {
+  (): Promise<SendEmailAPIResponse>;
+}
+
+export const sendVerificationEmail: ISendVerificationEmail = async () => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const url = baseUrl + '/api/auth/verification/send';
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(await response.text());
+    }
+
+    return response.json();
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);

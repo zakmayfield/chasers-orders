@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { Heading, ResendVerification, VerificationResults } from './components';
+import { Heading, VerificationResults } from './components';
 
 interface VerifyProps {
   email: string;
@@ -14,7 +14,6 @@ export const Verify: FC<VerifyProps> = ({ email, isVerified }) => {
       <div className='flex flex-col max-w-sm w-full'>
         <Heading />
         <VerificationResults email={email} isVerified={isVerified} />
-        {/* <ResendVerification /> */}
       </div>
     </div>
   );

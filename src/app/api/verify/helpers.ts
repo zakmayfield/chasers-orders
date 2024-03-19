@@ -7,7 +7,7 @@ import {
   generateVerificationToken,
 } from '@/utils/token.utils';
 import type { VerificationToken } from '@prisma/client';
-import { sendEmail } from '@/features/dashboard/verify-email/utils.verify-email';
+import { sendEmail } from '@/features/verify/utils.verify';
 
 // ^ Session
 
@@ -148,7 +148,7 @@ export const validateVerificationRecord: IValidateVerificationRecord = async ({
 
   const { userId, valid } = record;
 
-  if (userId !== id) {
+  if (userId !== id + 'x') {
     return new Response('Unauthorized attempt: please log in to continue', {
       status: 401,
     });

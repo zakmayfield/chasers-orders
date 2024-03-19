@@ -9,13 +9,13 @@ export const ResendVerification: FC<ResendVerificationProps> = ({
   className,
 }) => {
   return (
-    <div className={merge(` ${className}`)}>
-      RESEND
-      {/* <button onClick={() => send()}>manually send email</button> */}
-      {/* {isSendEmailError && sendEmailError && <p>{sendEmailError.message}</p>}
-      {isSendEmailSuccess && sendEmailData && (
-        <p>{sendEmailData.responseMessage}</p>
-      )} */}
+    <div className={merge(`flex items-center gap-6 ${className}`)}>
+      <button
+        className='text-sm text-purple-700 underline'
+        onClick={() => console.log('evoke send email mutation')}
+      >
+        Need a new verification email?
+      </button>
     </div>
   );
 };

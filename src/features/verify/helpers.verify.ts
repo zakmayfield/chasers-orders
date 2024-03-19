@@ -1,6 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
-import { verifyEmailWithToken } from './services.verify';
+import { UseMutateFunction, useMutation } from '@tanstack/react-query';
+import { sendVerificationEmail, verifyEmailWithToken } from './services.verify';
 import { VerifyAPIResponse, VerifyMutation, VerifyMutationArgs } from './types';
+import type { SendEmailAPIResponse } from './utils.verify';
+
+//^ Verification
 
 interface IUseVerify {
   ({
@@ -43,4 +46,50 @@ export const useVerify: IUseVerify = ({
   });
 
   return { verifyEmail, data, error, isLoading, isError, isSuccess };
+};
+
+//^ Send Verification Email
+
+interface IUseSendVerificationEmail {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback?: (data: SendEmailAPIResponse) => void;
+    onErrorCallback?: (error: Error) => void;
+  }): {
+    send: UseMutateFunction<SendEmailAPIResponse, Error, void, unknown>;
+    data: SendEmailAPIResponse | undefined;
+    isError: boolean;
+    isSuccess: boolean;
+    error: Error | null;
+  };
+}
+
+export const useSendVerificationEmail: IUseSendVerificationEmail = ({
+  onSuccessCallback,
+  onErrorCallback,
+}) => {
+  const {
+    mutate: send,
+    data,
+    isError,
+    isSuccess,
+    error,
+  } = useMutation<SendEmailAPIResponse, Error, void, unknown>({
+    mutationFn: sendVerificationEmail,
+    onSuccess(data) {
+      onSuccessCallback?.(data);
+    },
+    onError(error) {
+      onErrorCallback?.(error);
+    },
+  });
+  return {
+    send,
+    data,
+    isError,
+    isSuccess,
+    error,
+  };
 };
