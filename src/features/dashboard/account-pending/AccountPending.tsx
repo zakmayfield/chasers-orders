@@ -1,15 +1,15 @@
 'use client';
-import { Session } from 'next-auth';
-import Link from 'next/link';
 
-export default function AccountPending({
-  user,
-}: {
-  user: Session['user'] | undefined;
-}) {
+import { FC } from 'react';
+
+interface AccountPendingProps {
+  isApproved: boolean;
+}
+
+const AccountPending: FC<AccountPendingProps> = ({ isApproved }) => {
   return (
     <div>
-      {user?.isApproved ? (
+      {/* {isApproved ? (
         <div>
           <h2>Your account is approved</h2>
           <p>
@@ -30,7 +30,9 @@ export default function AccountPending({
             to view your account status.
           </p>
         </div>
-      )}
+      )} */}
     </div>
   );
-}
+};
+
+export default AccountPending;
