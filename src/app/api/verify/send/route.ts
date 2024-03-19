@@ -30,9 +30,7 @@ async function handler() {
     //^ throw email response error
     if (sendEmailResponse instanceof Error) {
       return new Response(
-        JSON.stringify(
-          `Send Verification Email Error: ${sendEmailResponse.message}`
-        ),
+        `Send Verification Email Error: ${sendEmailResponse.message}`,
         {
           status: 400,
         }
@@ -49,8 +47,7 @@ async function handler() {
     return new Response(JSON.stringify(verificationEmailResponse));
   } catch (error) {
     if (error instanceof Error) {
-      if (error.message)
-        return new Response(JSON.stringify(error.message), { status: 500 });
+      if (error.message) return new Response(error.message, { status: 500 });
     }
   }
 }
