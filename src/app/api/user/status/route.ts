@@ -1,9 +1,8 @@
 import { authenticateSession } from '@/features/auth/helpers.api';
 import { UserStatusAPIResponse } from '@/features/dashboard/account-pending/types';
 import { db } from '@/lib/prisma';
-import type { NextRequest } from 'next/server';
 
-async function handler(req: NextRequest) {
+async function handler() {
   const sessionResponse = await authenticateSession();
   if (sessionResponse instanceof Response) {
     return sessionResponse;
