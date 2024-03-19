@@ -23,6 +23,7 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
   const { verifyEmail, error, isLoading, isError, isSuccess, data } = useVerify(
     {
       onSuccessCallback({ data }) {
+        // TODO: route to account pending or dashboard
         notify(`${data.email} verified on: ${getDateString(data.verifiedOn)}`);
       },
       onErrorCallback({ error }) {
