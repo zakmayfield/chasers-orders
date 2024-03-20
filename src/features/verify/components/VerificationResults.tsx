@@ -1,11 +1,11 @@
-import { merge } from '@/utils/styles.utils';
 import { FC, useEffect, useRef } from 'react';
-import { useVerify } from '../helpers.verify';
-import LoadingSpinner from '@/features/shared/LoadingSpinner';
-import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useToast } from '@/hooks/general.hooks';
+import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
+import LoadingSpinner from '@/features/shared/LoadingSpinner';
 import { ResendVerification } from './ResendVerification';
+import { merge } from '@/utils/styles.utils';
+import { useVerify } from '../helpers.verify';
+import { useToast } from '@/hooks/general.hooks';
 
 interface VerificationResultsProps {
   className?: string;
@@ -50,7 +50,8 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
   const hasRun = useRef(false);
   useEffect(() => {
     if (!hasRun.current && !isVerified) {
-      verifyEmail({ token });
+      setTimeout(() => verifyEmail({ token }), 2000);
+
       hasRun.current = true;
     }
   }, [token, verifyEmail, isVerified]);
