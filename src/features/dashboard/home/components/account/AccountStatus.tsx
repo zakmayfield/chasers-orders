@@ -1,5 +1,8 @@
-import { DashboardUserData } from '@/types/types.dashboard';
+'use client';
+
 import { FC } from 'react';
+import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
+import type { DashboardUserData } from '@/types/types.dashboard';
 
 interface AccountStatusProps {
   userData: DashboardUserData;
@@ -25,14 +28,37 @@ export const AccountStatus: FC<AccountStatusProps> = ({ userData }) => {
           <span className='row-start-2 col-span-3 text-gray-700'>
             Email verification:{' '}
           </span>
-          <span className='row-start-2 col-start-5 col-span-6 text-gray-500 text-sm italic'>
-            Verified on {emailVerifiedDateString?.toLocaleDateString()}
-          </span>
 
-          <span className='col-span-3 text-gray-700'>Account approval: </span>
-          <span className='col-start-5 col-span-6'>
-            {userData.isApproved ? '🟢' : '🔴'}
-          </span>
+          {userData.emailVerified ? (
+            <div className='row-start-2 col-start-5 col-span-6 text-gray-400 text-sm italic flex items-center gap-3'>
+              <PiCheckCircleDuotone className='text-2xl text-light-greenish' />
+              <p className='text-gray-400 text-small italic'>
+                Verified on {emailVerifiedDateString?.toLocaleDateString()}
+              </p>
+            </div>
+          ) : (
+            <div className='row-start-2 col-start-5 col-span-6 text-gray-400 text-sm italic flex items-center gap-3'>
+              <PiXCircleDuotone className='text-2xl text-red-500' />
+              <p className='text-gray-400 text-small italic'>
+                pending verification
+              </p>
+            </div>
+          )}
+
+          <span className='col-span-3 text-gray-700'>Account status: </span>
+          {userData.isApproved ? (
+            <div className='col-start-5 col-span-6 flex items-center gap-3'>
+              <PiCheckCircleDuotone className='text-2xl text-light-greenish' />
+              <p className='text-gray-400 text-small italic'>approved</p>
+            </div>
+          ) : (
+            <div className='col-start-5 col-span-6 flex items-center gap-3'>
+              <PiXCircleDuotone className='text-2xl text-red-500' />
+              <p className='text-gray-400 text-small italic'>
+                pending approval
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

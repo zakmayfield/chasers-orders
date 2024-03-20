@@ -1,6 +1,9 @@
+'use client';
 import { FC } from 'react';
 import Link from 'next/link';
 import { DashboardUserData } from '@/types/types.dashboard';
+import { useQueryClient } from '@tanstack/react-query';
+import { getRecentOrders } from '@/services/queries/orders.getRecentOrders';
 
 interface RecentOrderDetailsProps {
   userData: DashboardUserData;
@@ -9,10 +12,12 @@ interface RecentOrderDetailsProps {
 export const RecentOrderDetails: FC<RecentOrderDetailsProps> = ({
   userData,
 }) => {
+  const queryClient = useQueryClient();
   const lastOrderCreatedAt =
     userData &&
     userData.orders.length !== 0 &&
     new Date(userData.orders[0].createdAt);
+
   return (
     <div className='grid grid-cols-8 gap-3'>
       <div className='col-span-2 border-r p-6 h-full'>
@@ -25,9 +30,14 @@ export const RecentOrderDetails: FC<RecentOrderDetailsProps> = ({
         <div className='grid grid-cols-10 gap-3'>
           <div className='col-span-10'>
             {userData.orders.length !== 0 ? (
-              <span>
+              <Link
+                href='/dashboard/recent-orders'
+                onMouseEnter={() =>
+                  queryClient.prefetchQuery(['recent-orders'], getRecentOrders)
+                }
+              >
                 {lastOrderCreatedAt && lastOrderCreatedAt.toLocaleDateString()}
-              </span>
+              </Link>
             ) : (
               <span>
                 first time?{' '}

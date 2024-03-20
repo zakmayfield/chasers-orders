@@ -1,3 +1,4 @@
+import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
 import { useToast } from '@/hooks/general.hooks';
@@ -7,8 +8,8 @@ import {
 } from '@/services/mutations/orders.create';
 import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
-import { useRouter } from 'next/navigation';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 
 export const OrderButton = () => {
   const router = useRouter();
@@ -41,6 +42,12 @@ export const OrderButton = () => {
           return oldData ? x : oldData;
         }
       );
+
+      // fetch user dashboard since we are redirecting there
+      queryClient.fetchQuery({
+        queryKey: ['user-dashboard'],
+        queryFn: getDashboardUser,
+      });
 
       // Clear 'cart' items cache after successful order
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
