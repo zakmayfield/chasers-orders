@@ -36,8 +36,6 @@ export const useVerify: IUseVerify = ({
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [userIsApproved, setUserIsApproved] = useState<boolean | null>(null);
 
-  // ^ Mutate was not inferring the correct types for the longest time
-  // ^ turns out i needed to define the types on the mutation generics first... and then set the interface...
   const {
     mutate: verifyEmail,
     data,
