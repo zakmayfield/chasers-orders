@@ -1,5 +1,6 @@
 import transporter from '@/lib/nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { baseURL } from '@/utils/constants';
 
 interface ISendEmailUtility {
   ({
@@ -26,9 +27,7 @@ export const sendEmail: ISendEmailUtility = async ({
   const info = await transporter.sendMail({
     from: process.env.GMAIL_USERNAME,
     to: email,
-    // to: '',
     subject: 'Email Confirmation: Chasers Fresh Juice',
-    // TODO: update redirection to prod
     html: `
     <!DOCTYPE html>
     <html>
@@ -70,14 +69,14 @@ export const sendEmail: ISendEmailUtility = async ({
     </head>
     
     <body style="padding: 20px;">
-      <h1>Welcome to AuthJS Test!</h1>
+      <h1>Welcome to Chasers Fresh Juice!</h1>
 
       <p>Hi, ${email}</p>
 
       <p>We're excited to have you on board. To get started, please confirm your email address by clicking the button below:</p>
 
       <div class="cta-container">
-        <a href="http://localhost:3000/verify?token=${verificationToken}" class="button" style="color: #fff;">Confirm Email</a>
+        <a href="${baseURL}/verify?token=${verificationToken}" class="button" style="color: #fff;">Confirm Email</a>
         <p style="font-size: 12; font-style: italic; color: #999;">This link expires in 48 hours.</p>
       </div>
       
