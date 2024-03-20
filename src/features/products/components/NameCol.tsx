@@ -108,7 +108,7 @@ function Favorited() {
 function Unfavorited() {
   return (
     <div>
-      <PiHeart />
+      <PiHeart className='hover:text-red-400' />
     </div>
   );
 }

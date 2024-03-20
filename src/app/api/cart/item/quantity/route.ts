@@ -1,11 +1,10 @@
+import { UpdateQuantity } from '@/features/cart/types';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 
 export async function PUT(req: Request) {
   const session = await getAuthSession();
 
-  // determine user auth
-  // test
   if (!session?.user) {
     return new Response('Unauthorized. Please log in to continue.', {
       status: 401,
@@ -13,29 +12,28 @@ export async function PUT(req: Request) {
   }
 
   try {
-    type ReqBody = {
-      cartId: string;
-      unitId: string;
-      quantityPayload: number;
-    };
+    type ReqBody = UpdateQuantity;
 
     const body: ReqBody = await req.json();
-    const quantityPayload = Number(body.quantityPayload);
+    const quantity = Number(body.quantity);
     const unitId: string = body.unitId;
     const cartId: string = body.cartId;
 
     switch (true) {
-      case !quantityPayload:
+      case !quantity:
         return new Response('Quantity is required', {
           status: 400,
         });
-        break;
 
-      case quantityPayload <= 0:
-        return new Response('Quantiy should be a value greater than 0', {
+      case quantity <= 0:
+        return new Response('Quantiy should be greater than 0', {
           status: 400,
         });
-        break;
+
+      case quantity > 100:
+        return new Response('Quantiy should be less than 100', {
+          status: 400,
+        });
     }
 
     if (!cartId || !unitId) {
@@ -44,7 +42,7 @@ export async function PUT(req: Request) {
 
     const u = await db.unitsOnCart.update({
       where: { cartId_unitId: { cartId, unitId } },
-      data: { quantity: quantityPayload },
+      data: { quantity },
       select: {
         unitId: true,
         quantity: true,

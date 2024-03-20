@@ -1,5 +1,10 @@
 import { Prisma, Unit, UnitsOnCart } from '@prisma/client';
-import type { CartCache, CartItem } from '@/features/cart/types';
+import type {
+  CartCache,
+  CartItem,
+  DeliveryInstructionsResponse,
+  UpdateQuantity,
+} from '@/features/cart/types';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
 import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
@@ -103,7 +108,6 @@ export const addItem: AddItemToCartParams = async (unitId) => {
 
     return response.json();
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -173,15 +177,11 @@ export const removeItem: RemoveCartItemStore = async (payload) => {
 };
 
 interface UpdateItemQuantityType {
-  (params: {
-    cartId: string;
-    unitId: string;
-    quantityPayload: number;
-  }): Promise<CartItem>;
+  (params: UpdateQuantity): Promise<CartItem>;
 }
 
 export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
-  const { cartId, unitId, quantityPayload } = params;
+  const { cartId, unitId, quantity } = params;
 
   try {
     const response = await fetch('/api/cart/item/quantity', {
@@ -189,7 +189,7 @@ export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
       headers: {
         'Content-type': 'application/json',
       },
-      body: JSON.stringify({ cartId, unitId, quantityPayload }),
+      body: JSON.stringify({ cartId, unitId, quantity: quantity }),
     });
 
     if (!response.ok) {
@@ -198,7 +198,6 @@ export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
 
     return response.json();
   } catch (error) {
-    console.error(error);
     if (error instanceof Error) {
       throw new Error(error.message);
     }
@@ -236,3 +235,33 @@ export const updateItemSize: UpdateItemSizeProps = async (params) => {
     }
   }
 };
+
+interface DeliveryInstructionsMutationProps {
+  (payload: {
+    deliveryInstructions: string;
+  }): Promise<DeliveryInstructionsResponse>;
+}
+
+export const deliveryInstructionsMutation: DeliveryInstructionsMutationProps =
+  async (payload) => {
+    try {
+      const response = await fetch(`/api/user/company/instructions`, {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(await response.text());
+      }
+
+      return response.json();
+    } catch (error) {
+      console.error(error);
+      if (error instanceof Error) {
+        throw new Error(error.message);
+      }
+    }
+  };

@@ -37,6 +37,5 @@ export const config = {
     '/api/products/:path*',
     '/api/trigger/:path*',
     // '/api/user/:path*', //todo: test commenting this out
-    '/api/auth/email/verify',
   ],
 };

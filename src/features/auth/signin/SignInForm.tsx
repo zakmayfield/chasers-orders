@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { signInWithCredentials, useSignInForm } from './helpers.signin';
 import { SignInFormData } from '../types';
 import FieldError from '../components/FieldError';
+import { SignInButton } from './components';
 
 interface SignInFormProps {}
 
@@ -9,7 +10,7 @@ const SignInForm: FC<SignInFormProps> = ({}) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitted, isSubmitSuccessful },
   } = useSignInForm();
 
   function submitHandler(data: SignInFormData) {
@@ -52,12 +53,10 @@ const SignInForm: FC<SignInFormProps> = ({}) => {
           </div>
         )}
 
-        <button
-          type='submit'
-          className='border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6 bg-light-greenish/70 text-lg'
-        >
-          Sign In
-        </button>
+        <SignInButton
+          isSubmitted={isSubmitted}
+          isSubmitSuccessful={isSubmitSuccessful}
+        />
       </div>
     </form>
   );
