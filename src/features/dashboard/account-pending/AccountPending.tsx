@@ -1,16 +1,34 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useUserStatusQuery } from './helpers.account-pending';
 import Link from 'next/link';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { useSendVerificationEmail } from '@/features/verify/helpers.verify';
+import { useToast } from '@/hooks/general.hooks';
 
 interface AccountPendingProps {
   isApproved: boolean;
 }
 
 const AccountPending: FC<AccountPendingProps> = () => {
+  const { notify } = useToast();
+  const [hasRequestedNewEmail, setHasRequestedNewEmail] = useState(false);
   const { status, isLoading } = useUserStatusQuery({});
+
+  const { send } = useSendVerificationEmail({
+    onSuccessCallback(data) {
+      notify(data.responseMessage);
+    },
+    onErrorCallback(error) {
+      notify(error.message, 'error');
+    },
+  });
+
+  function handleSend() {
+    setHasRequestedNewEmail(true);
+    send();
+  }
 
   if (isLoading) {
     return (
@@ -57,6 +75,7 @@ const AccountPending: FC<AccountPendingProps> = () => {
             </span>
           </p>
         </div>
+
         <div>
           <h3>
             Your email is{' '}
@@ -73,7 +92,11 @@ const AccountPending: FC<AccountPendingProps> = () => {
                 Verified on: {new Date(status.emailVerified).toDateString()}
               </p>
             ) : (
-              <button className='border rounded-lg py-2 px-4'>
+              <button
+                onClick={() => handleSend()}
+                disabled={hasRequestedNewEmail}
+                className={`border rounded-lg py-2 px-4 ${hasRequestedNewEmail && 'text-gray-500 bg-slate-50'}`}
+              >
                 request a new verification email
               </button>
             )}

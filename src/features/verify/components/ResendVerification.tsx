@@ -15,7 +15,6 @@ export const ResendVerification: FC<ResendVerificationProps> = ({
     onSuccessCallback(data) {
       notify(data.responseMessage);
     },
-    // TODO: configure error responses on backend
     onErrorCallback(error) {
       notify(error.message, 'error');
     },
