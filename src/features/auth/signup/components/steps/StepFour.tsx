@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import FieldError from '@/features/auth/components/FieldError';
-import { LoadingSpinner } from '@/shared';
 import { useBillingAddressSync } from '@/features/auth/signup/helpers.signup';
+import { FinalStepButton } from '@/features/auth/signup/components/buttons';
+import { provinceOptions } from '@/shared';
 import type { StepFourProps } from '@/features/auth/types';
 
 export const StepFour: FC<StepFourProps> = ({
@@ -19,6 +20,7 @@ export const StepFour: FC<StepFourProps> = ({
   return (
     <div>
       <div className='grid grid-cols-6 gap-4'>
+        {/*//^ SHIPPING */}
         <label htmlFor='shippingStreetAddress' className='col-span-6'>
           Address:
         </label>
@@ -65,13 +67,16 @@ export const StepFour: FC<StepFourProps> = ({
           <label htmlFor='shippingState' className='row-start-1 col-span-4'>
             Province:
           </label>
-          <input
-            type='shippingState'
+          <select
             id='shippingState'
-            placeholder='ON'
-            {...register('shippingState')}
             className='row-start-2 col-span-4 border-2 rounded-lg p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-          />
+            {...register('shippingState')}
+          >
+            <option value=''>{provinceOptions.default}</option>
+            {provinceOptions.options.map((province) => (
+              <option key={province}>{province}</option>
+            ))}
+          </select>
           {errors.shippingState && (
             <FieldError message={errors.shippingState.message} />
           )}
@@ -83,7 +88,6 @@ export const StepFour: FC<StepFourProps> = ({
             Postal Code:
           </label>
           <input
-            type='shippingPostalCode'
             id='shippingPostalCode'
             placeholder='X2X 2X2'
             {...register('shippingPostalCode')}
@@ -107,7 +111,7 @@ export const StepFour: FC<StepFourProps> = ({
           <FieldError message={errors.deliveryInstructions.message} />
         )}
 
-        {/* Same as Billing */}
+        {/*//^ Same as Billing */}
         <div className='col-span-full flex items-center gap-4 mb-6 mt-3'>
           <input
             type='checkbox'
@@ -119,7 +123,7 @@ export const StepFour: FC<StepFourProps> = ({
           <label htmlFor='sameAsBilling'>Use same address for billing?</label>
         </div>
 
-        {/* BILLING */}
+        {/*//^ BILLING */}
         <label htmlFor='billingStreetAddress' className='col-span-6'>
           Billing Address:
         </label>
@@ -167,13 +171,16 @@ export const StepFour: FC<StepFourProps> = ({
           <label htmlFor='billingState' className='row-start-1 col-span-4'>
             Billing Province:
           </label>
-          <input
-            type='billingState'
+          <select
             id='billingState'
-            placeholder='ON'
-            {...register('billingState')}
             className='row-start-2 col-span-4 border-2 rounded-lg p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-          />
+            {...register('billingState')}
+          >
+            <option value=''>{provinceOptions.default}</option>
+            {provinceOptions.options.map((province) => (
+              <option key={province}>{province}</option>
+            ))}
+          </select>
           {errors.billingState && (
             <FieldError message={errors.billingState.message} />
           )}
@@ -196,7 +203,7 @@ export const StepFour: FC<StepFourProps> = ({
           )}
         </div>
 
-        <FinalSubmitButton
+        <FinalStepButton
           isSubmitted={isSubmitted}
           isSubmitSuccessful={isSubmitSuccessful}
         />
@@ -204,26 +211,3 @@ export const StepFour: FC<StepFourProps> = ({
     </div>
   );
 };
-
-function FinalSubmitButton({
-  isSubmitted,
-  isSubmitSuccessful,
-}: {
-  isSubmitted: boolean;
-  isSubmitSuccessful: boolean;
-}) {
-  return (
-    <button
-      type='submit'
-      className={`
-        border-2 rounded-lg mt-6 col-span-6 p-2 h-12 font-medium text-white
-        flex items-center justify-center gap-3
-        focus:ring-4 focus:ring-blue-400 bg-light-greenish/70
-        ${isSubmitted && isSubmitSuccessful && 'bg-light-greenish/50'}
-      `}
-      disabled={isSubmitted && isSubmitSuccessful}
-    >
-      {isSubmitted ? <LoadingSpinner /> : 'Create Account'}
-    </button>
-  );
-}
