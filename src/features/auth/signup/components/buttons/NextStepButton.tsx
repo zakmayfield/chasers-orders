@@ -51,7 +51,7 @@ export const NextStepButton: FC<NextStepProps> = ({
   return (
     <button
       onClick={handleNextStep}
-      className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400 bg-light-greenish/70`}
+      className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400 bg-light-green-500`}
     >
       <span className='text-white font-bold'>Next</span>
       <PiArrowRightLight className='text-white' />

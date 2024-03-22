@@ -45,7 +45,7 @@ function SaveButton({
   return (
     <button
       onClick={onSave}
-      className='bg-light-greenish rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
+      className='bg-light-green-400 rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
     >
       {formState.isSubmitted && !formState.isSubmitSuccessful ? (
         <LoadingSpinner />

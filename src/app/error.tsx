@@ -19,7 +19,7 @@ export default function Error({
 
         <button
           onClick={() => reset()}
-          className='border p-2 rounded-lg w-36 mx-auto bg-light-greenish/70 text-white'
+          className='border p-2 rounded-lg w-36 mx-auto bg-light-green-400 text-white'
         >
           Try Again
         </button>

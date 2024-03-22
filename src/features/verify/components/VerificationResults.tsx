@@ -79,7 +79,7 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
         </p>
         {isVerified ? (
           <p className='flex items-center h-11'>
-            <PiCheckCircleDuotone className='text-light-greenish' />
+            <PiCheckCircleDuotone className='text-light-green-500' />
             <span className='ml-3 text-gray-500 text-sm'>{email}</span>
           </p>
         ) : (
@@ -89,12 +89,12 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
             ) : isError ? (
               <PiXCircleDuotone className='text-red-500' />
             ) : isSuccess ? (
-              <PiCheckCircleDuotone className='text-light-greenish' />
+              <PiCheckCircleDuotone className='text-light-green-500' />
             ) : (
               <PiCheckCircleDuotone className='text-gray-400' />
             )}
             <span
-              className={`ml-3 text-gray-500 text-sm ${isError && 'text-red-500'} ${isSuccess && 'text-light-greenish'}`}
+              className={`ml-3 text-gray-500 text-sm ${isError && 'text-red-500'} ${isSuccess && 'text-light-green-500'}`}
             >
               {email}
             </span>

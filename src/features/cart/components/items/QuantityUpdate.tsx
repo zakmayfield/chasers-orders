@@ -111,7 +111,7 @@ function QuantityForm({
       {isDirty && (
         <div className='flex items centergap-3'>
           <button type='submit' onClick={submit} className=''>
-            <PiCheckCircleDuotone className='text-light-greenish text-2xl' />
+            <PiCheckCircleDuotone className='text-light-green-400 text-2xl' />
           </button>
           <button type='submit' onClick={handleCancel}>
             <PiXCircleDuotone className='text-red-600 text-2xl' />

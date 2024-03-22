@@ -16,8 +16,8 @@ export const FinalStepButton: FC<FinalStepButtonProps> = ({
       className={`
         border-2 rounded-lg mt-6 col-span-6 p-2 h-12 font-medium text-white
         flex items-center justify-center gap-3
-        focus:ring-4 focus:ring-blue-400 bg-light-greenish/70
-        ${isSubmitted && isSubmitSuccessful && 'bg-light-greenish/50'}
+        focus:ring-4 focus:ring-blue-400 bg-light-green-500 hover:bg-light-green-400
+        ${isSubmitted && isSubmitSuccessful && 'bg-light-green-300'}
       `}
       disabled={isSubmitted && isSubmitSuccessful}
     >
