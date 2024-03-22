@@ -1,6 +1,9 @@
 import { FC } from 'react';
 import FieldError from '@/features/auth/components/FieldError';
-import { NextStepButton } from '@/features/auth/signup/components/buttons';
+import {
+  NextStepButton,
+  PreviousStepButton,
+} from '@/features/auth/signup/components/buttons';
 import { paymentMethodOptions } from '@/shared';
 import type { StepProps } from '@/features/auth/types';
 
@@ -8,6 +11,7 @@ export const StepThree: FC<StepProps> = ({
   register,
   getValues,
   handleStepChangeCallback,
+  handlePreviousStepCallback,
   errors,
   step,
 }) => {
@@ -62,6 +66,11 @@ export const StepThree: FC<StepProps> = ({
         {errors.paymentMethod && (
           <FieldError message={errors.paymentMethod.message} />
         )}
+
+        <PreviousStepButton
+          step={step}
+          handlePreviousStepCallback={handlePreviousStepCallback}
+        />
 
         <NextStepButton
           step={step}

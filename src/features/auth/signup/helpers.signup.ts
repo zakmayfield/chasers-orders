@@ -208,6 +208,23 @@ export const handleStepChange = ({
   setStep(nextStep.toString() as Steps);
 };
 
+export const handlePrevousStepChange = ({
+  step,
+  setStep,
+}: {
+  step: Steps;
+  setStep: Dispatch<SetStateAction<Steps>>;
+}) => {
+  let stepToNumber = Number(step);
+  if (stepToNumber <= 1) {
+    return;
+  }
+
+  const nextStep = (stepToNumber = stepToNumber - 1);
+
+  setStep(nextStep.toString() as Steps);
+};
+
 export const signUpWithCredentials = async (data: SignUpFormData) => {
   try {
     await signIn('sign-up', {

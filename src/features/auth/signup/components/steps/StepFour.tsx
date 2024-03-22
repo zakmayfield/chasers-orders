@@ -1,7 +1,10 @@
 import { FC } from 'react';
 import FieldError from '@/features/auth/components/FieldError';
 import { useBillingAddressSync } from '@/features/auth/signup/helpers.signup';
-import { FinalStepButton } from '@/features/auth/signup/components/buttons';
+import {
+  FinalStepButton,
+  PreviousStepButton,
+} from '@/features/auth/signup/components/buttons';
 import { provinceOptions } from '@/shared';
 import type { StepFourProps } from '@/features/auth/types';
 
@@ -9,6 +12,8 @@ export const StepFour: FC<StepFourProps> = ({
   register,
   getValues,
   setValue,
+  handlePreviousStepCallback,
+  step,
   errors,
   isSubmitted,
   isSubmitSuccessful,
@@ -202,6 +207,11 @@ export const StepFour: FC<StepFourProps> = ({
             <FieldError message={errors.billingPostalCode.message} />
           )}
         </div>
+
+        <PreviousStepButton
+          step={step}
+          handlePreviousStepCallback={handlePreviousStepCallback}
+        />
 
         <FinalStepButton
           isSubmitted={isSubmitted}
