@@ -10,20 +10,21 @@ import {
   handleStepChange,
   useSignUpForm,
   newData,
-} from './helpers.signup';
+} from '@/features/auth/signup/helpers.signup';
 import { useToast } from '@/hooks/general.hooks';
-import { SignUpFormData } from '../types/index';
-import FieldError from '../components/FieldError';
+import FieldError from '@/features/auth/components/FieldError';
 import { paymentMethodOptions } from '@/utils/paymentMethods';
 import { useQueryClient } from '@tanstack/react-query';
 import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { StepOne, StepTwo, StepThree, StepFour } from './steps';
+import type { SignUpFormData } from '@/features/auth/types';
 
 interface SignUpFormProps {
   setStep: Dispatch<SetStateAction<Steps>>;
   step: Steps;
 }
 
-const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
+export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
   const queryClient = useQueryClient();
 
   const {
@@ -31,7 +32,6 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
     setValue,
     register,
     handleSubmit,
-
     reset,
     formState: { errors, isSubmitted, isSubmitSuccessful },
   } = useSignUpForm();
@@ -61,60 +61,18 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
         </div>
       )}
       <div className='flex flex-col gap-24'>
-        {/* STEP ONE */}
+        {/*//^ STEP ONE */}
         {step === '1' && (
-          <div>
-            <div className='grid grid-cols-6 gap-4'>
-              <label htmlFor='email' className='col-span-6'>
-                Email:
-              </label>
-              <input
-                type='email'
-                id='email'
-                placeholder='email@email.com'
-                {...register('email')}
-                className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-              />
-              {errors.email && (
-                <div className='col-span-6'>
-                  <FieldError message={errors.email.message} />
-                </div>
-              )}
-
-              <label htmlFor='password' className='col-span-6'>
-                Password:
-              </label>
-              <input
-                type='password'
-                id='password'
-                placeholder='Password'
-                {...register('password')}
-                className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-              />
-              {errors.password && (
-                <FieldError message={errors.password.message} />
-              )}
-
-              <NextStepButton
-                step={step}
-                getValues={getValues}
-                handleStepChange={handleStepChangeCallback}
-              />
-            </div>
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                // TODO: remvove 'reset' when done with 'shortcut' button
-                reset(newData);
-                handleSubmit(() => signUpWithCredentials(newData))();
-              }}
-            >
-              shortcut
-            </button>
-          </div>
+          <StepOne
+            register={register}
+            getValues={getValues}
+            handleStepChangeCallback={handleStepChangeCallback}
+            errors={errors}
+            step={step}
+          />
         )}
 
-        {/* STEP TWO */}
+        {/*//^ STEP TWO */}
         {step === '2' && (
           <div>
             <div className='grid grid-cols-6 gap-4'>
@@ -170,7 +128,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
           </div>
         )}
 
-        {/* STEP THREE */}
+        {/*//^ STEP THREE */}
         {step === '3' && (
           <div>
             <div className='grid grid-cols-6 gap-4'>
@@ -232,7 +190,7 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
           </div>
         )}
 
-        {/* STEP four*/}
+        {/*//^ STEP four */}
         {step === '4' && (
           <div>
             <div className='grid grid-cols-6 gap-4'>
@@ -433,8 +391,6 @@ const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
     </form>
   );
 };
-
-export default SignUpForm;
 
 function FinalSubmitButton({
   isSubmitted,
