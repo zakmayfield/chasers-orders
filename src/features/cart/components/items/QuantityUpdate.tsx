@@ -101,6 +101,7 @@ function QuantityForm({
           <input
             type='number'
             id='quantity'
+            min={1}
             {...register('quantity', { valueAsNumber: true })}
             className='border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-16'
           />
