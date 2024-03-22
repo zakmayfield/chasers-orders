@@ -71,15 +71,12 @@ const providers: NextAuthProviders = [
       if (!user) {
         return null;
       }
-      if (!user.password) {
-        throw new Error('Error signing in');
-      }
 
       // compare passwords
       const passwordMatch = await compare(password, user.password);
 
       if (!passwordMatch) {
-        return null;
+        throw new Error('Invalid credentials.');
       }
 
       return user;
@@ -111,7 +108,9 @@ const providers: NextAuthProviders = [
       });
 
       if (existingUser) {
-        throw new Error('User already exists. Please log in.');
+        throw new Error(
+          'This email is already in use. Please log in to continue.'
+        );
       }
 
       // generate email verification token
