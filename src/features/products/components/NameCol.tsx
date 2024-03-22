@@ -100,7 +100,7 @@ function LoadingFavorite() {
 function Favorited() {
   return (
     <div>
-      <PiHeartDuotone className='text-light-greenish' />
+      <PiHeartDuotone className='text-light-green-500' />
     </div>
   );
 }
@@ -108,7 +108,7 @@ function Favorited() {
 function Unfavorited() {
   return (
     <div>
-      <PiHeart className='hover:text-red-400' />
+      <PiHeart className='hover:text-green-600' />
     </div>
   );
 }

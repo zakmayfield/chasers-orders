@@ -150,7 +150,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
               >
                 <PiXBold />
               </button>
-              <button className='w-2/3 h-full rounded-lg bg-light-greenish text-white hover:ring-2 hover:ring-sky-500'>
+              <button className='w-2/3 h-full rounded-lg bg-light-green-400 text-white hover:ring-2 hover:ring-sky-500'>
                 save
               </button>
             </div>

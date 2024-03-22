@@ -54,7 +54,7 @@ const AccountPending: FC<AccountPendingProps> = () => {
           <h3>
             Your account is{' '}
             <span
-              className={`text-2xl ${status.isApproved ? 'text-light-greenish' : 'text-red-400'}`}
+              className={`text-2xl ${status.isApproved ? 'text-light-green-500' : 'text-red-400'}`}
             >
               {status.isApproved ? 'approved' : 'pending approval'}
             </span>
@@ -80,7 +80,7 @@ const AccountPending: FC<AccountPendingProps> = () => {
           <h3>
             Your email is{' '}
             <span
-              className={`text-2xl ${status.emailVerified ? 'text-light-greenish' : 'text-red-400'}`}
+              className={`text-2xl ${status.emailVerified ? 'text-light-green-500' : 'text-red-400'}`}
             >
               {status.emailVerified ? 'verified' : 'pending verification'}
             </span>
