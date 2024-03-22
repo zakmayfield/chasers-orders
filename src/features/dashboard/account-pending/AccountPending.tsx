@@ -1,9 +1,9 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { useUserStatusQuery } from './helpers.account-pending';
 import Link from 'next/link';
-import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { useUserStatusQuery } from './helpers.account-pending';
+import { LoadingSpinner } from '@/shared';
 import { useSendVerificationEmail } from '@/features/verify/helpers.verify';
 import { useToast } from '@/hooks/general.hooks';
 

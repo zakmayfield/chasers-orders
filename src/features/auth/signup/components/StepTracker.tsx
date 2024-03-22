@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { Steps } from './helpers.signup';
+import { Steps } from '../helpers.signup';
 
-interface SignUpStepTrackerProps {
+interface StepTrackerProps {
   activeStep: Steps;
 }
 
-const SignUpStepTracker: FC<SignUpStepTrackerProps> = ({ activeStep }) => {
+export const StepTracker: FC<StepTrackerProps> = ({ activeStep }) => {
   if (!activeStep) {
     return (
       <div className='text-center text-sm tracking-wide flex items-center justify-center gap-3 mb-12'>
@@ -45,5 +45,3 @@ const SignUpStepTracker: FC<SignUpStepTrackerProps> = ({ activeStep }) => {
     </div>
   );
 };
-
-export default SignUpStepTracker;
