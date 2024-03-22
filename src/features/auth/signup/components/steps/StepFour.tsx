@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import FieldError from '@/features/auth/components/FieldError';
-import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { LoadingSpinner } from '@/shared';
 import { useBillingAddressSync } from '@/features/auth/signup/helpers.signup';
 import type { StepFourProps } from '@/features/auth/types';
 
