@@ -11,7 +11,7 @@ import { PiArrowRightLight } from 'react-icons/pi';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;
-  handleStepChange(): void;
+  handleStepChange?(): void;
   step: Steps;
 }
 
@@ -42,7 +42,7 @@ export const NextStepButton: FC<NextStepProps> = ({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...secureFormValues } = formValues;
       queryClient.setQueryData(['form-values'], secureFormValues);
-      handleStepChange();
+      handleStepChange?.();
     }
 
     isStepComplete(step) ? handleComplete() : handleNotComplete();
@@ -51,12 +51,10 @@ export const NextStepButton: FC<NextStepProps> = ({
   return (
     <button
       onClick={handleNextStep}
-      className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400`}
+      className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400 bg-light-greenish/70`}
     >
-      <span>Next</span>
-      <span>
-        <PiArrowRightLight />
-      </span>
+      <span className='text-white font-bold'>Next</span>
+      <PiArrowRightLight className='text-white' />
     </button>
   );
 };

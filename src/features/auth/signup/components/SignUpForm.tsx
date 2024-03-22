@@ -5,6 +5,7 @@ import {
   Steps,
   signUpWithCredentials,
   handleStepChange,
+  handlePrevousStepChange,
   useSignUpForm,
 } from '@/features/auth/signup/helpers.signup';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
@@ -28,6 +29,9 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
 
   function handleStepChangeCallback() {
     handleStepChange({ step, setStep });
+  }
+  function handlePreviousStepCallback() {
+    handlePrevousStepChange({ step, setStep });
   }
 
   async function signupCallback(data: SignUpFormData) {
@@ -64,6 +68,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
             register={register}
             getValues={getValues}
             handleStepChangeCallback={handleStepChangeCallback}
+            handlePreviousStepCallback={handlePreviousStepCallback}
             errors={errors}
             step={step}
           />
@@ -75,6 +80,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
             register={register}
             getValues={getValues}
             handleStepChangeCallback={handleStepChangeCallback}
+            handlePreviousStepCallback={handlePreviousStepCallback}
             errors={errors}
             step={step}
           />
@@ -86,6 +92,8 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
             register={register}
             getValues={getValues}
             setValue={setValue}
+            handlePreviousStepCallback={handlePreviousStepCallback}
+            step={step}
             errors={errors}
             isSubmitted={isSubmitted}
             isSubmitSuccessful={isSubmitSuccessful}

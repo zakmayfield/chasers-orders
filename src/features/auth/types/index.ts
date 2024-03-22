@@ -17,17 +17,15 @@ export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;
 export interface StepProps {
   register: UseFormRegister<SignUpFormData>;
   getValues: UseFormGetValues<SignUpFormData>;
-  handleStepChangeCallback(): void;
+  handleStepChangeCallback?(): void;
+  handlePreviousStepCallback?(): void;
   errors: FieldErrors<SignUpFormData>;
   step: Steps;
 }
 
 //^ Step(4) Component Props
-export interface StepFourProps {
-  register: UseFormRegister<SignUpFormData>;
-  getValues: UseFormGetValues<SignUpFormData>;
+export interface StepFourProps extends StepProps {
   setValue: UseFormSetValue<SignUpFormData>;
-  errors: FieldErrors<SignUpFormData>;
   isSubmitted: boolean;
   isSubmitSuccessful: boolean;
 }
