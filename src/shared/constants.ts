@@ -1,4 +1,4 @@
-const methods = [
+const paymentMethods = [
   {
     key: 1,
     value: 'Cash on delivery',
@@ -15,5 +15,5 @@ const methods = [
 
 export const paymentMethodOptions = {
   default: 'select',
-  methods,
+  methods: paymentMethods,
 };

@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import FieldError from '@/features/auth/components/FieldError';
 import { NextStepButton } from '@/features/auth/signup/components/buttons';
-import { paymentMethodOptions } from '@/utils/paymentMethods';
+import { paymentMethodOptions } from '@/shared';
 import type { StepProps } from '@/features/auth/types';
 
 export const StepThree: FC<StepProps> = ({
