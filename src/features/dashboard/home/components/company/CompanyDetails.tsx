@@ -25,6 +25,7 @@ export const CompanyDetails: FC<CompanyDetailsProps> = ({ userData }) => {
     handleSubmit,
     reset,
     getValues,
+    setValue,
   } = useForm<CompanyFormData>({
     resolver,
     defaultValues: getDefaultValues(userData),
@@ -53,6 +54,7 @@ export const CompanyDetails: FC<CompanyDetailsProps> = ({ userData }) => {
             handleSwitchEditCallback={handleSwitchEditCallback}
             setIsEdit={setIsEdit}
             getValues={getValues}
+            setValue={setValue}
           />
         ) : (
           <DetailBody

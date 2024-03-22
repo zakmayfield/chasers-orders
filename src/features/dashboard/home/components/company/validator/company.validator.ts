@@ -4,10 +4,7 @@ import { z } from 'zod';
 
 export const CompanyValidator = z.object({
   name: z.string().min(1, { message: 'Company Name is a required field' }),
-  accountPayableEmail: z.string().min(1, {
-    message:
-      'Account Payable Email is a required field. Please write "N/A" if you do not have one',
-  }),
+  accountPayableEmail: z.string(), // optional
   paymentMethod: z
     .string()
     .min(1, { message: 'Payment Method is a required field' }),
