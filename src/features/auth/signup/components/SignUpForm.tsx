@@ -60,6 +60,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
           <ImSpinner2 className='animate-spin' />
         </div>
       )}
+
       <div className='flex flex-col gap-24'>
         {/*//^ STEP ONE */}
         {step === '1' && (
@@ -74,120 +75,24 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
 
         {/*//^ STEP TWO */}
         {step === '2' && (
-          <div>
-            <div className='grid grid-cols-6 gap-4'>
-              <label htmlFor='contactName' className='col-span-6'>
-                Delivery Contact&apos;s Name:
-              </label>
-              <input
-                type='contactName'
-                id='contactName'
-                placeholder='John'
-                {...register('contactName')}
-                className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-              />
-              {errors.contactName && (
-                <FieldError message={errors.contactName.message} />
-              )}
-
-              <label htmlFor='contactPosition' className='col-span-6'>
-                Contact&apos;s Position{' '}
-                <span className='text-gray-400 font-light'>(Optional)</span>:
-              </label>
-              <input
-                type='contactPosition'
-                id='contactPosition'
-                placeholder='Optional'
-                {...register('contactPosition')}
-                className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 bg-slate-50 bg-opacity-60 focus:ring-4 focus:ring-green-300'
-              />
-              {errors.contactPosition && (
-                <FieldError message={errors.contactPosition.message} />
-              )}
-
-              <label htmlFor='contactPhoneNumber' className='col-span-6'>
-                Contact&apos;s Phone Number
-              </label>
-              <input
-                type='contactPhoneNumber'
-                id='contactPhoneNumber'
-                placeholder='8412238765'
-                {...register('contactPhoneNumber')}
-                className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-              />
-              {errors.contactPhoneNumber && (
-                <FieldError message={errors.contactPhoneNumber.message} />
-              )}
-
-              <NextStepButton
-                step={step}
-                getValues={getValues}
-                handleStepChange={handleStepChangeCallback}
-              />
-            </div>
-          </div>
+          <StepTwo
+            register={register}
+            getValues={getValues}
+            handleStepChangeCallback={handleStepChangeCallback}
+            errors={errors}
+            step={step}
+          />
         )}
 
         {/*//^ STEP THREE */}
         {step === '3' && (
-          <div>
-            <div className='grid grid-cols-6 gap-4'>
-              <label htmlFor='companyName' className='col-span-6'>
-                Company Name:
-              </label>
-              <input
-                type='companyName'
-                id='companyName'
-                placeholder='Acme'
-                {...register('companyName')}
-                className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-              />
-              {errors.companyName && (
-                <FieldError message={errors.companyName.message} />
-              )}
-
-              <label htmlFor='accountPayableEmail' className='col-span-6'>
-                Account Payable Email{' '}
-                <span className='text-gray-400 text-sm'>
-                  (Please write N/A if not applicable)
-                </span>
-                :
-              </label>
-              <input
-                type='accountPayableEmail'
-                id='accountPayableEmail'
-                placeholder='payable@email.com'
-                {...register('accountPayableEmail')}
-                className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
-              />
-              {errors.accountPayableEmail && (
-                <FieldError message={errors.accountPayableEmail.message} />
-              )}
-
-              <label htmlFor='paymentMethod' className='col-span-6'>
-                Payment Method:
-              </label>
-              <select
-                id='paymentMethod'
-                {...register('paymentMethod')}
-                className='border-2 rounded-lg col-span-5 p-2 text-lg focus:ring-4 focus:ring-blue-400'
-              >
-                <option value=''>{paymentMethodOptions.default}</option>
-                {paymentMethodOptions.methods.map((method) => (
-                  <option key={method.key}>{method.value}</option>
-                ))}
-              </select>
-              {errors.paymentMethod && (
-                <FieldError message={errors.paymentMethod.message} />
-              )}
-
-              <NextStepButton
-                step={step}
-                getValues={getValues}
-                handleStepChange={handleStepChangeCallback}
-              />
-            </div>
-          </div>
+          <StepThree
+            register={register}
+            getValues={getValues}
+            handleStepChangeCallback={handleStepChangeCallback}
+            errors={errors}
+            step={step}
+          />
         )}
 
         {/*//^ STEP four */}
@@ -411,61 +316,6 @@ function FinalSubmitButton({
       disabled={isSubmitted && isSubmitSuccessful}
     >
       {isSubmitted ? <LoadingSpinner /> : 'Create Account'}
-    </button>
-  );
-}
-
-function NextStepButton({
-  step,
-  getValues,
-  handleStepChange,
-}: {
-  step: Steps;
-  getValues: UseFormGetValues<SignUpFormData>;
-  handleStepChange(): void;
-}) {
-  const queryClient = useQueryClient();
-  const { notify } = useToast();
-
-  function isStepComplete(currentStep: Steps) {
-    const formValues = getValues();
-    const requiredFields = requiredStepFields[currentStep];
-    return requiredFields.every((field) => !!formValues[field]);
-  }
-
-  const handleNextStep = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    function handleNotComplete() {
-      // set focus when submitting an incomplete form to the first item in the required arr if not empty
-      notify('Please complete all required fields', 'info');
-    }
-
-    function handleComplete() {
-      // define current form state
-      const formValues = getValues();
-      // spread all values except for password
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { password, ...secureFormValues } = formValues;
-      // set form state to cache
-      queryClient.setQueryData(['form-values'], secureFormValues);
-
-      // evoke callback from parent
-      handleStepChange();
-    }
-
-    isStepComplete(step) ? handleComplete() : handleNotComplete();
-  };
-
-  return (
-    <button
-      onClick={handleNextStep}
-      className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400`}
-    >
-      <span>Next</span>
-      <span>
-        <IoIosReturnRight />
-      </span>
     </button>
   );
 }

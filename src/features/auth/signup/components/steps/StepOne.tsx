@@ -1,23 +1,9 @@
 import { FC } from 'react';
 import FieldError from '@/features/auth/components/FieldError';
 import { NextStepButton } from '@/features/auth/signup/components/buttons';
-import { Steps } from '@/features/auth/signup/helpers.signup';
-import type { SignUpFormData } from '@/features/auth/types';
-import type {
-  FieldErrors,
-  UseFormGetValues,
-  UseFormRegister,
-} from 'react-hook-form';
+import type { StepProps } from '@/features/auth/types';
 
-interface StepOneProps {
-  register: UseFormRegister<SignUpFormData>;
-  getValues: UseFormGetValues<SignUpFormData>;
-  handleStepChangeCallback(): void;
-  errors: FieldErrors<SignUpFormData>;
-  step: Steps;
-}
-
-export const StepOne: FC<StepOneProps> = ({
+export const StepOne: FC<StepProps> = ({
   register,
   getValues,
   handleStepChangeCallback,
