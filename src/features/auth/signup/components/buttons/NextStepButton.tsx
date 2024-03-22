@@ -7,7 +7,7 @@ import type { UseFormGetValues } from 'react-hook-form';
 import type { SignUpFormData } from '@/features/auth/types';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/general.hooks';
-import { IoIosReturnRight } from 'react-icons/io';
+import { PiArrowRightLight } from 'react-icons/pi';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;
@@ -33,20 +33,15 @@ export const NextStepButton: FC<NextStepProps> = ({
     e.preventDefault();
 
     function handleNotComplete() {
-      // set focus when submitting an incomplete form to the first item in the required arr if not empty
       notify('Please complete all required fields', 'info');
     }
 
     function handleComplete() {
-      // define current form state
       const formValues = getValues();
       // spread all values except for password
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...secureFormValues } = formValues;
-      // set form state to cache
       queryClient.setQueryData(['form-values'], secureFormValues);
-
-      // evoke callback from parent
       handleStepChange();
     }
 
@@ -60,8 +55,7 @@ export const NextStepButton: FC<NextStepProps> = ({
     >
       <span>Next</span>
       <span>
-        {/* // TODO: replace with PI */}
-        <IoIosReturnRight />
+        <PiArrowRightLight />
       </span>
     </button>
   );
