@@ -104,13 +104,14 @@ export const StepFour: FC<StepFourProps> = ({
         </div>
 
         <label htmlFor='deliveryInstructions' className='col-span-6'>
-          Delivery Instructions:
+          Delivery Instructions{' '}
+          <span className='text-gray-400'>(Optional)</span>:
         </label>
         <textarea
           id='deliveryInstructions'
           placeholder='Deliver to side door...'
           {...register('deliveryInstructions')}
-          className='border-2 rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
+          className='border-2 bg-light-primary rounded-lg col-span-6 p-2 text-lg placeholder:text-gray-300 focus:ring-4 focus:ring-blue-400'
         />
         {errors.deliveryInstructions && (
           <FieldError message={errors.deliveryInstructions.message} />

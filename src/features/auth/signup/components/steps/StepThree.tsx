@@ -34,10 +34,7 @@ export const StepThree: FC<StepProps> = ({
 
         <label htmlFor='accountPayableEmail' className='col-span-6'>
           Account Payable Email{' '}
-          <span className='text-gray-400 text-sm'>
-            (Please write N/A if not applicable)
-          </span>
-          :
+          <span className='text-gray-400'>(Optional)</span>:
         </label>
         <input
           type='accountPayableEmail'

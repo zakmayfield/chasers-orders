@@ -35,7 +35,15 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
   }
 
   async function signupCallback(data: SignUpFormData) {
-    const { isSuccess } = await signUpWithCredentials(data);
+    const accountPayable = data.accountPayableEmail;
+
+    if (!accountPayable || accountPayable === '') {
+      setValue('accountPayableEmail', 'N/A');
+    }
+
+    const values = getValues();
+
+    const { isSuccess } = await signUpWithCredentials(values);
 
     if (isSuccess) {
       queryClient.removeQueries(['form-values']);

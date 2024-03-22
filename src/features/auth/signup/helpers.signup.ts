@@ -99,7 +99,7 @@ interface IRequiredFields {
 export const requiredStepFields: IRequiredFields = {
   '1': ['email', 'password'],
   '2': ['contactName', 'contactPhoneNumber'],
-  '3': ['companyName', 'paymentMethod', 'accountPayableEmail'],
+  '3': ['companyName', 'paymentMethod'],
   '4': [
     'shippingStreetAddress',
     'shippingCity',
