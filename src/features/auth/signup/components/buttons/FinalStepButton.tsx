@@ -21,7 +21,11 @@ export const FinalStepButton: FC<FinalStepButtonProps> = ({
       `}
       disabled={isSubmitted && isSubmitSuccessful}
     >
-      {isSubmitted ? <LoadingSpinner /> : 'Create Account'}
+      {isSubmitted && isSubmitSuccessful ? (
+        <LoadingSpinner />
+      ) : (
+        'Create Account'
+      )}
     </button>
   );
 };
