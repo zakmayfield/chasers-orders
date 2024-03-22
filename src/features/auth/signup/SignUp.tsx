@@ -1,7 +1,8 @@
 'use client';
-import { useStepTracker } from './helpers.signup';
+
+import { useStepTracker } from '@/features/auth/signup/helpers.signup';
 import { SignUpForm, StepTracker } from './components';
-import FormSwitchLink from '../components/FormSwitchLink';
+import FormSwitchLink from '@/features/auth/components/FormSwitchLink';
 
 export const SignUp = () => {
   const { step, setStep } = useStepTracker();
