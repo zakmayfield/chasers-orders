@@ -18,9 +18,9 @@ export const Cart = () => {
 };
 
 function ItemsLayout({ children }: { children: React.ReactNode }) {
-  return <div className='col-start-3 col-span-4'>{children}</div>;
+  return <div className='col-start-2 col-span-5'>{children}</div>;
 }
 
 function SummaryLayout({ children }: { children: React.ReactNode }) {
-  return <div className='col-start-8 col-span-3'>{children}</div>;
+  return <div className='col-start-8 col-span-4'>{children}</div>;
 }

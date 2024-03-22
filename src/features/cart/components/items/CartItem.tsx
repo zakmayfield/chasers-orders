@@ -30,8 +30,8 @@ export const CartItem: React.FC<CartItemProps> = (props) => {
       />
 
       <div>
-        <div className='flex space-x-2 items-center mt-3'>
-          <h3 className='text-lg font-medium'>{product.name}</h3>
+        <div className='flex items-start mt-3 flex-col xl:flex-row xl:items-center xl:space-x-2'>
+          <h3 className='text-base xl:text-lg font-medium'>{product.name}</h3>
           <p className='text-sm text-gray-500'>{product.category}</p>
         </div>
 
