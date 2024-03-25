@@ -30,7 +30,7 @@ const DashNavItem = ({
         py-2 px-4
         rounded-lg 
         2xl:w-full
-        ${active ? 'bg-light-greenish hover:bg-light-greenish/75' : 'hover:bg-light-greenish/20'}`}
+        ${active ? 'bg-light-green-400 hover:bg-light-green-300' : 'hover:bg-light-green-50/50'}`}
     >
       <div className='flex items-center gap-4 tracking-wide'>
         <span className='text-2xl 2xl:text-lg'>{item.icon}</span>

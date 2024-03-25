@@ -24,10 +24,14 @@ export const sendEmail: ISendEmailUtility = async ({
   verificationToken,
   email,
 }) => {
+  const fromAddress = process.env.GMAIL_USERNAME;
+  const userEmail = email;
+  const subject = 'Email Confirmation: Chasers Fresh Juice';
+
   const info = await transporter.sendMail({
-    from: process.env.GMAIL_USERNAME,
-    to: email,
-    subject: 'Email Confirmation: Chasers Fresh Juice',
+    from: fromAddress,
+    to: userEmail,
+    subject,
     html: `
     <!DOCTYPE html>
     <html>

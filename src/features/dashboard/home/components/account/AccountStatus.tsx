@@ -31,7 +31,7 @@ export const AccountStatus: FC<AccountStatusProps> = ({ userData }) => {
 
           {userData.emailVerified ? (
             <div className='row-start-2 col-start-5 col-span-6 text-gray-400 text-sm italic flex items-center gap-3'>
-              <PiCheckCircleDuotone className='text-2xl text-light-greenish' />
+              <PiCheckCircleDuotone className='text-2xl text-light-green-500' />
               <p className='text-gray-400 text-small italic'>
                 Verified on {emailVerifiedDateString?.toLocaleDateString()}
               </p>
@@ -48,7 +48,7 @@ export const AccountStatus: FC<AccountStatusProps> = ({ userData }) => {
           <span className='col-span-3 text-gray-700'>Account status: </span>
           {userData.isApproved ? (
             <div className='col-start-5 col-span-6 flex items-center gap-3'>
-              <PiCheckCircleDuotone className='text-2xl text-light-greenish' />
+              <PiCheckCircleDuotone className='text-2xl text-light-green-500' />
               <p className='text-gray-400 text-small italic'>approved</p>
             </div>
           ) : (

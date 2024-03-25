@@ -58,13 +58,15 @@ export const sendOrderEmail = async (payload: PayloadType) => {
 
 function orderEmailOptions(payload: PayloadType): Record<string, string> {
   const { userData } = payload;
-  const email = userData!.email;
+  const userEmail = userData!.email;
   const companyName = userData!.company!.name;
+  const fromAddress = process.env.GMAIL_USERNAME;
+  const subject = `New Order - ${companyName}`;
 
   const mailOptions = {
-    from: 'zakmayfield@gmail.com',
-    to: email,
-    subject: `New Order - ${companyName}`,
+    from: fromAddress!,
+    to: userEmail,
+    subject,
     html: `
     <!DOCTYPE html>
     <html>

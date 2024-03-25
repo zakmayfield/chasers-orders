@@ -35,7 +35,7 @@ function NotFoundInfo() {
         </p>
         <Link
           href='/dashboard'
-          className='underline text-light-greenish text-xl 2xl:lg'
+          className='underline text-light-green-500 text-xl 2xl:lg'
         >
           Head back home
         </Link>

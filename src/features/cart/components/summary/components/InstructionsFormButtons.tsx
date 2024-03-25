@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { DeliveryInstructionsData } from '@/features/cart/types';
 import { FormState } from 'react-hook-form';
-import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { LoadingSpinner } from '@/shared';
 
 interface InstructionsFormButtonsProps {
   onSave: () => void;
@@ -45,9 +45,9 @@ function SaveButton({
   return (
     <button
       onClick={onSave}
-      className='bg-light-greenish rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
+      className='bg-light-green-400 rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
     >
-      {formState.isSubmitted && !formState.isSubmitSuccessful ? (
+      {formState.isSubmitted && formState.isSubmitSuccessful ? (
         <LoadingSpinner />
       ) : (
         'save'

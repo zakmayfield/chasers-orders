@@ -8,8 +8,8 @@ export const InstructionsContent: FC<InstructionsContentProps> = ({
   deliveryInstructions,
 }) => {
   return (
-    <p className='p-3 min-h-[5rem] bg-light-primary rounded-lg'>
-      {deliveryInstructions}
-    </p>
+    <div className='p-3 min-h-[5rem] bg-light-primary rounded-lg'>
+      <p>{deliveryInstructions}</p>
+    </div>
   );
 };
