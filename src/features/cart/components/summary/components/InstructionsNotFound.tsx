@@ -8,9 +8,9 @@ export const InstructionsNotFound: FC<InstructionsNotFoundProps> = ({
   toggleEdit,
 }) => {
   return (
-    <div className='min-h-[6rem]'>
+    <div className='p-3 min-h-[5rem] bg-light-primary rounded-lg'>
       <button onClick={toggleEdit} className='underline text-purple-800'>
-        add instructions
+        add delivery instructions
       </button>
     </div>
   );

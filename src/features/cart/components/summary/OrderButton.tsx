@@ -17,11 +17,13 @@ export const OrderButton = () => {
   const { notify } = useToast();
 
   // Cart cache query
-  const { data: cartData } = useQuery<CartCache | undefined, Error>({
-    queryKey: ['cart'],
-    queryFn: getCart,
-    staleTime: Infinity,
-  });
+  const { data: cartData, isFetching } = useQuery<CartCache | undefined, Error>(
+    {
+      queryKey: ['cart'],
+      queryFn: getCart,
+      staleTime: Infinity,
+    }
+  );
 
   // Create order mutation
   const { mutate, isSuccess, isLoading } = useMutation({
@@ -71,25 +73,30 @@ export const OrderButton = () => {
     };
     mutate(payload);
   };
+
+  if (isFetching) {
+    return (
+      <div className='col-start-1 col-span-3 text-center rounded-lg  mt-3 bg-light-secondary h-14 animate-pulse'></div>
+    );
+  }
+
   return (
     <button
       onClick={handlePlaceOrder}
       className={`
-        col-start-1 col-span-3 text-center border rounded-lg py-2 mt-6 focus:ring-green-600 focus:ring-2 shadow-sm 
-        ${cartData?.items.length === 0 && 'bg-slate-50'}
+        col-start-1 col-span-3 text-center border rounded-lg py-3 mt-3 focus:ring-green-600 focus:ring-2 shadow-sm h-14
+        bg-light-green-500 
+        ${(!cartData || cartData.items.length > 0) && 'hover:bg-light-green-300'}
+        ${(!cartData || cartData.items.length === 0) && 'bg-light-green-300/50'}
       `}
       disabled={
         isSuccess || isLoading || !cartData || cartData.items.length === 0
       }
     >
       {isLoading ? (
-        <LoadingSpinner className='mx-auto' />
+        <LoadingSpinner className='mx-auto text-white text-xl' />
       ) : (
-        <span
-          className={`font-light ${cartData?.items.length === 0 && 'opacity-50 font-extralight'}`}
-        >
-          Place Order
-        </span>
+        <span className={`text-white text-lg font-normal`}>Place Order</span>
       )}
     </button>
   );

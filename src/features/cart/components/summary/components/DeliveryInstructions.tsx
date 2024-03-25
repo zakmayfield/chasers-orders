@@ -60,7 +60,7 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   }
 
   return (
-    <div className='mt-3'>
+    <div className='mt-3 '>
       <InstructionsHeader
         isEdit={isEdit}
         formState={formState}
@@ -69,16 +69,30 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
         onCancel={onCancel}
       />
 
-      <div className='h-24'>
-        {!deliveryInstructions ? (
-          <InstructionsNotFound toggleEdit={toggleEdit} />
-        ) : isEdit ? (
-          <InstructionsEdit register={register} />
-        ) : (
-          <InstructionsContent deliveryInstructions={deliveryInstructions} />
-        )}
+      <div className='flex flex-col gap-1'>
+        <div className='min-h-[6rem]'>
+          {/* No instructions found */}
+          {!deliveryInstructions && !isEdit && (
+            <InstructionsNotFound toggleEdit={toggleEdit} />
+          )}
 
-        <p className='h-9 text-red-600'>
+          {/* To edit */}
+          {((!deliveryInstructions && isEdit) ||
+            (deliveryInstructions && isEdit)) && (
+            <InstructionsEdit register={register} />
+          )}
+
+          {/* To read */}
+          {deliveryInstructions && !isEdit && (
+            <InstructionsContent deliveryInstructions={deliveryInstructions} />
+          )}
+        </div>
+
+        {/* Errors */}
+        <p
+          className='min-h-[3rem] text-red-600'
+          aria-hidden={!formState.errors.deliveryInstructions}
+        >
           {formState.errors &&
             formState.errors.deliveryInstructions &&
             formState.errors.deliveryInstructions.message}
