@@ -99,7 +99,7 @@ interface IRequiredFields {
 export const requiredStepFields: IRequiredFields = {
   '1': ['email', 'password'],
   '2': ['contactName', 'contactPhoneNumber'],
-  '3': ['companyName', 'paymentMethod', 'accountPayableEmail'],
+  '3': ['companyName', 'paymentMethod'],
   '4': [
     'shippingStreetAddress',
     'shippingCity',
@@ -204,6 +204,23 @@ export const handleStepChange = ({
   }
 
   const nextStep = (stepToNumber = stepToNumber + 1);
+
+  setStep(nextStep.toString() as Steps);
+};
+
+export const handlePrevousStepChange = ({
+  step,
+  setStep,
+}: {
+  step: Steps;
+  setStep: Dispatch<SetStateAction<Steps>>;
+}) => {
+  let stepToNumber = Number(step);
+  if (stepToNumber <= 1) {
+    return;
+  }
+
+  const nextStep = (stepToNumber = stepToNumber - 1);
 
   setStep(nextStep.toString() as Steps);
 };

@@ -7,6 +7,7 @@ import {
   UseFormHandleSubmit,
   UseFormRegister,
   UseFormReset,
+  UseFormSetValue,
 } from 'react-hook-form';
 import {
   CompanyFormData,
@@ -16,7 +17,7 @@ import {
 import { useCompanyEditMutation } from '@/hooks/mutation.hooks';
 import { useToast } from '@/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
-import { paymentMethodOptions } from '@/utils/paymentMethods';
+import { paymentMethodOptions } from '@/shared';
 
 interface CompanyEditProps {
   userData: DashboardUserData;
@@ -28,6 +29,7 @@ interface CompanyEditProps {
   handleSwitchEditCallback: () => void;
   getValues: UseFormGetValues<CompanyFormData>;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
+  setValue: UseFormSetValue<CompanyFormData>;
 }
 
 export const CompanyEdit: FC<CompanyEditProps> = ({
@@ -40,6 +42,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
   getValues,
   setIsEdit,
   handleSwitchEditCallback,
+  setValue,
 }) => {
   const { notify } = useToast();
 
@@ -50,10 +53,19 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
 
   const onFormSubmit = () => {
     const formValues = getValues();
-    // if validated: run `edit(formValues)`
     try {
       CompanyValidator.parse(formValues);
-      edit(formValues);
+
+      if (
+        !formValues.accountPayableEmail ||
+        formValues.accountPayableEmail === ''
+      ) {
+        setValue('accountPayableEmail', 'N/A');
+      }
+
+      const newValues = getValues();
+
+      edit(newValues);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
@@ -138,7 +150,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
               >
                 <PiXBold />
               </button>
-              <button className='w-2/3 h-full rounded-lg bg-light-greenish text-white hover:ring-2 hover:ring-sky-500'>
+              <button className='w-2/3 h-full rounded-lg bg-light-green-400 text-white hover:ring-2 hover:ring-sky-500'>
                 save
               </button>
             </div>

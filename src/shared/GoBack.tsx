@@ -3,7 +3,13 @@
 import { merge } from '@/utils/styles.utils';
 import { useRouter } from 'next/navigation';
 
-export default function GoBack({ className }: { className?: string }) {
+import { FC } from 'react';
+
+interface GoBackProps {
+  className?: string;
+}
+
+export const GoBack: FC<GoBackProps> = ({ className }) => {
   const router = useRouter();
 
   return (
@@ -14,4 +20,4 @@ export default function GoBack({ className }: { className?: string }) {
       Go Back
     </button>
   );
-}
+};

@@ -70,7 +70,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   return (
     <div className='h-16 w-full flex items-center border-b last-of-type:border-0 gap-3 px-6'>
       <div className=' flex items-center justify-center mr-3'>
-        <PiHeartDuotone className='text-2xl opacity-30' />
+        <PiHeartDuotone className='text-2xl text-light-green-500' />
       </div>
 
       <div>
@@ -85,7 +85,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
 
       <div className='flex items-center gap-6  ml-auto'>
         <button onClick={() => handleAddUnitToCart()}>
-          <PiShoppingCartSimpleDuotone className='text-2xl hover:text-light-greenish' />
+          <PiShoppingCartSimpleDuotone className='text-2xl hover:text-light-green-500' />
         </button>
 
         <button

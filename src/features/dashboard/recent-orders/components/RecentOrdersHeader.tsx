@@ -1,4 +1,4 @@
-import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { LoadingSpinner } from '@/shared';
 
 function RecentOrdersHeader({
   isLoading,

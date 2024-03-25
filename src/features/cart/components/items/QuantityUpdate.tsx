@@ -88,6 +88,7 @@ function QuantityForm({
 
   useEffect(() => {
     handleReset();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
   return (
@@ -100,6 +101,7 @@ function QuantityForm({
           <input
             type='number'
             id='quantity'
+            min={1}
             {...register('quantity', { valueAsNumber: true })}
             className='border rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-16'
           />
@@ -109,7 +111,7 @@ function QuantityForm({
       {isDirty && (
         <div className='flex items centergap-3'>
           <button type='submit' onClick={submit} className=''>
-            <PiCheckCircleDuotone className='text-light-greenish text-2xl' />
+            <PiCheckCircleDuotone className='text-light-green-400 text-2xl' />
           </button>
           <button type='submit' onClick={handleCancel}>
             <PiXCircleDuotone className='text-red-600 text-2xl' />

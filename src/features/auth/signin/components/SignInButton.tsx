@@ -1,4 +1,4 @@
-import LoadingSpinner from '@/features/shared/LoadingSpinner';
+import { LoadingSpinner } from '@/shared';
 import { FC } from 'react';
 
 interface SignInButtonProps {
@@ -13,8 +13,11 @@ export const SignInButton: FC<SignInButtonProps> = ({
   return (
     <button
       type='submit'
-      className={`border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6 bg-light-greenish/70 text-lg text-white font-medium h-12
-                  ${isSubmitted && isSubmitSuccessful && 'bg-light-greenish/50'}`}
+      className={`border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6 h-12
+        bg-light-green-500 text-lg text-white font-medium 
+        hover:bg-light-green-400
+        ${isSubmitted && isSubmitSuccessful && 'bg-light-green-300'}
+      `}
       disabled={isSubmitted && isSubmitSuccessful}
     >
       {isSubmitted && isSubmitSuccessful ? (
