@@ -70,11 +70,19 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
       />
 
       <div className='h-24'>
-        {!deliveryInstructions ? (
+        {/* No instructions found */}
+        {!deliveryInstructions && !isEdit && (
           <InstructionsNotFound toggleEdit={toggleEdit} />
-        ) : isEdit ? (
+        )}
+
+        {/* To edit */}
+        {((!deliveryInstructions && isEdit) ||
+          (deliveryInstructions && isEdit)) && (
           <InstructionsEdit register={register} />
-        ) : (
+        )}
+
+        {/* To read */}
+        {deliveryInstructions && !isEdit && (
           <InstructionsContent deliveryInstructions={deliveryInstructions} />
         )}
 
