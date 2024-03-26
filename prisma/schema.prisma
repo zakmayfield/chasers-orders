@@ -59,10 +59,35 @@ model User {
   // authorization
   isApproved        Boolean             @default(false)
   verificationToken VerificationToken[] // 1:m
+  role              Role                @default(USER)
+  permissions       UserPermission[]
   // NextAuth
   image             String?
   accounts          Account[]
   sessions          Session[]
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model Permission {
+  id          String  @id @default(cuid())
+  name        String  @unique
+  description String?
+
+  users UserPermission[]
+}
+
+model UserPermission {
+  userId       String
+  permissionId String
+
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id])
+
+  @@unique([userId, permissionId])
 }
 
 model Contact {

@@ -51,6 +51,7 @@ export const findUniqueSecureUser: UniqueSecureUser = async (email) =>
       email: true,
       isApproved: true,
       emailVerified: true,
+      role: true,
     },
   });
 
@@ -122,6 +123,7 @@ export const registerUser: IRegisterUser = async (payload) => {
       email: true,
       isApproved: true,
       emailVerified: true,
+      role: true,
     },
   });
 };
