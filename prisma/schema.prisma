@@ -73,6 +73,11 @@ enum Role {
   USER
 }
 
+model AuthorizedAdmin {
+  id    String @id @default(cuid())
+  email String @unique
+}
+
 model Permission {
   id          String  @id @default(cuid())
   name        String  @unique
