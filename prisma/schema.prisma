@@ -214,7 +214,7 @@ model Favorite {
   juice   Product @relation(fields: [juiceId], references: [id])
   juiceId String
 
-  user   User   @relation(fields: [userId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
   @@unique([userId, juiceId])
