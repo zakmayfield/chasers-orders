@@ -71,6 +71,7 @@ model User {
 enum Role {
   ADMIN
   USER
+  SUPER
 }
 
 model AuthorizedAdmin {
@@ -206,7 +207,6 @@ model OrderLineItem {
   unitId  String
 }
 
-// TODO: cascade on user delete
 model Favorite {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
