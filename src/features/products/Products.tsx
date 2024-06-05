@@ -7,6 +7,7 @@ export const Products: FC<ProductsProps> = ({}) => {
   return (
     <div>
       <ProductsTable />
+      {/* TODO: Custom juice component */}
     </div>
   );
 };
