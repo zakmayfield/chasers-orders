@@ -1,5 +1,6 @@
 'use client';
 import { FC, FormEvent, useEffect, useState } from 'react';
+import { categoryData } from '../products/helpers.products';
 
 interface CustomProductProps {}
 
@@ -21,13 +22,24 @@ export const CustomProduct: FC<CustomProductProps> = ({}) => {
   return (
     <div className='border rounded p-6'>
       <div>Custom product</div>
-      <form onSubmit={(e) => handleAddIngredient(e)}>
-        <input
-          className='border rounded-md'
-          onChange={(e) => setInput(e.target.value)}
-          value={input}
-        />
-        <button>add</button>
+      <form onSubmit={(e) => handleAddIngredient(e)} className='flex flex-col'>
+        <div>
+          <label htmlFor='category'></label>
+          <select name='category'>
+            <option>type</option>
+            {categoryData.slice(0, 4).map((cat) => (
+              <option key={cat}>{cat}</option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <input
+            className='border rounded-md'
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+          />
+          <button>add ingredient</button>
+        </div>
       </form>
 
       <div className='flex gap-3'>
@@ -37,7 +49,7 @@ export const CustomProduct: FC<CustomProductProps> = ({}) => {
       </div>
 
       <div>
-        <button>submit</button>
+        <button>add to cart</button>
       </div>
     </div>
   );
