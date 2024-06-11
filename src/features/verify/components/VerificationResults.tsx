@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
-import { LoadingSpinner } from '@/shared';
+import { LoadingSpinner } from '@/shared/components';
 import { ResendVerification } from './ResendVerification';
 import { merge } from '@/utils/styles.utils';
 import { useVerify } from '@/features/verify/helpers.verify';

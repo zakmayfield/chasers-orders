@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { FaChevronDown } from 'react-icons/fa';
-import { LoadingSpinner } from '@/shared';
+import { LoadingSpinner } from '@/shared/components';
 
 interface ContainerHeaderProps {
   expanded?: boolean;

@@ -1,3 +1,3 @@
 export * from './constants';
-export * from './LoadingSpinner';
+export * from './components/LoadingSpinner';
 export * from './Logos';

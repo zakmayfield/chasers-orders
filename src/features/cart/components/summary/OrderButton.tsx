@@ -8,7 +8,7 @@ import {
 } from '@/services/mutations/orders.create';
 import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
-import { LoadingSpinner } from '@/shared';
+import { LoadingSpinner } from '@/shared/components';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 
 export const OrderButton = () => {
