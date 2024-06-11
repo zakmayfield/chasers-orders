@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { useToast } from '@/hooks/general.hooks';
+import { useToast } from '@/shared/hooks/general.hooks';
 import {
   CreateOrderPayload,
   createOrder,

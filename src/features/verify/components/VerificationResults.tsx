@@ -5,7 +5,7 @@ import { LoadingSpinner } from '@/shared/components';
 import { ResendVerification } from './ResendVerification';
 import { merge } from '@/utils/styles.utils';
 import { useVerify } from '@/features/verify/helpers.verify';
-import { useToast } from '@/hooks/general.hooks';
+import { useToast } from '@/shared/hooks/general.hooks';
 
 interface VerificationResultsProps {
   className?: string;

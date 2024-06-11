@@ -14,8 +14,8 @@ import {
   CompanyValidator,
   getDefaultValues,
 } from './validator/company.validator';
-import { useCompanyEditMutation } from '@/hooks/mutation.hooks';
-import { useToast } from '@/hooks/general.hooks';
+import { useCompanyEditMutation } from '@/shared/hooks/mutation.hooks';
+import { useToast } from '@/shared/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { paymentMethodOptions } from '@/shared/constants';
 
