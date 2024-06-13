@@ -1,4 +1,4 @@
-import { LogoSm } from '@/shared/Logos';
+import { LogoSm } from '@/shared/components';
 import { FC } from 'react';
 
 interface DashboardNavHeaderProps {}

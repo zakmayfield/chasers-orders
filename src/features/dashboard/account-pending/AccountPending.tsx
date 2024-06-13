@@ -3,9 +3,9 @@
 import { FC, useState } from 'react';
 import Link from 'next/link';
 import { useUserStatusQuery } from './helpers.account-pending';
-import { LoadingSpinner } from '@/shared';
+import { LoadingSpinner } from '@/shared/components';
 import { useSendVerificationEmail } from '@/features/verify/helpers.verify';
-import { useToast } from '@/hooks/general.hooks';
+import { useToast } from '@/shared/hooks/general.hooks';
 
 interface AccountPendingProps {
   isApproved: boolean;
