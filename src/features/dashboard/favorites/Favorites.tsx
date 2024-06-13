@@ -4,7 +4,7 @@ import { useFavorites } from '@/features/products/helpers.products';
 import Favorite from './components/Favorite';
 import FavoritesLoadingSkeleton from './components/FavoritesLoadingSkeleton';
 import EmptyFavorites from './components/EmptyFavorites';
-import { LoadingSpinner } from '@/shared';
+import { LoadingSpinner } from '@/shared/components';
 
 export default function Favorites() {
   const {

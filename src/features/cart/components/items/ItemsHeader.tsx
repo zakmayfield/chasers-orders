@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import type { CartCache } from '@/features/cart/types';
-import { LoadingSpinner } from '@/shared';
+import { LoadingSpinner } from '@/shared/components';
 
 interface ItemsHeaderProps {
   isFetching: boolean;

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useDashboardQuery } from '@/hooks/query.hooks';
+import { useDashboardQuery } from '@/shared/hooks/query.hooks';
 import { DashboardUserData } from '@/types/types.dashboard';
 
 export default function Settings() {
