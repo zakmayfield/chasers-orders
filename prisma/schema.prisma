@@ -62,10 +62,19 @@ model User {
   verificationToken VerificationToken[] // 1:m
   role              Role                @default(USER)
   permissions       UserPermission[]
+  customProducts    CustomProduct[]
   // NextAuth
   image             String?
   accounts          Account[]
   sessions          Session[]
+}
+
+model CustomProduct {
+  id     String @id @default(cuid())
+  name   String
+  type   String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 }
 
 enum Role {
