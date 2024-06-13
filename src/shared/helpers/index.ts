@@ -1,7 +1,7 @@
 import { BASE_URL } from '@/shared/constants';
 
 export type FetchService = {
-  route: 'string';
+  route: string;
   options?: {
     urlExtension?: string;
     config?: RequestInit;
