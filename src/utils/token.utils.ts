@@ -2,7 +2,7 @@ import { verify, sign, JwtPayload } from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
 
 // secret
-const secret = process.env.VERIFICATION_TOKEN_SECRET;
+const secret = process.env.NEXTAUTH_SECRET;
 
 // helpers
 function getSecretOrThrow(secret: string | undefined): string {
