@@ -1,4 +1,4 @@
-import { GoBack } from '@/shared';
+import { GoBack } from '@/shared/components';
 
 export default function Page({
   searchParams,
