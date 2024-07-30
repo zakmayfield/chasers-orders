@@ -7,7 +7,7 @@ import {
   UpdateQuantity,
   QuantityData,
 } from '@/features/cart/types';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 import {
   useQuantityUpdateForm,
   useUpdateQuantity,

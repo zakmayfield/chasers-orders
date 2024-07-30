@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { DashboardCompany } from '@/types/types.dashboard';
-import { useDashboardQuery } from '@/shared/hooks/query.hooks';
+import { useDashboardQuery } from '@/hooks/query.hooks';
 
 export default function Company() {
   const { fetchState, isLoading, isData, isError } =

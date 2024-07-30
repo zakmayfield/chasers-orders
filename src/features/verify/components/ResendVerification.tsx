@@ -1,7 +1,7 @@
 import { merge } from '@/utils/styles.utils';
 import { FC } from 'react';
 import { useSendVerificationEmail } from '../helpers.verify';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 
 interface ResendVerificationProps {
   className?: string;

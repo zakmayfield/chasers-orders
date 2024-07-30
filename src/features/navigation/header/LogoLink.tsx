@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Link from 'next/link';
-import { LogoBase } from '@/shared/components';
+import { LogoBase } from '@/shared/Logos';
 
 interface LogoLinkProps {}
 

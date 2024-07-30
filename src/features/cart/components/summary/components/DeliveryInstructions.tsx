@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 import {
   useInstructionEditForm,
   useEditInstructionsMutation,
