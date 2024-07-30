@@ -1,5 +1,5 @@
 'use client';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 import {
   useToggleFavoriteMutation,
   getActionToggle,

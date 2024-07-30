@@ -3,7 +3,7 @@ import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
 import { getFirstUnitOfProduct } from '@/features/products/utils.products';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 import { addItem } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
 import {

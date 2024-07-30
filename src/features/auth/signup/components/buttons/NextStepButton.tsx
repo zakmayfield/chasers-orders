@@ -6,7 +6,7 @@ import {
 import type { UseFormGetValues } from 'react-hook-form';
 import type { SignUpFormData } from '@/features/auth/types';
 import { useQueryClient } from '@tanstack/react-query';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 import { PiArrowRightLight } from 'react-icons/pi';
 
 interface NextStepProps {

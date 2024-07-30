@@ -1,14 +1,14 @@
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 import {
   CreateOrderPayload,
   createOrder,
 } from '@/services/mutations/orders.create';
 import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
-import { LoadingSpinner } from '@/shared/components';
+import { LoadingSpinner } from '@/shared';
 import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
 
 export const OrderButton = () => {

@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '@/shared/components';
+import { LoadingSpinner } from '@/shared';
 import { FC } from 'react';
 
 interface SignInButtonProps {

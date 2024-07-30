@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LoadingSpinner } from '@/shared/components';
+import { LoadingSpinner } from '@/shared';
 
 interface FinalStepButtonProps {
   isSubmitted: boolean;

@@ -6,7 +6,7 @@ import { OrderType } from '../RecentOrders';
 import { CartCache } from '@/features/cart/types';
 import { useRouter } from 'next/navigation';
 import { Prisma } from '@prisma/client';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/hooks/general.hooks';
 
 interface OrderAgainButtonProps {
   order: OrderType;
