@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { PiSpinnerGapThin } from 'react-icons/pi';
-import { merge } from '@/utils/styles.utils';
+import { merge } from '@/utils/styles';
 
 interface LoadingSpinnerProps {
   className?: string;
