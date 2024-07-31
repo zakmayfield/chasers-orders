@@ -12,7 +12,7 @@ import {
   generateVerificationToken,
 } from '@/utils/token.utils';
 import { db } from '@/lib/prisma';
-import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
+import { findUniqueSecureUser, registerUser } from '@/utils/auth';
 import { createCart } from '@/features/cart/utils.cart';
 import { sendEmail } from '@/features/verify/utils.verify';
 

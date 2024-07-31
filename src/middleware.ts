@@ -1,6 +1,6 @@
 import { JWT, getToken } from 'next-auth/jwt';
 import { NextResponse, NextRequest } from 'next/server';
-import { userStatus } from './utils/auth.utils';
+import { userStatus } from './utils/auth';
 
 /*
   TODO: Implement wrapped middleware: https://next-auth.js.org/configuration/nextjs#advanced-usage
