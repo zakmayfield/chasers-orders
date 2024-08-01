@@ -4,7 +4,7 @@ import { DashboardUserData } from '@/types/types.dashboard';
 import { useToast } from '../general.hooks';
 import { CompanyFormData } from '@/features/dashboard/home/components/company/validator/company.validator';
 
-export const useCompanyEditMutation = ({
+export const useEditCompany = ({
   handleSwitchEditCallback,
   handleResetFormCB,
 }: {
