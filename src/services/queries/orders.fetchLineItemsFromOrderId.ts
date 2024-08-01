@@ -1,6 +1,4 @@
-type FetchLineItemProducts = {
-  (orderId: string): Promise<LineItemProducts>;
-};
+import { fetchHandler } from '@/utils/fetch';
 
 export type LineItemProducts = {
   id: string;
@@ -18,28 +16,16 @@ export type LineItemProducts = {
   }[];
 };
 
-export const fetchLineItemsFromOrderId: FetchLineItemProducts = async (
-  orderId
-) => {
-  try {
-    const fetchUrl = new URL(
-      `/api/orders/recent/line-items`,
-      process.env.NEXT_PUBLIC_BASE_URL
-    );
-    const response = await fetch(fetchUrl, {
-      headers: {
-        'x-order-id': orderId,
+export const fetchLineItemsFromOrderId = async (
+  orderId: string
+): Promise<LineItemProducts> =>
+  await fetchHandler({
+    route: '/orders/recent/line-items',
+    options: {
+      config: {
+        headers: {
+          'x-order-id': orderId,
+        },
       },
-    });
-
-    if (!response.ok) {
-      throw new Error(await response.text());
-    }
-
-    return response.json();
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-};
+    },
+  });
