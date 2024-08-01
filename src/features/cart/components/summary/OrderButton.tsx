@@ -5,7 +5,7 @@ import { useToast } from '@/shared/hooks/general.hooks';
 import {
   CreateOrderPayload,
   createOrder,
-} from '@/services/mutations/orders.create';
+} from '@/services/mutations/createOrder';
 import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
 import { LoadingSpinner } from '@/shared/components';
