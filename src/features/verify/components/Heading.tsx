@@ -1,4 +1,4 @@
-import { merge } from '@/utils/styles.utils';
+import { merge } from '@/utils/styles';
 import { FC } from 'react';
 
 interface HeadingProps {

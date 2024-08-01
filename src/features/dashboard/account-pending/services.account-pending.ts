@@ -1,9 +1,9 @@
 import { UserStatus } from './types';
-import { baseURL } from '@/utils/constants';
+import { BASE_URL } from '@/utils/constants';
 
 export const userStatus: UserStatus = async () => {
   try {
-    const url = baseURL + '/api/user/status';
+    const url = BASE_URL + '/api/user/status';
 
     const response = await fetch(url);
 

@@ -1,10 +1,7 @@
 'use server';
 
 import { db } from '@/lib/prisma';
-import {
-  extractExpiration,
-  generateVerificationToken,
-} from '@/utils/token.utils';
+import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { sendEmail } from '@/features/verify/utils.verify';
 import type { VerificationToken } from '@prisma/client';
 
