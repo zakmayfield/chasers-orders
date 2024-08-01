@@ -2,7 +2,7 @@ import { ContactFormData } from '@/features/dashboard/home/components/contact/va
 import { DashboardUserData } from '@/types/types.dashboard';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
-import { updateContact } from '@/services/mutations/contact.update';
+import { updateContact } from '@/services/mutations/updateContact';
 
 // TODO: Change this
 // kinda configured it only towards ContactFormData isntead of both Contact and Company
@@ -17,7 +17,6 @@ export const useDashboardEdit = ({
   const { notify } = useToast();
 
   const { mutate: edit, isSuccess } = useMutation({
-    // TODO: do this for company (remove the fetch from the hook)
     mutationFn: updateContact,
     onSuccess(data) {
       // will need to make this a bit more modular for `company` to use it without error
