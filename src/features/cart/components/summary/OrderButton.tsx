@@ -9,7 +9,7 @@ import {
 import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
 import { LoadingSpinner } from '@/shared/components';
-import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
+import { getUser } from '@/services/queries/getUser';
 
 export const OrderButton = () => {
   const router = useRouter();
@@ -48,7 +48,7 @@ export const OrderButton = () => {
       // fetch user dashboard since we are redirecting there
       queryClient.fetchQuery({
         queryKey: ['user-dashboard'],
-        queryFn: getDashboardUser,
+        queryFn: getUser,
       });
 
       // Clear 'cart' items cache after successful order
