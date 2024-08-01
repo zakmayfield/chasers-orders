@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
 import { updateContact } from '@/services/mutations/updateContact';
 
-export const useEditContact = ({
+export const useUpdateContact = ({
   handleSwitchEditCallback,
   handleResetFormCB,
 }: {

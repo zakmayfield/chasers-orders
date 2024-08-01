@@ -1,2 +1,2 @@
-export * from './mutations/useEditContact';
-export * from './mutations/useEditCompany';
+export * from './mutations/useUpdateContact';
+export * from './mutations/useUpdateCompany';

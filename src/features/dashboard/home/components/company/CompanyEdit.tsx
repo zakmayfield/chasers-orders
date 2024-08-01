@@ -14,7 +14,7 @@ import {
   CompanyValidator,
   getDefaultValues,
 } from './validator/company.validator';
-import { useEditCompany } from '@/shared/hooks/mutation.hooks';
+import { useUpdateCompany } from '@/shared/hooks/mutation.hooks';
 import { useToast } from '@/shared/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { paymentMethodOptions } from '@/utils/constants';
@@ -46,7 +46,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
 }) => {
   const { notify } = useToast();
 
-  const { edit } = useEditCompany({
+  const { edit } = useUpdateCompany({
     handleSwitchEditCallback,
     handleResetFormCB,
   });
