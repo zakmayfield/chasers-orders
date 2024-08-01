@@ -15,6 +15,7 @@ export const useCompanyEditMutation = ({
   const { notify } = useToast();
 
   const { mutate: edit, isSuccess } = useMutation({
+    // TODO: Extract mutation function to the service mutations directory
     mutationFn: async (formData: CompanyFormData) => {
       const updateUser = async (): Promise<Company | undefined> => {
         try {
