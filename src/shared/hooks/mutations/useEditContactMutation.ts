@@ -4,9 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
 import { updateContact } from '@/services/mutations/updateContact';
 
-// TODO: Change this
-// kinda configured it only towards ContactFormData isntead of both Contact and Company
-export const useDashboardEdit = ({
+export const useEditContact = ({
   handleSwitchEditCallback,
   handleResetFormCB,
 }: {
