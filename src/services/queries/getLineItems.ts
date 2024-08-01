@@ -16,7 +16,7 @@ export type LineItemProducts = {
   }[];
 };
 
-export const fetchLineItemsFromOrderId = async (
+export const getLineItems = async (
   orderId: string
 ): Promise<LineItemProducts> =>
   await fetchHandler({
