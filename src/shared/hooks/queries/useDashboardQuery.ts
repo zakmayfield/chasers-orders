@@ -5,7 +5,7 @@ import {
   DashboardUserData,
   DashboardFetchState,
 } from '@/types/types.dashboard';
-import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
+import { getUser } from '@/services/queries/getUser';
 
 export const useDashboardQuery = <T>(
   property?: 'contact' | 'orders' | 'company' | 'favorites'
@@ -27,7 +27,7 @@ export const useDashboardQuery = <T>(
       try {
         setIsLoading(true);
         const data: DashboardUserData | undefined =
-          await queryClient.fetchQuery(['user-dashboard'], getDashboardUser, {
+          await queryClient.fetchQuery(['user-dashboard'], getUser, {
             staleTime: 60 * 1000 * 5,
           });
 

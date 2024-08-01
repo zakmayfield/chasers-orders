@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
+import { getUser } from '@/services/queries/getUser';
 import { DashboardUserData } from '@/types/types.dashboard';
 import { AccountStatus } from './components/account';
 import { ContactDetails } from './components/contact';
@@ -14,7 +14,7 @@ const DashboardHome = () => {
     Error
   >({
     queryKey: ['user-dashboard'],
-    queryFn: getDashboardUser,
+    queryFn: getUser,
     staleTime: 60 * 1000 * 10,
   });
 
