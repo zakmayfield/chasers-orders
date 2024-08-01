@@ -11,7 +11,7 @@ export type FetchService = {
 export function getUrl({ route, options }: FetchService) {
   const url = BASE_URL + '/api';
 
-  if (options) {
+  if (options?.urlExtension) {
     return url + route + options.urlExtension;
   }
 
