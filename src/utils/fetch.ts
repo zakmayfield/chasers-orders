@@ -1,4 +1,4 @@
-import { BASE_URL } from '@/shared/constants';
+import { BASE_URL } from '@/utils/constants';
 
 export type FetchService = {
   route: string;

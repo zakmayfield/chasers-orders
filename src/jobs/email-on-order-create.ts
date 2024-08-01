@@ -1,7 +1,7 @@
 import { eventTrigger } from '@trigger.dev/sdk';
 import { client } from '@/lib/trigger';
 import { Company, Order, OrderLineItem, User } from '@prisma/client';
-import { sendOrderEmail } from '@/utils/email.utils';
+import { sendOrderEmail } from '@/utils/email';
 
 type PayloadType = {
   order: Order & {

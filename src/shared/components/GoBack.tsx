@@ -1,6 +1,6 @@
 'use client';
 
-import { merge } from '@/utils/styles.utils';
+import { merge } from '@/utils/styles';
 import { useRouter } from 'next/navigation';
 
 import { FC } from 'react';

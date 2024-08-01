@@ -7,12 +7,9 @@ import { compare, genSalt, hash } from 'bcryptjs';
 import { AuthSignUpValidator } from '@/features/auth/signup/validator/validator.signup';
 import { AuthSignInValidator } from '@/features/auth/signin/validator/validator.signin';
 
-import {
-  extractExpiration,
-  generateVerificationToken,
-} from '@/utils/token.utils';
+import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
-import { findUniqueSecureUser, registerUser } from '@/utils/auth.utils';
+import { findUniqueSecureUser, registerUser } from '@/utils/auth';
 import { createCart } from '@/features/cart/utils.cart';
 import { sendEmail } from '@/features/verify/utils.verify';
 

@@ -17,7 +17,7 @@ import {
 import { useCompanyEditMutation } from '@/shared/hooks/mutation.hooks';
 import { useToast } from '@/shared/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
-import { paymentMethodOptions } from '@/shared/constants';
+import { paymentMethodOptions } from '@/utils/constants';
 
 interface CompanyEditProps {
   userData: DashboardUserData;
