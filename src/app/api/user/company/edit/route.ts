@@ -1,6 +1,6 @@
 import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { CompanyFormData } from '@/shared/validators/UpdateCompanyFormValidator';
+import { CompanyFormData } from '@/shared/validators/CompanyValidator';
 
 export async function PUT(req: Request) {
   const session = await getAuthSession();
