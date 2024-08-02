@@ -1,5 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { EditButton } from '../Buttons';
 
 interface DetailBodyProps {

@@ -8,7 +8,7 @@ import {
   UseFormReset,
   UseFormSetFocus,
 } from 'react-hook-form';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import {
   ContactFormData,
   ContactValidator,

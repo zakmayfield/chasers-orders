@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
-import type { DashboardUserData } from '@/types/types.dashboard';
+import type { DashboardUserData } from '@/types/user';
 
 interface AccountStatusProps {
   userData: DashboardUserData;

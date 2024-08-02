@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import DetailBody from './DetailBody';
 import { CompanyEdit } from './CompanyEdit';
 import {

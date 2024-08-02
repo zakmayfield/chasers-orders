@@ -1,7 +1,7 @@
 'use client';
 import { FC } from 'react';
 import Link from 'next/link';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { useQueryClient } from '@tanstack/react-query';
 import { getRecentOrders } from '@/services/queries/getRecentOrders';
 
