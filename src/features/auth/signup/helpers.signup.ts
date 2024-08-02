@@ -18,7 +18,7 @@ import {
 } from 'react-hook-form';
 import type { SignUpFormData } from '../types/index';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthSignUpValidator } from '@/shared/validators';
+import { AuthSignUpValidator } from '@/shared/validators/auth';
 
 export type Steps = '1' | '2' | '3' | '4';
 
