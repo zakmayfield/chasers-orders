@@ -13,7 +13,7 @@ import {
   CompanyFormData,
   CompanyValidator,
   getDefaultValues,
-} from './validator/company.validator';
+} from '@/shared/validators/user/CompanyValidator';
 import { useUpdateCompany } from '@/shared/hooks/mutation.hooks';
 import { useToast } from '@/shared/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
