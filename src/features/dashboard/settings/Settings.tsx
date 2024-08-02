@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useDashboardQuery } from '@/shared/hooks/query.hooks';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 
 export default function Settings() {
   const { fetchState, isLoading, isData, isError } =

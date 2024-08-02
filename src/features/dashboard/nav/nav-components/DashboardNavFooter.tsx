@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { PiWarningDuotone } from 'react-icons/pi';
 import { getUser } from '@/services/queries/getUser';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 
 export const DashboardNavFooter = () => {
   const {

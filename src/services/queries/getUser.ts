@@ -1,4 +1,4 @@
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { fetchHandler } from '@/utils/fetch';
 
 export const getUser = async (): Promise<DashboardUserData> =>

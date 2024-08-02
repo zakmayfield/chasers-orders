@@ -4,7 +4,7 @@ import {
   DashboardQueryError,
   DashboardUserData,
   DashboardFetchState,
-} from '@/types/types.dashboard';
+} from '@/types/user';
 import { getUser } from '@/services/queries/getUser';
 
 export const useDashboardQuery = <T>(

@@ -1,8 +1,8 @@
 import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/features/auth/types/index';
-import { User } from '@prisma/client';
 import { JWT } from 'next-auth/jwt';
 import { BASE_URL } from './constants';
+import { SecureUser } from '@/types/user';
 
 /*
   USER ACCOUNT STATUS
@@ -41,8 +41,6 @@ type UniqueSecureUser = {
   (email: string): Promise<SecureUser | null>;
 };
 
-type SecureUser = Omit<User, 'password' | 'image'>;
-
 export const findUniqueSecureUser: UniqueSecureUser = async (email) =>
   await db.user.findUnique({
     where: { email },
@@ -53,6 +51,7 @@ export const findUniqueSecureUser: UniqueSecureUser = async (email) =>
       emailVerified: true,
       role: true,
       username: true,
+      image: true,
     },
   });
 
@@ -126,6 +125,7 @@ export const registerUser: IRegisterUser = async (payload) => {
       emailVerified: true,
       role: true,
       username: true,
+      image: true,
     },
   });
 };

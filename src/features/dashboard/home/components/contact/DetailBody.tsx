@@ -1,4 +1,4 @@
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { Dispatch, FC, SetStateAction } from 'react';
 import { EditButton } from '../Buttons';
 

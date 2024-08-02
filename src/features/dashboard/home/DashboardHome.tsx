@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/services/queries/getUser';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { AccountStatus } from './components/account';
 import { ContactDetails } from './components/contact';
 import { CompanyDetails } from './components/company';
