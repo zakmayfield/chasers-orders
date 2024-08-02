@@ -1,5 +1,5 @@
 import { ContactFormData } from '@/features/dashboard/home/components/contact/validator/contact.validator';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { UserData } from '@/types/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
 import { updateContact } from '@/services/mutations/updateContact';
@@ -20,12 +20,13 @@ export const useUpdateContact = ({
       // will need to make this a bit more modular for `company` to use it without error
       queryClient.setQueryData(
         ['user-dashboard'],
-        (oldData: DashboardUserData | undefined) => {
+        (oldData: UserData | undefined) => {
           const payload = data && {
             id: data.id,
             name: data.name,
             phoneNumber: data.phoneNumber,
             position: data.position,
+            userId: data.userId,
           };
           return oldData ? { ...oldData, contact: payload! } : oldData;
         }

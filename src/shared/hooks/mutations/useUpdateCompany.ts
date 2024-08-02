@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { UserData } from '@/types/user';
 import { useToast } from '../general.hooks';
 import { CompanyFormData } from '@/features/dashboard/home/components/company/validator/company.validator';
 import { updateCompany } from '@/services/mutations/updateCompany';
@@ -19,12 +19,13 @@ export const useUpdateCompany = ({
     onSuccess(data) {
       queryClient.setQueryData(
         ['user-dashboard'],
-        (oldData: DashboardUserData | undefined) => {
+        (oldData: UserData | undefined) => {
           const company = {
             id: data!.id,
             name: data!.name,
             accountPayableEmail: data!.accountPayableEmail,
             paymentMethod: data!.paymentMethod,
+            userId: data!.userId,
           };
           return oldData
             ? { ...oldData, company: { ...oldData.company, ...company } }

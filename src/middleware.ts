@@ -13,10 +13,10 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
-  // Fetch user account status from token
+  //^ Fetch user account status from token
   const { isApproved, emailVerified } = await userStatus(token);
 
-  // All routes except /dashboard will redirect conditionally
+  //^ All routes except /dashboard will redirect conditionally
   if (
     !req.nextUrl.pathname.includes('/dashboard') &&
     (!isApproved || !emailVerified)
@@ -36,6 +36,5 @@ export const config = {
     '/api/orders/:path*',
     '/api/products/:path*',
     '/api/trigger/:path*',
-    // '/api/user/:path*', //todo: test commenting this out
   ],
 };
