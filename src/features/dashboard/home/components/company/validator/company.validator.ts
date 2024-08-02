@@ -1,4 +1,4 @@
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
@@ -12,7 +12,7 @@ export const CompanyValidator = z.object({
 
 export type CompanyFormData = z.infer<typeof CompanyValidator>;
 
-export const getDefaultValues = (userData: DashboardUserData) => {
+export const getDefaultValues = (userData: UserData) => {
   return {
     name: userData.company.name,
     accountPayableEmail: userData.company.accountPayableEmail,

@@ -10,7 +10,7 @@ import {
 
 export type SecureUser = Omit<User, 'password'>;
 
-export type DashboardUserData = SecureUser & {
+export type UserData = SecureUser & {
   contact: Contact;
   favorites: Favorite[];
   orders: Order[];

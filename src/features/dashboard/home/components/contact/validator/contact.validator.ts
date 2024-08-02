@@ -1,4 +1,4 @@
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 
@@ -31,7 +31,7 @@ type AdjustedFormType = z.ZodObject<
 >;
 export type ContactFormData = z.infer<AdjustedFormType>;
 
-export const getDefaultValues = (userData: DashboardUserData) => {
+export const getDefaultValues = (userData: UserData) => {
   return {
     name: userData.contact.name,
     phoneNumber: userData.contact.phoneNumber,

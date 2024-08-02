@@ -2,14 +2,14 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { PiWarningDuotone } from 'react-icons/pi';
 import { getUser } from '@/services/queries/getUser';
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 
 export const DashboardNavFooter = () => {
   const {
     data: user,
     isLoading,
     isError,
-  } = useQuery<DashboardUserData>({
+  } = useQuery<UserData>({
     queryKey: ['user-dashboard'],
     queryFn: getUser,
     staleTime: 60 * 1000 * 10,
