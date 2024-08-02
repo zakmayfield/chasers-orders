@@ -3,10 +3,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import { compare, genSalt, hash } from 'bcryptjs';
-
-import { AuthSignUpValidator } from '@/features/auth/signup/validator/validator.signup';
-import { AuthSignInValidator } from '@/shared/validators/SignInValidator';
-
+import { AuthSignInValidator, AuthSignUpValidator } from '@/shared/validators';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth';

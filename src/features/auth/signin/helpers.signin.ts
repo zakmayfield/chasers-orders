@@ -7,7 +7,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthSignInValidator } from '@/shared/validators/SignInValidator';
+import { AuthSignInValidator } from '@/shared/validators';
 
 export const signInWithCredentials = async (data: SignInFormData) => {
   try {
