@@ -19,7 +19,7 @@ import {
   UpdateQuantity,
 } from '@/features/cart/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DeliveryInstructionsValidator } from './validator/validator.delivery-instructions';
+import { DeliveryInstructionsValidator } from '@/shared/validators/DeliveryInstructionsValidator';
 import {
   FormState,
   UseFormGetValues,
@@ -28,7 +28,7 @@ import {
   UseFormReset,
   useForm,
 } from 'react-hook-form';
-import { QuantityValidator } from './validator';
+import { QuantityValidator } from '@/shared/validators/QuantityValidator';
 import { FormEvent } from 'react';
 
 interface UseFetchCartQuery {
