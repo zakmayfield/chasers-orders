@@ -2,6 +2,7 @@ import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/features/auth/types/index';
 import { User } from '@prisma/client';
 import { JWT } from 'next-auth/jwt';
+import { BASE_URL } from './constants';
 
 /*
   USER ACCOUNT STATUS
@@ -18,8 +19,7 @@ type ResolvedVerificationCheck = {
 
 export const userStatus: ResolvedVerificationCheck = async (token) => {
   if (token && (!token.isApproved || !token.emailVerified)) {
-    const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
-    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, baseURL);
+    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, BASE_URL);
 
     try {
       const response = await fetch(apiUrl);
