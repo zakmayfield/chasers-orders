@@ -1,7 +1,7 @@
 import { ContactFormData } from '@/shared/validators/user/ContactValidator';
 import { UserData } from '@/types/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useToast } from '../general.hooks';
+import { useToast } from '@/shared/hooks';
 import { updateContact } from '@/services/mutations/updateContact';
 
 export const useUpdateContact = ({

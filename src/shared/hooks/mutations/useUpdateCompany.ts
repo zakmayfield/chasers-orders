@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserData } from '@/types/user';
-import { useToast } from '../general.hooks';
+import { useToast } from '@/shared/hooks';
 import { CompanyFormData } from '@/shared/validators/user/CompanyValidator';
 import { updateCompany } from '@/services/mutations/updateCompany';
 
