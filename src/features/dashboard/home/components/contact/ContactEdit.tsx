@@ -13,7 +13,7 @@ import {
   ContactFormData,
   ContactValidator,
   getDefaultValues,
-} from '@/shared/validators/UpdateContactFormValidator';
+} from '@/shared/validators/ContactValidator';
 import { useUpdateContact } from '@/shared/hooks/mutation.hooks';
 import { useToast } from '@/shared/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';

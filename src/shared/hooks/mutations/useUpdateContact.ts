@@ -1,4 +1,4 @@
-import { ContactFormData } from '@/shared/validators/UpdateContactFormValidator';
+import { ContactFormData } from '@/shared/validators/ContactValidator';
 import { UserData } from '@/types/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
