@@ -1,11 +1,11 @@
 'use client';
 
 import { useDashboardQuery } from '@/shared/hooks/query.hooks';
-import { DashboardUser } from '@/types/types.dashboard';
+import { SecureUser } from '@/types/types.dashboard';
 
 export default function Account() {
   const { fetchState, isLoading, isError, isData } =
-    useDashboardQuery<DashboardUser>();
+    useDashboardQuery<SecureUser>();
 
   const OnLoad = isLoading && (
     <div>
