@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LineItemProducts } from '@/services/queries/orders.fetchLineItemsFromOrderId';
+import { LineItemProducts } from '@/services/queries/getLineItems';
 
 interface RecentOrderItemsProps {
   order: LineItemProducts | undefined;

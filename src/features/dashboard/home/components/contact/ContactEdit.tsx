@@ -14,7 +14,7 @@ import {
   ContactValidator,
   getDefaultValues,
 } from './validator/contact.validator';
-import { useDashboardEdit } from '@/shared/hooks/mutation.hooks';
+import { useUpdateContact } from '@/shared/hooks/mutation.hooks';
 import { useToast } from '@/shared/hooks/general.hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 
@@ -44,7 +44,7 @@ export const ContactEdit: FC<ContactEditProps> = ({
 }) => {
   const { notify } = useToast();
 
-  const { edit } = useDashboardEdit({
+  const { edit } = useUpdateContact({
     handleSwitchEditCallback,
     handleResetFormCB,
   });

@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { PiSpinnerGapThin, PiWarningDuotone } from 'react-icons/pi';
 import {
   LineItemProducts,
-  fetchLineItemsFromOrderId,
-} from '@/services/queries/orders.fetchLineItemsFromOrderId';
+  getLineItems,
+} from '@/services/queries/getLineItems';
 import { OrderType } from '../RecentOrders';
 import OrderAgainButton from './OrderAgainButton';
 import { RecentOrderItems } from './RecentOrderItems';
@@ -15,7 +15,7 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
     isError,
   } = useQuery<LineItemProducts | undefined>({
     queryKey: ['line-item-products', order.id],
-    queryFn: () => fetchLineItemsFromOrderId(order.id),
+    queryFn: () => getLineItems(order.id),
     staleTime: Infinity,
   });
 

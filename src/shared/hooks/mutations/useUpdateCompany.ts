@@ -1,10 +1,10 @@
-import { Company } from '@prisma/client';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DashboardUserData } from '@/types/types.dashboard';
 import { useToast } from '../general.hooks';
 import { CompanyFormData } from '@/features/dashboard/home/components/company/validator/company.validator';
+import { updateCompany } from '@/services/mutations/updateCompany';
 
-export const useCompanyEditMutation = ({
+export const useUpdateCompany = ({
   handleSwitchEditCallback,
   handleResetFormCB,
 }: {
@@ -15,33 +15,7 @@ export const useCompanyEditMutation = ({
   const { notify } = useToast();
 
   const { mutate: edit, isSuccess } = useMutation({
-    mutationFn: async (formData: CompanyFormData) => {
-      const updateUser = async (): Promise<Company | undefined> => {
-        try {
-          const url = `/api/user/company/edit`;
-          const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-          });
-
-          if (!response.ok) {
-            throw new Error(await response.text());
-          }
-
-          return response.json();
-        } catch (error) {
-          if (error instanceof Error) {
-            throw new Error(error.message);
-          }
-        }
-      };
-
-      const apiResponse = updateUser();
-      return apiResponse;
-    },
+    mutationFn: updateCompany,
     onSuccess(data) {
       queryClient.setQueryData(
         ['user-dashboard'],

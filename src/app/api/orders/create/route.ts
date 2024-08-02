@@ -1,6 +1,6 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import { CreateOrderPayload } from '@/services/mutations/orders.create';
+import { CreateOrderPayload } from '@/services/mutations/createOrder';
 import { client } from '@/lib/trigger';
 
 export async function POST(req: Request) {

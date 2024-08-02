@@ -5,11 +5,11 @@ import { useToast } from '@/shared/hooks/general.hooks';
 import {
   CreateOrderPayload,
   createOrder,
-} from '@/services/mutations/orders.create';
+} from '@/services/mutations/createOrder';
 import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/features/cart/types';
 import { LoadingSpinner } from '@/shared/components';
-import { getDashboardUser } from '@/services/queries/user.getDashboardUser';
+import { getUser } from '@/services/queries/getUser';
 
 export const OrderButton = () => {
   const router = useRouter();
@@ -48,7 +48,7 @@ export const OrderButton = () => {
       // fetch user dashboard since we are redirecting there
       queryClient.fetchQuery({
         queryKey: ['user-dashboard'],
-        queryFn: getDashboardUser,
+        queryFn: getUser,
       });
 
       // Clear 'cart' items cache after successful order
