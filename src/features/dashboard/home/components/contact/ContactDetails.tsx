@@ -7,7 +7,7 @@ import {
   ContactFormData,
   resolver,
   getDefaultValues,
-} from './validator/contact.validator';
+} from '@/shared/validators/UpdateContactFormValidator';
 import { useForm } from 'react-hook-form';
 
 interface ContactDetailsProps {

@@ -1,4 +1,4 @@
-import { ContactFormData } from '@/features/dashboard/home/components/contact/validator/contact.validator';
+import { ContactFormData } from '@/shared/validators/UpdateContactFormValidator';
 import { UserData } from '@/types/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
