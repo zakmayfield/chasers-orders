@@ -5,7 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import { compare, genSalt, hash } from 'bcryptjs';
 
 import { AuthSignUpValidator } from '@/features/auth/signup/validator/validator.signup';
-import { AuthSignInValidator } from '@/features/auth/signin/validator/validator.signin';
+import { AuthSignInValidator } from '@/shared/validators/SignInValidator';
 
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
