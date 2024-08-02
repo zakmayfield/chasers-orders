@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 import { DashboardUserData } from '@/types/types.dashboard';
 import { useQueryClient } from '@tanstack/react-query';
-import { getRecentOrders } from '@/services/queries/orders.getRecentOrders';
+import { getRecentOrders } from '@/services/queries/getRecentOrders';
 
 interface RecentOrderDetailsProps {
   userData: DashboardUserData;
