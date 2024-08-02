@@ -2,10 +2,10 @@
 
 import { FC } from 'react';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
-import type { DashboardUserData } from '@/types/user';
+import type { UserData } from '@/types/user';
 
 interface AccountStatusProps {
-  userData: DashboardUserData;
+  userData: UserData;
 }
 
 export const AccountStatus: FC<AccountStatusProps> = ({ userData }) => {

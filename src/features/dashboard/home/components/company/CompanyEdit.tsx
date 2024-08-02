@@ -1,6 +1,6 @@
 'use client';
 import { Dispatch, FC, SetStateAction } from 'react';
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import {
   FieldErrors,
   UseFormGetValues,
@@ -20,7 +20,7 @@ import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { paymentMethodOptions } from '@/utils/constants';
 
 interface CompanyEditProps {
-  userData: DashboardUserData;
+  userData: UserData;
   isDirty: boolean;
   errors: FieldErrors<CompanyFormData>;
   handleSubmit: UseFormHandleSubmit<CompanyFormData, undefined>;

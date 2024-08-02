@@ -2,17 +2,14 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { getUser } from '@/services/queries/getUser';
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import { AccountStatus } from './components/account';
 import { ContactDetails } from './components/contact';
 import { CompanyDetails } from './components/company';
 import { RecentOrderDetails } from './components/recent';
 
 const DashboardHome = () => {
-  const { data, isLoading, error, isError } = useQuery<
-    DashboardUserData,
-    Error
-  >({
+  const { data, isLoading, error, isError } = useQuery<UserData, Error>({
     queryKey: ['user-dashboard'],
     queryFn: getUser,
     staleTime: 60 * 1000 * 10,

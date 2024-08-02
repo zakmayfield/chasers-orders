@@ -2,11 +2,11 @@
 
 import Link from 'next/link';
 import { useDashboardQuery } from '@/shared/hooks/query.hooks';
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 
 export default function Settings() {
   const { fetchState, isLoading, isData, isError } =
-    useDashboardQuery<DashboardUserData>();
+    useDashboardQuery<UserData>();
 
   const LoadingData = isLoading && <div>Loading...</div>;
 

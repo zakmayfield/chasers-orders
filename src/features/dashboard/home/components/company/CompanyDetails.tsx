@@ -1,7 +1,7 @@
 'use client';
 
 import { FC, useState } from 'react';
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import DetailBody from './DetailBody';
 import { CompanyEdit } from './CompanyEdit';
 import {
@@ -12,7 +12,7 @@ import {
 import { useForm } from 'react-hook-form';
 
 interface CompanyDetailsProps {
-  userData: DashboardUserData;
+  userData: UserData;
 }
 
 export const CompanyDetails: FC<CompanyDetailsProps> = ({ userData }) => {

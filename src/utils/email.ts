@@ -9,10 +9,10 @@ type PayloadType = {
   order: Order & {
     lineItems: OrderLineItem[];
   };
-  userData: UserData;
+  userData: PayloadUser;
 };
 
-type UserData = {
+type PayloadUser = {
   company: {
     name: string;
   } | null;

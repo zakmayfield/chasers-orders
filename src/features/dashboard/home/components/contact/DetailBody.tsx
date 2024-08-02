@@ -1,9 +1,9 @@
-import { DashboardUserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import { Dispatch, FC, SetStateAction } from 'react';
 import { EditButton } from '../Buttons';
 
 interface DetailBodyProps {
-  userData: DashboardUserData;
+  userData: UserData;
   isEdit: boolean;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
 }
