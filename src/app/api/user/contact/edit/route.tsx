@@ -1,7 +1,7 @@
 import { db } from '@/lib/prisma';
 import { NextRequest } from 'next/server';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { ContactFormData } from '@/shared/validators/ContactValidator';
+import { ContactFormData } from '@/shared/validators/user/ContactValidator';
 
 export async function PUT(req: NextRequest) {
   const session = await getAuthSession();

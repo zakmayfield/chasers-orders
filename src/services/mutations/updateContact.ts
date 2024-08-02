@@ -1,4 +1,4 @@
-import { ContactFormData } from '@/shared/validators/ContactValidator';
+import { ContactFormData } from '@/shared/validators/user/ContactValidator';
 import { fetchHandler } from '@/utils/fetch';
 import { Contact } from '@prisma/client';
 
