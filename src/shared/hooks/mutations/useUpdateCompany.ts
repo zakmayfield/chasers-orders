@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { useToast } from '../general.hooks';
 import { CompanyFormData } from '@/features/dashboard/home/components/company/validator/company.validator';
 import { updateCompany } from '@/services/mutations/updateCompany';

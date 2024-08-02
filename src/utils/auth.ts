@@ -2,7 +2,7 @@ import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/features/auth/types/index';
 import { JWT } from 'next-auth/jwt';
 import { BASE_URL } from './constants';
-import { SecureUser } from '@/types/types.dashboard';
+import { SecureUser } from '@/types/user';
 
 /*
   USER ACCOUNT STATUS

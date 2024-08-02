@@ -1,5 +1,5 @@
 import { ContactFormData } from '@/features/dashboard/home/components/contact/validator/contact.validator';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '../general.hooks';
 import { updateContact } from '@/services/mutations/updateContact';

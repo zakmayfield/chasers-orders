@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { DashboardUserData } from '@/types/user';
 import { useDashboardQuery } from '@/shared/hooks/query.hooks';
 
 export default function Company() {
