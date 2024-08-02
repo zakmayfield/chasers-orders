@@ -8,7 +8,7 @@ import {
   CompanyFormData,
   resolver,
   getDefaultValues,
-} from './validator/company.validator';
+} from '@/shared/validators/UpdateCompanyFormValidator';
 import { useForm } from 'react-hook-form';
 
 interface CompanyDetailsProps {

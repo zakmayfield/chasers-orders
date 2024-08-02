@@ -1,5 +1,5 @@
 import type { Company } from '@prisma/client';
-import { CompanyFormData } from '@/features/dashboard/home/components/company/validator/company.validator';
+import { CompanyFormData } from '@/shared/validators/UpdateCompanyFormValidator';
 import { fetchHandler } from '@/utils/fetch';
 
 export const updateCompany = async (
