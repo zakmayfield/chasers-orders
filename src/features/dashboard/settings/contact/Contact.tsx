@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useDashboardQuery } from '@/shared/hooks/query.hooks';
+import { useDashboardQuery } from '@/shared/hooks/queries';
 import { UserData } from '@/types/user';
 
 export default function Contact() {

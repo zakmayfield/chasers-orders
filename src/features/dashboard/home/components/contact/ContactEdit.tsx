@@ -14,8 +14,8 @@ import {
   ContactValidator,
   getDefaultValues,
 } from '@/shared/validators/user/ContactValidator';
-import { useUpdateContact } from '@/shared/hooks/mutation.hooks';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useUpdateContact } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 
 interface ContactEditProps {

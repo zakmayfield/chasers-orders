@@ -1,6 +1,6 @@
 'use client';
 
-import { useDashboardQuery } from '@/shared/hooks/query.hooks';
+import { useDashboardQuery } from '@/shared/hooks/queries';
 import { SecureUser } from '@/types/user';
 
 export default function Account() {
