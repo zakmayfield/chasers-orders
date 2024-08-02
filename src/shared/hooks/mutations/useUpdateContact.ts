@@ -26,6 +26,7 @@ export const useUpdateContact = ({
             name: data.name,
             phoneNumber: data.phoneNumber,
             position: data.position,
+            userId: data.userId,
           };
           return oldData ? { ...oldData, contact: payload! } : oldData;
         }

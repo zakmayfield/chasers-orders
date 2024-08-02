@@ -25,6 +25,7 @@ export const useUpdateCompany = ({
             name: data!.name,
             accountPayableEmail: data!.accountPayableEmail,
             paymentMethod: data!.paymentMethod,
+            userId: data!.userId,
           };
           return oldData
             ? { ...oldData, company: { ...oldData.company, ...company } }
