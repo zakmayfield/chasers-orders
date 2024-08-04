@@ -5,7 +5,7 @@ import { PiXCircleThin } from 'react-icons/pi';
 import { getFirstUnitOfProduct } from '@/features/products/utils.products';
 import { useToast } from '@/shared/hooks';
 import { addItem } from '@/features/cart/services.cart';
-import { CartCache } from '@/features/cart/types';
+import { CartCache } from '@/types/cart';
 import {
   useToggleFavoriteMutation,
   ExtendedFavorite,

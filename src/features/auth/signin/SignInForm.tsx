@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { signInWithCredentials, useSignInForm } from './helpers.signin';
-import { SignInFormData } from '../types';
+import { SignInFormData } from '@/shared/validators/auth';
 import FieldError from '../components/FieldError';
 import { SignInButton } from './components';
 

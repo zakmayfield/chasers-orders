@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import type { CartCache } from '@/features/cart/types';
+import type { CartCache } from '@/types/cart';
 import { LoadingSpinner } from '@/shared/components';
 
 interface ItemsHeaderProps {

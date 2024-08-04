@@ -1,5 +1,9 @@
-import { UserStatus } from './types';
+import { UserStatusAPIResponse } from '@/types/dashboard';
 import { BASE_URL } from '@/utils/constants';
+
+export type UserStatus = {
+  (): Promise<UserStatusAPIResponse>;
+};
 
 export const userStatus: UserStatus = async () => {
   try {

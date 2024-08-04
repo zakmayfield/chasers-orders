@@ -19,8 +19,3 @@ export type UserData = SecureUser & {
     billingAddress: BillingAddress;
   };
 };
-
-export type DashboardFetchState<T> = T | DashboardQueryError | null;
-export type DashboardQueryError = {
-  error: string;
-};

@@ -16,11 +16,9 @@ import {
   UseFormSetValue,
   useForm,
 } from 'react-hook-form';
-import type { SignUpFormData } from '../types/index';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthSignUpValidator } from '@/shared/validators/auth';
-
-export type Steps = '1' | '2' | '3' | '4';
+import { AuthSignUpValidator, SignUpFormData } from '@/shared/validators/auth';
+import { Steps } from '@/types/auth';
 
 export const defaultValues = {
   email: '',

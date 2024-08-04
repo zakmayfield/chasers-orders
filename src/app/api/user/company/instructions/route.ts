@@ -1,9 +1,7 @@
-import {
-  DeliveryInstructionsData,
-  DeliveryInstructionsResponse,
-} from '@/features/cart/types/index';
+import { DeliveryInstructionsResponse } from '@/types/cart';
 import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
+import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 
 export async function PUT(req: Request) {
   const session = await getAuthSession();

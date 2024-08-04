@@ -1,10 +1,22 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
 import {
-  IUseUserStatusMutation,
-  IUseUserStatusQuery,
-  UserStatusAPIResponse,
-} from './types';
+  UseMutateFunction,
+  useMutation,
+  useQuery,
+} from '@tanstack/react-query';
+import { UserStatusAPIResponse } from '@/types/dashboard';
 import { userStatus } from './services.account-pending';
+
+export interface IUseUserStatusMutation {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback?: (data: UserStatusAPIResponse) => void;
+    onErrorCallback?: (error: Error) => void;
+  }): {
+    mutate: UseMutateFunction<UserStatusAPIResponse, Error, void, unknown>;
+  };
+}
 
 export const useUserStatusMutation: IUseUserStatusMutation = ({
   onSuccessCallback,
@@ -22,6 +34,19 @@ export const useUserStatusMutation: IUseUserStatusMutation = ({
 
   return { mutate };
 };
+
+export interface IUseUserStatusQuery {
+  ({
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    onSuccessCallback?: (data: UserStatusAPIResponse) => void;
+    onErrorCallback?: (error: Error) => void;
+  }): {
+    status: UserStatusAPIResponse | undefined;
+    isLoading: boolean;
+  };
+}
 
 export const useUserStatusQuery: IUseUserStatusQuery = ({
   onSuccessCallback,

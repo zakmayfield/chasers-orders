@@ -1,11 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import {
-  DashboardQueryError,
-  UserData,
-  DashboardFetchState,
-} from '@/types/user';
+import { UserData } from '@/types/user';
 import { getUser } from '@/services/queries/getUser';
+
+type DashboardFetchState<T> = T | DashboardQueryError | null;
+type DashboardQueryError = {
+  error: string;
+};
 
 export const useDashboardQuery = <T>(
   property?: 'contact' | 'orders' | 'company' | 'favorites'

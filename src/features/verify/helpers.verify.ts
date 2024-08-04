@@ -5,7 +5,7 @@ import type {
   VerifyAPIResponse,
   VerifyMutation,
   VerifyMutationArgs,
-} from './types';
+} from '@/types/verification';
 import type { SendEmailAPIResponse } from './utils.verify';
 
 //^ Verification

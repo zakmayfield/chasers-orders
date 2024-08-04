@@ -1,5 +1,4 @@
 import { signIn } from 'next-auth/react';
-import { SignInFormData } from '../types';
 import {
   FormState,
   UseFormHandleSubmit,
@@ -7,7 +6,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthSignInValidator } from '@/shared/validators/auth';
+import { AuthSignInValidator, SignInFormData } from '@/shared/validators/auth';
 
 export const signInWithCredentials = async (data: SignInFormData) => {
   try {

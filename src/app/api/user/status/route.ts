@@ -1,5 +1,5 @@
 import { authenticateSession } from '@/features/auth/helpers.api';
-import { UserStatusAPIResponse } from '@/features/dashboard/account-pending/types';
+import { UserStatusAPIResponse } from '@/types/dashboard';
 import { db } from '@/lib/prisma';
 
 async function handler() {

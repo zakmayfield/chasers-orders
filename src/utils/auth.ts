@@ -1,5 +1,5 @@
 import { db } from '@/lib/prisma';
-import { SignUpFormData } from '@/features/auth/types/index';
+import { SignUpFormData } from '@/shared/validators/auth';
 import { JWT } from 'next-auth/jwt';
 import { BASE_URL } from './constants';
 import { SecureUser } from '@/types/user';

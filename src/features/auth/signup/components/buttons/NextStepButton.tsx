@@ -1,13 +1,11 @@
 import { FC } from 'react';
-import {
-  Steps,
-  requiredStepFields,
-} from '@/features/auth/signup/helpers.signup';
+import { requiredStepFields } from '@/features/auth/signup/helpers.signup';
 import type { UseFormGetValues } from 'react-hook-form';
-import type { SignUpFormData } from '@/features/auth/types';
+import type { SignUpFormData } from '@/shared/validators/auth';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks';
 import { PiArrowRightLight } from 'react-icons/pi';
+import { Steps } from '@/types/auth';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;
