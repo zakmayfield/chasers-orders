@@ -2,7 +2,7 @@ import { getAuthSession } from '@/lib/auth/auth.options';
 import { NextRequest } from 'next/server';
 import { headers } from 'next/headers';
 import { db } from '@/lib/prisma';
-import { Actions } from '@/features/products/types';
+import { Actions } from '@/types/products';
 
 const handler = async (req: NextRequest) => {
   const session = await getAuthSession();

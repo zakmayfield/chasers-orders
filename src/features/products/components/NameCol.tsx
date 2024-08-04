@@ -5,7 +5,7 @@ import {
   getActionToggle,
   useFavorites,
 } from '@/features/products/helpers.products';
-import { ProductWithUnits } from '@/features/products/types';
+import { ProductWithUnits } from '@/types/products';
 import { useQueryClient } from '@tanstack/react-query';
 import { CellContext } from '@tanstack/react-table';
 import { FC, useState } from 'react';

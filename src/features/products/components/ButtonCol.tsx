@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { ProductWithUnits } from '@/features/products/types';
+import { ProductWithUnits } from '@/types/products';
 import {
   getRowPayload,
   useSizeCache,

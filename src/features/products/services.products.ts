@@ -1,4 +1,4 @@
-import type { ProductWithUnits } from '@/features/products/types';
+import type { Actions, ProductWithUnits } from '@/types/products';
 import type { ExtendedFavorite } from '@/features/products/helpers.products';
 
 /*
@@ -53,7 +53,6 @@ export const getFavorites: GetFavoritesType = async () => {
 type ToggleFavoriteProps = {
   (action: Actions, id?: string): Promise<ExtendedFavorite>;
 };
-export type Actions = 'add' | 'remove';
 
 export const toggleFavorite: ToggleFavoriteProps = async (action, id) => {
   try {
