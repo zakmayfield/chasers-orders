@@ -5,7 +5,7 @@ import {
   validateVerificationRecord,
 } from '@/features/verify/helpers.api';
 import { authenticateSession } from '@/features/auth/helpers.api';
-import { VerifyAPIResponse, VerifyMutationArgs } from '@/features/verify/types';
+import { VerifyAPIResponse, VerifyMutationArgs } from '@/types/verification';
 import { db } from '@/lib/prisma';
 
 type RequestPayload = VerifyMutationArgs;

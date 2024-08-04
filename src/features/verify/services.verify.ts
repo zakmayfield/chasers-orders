@@ -1,4 +1,4 @@
-import { VerifyServiceResponse } from './types';
+import { VerifyServiceResponse } from '@/types/verification';
 import { SendEmailAPIResponse } from '@/features/verify/utils.verify';
 
 //^ Verify Email with Token
