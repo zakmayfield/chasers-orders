@@ -8,18 +8,18 @@ import {
   UseFormReset,
   UseFormSetFocus,
 } from 'react-hook-form';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { UserData } from '@/types/user';
 import {
   ContactFormData,
   ContactValidator,
   getDefaultValues,
-} from './validator/contact.validator';
-import { useUpdateContact } from '@/shared/hooks/mutation.hooks';
-import { useToast } from '@/shared/hooks/general.hooks';
+} from '@/shared/validators/user/ContactValidator';
+import { useUpdateContact } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 
 interface ContactEditProps {
-  userData: DashboardUserData;
+  userData: UserData;
   errors: FieldErrors<ContactFormData>;
   isDirty: boolean;
   handleSubmit: UseFormHandleSubmit<ContactFormData, undefined>;

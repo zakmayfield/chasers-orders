@@ -7,10 +7,10 @@ type PayloadType = {
   order: Order & {
     lineItems: OrderLineItem[];
   };
-  userData: UserData;
+  userData: UserWithCompany;
 };
 
-type UserData = User & {
+type UserWithCompany = User & {
   company: Company;
 };
 

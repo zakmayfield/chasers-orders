@@ -9,7 +9,7 @@ import {
 import { Unit, UnitsOnCart } from '@prisma/client';
 import { CellContext } from '@tanstack/react-table';
 import { BsCartPlus } from 'react-icons/bs';
-import { useToast } from '@/shared/hooks/general.hooks';
+import { useToast } from '@/shared/hooks';
 import {
   useAddToCartMutation,
   useUpdateQuantity,

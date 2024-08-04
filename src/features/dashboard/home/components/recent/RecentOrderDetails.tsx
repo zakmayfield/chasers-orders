@@ -1,12 +1,12 @@
 'use client';
 import { FC } from 'react';
 import Link from 'next/link';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { UserData } from '@/types/user';
 import { useQueryClient } from '@tanstack/react-query';
 import { getRecentOrders } from '@/services/queries/getRecentOrders';
 
 interface RecentOrderDetailsProps {
-  userData: DashboardUserData;
+  userData: UserData;
 }
 
 export const RecentOrderDetails: FC<RecentOrderDetailsProps> = ({

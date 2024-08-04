@@ -1,6 +1,8 @@
 import { z } from 'zod';
-import { AuthSignUpValidator } from '../signup/validator/validator.signup';
-import { AuthSignInValidator } from '../signin/validator/validator.signin';
+import {
+  AuthSignInValidator,
+  AuthSignUpValidator,
+} from '@/shared/validators/auth';
 import type {
   FieldErrors,
   UseFormGetValues,

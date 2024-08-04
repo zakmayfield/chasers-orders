@@ -18,45 +18,19 @@ export async function GET() {
         email: true,
         isApproved: true,
         emailVerified: true,
-        contact: {
-          select: {
-            id: true,
-            name: true,
-            phoneNumber: true,
-            position: true,
-          },
-        },
+        contact: true,
         orders: {
           take: 1,
           orderBy: {
             createdAt: 'desc',
-          },
-          select: {
-            id: true,
-            createdAt: true,
           },
         },
         favorites: {
           orderBy: {
             createdAt: 'desc',
           },
-          select: {
-            id: true,
-            createdAt: true,
-            juiceId: true,
-            juice: true,
-          },
         },
-        company: {
-          select: {
-            id: true,
-            name: true,
-            shippingAddress: true,
-            billingAddress: true,
-            paymentMethod: true,
-            accountPayableEmail: true,
-          },
-        },
+        company: true,
       },
     });
 
