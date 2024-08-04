@@ -2,14 +2,14 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { ImSpinner2 } from 'react-icons/im';
 import {
-  Steps,
   signUpWithCredentials,
   handleStepChange,
   handlePrevousStepChange,
   useSignUpForm,
 } from '@/features/auth/signup/helpers.signup';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
-import type { SignUpFormData } from '@/features/auth/types';
+import type { SignUpFormData } from '@/shared/validators/auth';
+import { Steps } from '@/types/auth';
 
 interface SignUpFormProps {
   setStep: Dispatch<SetStateAction<Steps>>;

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Steps } from '../helpers.signup';
+import { Steps } from '@/types/auth';
 
 interface StepTrackerProps {
   activeStep: Steps;
