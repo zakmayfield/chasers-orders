@@ -1,4 +1,3 @@
-import { z } from 'zod';
 import type {
   Cart,
   UnitsOnCart,
@@ -6,8 +5,6 @@ import type {
   Product,
   ShippingAddress,
 } from '@prisma/client';
-import { QuantityValidator } from '@/shared/validators/cart/QuantityValidator';
-import { DeliveryInstructionsValidator } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 
 //^ Cart Cache
 export type CartCache = Cart & {
@@ -21,16 +18,10 @@ export type CartItem = UnitsOnCart & {
 };
 
 //^ Delivery Instructions
-export type DeliveryInstructionsData = z.infer<
-  typeof DeliveryInstructionsValidator
->;
-
 export type DeliveryInstructionsResponse = {
   companyName: string;
   shippingAddress: ShippingAddress;
 };
-
-export type QuantityData = z.infer<typeof QuantityValidator>;
 
 export type UpdateQuantity = {
   cartId: string;

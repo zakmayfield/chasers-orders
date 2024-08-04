@@ -1,17 +1,13 @@
 import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
-import {
-  CartCache,
-  CartItem,
-  UpdateQuantity,
-  QuantityData,
-} from '@/features/cart/types';
+import { CartCache, CartItem, UpdateQuantity } from '@/types/cart';
 import { useToast } from '@/shared/hooks';
 import {
   useQuantityUpdateForm,
   useUpdateQuantity,
 } from '@/features/cart/helpers.cart';
+import { QuantityData } from '@/shared/validators/cart/QuantityValidator';
 
 type UpdateCartItemQuantityProps = UpdateQuantity;
 

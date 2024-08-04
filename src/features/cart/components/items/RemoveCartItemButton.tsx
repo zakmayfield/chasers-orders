@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { LuTrash2 } from 'react-icons/lu';
 import { removeItem } from '@/features/cart/services.cart';
 import { useToast } from '@/shared/hooks';
-import { CartCache, CartItem } from '@/features/cart/types';
+import { CartCache, CartItem } from '@/types/cart';
 
 export interface RemoveCartItemProps {
   payload: RemoveItemPayloadData;

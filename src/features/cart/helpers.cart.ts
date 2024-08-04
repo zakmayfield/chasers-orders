@@ -13,14 +13,18 @@ import {
 import {
   CartCache,
   CartItem,
-  DeliveryInstructionsData,
   DeliveryInstructionsResponse,
-  QuantityData,
   UpdateQuantity,
-} from '@/features/cart/types';
+} from '@/types/cart';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { DeliveryInstructionsValidator } from '@/shared/validators/cart/DeliveryInstructionsValidator';
-import { QuantityValidator } from '@/shared/validators/cart/QuantityValidator';
+import {
+  DeliveryInstructionsData,
+  DeliveryInstructionsValidator,
+} from '@/shared/validators/cart/DeliveryInstructionsValidator';
+import {
+  QuantityValidator,
+  QuantityData,
+} from '@/shared/validators/cart/QuantityValidator';
 import {
   FormState,
   UseFormGetValues,

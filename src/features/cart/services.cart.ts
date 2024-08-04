@@ -4,7 +4,7 @@ import type {
   CartItem,
   DeliveryInstructionsResponse,
   UpdateQuantity,
-} from '@/features/cart/types';
+} from '@/types/cart';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
 import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';

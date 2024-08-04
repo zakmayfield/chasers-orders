@@ -1,4 +1,4 @@
-import { UpdateQuantity } from '@/features/cart/types';
+import { UpdateQuantity } from '@/types/cart';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 
