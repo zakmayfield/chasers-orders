@@ -1,6 +1,6 @@
 'use client';
 import { Dispatch, FC, SetStateAction } from 'react';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { UserData } from '@/types/user';
 import {
   FieldErrors,
   UseFormGetValues,
@@ -13,14 +13,14 @@ import {
   CompanyFormData,
   CompanyValidator,
   getDefaultValues,
-} from './validator/company.validator';
-import { useUpdateCompany } from '@/shared/hooks/mutation.hooks';
-import { useToast } from '@/shared/hooks/general.hooks';
+} from '@/shared/validators/user/CompanyValidator';
+import { useUpdateCompany } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { paymentMethodOptions } from '@/utils/constants';
 
 interface CompanyEditProps {
-  userData: DashboardUserData;
+  userData: UserData;
   isDirty: boolean;
   errors: FieldErrors<CompanyFormData>;
   handleSubmit: UseFormHandleSubmit<CompanyFormData, undefined>;

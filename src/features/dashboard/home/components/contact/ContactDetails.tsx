@@ -1,17 +1,17 @@
 'use client';
 import { FC, useState } from 'react';
-import { DashboardUserData } from '@/types/types.dashboard';
+import { UserData } from '@/types/user';
 import { ContactEdit } from './ContactEdit';
 import { DetailBody } from './DetailBody';
 import {
   ContactFormData,
   resolver,
   getDefaultValues,
-} from './validator/contact.validator';
+} from '@/shared/validators/user/ContactValidator';
 import { useForm } from 'react-hook-form';
 
 interface ContactDetailsProps {
-  userData: DashboardUserData;
+  userData: UserData;
 }
 
 export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {

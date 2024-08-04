@@ -6,10 +6,8 @@ import type {
   Product,
   ShippingAddress,
 } from '@prisma/client';
-import {
-  QuantityValidator,
-  DeliveryInstructionsValidator,
-} from '@/features/cart/validator';
+import { QuantityValidator } from '@/shared/validators/cart/QuantityValidator';
+import { DeliveryInstructionsValidator } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 
 //^ Cart Cache
 export type CartCache = Cart & {

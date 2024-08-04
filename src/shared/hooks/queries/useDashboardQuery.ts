@@ -2,9 +2,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import {
   DashboardQueryError,
-  DashboardUserData,
+  UserData,
   DashboardFetchState,
-} from '@/types/types.dashboard';
+} from '@/types/user';
 import { getUser } from '@/services/queries/getUser';
 
 export const useDashboardQuery = <T>(
@@ -26,10 +26,13 @@ export const useDashboardQuery = <T>(
     (async () => {
       try {
         setIsLoading(true);
-        const data: DashboardUserData | undefined =
-          await queryClient.fetchQuery(['user-dashboard'], getUser, {
+        const data: UserData | undefined = await queryClient.fetchQuery(
+          ['user-dashboard'],
+          getUser,
+          {
             staleTime: 60 * 1000 * 5,
-          });
+          }
+        );
 
         if (!data) {
           setFetchState({
