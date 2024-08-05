@@ -7,7 +7,6 @@ import {
 import {
   addItem,
   deliveryInstructionsMutation,
-  getCart,
   updateItemQuantity,
 } from '@/features/cart/services.cart';
 import {
@@ -34,6 +33,7 @@ import {
   useForm,
 } from 'react-hook-form';
 import { FormEvent } from 'react';
+import { getCart } from '@/services/queries/getCart';
 
 interface UseFetchCartQuery {
   (): {

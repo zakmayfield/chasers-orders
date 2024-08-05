@@ -13,27 +13,6 @@ import type { RemoveCartItemProps } from './components/items/RemoveCartItemButto
   ^ ----- QUERIES -----
 */
 
-interface GetCartCache {
-  (): Promise<CartCache>;
-}
-
-export const getCart: GetCartCache = async () => {
-  try {
-    const response = await fetch('/api/cart');
-
-    if (!response.ok) {
-      throw new Error(await response.text());
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error(error);
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-};
-
 interface GetProductUnitSizesProps {
   (unitId: string): Promise<SizesData | undefined>;
 }

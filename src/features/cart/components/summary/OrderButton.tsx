@@ -6,10 +6,10 @@ import {
   CreateOrderPayload,
   createOrder,
 } from '@/services/mutations/createOrder';
-import { getCart } from '@/features/cart/services.cart';
 import { CartCache } from '@/types/cart';
 import { LoadingSpinner } from '@/shared/components';
 import { getUser } from '@/services/queries/getUser';
+import { getCart } from '@/services/queries/getCart';
 
 export const OrderButton = () => {
   const router = useRouter();
