@@ -1,4 +1,4 @@
-import { Prisma, Unit, UnitsOnCart } from '@prisma/client';
+import { Prisma, UnitsOnCart } from '@prisma/client';
 import type {
   CartCache,
   CartItem,
