@@ -12,32 +12,6 @@ import type { RemoveCartItemProps } from './components/items/RemoveCartItemButto
   ^ ----- MUTATIONS -----
 */
 
-interface AddItemToCartParams {
-  (unitId: string): Promise<CartItem>;
-}
-
-export const addItem: AddItemToCartParams = async (unitId) => {
-  try {
-    const response = await fetch('/api/cart/item/add', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ unitId }),
-    });
-
-    if (!response.ok) {
-      throw new Error(await response.text());
-    }
-
-    return response.json();
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-};
-
 interface OrderAgainProps {
   (order: OrderType): Promise<OrderAgainResponse>;
 }

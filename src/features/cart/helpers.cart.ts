@@ -5,7 +5,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
-  addItem,
   deliveryInstructionsMutation,
   updateItemQuantity,
 } from '@/features/cart/services.cart';
@@ -34,6 +33,7 @@ import {
 } from 'react-hook-form';
 import { FormEvent } from 'react';
 import { getCart } from '@/services/queries/getCart';
+import { addToCart } from '@/services/mutations/addToCart';
 
 interface UseFetchCartQuery {
   (): {
@@ -139,7 +139,7 @@ export const useAddToCartMutation: UseAddToCartMutationProps = ({
   const queryClient = useQueryClient();
 
   const { mutate: addToCartMutation } = useMutation({
-    mutationFn: addItem,
+    mutationFn: addToCart,
     onSuccess(data) {
       onSuccessCallback(data);
       setDataToCache(data);
