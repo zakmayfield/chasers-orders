@@ -19,3 +19,8 @@ export type UserData = SecureUser & {
     billingAddress: BillingAddress;
   };
 };
+
+export type ShippingData = {
+  companyName?: string;
+  shippingAddress: ShippingAddress | null;
+};

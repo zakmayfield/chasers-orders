@@ -6,33 +6,7 @@ import type {
   UpdateQuantity,
 } from '@/types/cart';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
-import type { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
-
-/*
-  ^ ----- QUERIES -----
-*/
-
-interface GetShippingProps {
-  (): Promise<GetShippingPayload | undefined>;
-}
-
-export const getShipping: GetShippingProps = async () => {
-  try {
-    const response = await fetch('/api/user/company/shipping');
-
-    if (!response.ok) {
-      throw new Error(await response.text());
-    }
-
-    return response.json();
-  } catch (error) {
-    console.error(error);
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-};
 
 /*
   ^ ----- MUTATIONS -----
