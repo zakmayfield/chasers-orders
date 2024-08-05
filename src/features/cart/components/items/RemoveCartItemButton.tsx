@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { LuTrash2 } from 'react-icons/lu';
-import { removeItem } from '@/features/cart/services.cart';
 import { useToast } from '@/shared/hooks';
 import { CartCache, CartItem } from '@/types/cart';
+import { removeFromCart } from '@/services/mutations/removeFromCart';
 
 export interface RemoveCartItemProps {
   payload: RemoveItemPayloadData;
@@ -21,7 +21,7 @@ export const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
   } = props;
 
   const { mutate: removeCartItem, isLoading } = useMutation({
-    mutationFn: removeItem,
+    mutationFn: removeFromCart,
     onSuccess: (data) => {
       const { unitId } = data;
 

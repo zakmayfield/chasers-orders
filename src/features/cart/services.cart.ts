@@ -1,4 +1,4 @@
-import { Prisma, UnitsOnCart } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import type {
   CartCache,
   CartItem,
@@ -6,7 +6,6 @@ import type {
   UpdateQuantity,
 } from '@/types/cart';
 import type { OrderType } from '../dashboard/recent-orders/RecentOrders';
-import type { RemoveCartItemProps } from './components/items/RemoveCartItemButton';
 
 /*
   ^ ----- MUTATIONS -----
@@ -38,36 +37,6 @@ export const orderAgain: OrderAgainProps = async (order) => {
     return response.json();
   } catch (error) {
     console.error(error);
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-};
-
-interface RemoveCartItemStore {
-  (payload: RemoveCartItemProps['payload']): Promise<DeletedItemID>;
-}
-
-type DeletedItemID = Pick<UnitsOnCart, 'unitId'>;
-
-export const removeItem: RemoveCartItemStore = async (payload) => {
-  const body = JSON.stringify(payload);
-
-  try {
-    const response = await fetch('/api/cart/item/remove', {
-      method: 'DELETE',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body,
-    });
-
-    if (!response.ok) {
-      throw new Error(await response.text());
-    }
-
-    return response.json();
-  } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
     }
