@@ -1,12 +1,11 @@
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
 import { useToast } from '@/shared/hooks';
 import {
   CreateOrderPayload,
   createOrder,
 } from '@/services/mutations/createOrder';
-import { CartCache } from '@/types/cart';
+import { CartCache, OrderType } from '@/types/cart';
 import { LoadingSpinner } from '@/shared/components';
 import { getUser } from '@/services/queries/getUser';
 import { getCart } from '@/services/queries/getCart';
