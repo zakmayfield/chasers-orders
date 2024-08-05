@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import { DeliveryInstructions } from './DeliveryInstructions';
 import { ShippingAddress } from '@prisma/client';
+import { ShippingData } from '@/types/user';
 
 interface ContainerBodyProps {
-  data: GetShippingPayload | undefined;
+  data: ShippingData | undefined;
 }
 
 export const ContainerBody: FC<ContainerBodyProps> = ({ data }) => {

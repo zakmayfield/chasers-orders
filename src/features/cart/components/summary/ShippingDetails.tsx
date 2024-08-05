@@ -1,19 +1,18 @@
 'use client';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getShipping } from '@/features/cart/services.cart';
-import { GetShippingPayload } from '@/app/api/user/company/shipping/route';
 import { ContainerBody, ContainerError, ContainerHeader } from './components';
+import { ShippingData } from '@/types/user';
+import { getShippingAddress } from '@/services/queries/getShippingAddress';
 
 export const ShippingDetails = () => {
-  const { data, isFetching, error } = useQuery<
-    GetShippingPayload | undefined,
-    Error
-  >({
-    queryKey: ['shipping-address'],
-    queryFn: getShipping,
-    staleTime: 60 * 1000 * 60,
-  });
+  const { data, isFetching, error } = useQuery<ShippingData | undefined, Error>(
+    {
+      queryKey: ['shipping-address'],
+      queryFn: getShippingAddress,
+      staleTime: 60 * 1000 * 60,
+    }
+  );
 
   const [expanded, setExpanded] = useState(false);
 

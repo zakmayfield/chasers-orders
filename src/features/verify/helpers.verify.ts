@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { UseMutateFunction, useMutation } from '@tanstack/react-query';
-import { sendVerificationEmail, verifyEmailWithToken } from './services.verify';
 import type {
   VerifyAPIResponse,
   VerifyMutation,
   VerifyMutationArgs,
 } from '@/types/verification';
 import type { SendEmailAPIResponse } from './utils.verify';
+import { sendVerificationEmail } from '@/services/queries/sendVerificationEmail';
+import { updateUserVerification } from '@/services/mutations/updateUserVerification';
 
 //^ Verification
 
@@ -44,7 +45,7 @@ export const useVerify: IUseVerify = ({
     isError,
     isSuccess,
   } = useMutation<VerifyAPIResponse, Error, VerifyMutationArgs, unknown>({
-    mutationFn: verifyEmailWithToken,
+    mutationFn: updateUserVerification,
     onSuccess(data) {
       setUserIsApproved(data.isApproved);
       setIsRedirecting(true);

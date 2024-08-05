@@ -1,39 +1,6 @@
-import {
-  UseMutateFunction,
-  useMutation,
-  useQuery,
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { UserStatusAPIResponse } from '@/types/dashboard';
-import { userStatus } from './services.account-pending';
-
-export interface IUseUserStatusMutation {
-  ({
-    onSuccessCallback,
-    onErrorCallback,
-  }: {
-    onSuccessCallback?: (data: UserStatusAPIResponse) => void;
-    onErrorCallback?: (error: Error) => void;
-  }): {
-    mutate: UseMutateFunction<UserStatusAPIResponse, Error, void, unknown>;
-  };
-}
-
-export const useUserStatusMutation: IUseUserStatusMutation = ({
-  onSuccessCallback,
-  onErrorCallback,
-}) => {
-  const { mutate } = useMutation<UserStatusAPIResponse, Error, void, unknown>({
-    mutationFn: userStatus,
-    onSuccess(data) {
-      onSuccessCallback?.(data);
-    },
-    onError(error) {
-      onErrorCallback?.(error);
-    },
-  });
-
-  return { mutate };
-};
+import { getUserStatus } from '@/services/queries/getUserStatus';
 
 export interface IUseUserStatusQuery {
   ({
@@ -59,7 +26,7 @@ export const useUserStatusQuery: IUseUserStatusQuery = ({
     string[]
   >({
     queryKey: ['account-status'],
-    queryFn: userStatus,
+    queryFn: getUserStatus,
     staleTime: Infinity,
     onSuccess(data) {
       onSuccessCallback?.(data);

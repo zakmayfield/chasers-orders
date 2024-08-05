@@ -4,9 +4,11 @@ import type {
   Unit,
   Product,
   ShippingAddress,
+  Prisma,
+  Order,
+  OrderLineItem,
 } from '@prisma/client';
 
-//^ Cart Cache
 export type CartCache = Cart & {
   items: CartItem[];
 };
@@ -17,14 +19,36 @@ export type CartItem = UnitsOnCart & {
   };
 };
 
-//^ Delivery Instructions
 export type DeliveryInstructionsResponse = {
   companyName: string;
   shippingAddress: ShippingAddress;
 };
 
-export type UpdateQuantity = {
+export type UpdateCartItemQuantityParams = {
   cartId: string;
   unitId: string;
   quantity: number;
+};
+
+export type UpdateCartItemSizeParams = {
+  cartId: string;
+  unitId: string;
+  selectedUnitId: string | undefined;
+};
+
+export type CartSizesData = {
+  id: string;
+  product: {
+    id: string;
+    units: Unit[];
+  };
+};
+
+export type OrderType = Order & {
+  lineItems: OrderLineItem[];
+};
+
+export type OrderAgainData = {
+  batchPayload: Prisma.BatchPayload;
+  cartPayload: CartCache;
 };

@@ -1,11 +1,6 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import { ShippingAddress } from '@prisma/client';
-
-export type GetShippingPayload = {
-  shippingAddress: ShippingAddress | null;
-  companyName?: string;
-};
+import { ShippingData } from '@/types/user';
 
 export async function GET() {
   const session = await getAuthSession();
@@ -31,7 +26,7 @@ export async function GET() {
       where: { companyId: company?.id },
     });
 
-    const payload: GetShippingPayload = {
+    const payload: ShippingData = {
       companyName: company?.name,
       shippingAddress,
     };

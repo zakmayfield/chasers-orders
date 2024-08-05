@@ -4,12 +4,12 @@ import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
 import { getFirstUnitOfProduct } from '@/features/products/utils.products';
 import { useToast } from '@/shared/hooks';
-import { addItem } from '@/features/cart/services.cart';
 import { CartCache } from '@/types/cart';
 import {
   useToggleFavoriteMutation,
   ExtendedFavorite,
 } from '@/features/products/helpers.products';
+import { addToCart } from '@/services/mutations/addToCart';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
@@ -34,8 +34,8 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
     },
   });
 
-  const { mutate: addToCart } = useMutation({
-    mutationFn: addItem,
+  const { mutate } = useMutation({
+    mutationFn: addToCart,
     onSuccess(data) {
       notify('Item added to cart');
 
@@ -64,7 +64,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   async function handleAddUnitToCart() {
     // server function
     const firstUnitId = await getFirstUnitOfProduct(productId);
-    addToCart(firstUnitId!);
+    mutate(firstUnitId!);
   }
 
   return (

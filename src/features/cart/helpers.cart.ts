@@ -5,16 +5,10 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
-  addItem,
-  deliveryInstructionsMutation,
-  getCart,
-  updateItemQuantity,
-} from '@/features/cart/services.cart';
-import {
   CartCache,
   CartItem,
   DeliveryInstructionsResponse,
-  UpdateQuantity,
+  UpdateCartItemQuantityParams,
 } from '@/types/cart';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -34,6 +28,10 @@ import {
   useForm,
 } from 'react-hook-form';
 import { FormEvent } from 'react';
+import { getCart } from '@/services/queries/getCart';
+import { addToCart } from '@/services/mutations/addToCart';
+import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
+import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
 
 interface UseFetchCartQuery {
   (): {
@@ -97,7 +95,7 @@ export const useEditInstructionsMutation: UseEditInstructionsMutation = ({
   const queryClient = useQueryClient();
 
   const { mutate: editDeliveryInstructions } = useMutation({
-    mutationFn: deliveryInstructionsMutation,
+    mutationFn: updateDeliveryInstructions,
     onSuccess(data) {
       setDataToCache(data);
       successCallback?.();
@@ -139,7 +137,7 @@ export const useAddToCartMutation: UseAddToCartMutationProps = ({
   const queryClient = useQueryClient();
 
   const { mutate: addToCartMutation } = useMutation({
-    mutationFn: addItem,
+    mutationFn: addToCart,
     onSuccess(data) {
       onSuccessCallback(data);
       setDataToCache(data);
@@ -176,7 +174,7 @@ interface UseUpdateQuantityProps {
     updateQuantity: UseMutateFunction<
       CartItem,
       unknown,
-      UpdateQuantity,
+      UpdateCartItemQuantityParams,
       unknown
     >;
   };
@@ -191,7 +189,7 @@ export const useUpdateQuantity: UseUpdateQuantityProps = ({
     isLoading,
     isSuccess,
   } = useMutation({
-    mutationFn: updateItemQuantity,
+    mutationFn: updateCartItemQuantity,
     onSuccess: (data) => {
       onSuccessCallback(data);
     },

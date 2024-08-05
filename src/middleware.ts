@@ -1,6 +1,6 @@
 import { JWT, getToken } from 'next-auth/jwt';
 import { NextResponse, NextRequest } from 'next/server';
-import { userStatus } from './utils/auth';
+import { getUserAuthorization } from '@/services/queries/getUserAuthorization';
 
 /*
   TODO: Implement wrapped middleware: https://next-auth.js.org/configuration/nextjs#advanced-usage
@@ -13,8 +13,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
-  //^ Fetch user account status from token
-  const { isApproved, emailVerified } = await userStatus(token);
+  const { isApproved, emailVerified } = await getUserAuthorization(token);
 
   //^ All routes except /dashboard will redirect conditionally
   if (

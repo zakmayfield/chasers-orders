@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { OrderType } from '../RecentOrders';
 import { getRecentOrders } from '@/services/queries/getRecentOrders';
 import RecentOrdersSkeleton from './RecentOrdersSkeleton';
 import RecentOrder from './RecentOrder';
+import { OrderType } from '@/types/cart';
 
 function RecentOrdersContent() {
   const {
