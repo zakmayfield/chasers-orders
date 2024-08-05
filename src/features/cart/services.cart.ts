@@ -1,40 +1,8 @@
-import type {
-  CartItem,
-  DeliveryInstructionsResponse,
-  UpdateQuantity,
-} from '@/types/cart';
+import type { CartItem, DeliveryInstructionsResponse } from '@/types/cart';
 
 /*
   ^ ----- MUTATIONS -----
 */
-
-interface UpdateItemQuantityType {
-  (params: UpdateQuantity): Promise<CartItem>;
-}
-
-export const updateItemQuantity: UpdateItemQuantityType = async (params) => {
-  const { cartId, unitId, quantity } = params;
-
-  try {
-    const response = await fetch('/api/cart/item/quantity', {
-      method: 'PUT',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({ cartId, unitId, quantity: quantity }),
-    });
-
-    if (!response.ok) {
-      throw new Error(await response.text());
-    }
-
-    return response.json();
-  } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    }
-  }
-};
 
 interface UpdateItemSizeProps {
   (params: {

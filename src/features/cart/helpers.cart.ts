@@ -4,10 +4,7 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import {
-  deliveryInstructionsMutation,
-  updateItemQuantity,
-} from '@/features/cart/services.cart';
+import { deliveryInstructionsMutation } from '@/features/cart/services.cart';
 import {
   CartCache,
   CartItem,
@@ -34,6 +31,7 @@ import {
 import { FormEvent } from 'react';
 import { getCart } from '@/services/queries/getCart';
 import { addToCart } from '@/services/mutations/addToCart';
+import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
 
 interface UseFetchCartQuery {
   (): {
@@ -191,7 +189,7 @@ export const useUpdateQuantity: UseUpdateQuantityProps = ({
     isLoading,
     isSuccess,
   } = useMutation({
-    mutationFn: updateItemQuantity,
+    mutationFn: updateCartItemQuantity,
     onSuccess: (data) => {
       onSuccessCallback(data);
     },
