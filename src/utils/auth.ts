@@ -1,37 +1,6 @@
 import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/shared/validators/auth';
-import { JWT } from 'next-auth/jwt';
-import { BASE_URL } from './constants';
 import { SecureUser } from '@/types/user';
-
-/*
-  USER ACCOUNT STATUS
-*/
-
-interface IUserVerification {
-  isApproved: boolean;
-  emailVerified: Date | null;
-}
-
-type ResolvedVerificationCheck = {
-  (token: JWT | null): Promise<IUserVerification>;
-};
-
-export const userStatus: ResolvedVerificationCheck = async (token) => {
-  if (token && (!token.isApproved || !token.emailVerified)) {
-    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, BASE_URL);
-
-    try {
-      const response = await fetch(apiUrl);
-      const { isApproved, emailVerified } = await response.json();
-      return { isApproved, emailVerified };
-    } catch (error) {
-      console.error(error);
-    }
-  }
-
-  return { isApproved: token!.isApproved, emailVerified: token!.emailVerified };
-};
 
 /*
   GET SECURE USER
