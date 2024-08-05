@@ -16,7 +16,7 @@ import {
 } from '@/features/cart/helpers.cart';
 import { useSession } from 'next-auth/react';
 import { fetchCart } from '@/features/cart/utils.cart';
-import { UpdateQuantity } from '@/types/cart';
+import { UpdateCartItemQuantityParams } from '@/types/cart';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
@@ -43,7 +43,9 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     },
   });
 
-  function updateQuantityCallback(updateQuantityPayload: UpdateQuantity) {
+  function updateQuantityCallback(
+    updateQuantityPayload: UpdateCartItemQuantityParams
+  ) {
     updateQuantity(updateQuantityPayload);
   }
 

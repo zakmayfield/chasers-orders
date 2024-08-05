@@ -9,7 +9,7 @@ import {
   CartCache,
   CartItem,
   DeliveryInstructionsResponse,
-  UpdateQuantity,
+  UpdateCartItemQuantityParams,
 } from '@/types/cart';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -174,7 +174,7 @@ interface UseUpdateQuantityProps {
     updateQuantity: UseMutateFunction<
       CartItem,
       unknown,
-      UpdateQuantity,
+      UpdateCartItemQuantityParams,
       unknown
     >;
   };

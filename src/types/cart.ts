@@ -24,10 +24,16 @@ export type DeliveryInstructionsResponse = {
   shippingAddress: ShippingAddress;
 };
 
-export type UpdateQuantity = {
+export type UpdateCartItemQuantityParams = {
   cartId: string;
   unitId: string;
   quantity: number;
+};
+
+export type UpdateCartItemSizeParams = {
+  cartId: string;
+  unitId: string;
+  selectedUnitId: string | undefined;
 };
 
 export type CartSizesData = {

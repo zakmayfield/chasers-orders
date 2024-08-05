@@ -1,11 +1,11 @@
-import { CartItem, UpdateCartItemQuantityParams } from '@/types/cart';
+import { CartItem, UpdateCartItemSizeParams } from '@/types/cart';
 import { fetchHandler } from '@/utils/fetch';
 
-export const updateCartItemQuantity = async (
-  params: UpdateCartItemQuantityParams
+export const updateCartItemSize = async (
+  params: UpdateCartItemSizeParams
 ): Promise<CartItem> =>
   await fetchHandler({
-    route: '/cart/item/quantity',
+    route: '/cart/item/size',
     options: {
       config: {
         method: 'PUT',
