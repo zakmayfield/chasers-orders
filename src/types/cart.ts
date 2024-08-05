@@ -28,3 +28,13 @@ export type UpdateQuantity = {
   unitId: string;
   quantity: number;
 };
+
+//^
+
+export type CartSizesData = {
+  id: string;
+  product: {
+    id: string;
+    units: Unit[];
+  };
+};
