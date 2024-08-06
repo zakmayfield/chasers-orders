@@ -1,10 +1,7 @@
 import { db } from '@/lib/prisma';
 import { authenticateSession } from '@/features/auth/helpers.api';
-import {
-  SendEmailAPIResponse,
-  TransporterResponse,
-  sendEmail,
-} from '@/features/verify/utils.verify';
+import { sendEmail } from '@/utils/email';
+import { SendEmailAPIResponse, TransporterResponse } from '@/types/email';
 
 async function handler() {
   const session = await authenticateSession();

@@ -11,7 +11,7 @@ import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth';
 import { createCart } from '@/features/cart/utils.cart';
-import { sendEmail } from '@/features/verify/utils.verify';
+import { sendEmail } from '@/utils/email';
 
 //^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];

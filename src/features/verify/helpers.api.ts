@@ -2,7 +2,7 @@
 
 import { db } from '@/lib/prisma';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
-import { sendEmail } from '@/features/verify/utils.verify';
+import { sendEmail } from '@/utils/email';
 import type { VerificationToken } from '@prisma/client';
 
 // ^ Expiration
