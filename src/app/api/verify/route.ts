@@ -4,9 +4,9 @@ import {
   handleExpiration,
   validateVerificationRecord,
 } from '@/features/verify/helpers.api';
-import { authenticateSession } from '@/features/auth/helpers.api';
 import { VerifyAPIResponse, VerifyMutationArgs } from '@/types/verification';
 import { db } from '@/lib/prisma';
+import { authenticateSession } from '@/utils/auth';
 
 type RequestPayload = VerifyMutationArgs;
 const errorPrefix = 'Error processing your request:';

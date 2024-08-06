@@ -5,9 +5,9 @@ import type {
   VerifyMutation,
   VerifyMutationArgs,
 } from '@/types/verification';
-import type { SendEmailAPIResponse } from './utils.verify';
 import { sendVerificationEmail } from '@/services/queries/sendVerificationEmail';
 import { updateUserVerification } from '@/services/mutations/updateUserVerification';
+import { SendEmailAPIResponse } from '@/types/email';
 
 //^ Verification
 

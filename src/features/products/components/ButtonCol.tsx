@@ -15,8 +15,8 @@ import {
   useUpdateQuantity,
 } from '@/features/cart/helpers.cart';
 import { useSession } from 'next-auth/react';
-import { fetchCart } from '@/features/cart/utils.cart';
 import { UpdateCartItemQuantityParams } from '@/types/cart';
+import { fetchCart } from '@/utils/cart';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;

@@ -1,4 +1,4 @@
-import { SendEmailAPIResponse } from '@/features/verify/utils.verify';
+import { SendEmailAPIResponse } from '@/types/email';
 import { fetchHandler } from '@/utils/fetch';
 
 export const sendVerificationEmail = async (): Promise<SendEmailAPIResponse> =>

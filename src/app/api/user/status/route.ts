@@ -1,6 +1,6 @@
-import { authenticateSession } from '@/features/auth/helpers.api';
 import { UserStatusAPIResponse } from '@/types/dashboard';
 import { db } from '@/lib/prisma';
+import { authenticateSession } from '@/utils/auth';
 
 async function handler() {
   const sessionResponse = await authenticateSession();

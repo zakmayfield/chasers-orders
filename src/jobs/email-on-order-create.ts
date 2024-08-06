@@ -1,18 +1,7 @@
 import { eventTrigger } from '@trigger.dev/sdk';
 import { client } from '@/lib/trigger';
-import { Company, Order, OrderLineItem, User } from '@prisma/client';
 import { sendOrderEmail } from '@/utils/email';
-
-type PayloadType = {
-  order: Order & {
-    lineItems: OrderLineItem[];
-  };
-  userData: UserWithCompany;
-};
-
-type UserWithCompany = User & {
-  company: Company;
-};
+import { SendOrderEmailPayload } from '@/types/email';
 
 client.defineJob({
   id: 'send-order-confirmation-email',
@@ -21,7 +10,7 @@ client.defineJob({
   trigger: eventTrigger({
     name: 'order.created',
   }),
-  run: async (payload: PayloadType, io) => {
+  run: async (payload: SendOrderEmailPayload, io) => {
     await io.logger.info('Running send-email task...');
 
     await io.runTask('send-email', async () => {
