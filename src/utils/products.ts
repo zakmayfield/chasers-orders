@@ -1,17 +1,18 @@
 'use server';
-
 import { db } from '@/lib/prisma';
 
-type ReturnType = {
-  (productId: string): Promise<string | undefined>;
-};
-
-export const getFirstUnitOfProduct: ReturnType = async (productId) => {
+export const getUnitId = async (
+  productId: string
+): Promise<string | undefined> => {
   const product = await db.product.findUnique({
     where: { id: productId },
     select: {
       id: true,
-      units: true,
+      units: {
+        select: {
+          id: true,
+        },
+      },
     },
   });
 
