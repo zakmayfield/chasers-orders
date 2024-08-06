@@ -1,8 +1,9 @@
 import { FC } from 'react';
-import { signInWithCredentials, useSignInForm } from './helpers.signin';
+import { useSignInForm } from './helpers.signin';
 import { SignInFormData } from '@/shared/validators/auth';
 import FieldError from '../components/FieldError';
 import { SignInButton } from './components';
+import { handleSignIn } from '@/utils/helpers';
 
 interface SignInFormProps {}
 
@@ -14,7 +15,7 @@ const SignInForm: FC<SignInFormProps> = ({}) => {
   } = useSignInForm();
 
   function submitHandler(data: SignInFormData) {
-    signInWithCredentials(data);
+    handleSignIn(data);
   }
   return (
     <form onSubmit={handleSubmit(submitHandler)}>

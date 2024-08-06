@@ -1,5 +1,4 @@
 'use server';
-
 import { db } from '@/lib/prisma';
 import { SecureUser } from '@/types/user';
 import { getAuthSession } from '@/lib/auth/auth.options';
