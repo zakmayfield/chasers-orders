@@ -2,10 +2,6 @@ import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/shared/validators/auth';
 import { SecureUser } from '@/types/user';
 
-/*
-  GET SECURE USER
-*/
-
 type UniqueSecureUser = {
   (email: string): Promise<SecureUser | null>;
 };
@@ -23,10 +19,6 @@ export const findUniqueSecureUser: UniqueSecureUser = async (email) =>
       image: true,
     },
   });
-
-/*
-  REGISTER USER
-*/
 
 interface IRegisterUser {
   (payload: RegisterUserPayload): Promise<SecureUser | null>;
