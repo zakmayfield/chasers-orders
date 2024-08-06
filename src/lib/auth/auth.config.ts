@@ -9,7 +9,7 @@ import {
 } from '@/shared/validators/auth';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
-import { findUniqueSecureUser, registerUser } from '@/utils/auth';
+import { getSecureUser, registerUser } from '@/utils/auth';
 import { sendEmail } from '@/utils/email';
 import { createCart } from '@/utils/cart';
 
@@ -167,7 +167,7 @@ const callbacks: NextAuthCallbacks = {
   },
 
   async jwt({ token, user }) {
-    const u = await findUniqueSecureUser(token.email!);
+    const u = await getSecureUser(token.email!);
 
     if (!u) {
       token.id = user!.id;

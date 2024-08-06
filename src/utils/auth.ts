@@ -24,7 +24,7 @@ export const authenticateSession = async (): Promise<
   };
 };
 
-export const findUniqueSecureUser = async (
+export const getSecureUser = async (
   email: string
 ): Promise<SecureUser | null> =>
   await db.user.findUnique({
