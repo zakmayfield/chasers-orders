@@ -1,28 +1,8 @@
-import { Order, OrderLineItem } from '@prisma/client';
 import transporter from '@/lib/nodemailer';
 import { BASE_URL } from '@/utils/constants';
-import { TransporterResponse } from '@/types/email';
+import { SendOrderEmailPayload, TransporterResponse } from '@/types/email';
 
-/*
-  ORDER 
-*/
-
-type PayloadType = {
-  order: Order & {
-    lineItems: OrderLineItem[];
-  };
-  userData: PayloadUser;
-};
-
-type PayloadUser = {
-  company: {
-    name: string;
-  } | null;
-  id: string;
-  email: string;
-} | null;
-
-export const sendOrderEmail = async (payload: PayloadType) => {
+export const sendOrderEmail = async (payload: SendOrderEmailPayload) => {
   const mailOptions = orderEmailOptions(payload);
 
   const send = async (): Promise<string | undefined> => {
@@ -58,7 +38,9 @@ export const sendOrderEmail = async (payload: PayloadType) => {
   return await send();
 };
 
-function orderEmailOptions(payload: PayloadType): Record<string, string> {
+function orderEmailOptions(
+  payload: SendOrderEmailPayload
+): Record<string, string> {
   const { userData } = payload;
   const userEmail = userData!.email;
   const companyName = userData!.company!.name;
