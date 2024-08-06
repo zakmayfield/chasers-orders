@@ -24,3 +24,15 @@ export interface StepFourProps extends StepProps {
   isSubmitted: boolean;
   isSubmitSuccessful: boolean;
 }
+
+export type RegisterUserParams = {
+  credentials: SignUpFormData;
+  hashedPassword: string;
+  verificationToken: string;
+  expires: Date;
+};
+
+export type AuthenticateSessionData = {
+  id: string;
+  email: string;
+};
