@@ -19,6 +19,10 @@ export type CartItem = UnitsOnCart & {
   };
 };
 
+export type CartWithItems = Cart & {
+  items: UnitsOnCart[];
+};
+
 export type DeliveryInstructionsResponse = {
   companyName: string;
   shippingAddress: ShippingAddress;

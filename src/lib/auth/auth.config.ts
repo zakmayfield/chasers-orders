@@ -10,8 +10,8 @@ import {
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
 import { findUniqueSecureUser, registerUser } from '@/utils/auth';
-import { createCart } from '@/features/cart/utils.cart';
 import { sendEmail } from '@/utils/email';
+import { createCart } from '@/utils/cart';
 
 //^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
