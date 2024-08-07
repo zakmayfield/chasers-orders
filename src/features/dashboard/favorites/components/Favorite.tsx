@@ -10,6 +10,7 @@ import {
   ExtendedFavorite,
 } from '@/features/products/helpers.products';
 import { addToCart } from '@/services/mutations/addToCart';
+import { useAddToCart } from '@/shared/hooks/mutations';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
@@ -34,36 +35,16 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
     },
   });
 
-  const { mutate } = useMutation({
-    mutationFn: addToCart,
-    onSuccess(data) {
-      notify('Item added to cart');
-
-      // Update `cart` items cache with data from response
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              items: [data, ...oldData.items],
-            }
-          : oldData
-      );
-    },
-    onError(error) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
-    },
-  });
+  const { mutate: addToCart } = useAddToCart();
 
   const favId = fav.id;
   const productId = fav.juice.id;
   const productName = fav.juice.name;
   const productCategory = fav.juice.category;
 
-  async function handleAddUnitToCart() {
+  async function handleAddToCart() {
     const unitId = await getUnitId(productId);
-    mutate(unitId!);
+    addToCart(unitId!);
   }
 
   return (
@@ -83,7 +64,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
       </div>
 
       <div className='flex items-center gap-6  ml-auto'>
-        <button onClick={() => handleAddUnitToCart()}>
+        <button onClick={() => handleAddToCart()}>
           <PiShoppingCartSimpleDuotone className='text-2xl hover:text-light-green-500' />
         </button>
 
