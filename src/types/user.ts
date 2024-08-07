@@ -20,7 +20,7 @@ export type UserData = SecureUser & {
   };
 };
 
-export type DashboardFetchState<T> = T | DashboardQueryError | null;
-export type DashboardQueryError = {
-  error: string;
+export type ShippingData = {
+  companyName?: string;
+  shippingAddress: ShippingAddress | null;
 };

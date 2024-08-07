@@ -4,9 +4,9 @@ import {
   LineItemProducts,
   getLineItems,
 } from '@/services/queries/getLineItems';
-import { OrderType } from '../RecentOrders';
 import OrderAgainButton from './OrderAgainButton';
 import { RecentOrderItems } from './RecentOrderItems';
+import { OrderType } from '@/types/cart';
 
 const RecentOrder = ({ order }: { order: OrderType }) => {
   const {

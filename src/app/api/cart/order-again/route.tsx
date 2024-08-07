@@ -1,8 +1,6 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import { OrderType } from '@/features/dashboard/recent-orders/RecentOrders';
-import { CartCache } from '@/features/cart/types';
-import { Prisma } from '@prisma/client';
+import { OrderAgainData, OrderType } from '@/types/cart';
 
 export async function POST(req: Request) {
   const session = await getAuthSession();
@@ -56,10 +54,7 @@ export async function POST(req: Request) {
       },
     });
 
-    const returnPayload: {
-      batchPayload: Prisma.BatchPayload;
-      cartPayload: CartCache;
-    } = {
+    const returnPayload: OrderAgainData = {
       batchPayload,
       cartPayload: {
         id: cartId.id,

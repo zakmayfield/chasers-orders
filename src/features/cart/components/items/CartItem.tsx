@@ -1,6 +1,6 @@
 'use client';
 
-import { CartItem as CartItemType } from '@/features/cart/types';
+import { CartItem as CartItemType } from '@/types/cart';
 import { RemoveCartItemButton } from './RemoveCartItemButton';
 import { UpdateCartItemSize } from './UpdateCartItemSize';
 import { QuantityUpdate } from './QuantityUpdate';

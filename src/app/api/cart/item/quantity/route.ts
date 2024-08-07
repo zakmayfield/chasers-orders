@@ -1,4 +1,4 @@
-import { UpdateQuantity } from '@/features/cart/types';
+import { UpdateCartItemQuantityParams } from '@/types/cart';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
 
@@ -12,9 +12,7 @@ export async function PUT(req: Request) {
   }
 
   try {
-    type ReqBody = UpdateQuantity;
-
-    const body: ReqBody = await req.json();
+    const body: UpdateCartItemQuantityParams = await req.json();
     const quantity = Number(body.quantity);
     const unitId: string = body.unitId;
     const cartId: string = body.cartId;

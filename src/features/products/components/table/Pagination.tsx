@@ -1,5 +1,5 @@
 import { ImSpinner2 } from 'react-icons/im';
-import { ProductWithUnits } from '../../types';
+import { ProductWithUnits } from '@/types/products';
 import { Table as ReactTable } from '@tanstack/react-table';
 
 export const Pagination = ({

@@ -1,19 +1,12 @@
-import { z } from 'zod';
-import {
-  AuthSignInValidator,
-  AuthSignUpValidator,
-} from '@/shared/validators/auth';
+import { SignUpFormData } from '@/shared/validators/auth';
 import type {
   FieldErrors,
   UseFormGetValues,
   UseFormRegister,
   UseFormSetValue,
 } from 'react-hook-form';
-import type { Steps } from '@/features/auth/signup/helpers.signup';
 
-//^ Validator Types
-export type SignInFormData = z.infer<typeof AuthSignInValidator>;
-export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;
+export type Steps = '1' | '2' | '3' | '4';
 
 //^ Step(1-3) Component Props
 export interface StepProps {
@@ -31,3 +24,15 @@ export interface StepFourProps extends StepProps {
   isSubmitted: boolean;
   isSubmitSuccessful: boolean;
 }
+
+export type RegisterUserParams = {
+  credentials: SignUpFormData;
+  hashedPassword: string;
+  verificationToken: string;
+  expires: Date;
+};
+
+export type AuthenticateSessionData = {
+  id: string;
+  email: string;
+};

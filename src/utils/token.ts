@@ -2,7 +2,6 @@ import { verify, sign, JwtPayload } from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import { NEXTAUTH_SECRET } from './constants';
 
-//^ TOKEN HELPERS
 function getSecretOrThrow(secret: string | undefined): string {
   if (!secret) {
     throw new Error('Verification token needs a secret');
@@ -15,7 +14,6 @@ function isJwtPayload(decoded: unknown): decoded is JwtPayload {
   return !!decoded && typeof decoded === 'object' && 'exp' in decoded;
 }
 
-//^ TOKEN UTILS
 export const generateVerificationToken = (email: string): string => {
   const validSecret = getSecretOrThrow(NEXTAUTH_SECRET);
 

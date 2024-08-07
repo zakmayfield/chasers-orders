@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { ProductWithUnits } from '@/features/products/types';
+import { ProductWithUnits } from '@/types/products';
 import {
   getRowPayload,
   useSizeCache,
@@ -15,8 +15,8 @@ import {
   useUpdateQuantity,
 } from '@/features/cart/helpers.cart';
 import { useSession } from 'next-auth/react';
-import { fetchCart } from '@/features/cart/utils.cart';
-import { UpdateQuantity } from '@/features/cart/types';
+import { UpdateCartItemQuantityParams } from '@/types/cart';
+import { fetchCart } from '@/utils/cart';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
@@ -43,7 +43,9 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     },
   });
 
-  function updateQuantityCallback(updateQuantityPayload: UpdateQuantity) {
+  function updateQuantityCallback(
+    updateQuantityPayload: UpdateCartItemQuantityParams
+  ) {
     updateQuantity(updateQuantityPayload);
   }
 
