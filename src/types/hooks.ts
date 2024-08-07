@@ -6,6 +6,7 @@ export enum QueryKeys {
   SHIPPING = 'shipping',
   SIZE = 'size',
   ORDER = 'order',
+  ORDERS = 'orders',
 }
 
 export type UseCustomQueryParams<T> = {
