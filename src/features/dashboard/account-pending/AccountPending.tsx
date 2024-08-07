@@ -8,6 +8,7 @@ import { useToast } from '@/shared/hooks';
 import { useCustomQuery } from '@/shared/hooks/queries';
 import { QueryKeys } from '@/types/hooks';
 import { getUserStatus } from '@/services/queries/getUserStatus';
+import { UserStatusAPIResponse } from '@/types/dashboard';
 
 interface AccountPendingProps {
   isApproved: boolean;
@@ -17,7 +18,7 @@ const AccountPending: FC<AccountPendingProps> = () => {
   const { notify } = useToast();
   const [hasRequestedNewEmail, setHasRequestedNewEmail] = useState(false);
 
-  const { data: status, isLoading } = useCustomQuery({
+  const { data: status, isLoading } = useCustomQuery<UserStatusAPIResponse>({
     queryKey: [QueryKeys.USER_STATUS],
     queryFn: getUserStatus,
   });
