@@ -2,10 +2,12 @@
 
 import { FC, useState } from 'react';
 import Link from 'next/link';
-import { useUserStatusQuery } from './helpers.account-pending';
 import { LoadingSpinner } from '@/shared/components';
 import { useSendVerificationEmail } from '@/features/verify/helpers.verify';
 import { useToast } from '@/shared/hooks';
+import { useCustomQuery } from '@/shared/hooks/queries';
+import { QueryKeys } from '@/types/hooks';
+import { getUserStatus } from '@/services/queries/getUserStatus';
 
 interface AccountPendingProps {
   isApproved: boolean;
@@ -14,7 +16,11 @@ interface AccountPendingProps {
 const AccountPending: FC<AccountPendingProps> = () => {
   const { notify } = useToast();
   const [hasRequestedNewEmail, setHasRequestedNewEmail] = useState(false);
-  const { status, isLoading } = useUserStatusQuery({});
+
+  const { data: status, isLoading } = useCustomQuery({
+    queryKey: [QueryKeys.USER_STATUS],
+    queryFn: getUserStatus,
+  });
 
   const { send } = useSendVerificationEmail({
     onSuccessCallback(data) {
