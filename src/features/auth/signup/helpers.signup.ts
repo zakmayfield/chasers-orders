@@ -127,37 +127,3 @@ export const useStepTracker: UseStepTracker = () => {
 
   return { step, setStep };
 };
-
-export const handleStepChange = ({
-  step,
-  setStep,
-}: {
-  step: Steps;
-  setStep: Dispatch<SetStateAction<Steps>>;
-}) => {
-  let stepToNumber = Number(step);
-  if (stepToNumber >= 4) {
-    return;
-  }
-
-  const nextStep = (stepToNumber = stepToNumber + 1);
-
-  setStep(nextStep.toString() as Steps);
-};
-
-export const handlePrevousStepChange = ({
-  step,
-  setStep,
-}: {
-  step: Steps;
-  setStep: Dispatch<SetStateAction<Steps>>;
-}) => {
-  let stepToNumber = Number(step);
-  if (stepToNumber <= 1) {
-    return;
-  }
-
-  const nextStep = (stepToNumber = stepToNumber - 1);
-
-  setStep(nextStep.toString() as Steps);
-};

@@ -12,7 +12,7 @@ export const StepFour: FC<StepFourProps> = ({
   register,
   getValues,
   setValue,
-  handlePreviousStepCallback,
+  handleDecrementStep,
   step,
   errors,
   isSubmitted,
@@ -211,7 +211,7 @@ export const StepFour: FC<StepFourProps> = ({
 
         <PreviousStepButton
           step={step}
-          handlePreviousStepCallback={handlePreviousStepCallback}
+          handleDecrementStep={handleDecrementStep}
         />
 
         <FinalStepButton

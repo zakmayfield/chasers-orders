@@ -9,13 +9,13 @@ import { requiredSignUpFormValues } from '@/utils/constants';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;
-  handleStepChange?(): void;
+  handleIncrementStep?(): void;
   step: Steps;
 }
 
 export const NextStepButton: FC<NextStepProps> = ({
   getValues,
-  handleStepChange,
+  handleIncrementStep,
   step,
 }) => {
   const queryClient = useQueryClient();
@@ -40,7 +40,7 @@ export const NextStepButton: FC<NextStepProps> = ({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...secureFormValues } = formValues;
       queryClient.setQueryData(['form-values'], secureFormValues);
-      handleStepChange?.();
+      handleIncrementStep?.();
     }
 
     isStepComplete(step) ? handleComplete() : handleNotComplete();
