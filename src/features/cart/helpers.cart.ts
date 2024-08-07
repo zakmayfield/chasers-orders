@@ -27,7 +27,6 @@ import {
   useForm,
 } from 'react-hook-form';
 import { FormEvent } from 'react';
-import { addToCart } from '@/services/mutations/addToCart';
 import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
 import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
 
@@ -97,49 +96,6 @@ export const useEditInstructionsMutation: UseEditInstructionsMutation = ({
   }
 
   return { editDeliveryInstructions };
-};
-
-interface UseAddToCartMutationProps {
-  ({
-    onSuccessCallback,
-    onErrorCallback,
-  }: {
-    onSuccessCallback: (data: CartItem) => void;
-    onErrorCallback: (error: unknown, variables: string) => void;
-  }): {
-    addToCartMutation: UseMutateFunction<CartItem, unknown, string, unknown>;
-  };
-}
-
-export const useAddToCartMutation: UseAddToCartMutationProps = ({
-  onSuccessCallback,
-  onErrorCallback,
-}) => {
-  const queryClient = useQueryClient();
-
-  const { mutate: addToCartMutation } = useMutation({
-    mutationFn: addToCart,
-    onSuccess(data) {
-      onSuccessCallback(data);
-      setDataToCache(data);
-    },
-    onError(error, variables) {
-      onErrorCallback(error, variables);
-    },
-  });
-
-  function setDataToCache(data: CartItem) {
-    queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-      oldData
-        ? {
-            ...oldData,
-            items: [data, ...oldData.items],
-          }
-        : oldData
-    );
-  }
-
-  return { addToCartMutation };
 };
 
 interface UseUpdateQuantityProps {

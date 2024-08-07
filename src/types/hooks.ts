@@ -23,5 +23,5 @@ export type UseCustomQueryParams<T> = {
 export type UseCustomMutationParams<T, V> = {
   mutationFn: MutationFunction<T, V>;
   handleSuccess?(data: T): void;
-  handleError?(error: Error): void;
+  handleError?(error: Error, variables?: V): void;
 };

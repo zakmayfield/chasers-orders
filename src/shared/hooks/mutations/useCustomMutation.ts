@@ -11,8 +11,8 @@ export const useCustomMutation = <T, V>({
     onSuccess(data) {
       handleSuccess?.(data);
     },
-    onError(error) {
-      handleError?.(error);
+    onError(error, variables) {
+      handleError?.(error, variables);
     },
   });
 

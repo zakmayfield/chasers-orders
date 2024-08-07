@@ -33,7 +33,7 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
     },
   });
 
-  const { mutate: addToCart } = useAddToCart();
+  const { mutate: addToCart } = useAddToCart({});
 
   const favId = fav.id;
   const productId = fav.juice.id;
