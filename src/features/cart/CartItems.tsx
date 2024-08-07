@@ -1,15 +1,15 @@
 'use client';
 
-import { useFetchCartQuery } from './helpers.cart';
 import {
   EmptyItems,
   ItemsContainer,
   ItemsHeader,
   LoadingSkelly,
 } from './components';
+import { useGetCart } from '@/shared/hooks/queries';
 
 export const CartItems = () => {
-  const { data, isFetching } = useFetchCartQuery();
+  const { data, isFetching } = useGetCart();
 
   if (isFetching) {
     return (

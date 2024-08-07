@@ -1,7 +1,6 @@
 import {
   UseMutateFunction,
   useMutation,
-  useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
 import {
@@ -28,27 +27,9 @@ import {
   useForm,
 } from 'react-hook-form';
 import { FormEvent } from 'react';
-import { getCart } from '@/services/queries/getCart';
 import { addToCart } from '@/services/mutations/addToCart';
 import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
 import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
-
-interface UseFetchCartQuery {
-  (): {
-    data: CartCache | undefined;
-    isFetching: boolean;
-  };
-}
-
-export const useFetchCartQuery: UseFetchCartQuery = () => {
-  const { data, isFetching } = useQuery<CartCache, Error>({
-    queryKey: ['cart'],
-    queryFn: getCart,
-    staleTime: Infinity,
-  });
-
-  return { data, isFetching };
-};
 
 interface UseInstructionEditFormProps {
   ({

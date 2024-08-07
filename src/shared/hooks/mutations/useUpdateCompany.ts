@@ -3,6 +3,7 @@ import { UserData } from '@/types/user';
 import { useToast } from '@/shared/hooks';
 import { CompanyFormData } from '@/shared/validators/user/CompanyValidator';
 import { updateCompany } from '@/services/mutations/updateCompany';
+import { QueryKeys } from '@/types/hooks';
 
 export const useUpdateCompany = ({
   handleSwitchEditCallback,
@@ -18,7 +19,7 @@ export const useUpdateCompany = ({
     mutationFn: updateCompany,
     onSuccess(data) {
       queryClient.setQueryData(
-        ['user-dashboard'],
+        [QueryKeys.DASHBOARD],
         (oldData: UserData | undefined) => {
           const company = {
             id: data!.id,

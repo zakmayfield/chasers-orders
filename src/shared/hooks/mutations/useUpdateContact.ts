@@ -3,6 +3,7 @@ import { UserData } from '@/types/user';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks';
 import { updateContact } from '@/services/mutations/updateContact';
+import { QueryKeys } from '@/types/hooks';
 
 export const useUpdateContact = ({
   handleSwitchEditCallback,
@@ -19,7 +20,7 @@ export const useUpdateContact = ({
     onSuccess(data) {
       // will need to make this a bit more modular for `company` to use it without error
       queryClient.setQueryData(
-        ['user-dashboard'],
+        [QueryKeys.DASHBOARD],
         (oldData: UserData | undefined) => {
           const payload = data && {
             id: data.id,
