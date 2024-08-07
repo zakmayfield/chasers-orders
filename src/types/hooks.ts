@@ -4,6 +4,7 @@ export enum QueryKeys {
   USER_STATUS = 'user-status',
   CART = 'cart',
   SHIPPING = 'shipping',
+  SIZE = 'size',
 }
 
 export type UseCustomQueryParams<T> = {
