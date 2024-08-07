@@ -18,28 +18,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthSignUpValidator, SignUpFormData } from '@/shared/validators/auth';
 import { Steps } from '@/types/auth';
-
-export const defaultValues = {
-  email: '',
-  password: '',
-  contactName: '',
-  contactPosition: '',
-  contactPhoneNumber: '',
-  companyName: '',
-  accountPayableEmail: '',
-  paymentMethod: '',
-  shippingStreetAddress: '',
-  shippingUnit: '',
-  shippingCity: '',
-  shippingState: '',
-  shippingPostalCode: '',
-  deliveryInstructions: '',
-  billingStreetAddress: '',
-  billingUnit: '',
-  billingCity: '',
-  billingState: '',
-  billingPostalCode: '',
-};
+import { Key, defaultSignUpFormValues } from '@/utils/constants';
 
 interface UseSignUpForm {
   (): {
@@ -57,7 +36,7 @@ export const useSignUpForm: UseSignUpForm = () => {
   const { formState, handleSubmit, register, getValues, setValue, reset } =
     useForm<SignUpFormData>({
       resolver: zodResolver(AuthSignUpValidator),
-      defaultValues,
+      defaultValues: defaultSignUpFormValues,
     });
 
   return {
@@ -68,45 +47,6 @@ export const useSignUpForm: UseSignUpForm = () => {
     formState,
     reset,
   };
-};
-
-type Key =
-  | 'email'
-  | 'password'
-  | 'contactName'
-  | 'contactPhoneNumber'
-  | 'companyName'
-  | 'accountPayableEmail'
-  | 'paymentMethod'
-  | 'shippingStreetAddress'
-  | 'shippingUnit'
-  | 'shippingCity'
-  | 'shippingState'
-  | 'shippingPostalCode'
-  | 'billingStreetAddress'
-  | 'billingUnit'
-  | 'billingCity'
-  | 'billingState'
-  | 'billingPostalCode';
-
-interface IRequiredFields {
-  [step: string]: Key[];
-}
-
-export const requiredStepFields: IRequiredFields = {
-  '1': ['email', 'password'],
-  '2': ['contactName', 'contactPhoneNumber'],
-  '3': ['companyName', 'paymentMethod'],
-  '4': [
-    'shippingStreetAddress',
-    'shippingCity',
-    'shippingState',
-    'shippingPostalCode',
-    'billingStreetAddress',
-    'billingCity',
-    'billingState',
-    'billingPostalCode',
-  ],
 };
 
 interface UseBillingAddressSync {
