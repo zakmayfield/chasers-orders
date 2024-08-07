@@ -1,12 +1,12 @@
 'use client';
-import { orderAgain } from '@/features/cart/services.cart';
+
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
-import { OrderType } from '../RecentOrders';
-import { CartCache } from '@/features/cart/types';
+import { CartCache, OrderType } from '@/types/cart';
 import { useRouter } from 'next/navigation';
 import { Prisma } from '@prisma/client';
 import { useToast } from '@/shared/hooks';
+import { orderAgain } from '@/services/mutations/orderAgain';
 
 interface OrderAgainButtonProps {
   order: OrderType;

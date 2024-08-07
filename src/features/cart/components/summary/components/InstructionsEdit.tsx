@@ -1,4 +1,4 @@
-import { DeliveryInstructionsData } from '@/features/cart/types';
+import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 import { FC } from 'react';
 import { UseFormRegister } from 'react-hook-form';
 

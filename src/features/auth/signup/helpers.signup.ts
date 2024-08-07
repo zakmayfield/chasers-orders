@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import { signIn } from 'next-auth/react';
 import {
   FormState,
   UseFormGetValues,
@@ -16,11 +15,9 @@ import {
   UseFormSetValue,
   useForm,
 } from 'react-hook-form';
-import type { SignUpFormData } from '../types/index';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AuthSignUpValidator } from '@/shared/validators/auth';
-
-export type Steps = '1' | '2' | '3' | '4';
+import { AuthSignUpValidator, SignUpFormData } from '@/shared/validators/auth';
+import { Steps } from '@/types/auth';
 
 export const defaultValues = {
   email: '',
@@ -223,43 +220,4 @@ export const handlePrevousStepChange = ({
   const nextStep = (stepToNumber = stepToNumber - 1);
 
   setStep(nextStep.toString() as Steps);
-};
-
-export const signUpWithCredentials = async (data: SignUpFormData) => {
-  try {
-    await signIn('sign-up', {
-      ...data,
-    });
-
-    return {
-      isSuccess: true,
-    };
-  } catch (err) {
-    console.error(err);
-    return {
-      isSuccess: false,
-    };
-  }
-};
-
-export const newData: SignUpFormData = {
-  email: 'zakmayfield@gmail.com',
-  password: '123',
-  contactName: 'x',
-  contactPhoneNumber: 'x',
-  contactPosition: 'x',
-  companyName: 'x',
-  accountPayableEmail: 'x',
-  paymentMethod: 'credit card',
-  shippingStreetAddress: 'x',
-  shippingCity: 'x',
-  shippingPostalCode: 'x',
-  shippingUnit: 'x',
-  shippingState: 'x',
-  deliveryInstructions: 'x',
-  billingCity: 'x',
-  billingPostalCode: 'x',
-  billingState: 'x',
-  billingUnit: 'x',
-  billingStreetAddress: 'x',
 };

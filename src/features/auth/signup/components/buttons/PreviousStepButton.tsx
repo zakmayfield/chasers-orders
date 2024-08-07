@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Steps } from '@/features/auth/signup/helpers.signup';
+import { Steps } from '@/types/auth';
 
 interface PreviousStepButtonProps {
   step: Steps;

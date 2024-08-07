@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table as ReactTable, flexRender } from '@tanstack/react-table';
-import { ProductWithUnits } from '../../types';
+import { ProductWithUnits } from '@/types/products';
 import { Filter } from './Filter';
 
 export const Table = ({

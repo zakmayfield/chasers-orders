@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { CartItem } from './CartItem';
-import type { CartCache } from '@/features/cart/types';
+import type { CartCache } from '@/types/cart';
 
 interface ItemsContainerProps {
   cart: CartCache | undefined;

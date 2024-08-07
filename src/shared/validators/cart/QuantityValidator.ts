@@ -8,3 +8,5 @@ export const QuantityValidator = z
       .max(100, 'Quantity must be less than or equal to 100'),
   })
   .required();
+
+export type QuantityData = z.infer<typeof QuantityValidator>;

@@ -1,47 +1,31 @@
+'use server';
 import { db } from '@/lib/prisma';
-import { SignUpFormData } from '@/features/auth/types/index';
-import { JWT } from 'next-auth/jwt';
-import { BASE_URL } from './constants';
 import { SecureUser } from '@/types/user';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { AuthenticateSessionData, RegisterUserParams } from '@/types/auth';
 
-/*
-  USER ACCOUNT STATUS
-*/
+export const authenticateSession = async (): Promise<
+  AuthenticateSessionData | Response
+> => {
+  const session = await getAuthSession();
 
-interface IUserVerification {
-  isApproved: boolean;
-  emailVerified: Date | null;
-}
-
-type ResolvedVerificationCheck = {
-  (token: JWT | null): Promise<IUserVerification>;
-};
-
-export const userStatus: ResolvedVerificationCheck = async (token) => {
-  if (token && (!token.isApproved || !token.emailVerified)) {
-    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, BASE_URL);
-
-    try {
-      const response = await fetch(apiUrl);
-      const { isApproved, emailVerified } = await response.json();
-      return { isApproved, emailVerified };
-    } catch (error) {
-      console.error(error);
-    }
+  if (!session || !session.user) {
+    return new Response('Unauthorized: Please log in to continue.', {
+      status: 401,
+    });
   }
 
-  return { isApproved: token!.isApproved, emailVerified: token!.emailVerified };
+  const { id, email } = session.user;
+
+  return {
+    id,
+    email: email!,
+  };
 };
 
-/*
-  GET SECURE USER
-*/
-
-type UniqueSecureUser = {
-  (email: string): Promise<SecureUser | null>;
-};
-
-export const findUniqueSecureUser: UniqueSecureUser = async (email) =>
+export const getSecureUser = async (
+  email: string
+): Promise<SecureUser | null> =>
   await db.user.findUnique({
     where: { email },
     select: {
@@ -55,64 +39,49 @@ export const findUniqueSecureUser: UniqueSecureUser = async (email) =>
     },
   });
 
-/*
-  REGISTER USER
-*/
-
-interface IRegisterUser {
-  (payload: RegisterUserPayload): Promise<SecureUser | null>;
-}
-
-type RegisterUserPayload = {
-  credentials: SignUpFormData;
-  hashedPassword: string;
-  verificationToken: string;
-  expires: Date;
-};
-
-export const registerUser: IRegisterUser = async (payload) => {
-  const { credentials, hashedPassword, verificationToken, expires } = payload;
-
-  return await db.user.create({
+export const registerUser = async (
+  payload: RegisterUserParams
+): Promise<SecureUser | null> =>
+  await db.user.create({
     data: {
-      email: credentials.email,
-      password: hashedPassword,
+      email: payload.credentials.email,
+      password: payload.hashedPassword,
       verificationToken: {
         create: {
-          identifier: `email-verification-${credentials.email}`,
-          token: verificationToken,
-          expires,
+          identifier: `email-verification-${payload.credentials.email}`,
+          token: payload.verificationToken,
+          expires: payload.expires,
         },
       },
       contact: {
         create: {
-          name: credentials.contactName,
-          position: credentials.contactPosition,
-          phoneNumber: credentials.contactPhoneNumber,
+          name: payload.credentials.contactName,
+          position: payload.credentials.contactPosition,
+          phoneNumber: payload.credentials.contactPhoneNumber,
         },
       },
       company: {
         create: {
-          name: credentials.companyName,
-          accountPayableEmail: credentials.accountPayableEmail,
-          paymentMethod: credentials.paymentMethod,
+          name: payload.credentials.companyName,
+          accountPayableEmail: payload.credentials.accountPayableEmail,
+          paymentMethod: payload.credentials.paymentMethod,
           shippingAddress: {
             create: {
-              streetAddress: credentials.shippingStreetAddress,
-              unit: credentials.shippingUnit,
-              city: credentials.shippingCity,
-              state: credentials.shippingState,
-              postalCode: credentials.shippingPostalCode,
-              deliveryInstructions: credentials.deliveryInstructions,
+              streetAddress: payload.credentials.shippingStreetAddress,
+              unit: payload.credentials.shippingUnit,
+              city: payload.credentials.shippingCity,
+              state: payload.credentials.shippingState,
+              postalCode: payload.credentials.shippingPostalCode,
+              deliveryInstructions: payload.credentials.deliveryInstructions,
             },
           },
           billingAddress: {
             create: {
-              streetAddress: credentials.billingStreetAddress,
-              unit: credentials.billingUnit,
-              city: credentials.billingCity,
-              state: credentials.billingState,
-              postalCode: credentials.billingPostalCode,
+              streetAddress: payload.credentials.billingStreetAddress,
+              unit: payload.credentials.billingUnit,
+              city: payload.credentials.billingCity,
+              state: payload.credentials.billingState,
+              postalCode: payload.credentials.billingPostalCode,
             },
           },
         },
@@ -128,4 +97,3 @@ export const registerUser: IRegisterUser = async (payload) => {
       image: true,
     },
   });
-};

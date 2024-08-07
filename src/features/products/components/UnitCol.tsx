@@ -7,7 +7,7 @@ import {
   getRowPayload,
   useSizeCache,
 } from '@/features/products/helpers.products';
-import type { ProductWithUnits } from '@/features/products/types';
+import type { ProductWithUnits } from '@/types/products';
 
 interface UnitColProps {
   info: CellContext<ProductWithUnits, Unit[]>;

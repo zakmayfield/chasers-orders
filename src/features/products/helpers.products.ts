@@ -16,12 +16,12 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { getProducts } from '@/features/products/services.products';
-import { toggleFavorite } from '@/features/products/services.products';
-import { getFavorites } from '@/features/products/services.products';
+import { toggleFavorite } from '@/services/mutations/toggleFavorite';
+import { getProducts } from '@/services/queries/getProducts';
+import { getFavorites } from '@/services/queries/getFavorites';
 
 import type { Favorite, Product, Unit } from '@prisma/client';
-import type { ProductWithUnits, ActionTypes } from '@/features/products/types';
+import type { ProductWithUnits, ActionTypes } from '@/types/products';
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 

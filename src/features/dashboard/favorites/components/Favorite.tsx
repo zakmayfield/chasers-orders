@@ -2,14 +2,14 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
-import { getFirstUnitOfProduct } from '@/features/products/utils.products';
+import { getUnitId } from '@/utils/products';
 import { useToast } from '@/shared/hooks';
-import { addItem } from '@/features/cart/services.cart';
-import { CartCache } from '@/features/cart/types';
+import { CartCache } from '@/types/cart';
 import {
   useToggleFavoriteMutation,
   ExtendedFavorite,
 } from '@/features/products/helpers.products';
+import { addToCart } from '@/services/mutations/addToCart';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const queryClient = useQueryClient();
@@ -34,8 +34,8 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
     },
   });
 
-  const { mutate: addToCart } = useMutation({
-    mutationFn: addItem,
+  const { mutate } = useMutation({
+    mutationFn: addToCart,
     onSuccess(data) {
       notify('Item added to cart');
 
@@ -62,9 +62,8 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const productCategory = fav.juice.category;
 
   async function handleAddUnitToCart() {
-    // server function
-    const firstUnitId = await getFirstUnitOfProduct(productId);
-    addToCart(firstUnitId!);
+    const unitId = await getUnitId(productId);
+    mutate(unitId!);
   }
 
   return (

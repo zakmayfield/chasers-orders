@@ -4,7 +4,7 @@ import {
   NextStepButton,
   PreviousStepButton,
 } from '@/features/auth/signup/components/buttons';
-import type { StepProps } from '@/features/auth/types';
+import type { StepProps } from '@/types/auth';
 
 export const StepTwo: FC<StepProps> = ({
   register,

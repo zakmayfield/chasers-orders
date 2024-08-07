@@ -6,5 +6,5 @@ export type ProductWithUnits = Product & {
 
 export type Actions = 'add' | 'remove';
 export type ActionTypes = AddAction | RemoveAction;
-export type AddAction = { action: 'add'; id: string };
-export type RemoveAction = { action: 'remove'; id: string };
+type AddAction = { action: 'add'; id: string };
+type RemoveAction = { action: 'remove'; id: string };

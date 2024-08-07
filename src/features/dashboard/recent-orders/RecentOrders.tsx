@@ -1,14 +1,10 @@
 'use client';
 
-import { Order, OrderLineItem } from '@prisma/client';
 import { useQuery } from '@tanstack/react-query';
 import { getRecentOrders } from '@/services/queries/getRecentOrders';
 import RecentOrdersHeader from './components/RecentOrdersHeader';
 import RecentOrdersContent from './components/RecentOrdersContent';
-
-export type OrderType = Order & {
-  lineItems: OrderLineItem[];
-};
+import { OrderType } from '@/types/cart';
 
 const RecentOrders = () => {
   const { data: orders, isLoading } = useQuery<OrderType[]>({

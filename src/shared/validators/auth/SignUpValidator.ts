@@ -43,3 +43,5 @@ export const AuthSignUpValidator = z.object({
     .string()
     .min(1, { message: 'Postal Code is a required field' }),
 });
+
+export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;
