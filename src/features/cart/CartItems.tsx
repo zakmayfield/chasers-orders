@@ -1,21 +1,15 @@
 'use client';
+
 import {
   EmptyItems,
   ItemsContainer,
   ItemsHeader,
   LoadingSkelly,
 } from './components';
-import { useCustomQuery } from '@/shared/hooks/queries';
-import { getCart } from '@/services/queries/getCart';
-import { CartCache } from '@/types/cart';
-import { QueryKeys } from '@/types/hooks';
+import { useGetCart } from '@/shared/hooks/queries';
 
 export const CartItems = () => {
-  const { data, isFetching } = useCustomQuery<CartCache>({
-    queryKey: [QueryKeys.CART],
-    queryFn: getCart,
-    staleTime: Infinity,
-  });
+  const { data, isFetching } = useGetCart();
 
   if (isFetching) {
     return (
