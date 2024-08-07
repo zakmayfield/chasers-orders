@@ -1,15 +1,13 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { PiHeartDuotone } from 'react-icons/pi';
 import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
 import { PiXCircleThin } from 'react-icons/pi';
 import { getUnitId } from '@/utils/products';
 import { useToast } from '@/shared/hooks';
-import { CartCache } from '@/types/cart';
 import {
   useToggleFavoriteMutation,
   ExtendedFavorite,
 } from '@/features/products/helpers.products';
-import { addToCart } from '@/services/mutations/addToCart';
 import { useAddToCart } from '@/shared/hooks/mutations';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
