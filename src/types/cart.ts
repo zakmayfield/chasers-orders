@@ -56,3 +56,11 @@ export type OrderAgainData = {
   batchPayload: Prisma.BatchPayload;
   cartPayload: CartCache;
 };
+
+export type RemoveCartItemRequest = {
+  unitId: string;
+  cartId: string;
+};
+export type RemoveCartItemResponse = {
+  unitId: string;
+};
