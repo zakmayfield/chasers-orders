@@ -29,7 +29,6 @@ export const QuantityUpdate: React.FC<UpdateCartItemQuantityRequest> = ({
             : oldData
       );
     },
-    customErrorHandling(error) {},
   });
 
   function submitHandler(data: QuantityData) {
