@@ -14,10 +14,13 @@ import {
   CompanyValidator,
   getDefaultValues,
 } from '@/shared/validators/user/CompanyValidator';
-import { useUpdateCompany } from '@/shared/hooks/mutations';
+import { useCustomMutation } from '@/shared/hooks/mutations';
 import { useToast } from '@/shared/hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { paymentMethodOptions } from '@/utils/constants';
+import { updateCompany } from '@/services/mutations/updateCompany';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@/types/hooks';
 
 interface CompanyEditProps {
   userData: UserData;
@@ -44,15 +47,44 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
   handleSwitchEditCallback,
   setValue,
 }) => {
+  const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  const { edit } = useUpdateCompany({
-    handleSwitchEditCallback,
-    handleResetFormCB,
+  const { mutate: edit } = useCustomMutation({
+    mutationFn: updateCompany,
+    handleSuccess(data) {
+      notify('Successfully updated company');
+
+      queryClient.setQueryData(
+        [QueryKeys.DASHBOARD],
+        (oldData: UserData | undefined) => {
+          return oldData
+            ? { ...oldData, company: { ...oldData.company, ...data } }
+            : oldData;
+        }
+      );
+
+      reset(
+        {
+          name: data.name,
+          accountPayableEmail: data.accountPayableEmail,
+          paymentMethod: data.paymentMethod,
+        },
+        {
+          keepDirty: false,
+        }
+      );
+
+      handleSwitchEditCallback();
+    },
+    handleError(error) {
+      notify(error.message, 'error');
+    },
   });
 
   const onFormSubmit = () => {
     const formValues = getValues();
+
     try {
       CompanyValidator.parse(formValues);
 
@@ -74,12 +106,6 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
       return;
     }
   };
-
-  function handleResetFormCB(data: CompanyFormData) {
-    reset(data, {
-      keepDirty: false,
-    });
-  }
 
   function resetFormOnCancel() {
     const defaultValues = getDefaultValues(userData);
