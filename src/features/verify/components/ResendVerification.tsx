@@ -1,7 +1,9 @@
 import { merge } from '@/utils/styles';
 import { FC } from 'react';
-import { useSendVerificationEmail } from '../helpers.verify';
 import { useToast } from '@/shared/hooks';
+import { useCustomMutation } from '@/shared/hooks/mutations';
+import { sendVerificationEmail } from '@/services/queries/sendVerificationEmail';
+import { SendVerificationEmailResponse } from '@/types/email';
 
 interface ResendVerificationProps {
   className?: string;
@@ -11,11 +13,15 @@ export const ResendVerification: FC<ResendVerificationProps> = ({
   className,
 }) => {
   const { notify } = useToast();
-  const { send } = useSendVerificationEmail({
-    onSuccessCallback(data) {
+  const { mutate: sendEmail } = useCustomMutation<
+    SendVerificationEmailResponse,
+    void
+  >({
+    mutationFn: sendVerificationEmail,
+    handleSuccess(data) {
       notify(data.responseMessage);
     },
-    onErrorCallback(error) {
+    handleError(error) {
       notify(error.message, 'error');
     },
   });
@@ -23,9 +29,8 @@ export const ResendVerification: FC<ResendVerificationProps> = ({
   return (
     <div className={merge(`flex items-center gap-6 ${className}`)}>
       <button
-        className='text-sm text-purple-700 underline'
-        // TODO: configure the proper guard for anti abuse
-        onClick={() => send()}
+        className={`border rounded-lg py-2 px-4`}
+        onClick={() => sendEmail()}
       >
         Need a new verification email?
       </button>

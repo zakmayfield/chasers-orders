@@ -1,15 +1,17 @@
 import { FC, useState } from 'react';
 import { useToast } from '@/shared/hooks';
-import {
-  useInstructionEditForm,
-  useEditInstructionsMutation,
-} from '@/features/cart/helpers.cart';
+import { useInstructionEditForm } from '@/features/cart/helpers.cart';
 import {
   InstructionsNotFound,
   InstructionsHeader,
   InstructionsContent,
   InstructionsEdit,
 } from './index';
+import { useCustomMutation } from '@/shared/hooks/mutations';
+import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
+import { useQueryClient } from '@tanstack/react-query';
+import { DeliveryInstructionsResponse } from '@/types/cart';
+import { QueryKeys } from '@/types/hooks';
 
 interface DeliveryInstructionsProps {
   content: string | null | undefined;
@@ -18,6 +20,7 @@ interface DeliveryInstructionsProps {
 export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   content: deliveryInstructions,
 }) => {
+  const queryClient = useQueryClient();
   const { notify } = useToast();
   const [isEdit, setIsEdit] = useState(false);
 
@@ -26,10 +29,24 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
       deliveryInstructions: deliveryInstructions,
     });
 
-  const { editDeliveryInstructions } = useEditInstructionsMutation({
-    successCallback() {
-      setIsEdit(false);
+  const { mutate: editDeliveryInstructions } = useCustomMutation({
+    mutationFn: updateDeliveryInstructions,
+    handleSuccess(data) {
       notify('Updated delivery instructions');
+
+      queryClient.setQueryData(
+        [QueryKeys.SHIPPING],
+        (oldData: DeliveryInstructionsResponse | undefined) =>
+          oldData
+            ? {
+                ...oldData,
+                shippingAddress: data.shippingAddress,
+              }
+            : oldData
+      );
+
+      setIsEdit(false);
+
       resetFormState();
     },
   });
@@ -38,6 +55,7 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
     const formValues = getValues();
     handleSubmit(() => editDeliveryInstructions(formValues))();
   }
+
   function onSave() {
     submitHandler();
   }
@@ -45,6 +63,7 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   const toggleEdit = () => {
     setIsEdit(!isEdit);
   };
+
   function onEdit() {
     toggleEdit();
   }

@@ -1,3 +1,4 @@
+import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 import type {
   Cart,
   UnitsOnCart,
@@ -23,18 +24,19 @@ export type CartWithItems = Cart & {
   items: UnitsOnCart[];
 };
 
+export type DeliveryInstructionsRequest = DeliveryInstructionsData;
 export type DeliveryInstructionsResponse = {
   companyName: string;
   shippingAddress: ShippingAddress;
 };
 
-export type UpdateCartItemQuantityParams = {
+export type UpdateCartItemQuantityRequest = {
   cartId: string;
   unitId: string;
   quantity: number;
 };
 
-export type UpdateCartItemSizeParams = {
+export type UpdateCartItemSizeRequest = {
   cartId: string;
   unitId: string;
   selectedUnitId: string | undefined;
@@ -55,4 +57,12 @@ export type OrderType = Order & {
 export type OrderAgainData = {
   batchPayload: Prisma.BatchPayload;
   cartPayload: CartCache;
+};
+
+export type RemoveCartItemRequest = {
+  unitId: string;
+  cartId: string;
+};
+export type RemoveCartItemResponse = {
+  unitId: string;
 };

@@ -1,33 +1,30 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { LuTrash2 } from 'react-icons/lu';
 import { useToast } from '@/shared/hooks';
-import { CartCache, CartItem } from '@/types/cart';
+import { useCustomMutation } from '@/shared/hooks/mutations';
 import { removeFromCart } from '@/services/mutations/removeFromCart';
+import {
+  CartCache,
+  CartItem,
+  RemoveCartItemRequest,
+  RemoveCartItemResponse,
+} from '@/types/cart';
 
-export interface RemoveCartItemProps {
-  payload: RemoveItemPayloadData;
-}
-
-type RemoveItemPayloadData = {
-  cartId: string;
-  unitId: string;
-};
-
-export const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
+export const RemoveCartItemButton: React.FC<RemoveCartItemRequest> = (
+  props
+) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const {
-    payload: { unitId, cartId },
-  } = props;
 
-  const { mutate: removeCartItem, isLoading } = useMutation({
+  const { mutate, isLoading } = useCustomMutation<
+    RemoveCartItemResponse,
+    RemoveCartItemRequest
+  >({
     mutationFn: removeFromCart,
-    onSuccess: (data) => {
-      const { unitId } = data;
-
+    handleSuccess(data) {
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
         const items = oldData?.items.filter(
-          (item) => item.unitId !== unitId
+          (item) => item.unitId !== data.unitId
         ) as CartItem[];
 
         return oldData
@@ -40,17 +37,15 @@ export const RemoveCartItemButton: React.FC<RemoveCartItemProps> = (props) => {
 
       notify('Removed item from cart');
     },
-    onError(error) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
+    handleError(error) {
+      notify(error.message, 'error');
     },
   });
 
   return (
     <button
       disabled={isLoading}
-      onClick={() => removeCartItem({ unitId, cartId })}
+      onClick={() => mutate(props)}
       className=' text-gray-700 text-xl hover:text-red-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:text-red-600'
     >
       <LuTrash2 />
