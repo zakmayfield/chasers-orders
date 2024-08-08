@@ -1,10 +1,9 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { CartCache, OrderAgainData, OrderType } from '@/types/cart';
 import { useRouter } from 'next/navigation';
-import { Prisma } from '@prisma/client';
 import { useToast } from '@/shared/hooks';
 import { orderAgain } from '@/services/mutations/orderAgain';
 import { useCustomMutation } from '@/shared/hooks/mutations';
