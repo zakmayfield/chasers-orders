@@ -1,16 +1,13 @@
 'use client';
 
 import React from 'react';
-import {
-  getColumnHelper,
-  useTableConfig,
-  useFavorites,
-} from '@/features/products/helpers.products';
 import { NameCol, CategoryCol, ButtonCol } from './components';
 import { Pagination, Table, TableLoadingSkeleton } from './components/table';
 import { useCustomQuery } from '@/shared/hooks/queries';
-import { QueryKeys } from '@/types/hooks';
 import { getProducts } from '@/services/queries/getProducts';
+import { useFavorites } from '@/features/products/helpers.products';
+import { getColumnHelper, useTableConfig } from '@/utils/helpers';
+import { QueryKeys } from '@/types/hooks';
 
 export const ProductsTable = () => {
   const { data, isFetching } = useCustomQuery({
@@ -35,12 +32,6 @@ export const ProductsTable = () => {
       enableColumnFilter: true,
       cell: (info) => <CategoryCol info={info} />,
     }),
-    // TODO: re-establish the units col
-    // columnHelper.accessor('units', {
-    //   header: 'Size',
-    //   enableColumnFilter: false,
-    //   cell: (info) => <UnitCol info={info} />,
-    // }),
     columnHelper.accessor('units', {
       id: 'cta',
       header: '',
