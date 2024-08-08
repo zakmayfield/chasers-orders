@@ -6,7 +6,7 @@ export const useCustomMutation = <T, V>({
   handleSuccess,
   handleError,
 }: UseCustomMutationParams<T, V>) => {
-  const { mutate } = useMutation<T, Error, V, unknown>({
+  const { mutate, isLoading, isSuccess } = useMutation<T, Error, V, unknown>({
     mutationFn,
     onSuccess(data) {
       handleSuccess?.(data);
@@ -16,5 +16,5 @@ export const useCustomMutation = <T, V>({
     },
   });
 
-  return { mutate };
+  return { mutate, isLoading, isSuccess };
 };

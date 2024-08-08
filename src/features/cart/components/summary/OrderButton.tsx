@@ -1,8 +1,9 @@
 import { useRouter } from 'next/navigation';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks';
 import {
   CreateOrderPayload,
+  OrderData,
   createOrder,
 } from '@/services/mutations/createOrder';
 import { CartCache, OrderType } from '@/types/cart';
@@ -10,19 +11,20 @@ import { LoadingSpinner } from '@/shared/components';
 import { getUser } from '@/services/queries/getUser';
 import { useGetCart } from '@/shared/hooks/queries';
 import { QueryKeys } from '@/types/hooks';
+import { useCustomMutation } from '@/shared/hooks/mutations';
 
 export const OrderButton = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  // Cart cache query
   const { data: cartData, isFetching } = useGetCart();
-
-  // Create order mutation
-  const { mutate, isSuccess, isLoading } = useMutation({
+  const { mutate, isSuccess, isLoading } = useCustomMutation<
+    OrderData,
+    CreateOrderPayload
+  >({
     mutationFn: createOrder,
-    onSuccess(data) {
+    handleSuccess(data) {
       notify(`Order placed`);
 
       queryClient.setQueryData(
@@ -38,23 +40,19 @@ export const OrderButton = () => {
         }
       );
 
-      // fetch user dashboard since we are redirecting there
       queryClient.fetchQuery({
         queryKey: [QueryKeys.DASHBOARD],
         queryFn: getUser,
       });
 
-      // Clear 'cart' items cache after successful order
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
         return oldData ? { ...oldData, items: [] } : oldData;
       });
 
       router.push('/dashboard');
     },
-    onError(error) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
+    handleError(error) {
+      notify(error.message, 'error');
     },
   });
 
