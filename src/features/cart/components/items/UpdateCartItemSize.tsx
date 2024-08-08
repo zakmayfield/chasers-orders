@@ -1,11 +1,17 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { CartCache, CartSizesData } from '@/types/cart';
+import { useQueryClient } from '@tanstack/react-query';
+import {
+  CartCache,
+  CartItem,
+  CartSizesData,
+  UpdateCartItemSizeRequest,
+} from '@/types/cart';
 import { useToast } from '@/shared/hooks';
 import { getCartSizes } from '@/services/queries/getCartSizes';
 import { updateCartItemSize } from '@/services/mutations/updateCartItemSize';
 import { useCustomQuery } from '@/shared/hooks/queries';
 import { QueryKeys } from '@/types/hooks';
+import { useCustomMutation } from '@/shared/hooks/mutations';
 
 type UpdateCartItemSizeProps = {
   cartId: string;
@@ -25,28 +31,31 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
     queryFn: async () => await getCartSizes(props.unitId),
   });
 
-  const { mutate: sizeMutation } = useMutation({
+  const { mutate: updateSize } = useCustomMutation<
+    CartItem,
+    UpdateCartItemSizeRequest
+  >({
     mutationFn: updateCartItemSize,
-    onSuccess: (data) => {
-      setSize(data?.unit.size);
-
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              items: oldData.items.map((item) =>
-                item.unitId === props.unitId ? data : item
-              ),
-            }
-          : oldData
+    handleSuccess(data) {
+      notify(`Updated size to ${data.unit.size}`);
+      setSize(data.unit.size);
+      queryClient.setQueryData(
+        [QueryKeys.CART],
+        (oldData: CartCache | undefined) =>
+          oldData
+            ? {
+                ...oldData,
+                items: oldData.items.map((item) =>
+                  item.unitId === props.unitId ? data : item
+                ),
+              }
+            : oldData
       );
 
-      queryClient.invalidateQueries(['unit-sizes', props.unitId]);
-
-      notify(`Updated size to ${data?.unit.size}`);
+      queryClient.invalidateQueries([QueryKeys.SIZE, props.unitId]);
     },
-    onError(error) {
-      console.error('~~~error from sizeMutation~~~', error);
+    handleError() {
+      notify('Could not update size', 'error');
     },
   });
 
@@ -55,7 +64,8 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
     const selectedUnit = data?.product.units.find(
       (unit) => unit.size === sizeInput
     );
-    sizeMutation({
+
+    updateSize({
       cartId: props.cartId,
       unitId: props.unitId,
       selectedUnitId: selectedUnit?.id,
