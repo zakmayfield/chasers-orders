@@ -11,13 +11,7 @@ export const ItemsContainer: FC<ItemsContainerProps> = ({ cart }) => {
     <div>
       {cart &&
         cart.items.map((item) => (
-          <CartItem
-            key={item.unitId}
-            payload={{
-              cartId: cart.id,
-              cartItem: item,
-            }}
-          />
+          <CartItem key={item.unitId} cartId={cart.id} cartItem={item} />
         ))}
     </div>
   );

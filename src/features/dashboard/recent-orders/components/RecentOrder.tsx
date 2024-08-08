@@ -1,21 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
 import { PiSpinnerGapThin, PiWarningDuotone } from 'react-icons/pi';
-import {
-  LineItemProducts,
-  getLineItems,
-} from '@/services/queries/getLineItems';
+import { getLineItems } from '@/services/queries/getLineItems';
 import OrderAgainButton from './OrderAgainButton';
 import { RecentOrderItems } from './RecentOrderItems';
 import { OrderType } from '@/types/cart';
+import { useCustomQuery } from '@/shared/hooks/queries';
+import { QueryKeys } from '@/types/hooks';
 
 const RecentOrder = ({ order }: { order: OrderType }) => {
-  const {
-    data: orderWithLineItems,
-    isLoading,
-    isError,
-  } = useQuery<LineItemProducts | undefined>({
-    queryKey: ['line-item-products', order.id],
-    queryFn: () => getLineItems(order.id),
+  const { data, isLoading, isError } = useCustomQuery({
+    queryKey: [QueryKeys.ORDER, order.id],
+    queryFn: async () => await getLineItems(order.id),
     staleTime: Infinity,
   });
 
@@ -43,7 +37,7 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
         {isLoading ? (
           <PiSpinnerGapThin className='animate-spin' />
         ) : (
-          <RecentOrderItems order={orderWithLineItems} />
+          <RecentOrderItems order={data} />
         )}
       </div>
     </div>

@@ -1,27 +1,18 @@
 'use client';
-import { useToast } from '@/shared/hooks';
-import {
-  useToggleFavoriteMutation,
-  getActionToggle,
-  useFavorites,
-} from '@/features/products/helpers.products';
-import { ProductWithUnits } from '@/types/products';
-import { useQueryClient } from '@tanstack/react-query';
+
+import { FC } from 'react';
+import { useFavorites } from '@/features/products/helpers.products';
 import { CellContext } from '@tanstack/react-table';
-import { FC, useState } from 'react';
-import type { ExtendedFavorite } from '@/features/products/helpers.products';
 import { PiHeartDuotone, PiHeart } from 'react-icons/pi';
+import { useToggleFavorite } from '@/shared/hooks/mutations';
+import { ActionTypes, ProductWithUnits } from '@/types/products';
 
 export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
 };
 
 export const NameCol: FC<NameColProps> = ({ info }) => {
-  const { notify } = useToast();
-  const queryClient = useQueryClient();
   const productId = info.row.original.id;
-
-  const [actionState, setActionState] = useState<'add' | 'remove'>('add');
 
   const {
     query: { isLoading },
@@ -30,45 +21,18 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
     productId,
   });
 
-  const { toggleFavoriteMutation } = useToggleFavoriteMutation({
-    onSuccess(data: ExtendedFavorite) {
-      queryClient.setQueryData(
-        ['favorites'],
-        (oldData: ExtendedFavorite[] | undefined) => {
-          const newData = oldData && [data, ...oldData];
-          const filteredData =
-            oldData && oldData.filter((item) => item.id !== data.id);
-
-          return oldData
-            ? actionState === 'add'
-              ? newData
-              : filteredData
-            : oldData;
-        }
-      );
-
-      notify(
-        actionState === 'add' ? `Added to favorites` : `Removed from favorites`
-      );
-    },
-    onError(error: unknown) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
-    },
-  });
+  const { mutate: toggleFavorite } = useToggleFavorite({});
 
   const handleToggleFavorite = () => {
-    const { actionPayload } = getActionToggle({
-      favoriteId,
-      productId,
-      isProductFavorited,
-    });
+    let action: ActionTypes;
 
-    const { action } = actionPayload;
+    if (isProductFavorited && favoriteId) {
+      action = { action: 'remove', id: favoriteId! };
+    } else {
+      action = { action: 'add', id: productId };
+    }
 
-    setActionState(action);
-    toggleFavoriteMutation(actionPayload);
+    toggleFavorite(action);
   };
 
   return (

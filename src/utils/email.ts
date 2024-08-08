@@ -1,5 +1,5 @@
 import transporter from '@/lib/nodemailer';
-import { BASE_URL } from '@/utils/constants';
+import { BASE_URL, GMAIL_USERNAME } from '@/utils/constants';
 import { SendOrderEmailPayload, TransporterResponse } from '@/types/email';
 
 export const sendOrderEmail = async (payload: SendOrderEmailPayload) => {
@@ -44,7 +44,7 @@ function orderEmailOptions(
   const { userData } = payload;
   const userEmail = userData!.email;
   const companyName = userData!.company!.name;
-  const fromAddress = process.env.GMAIL_USERNAME;
+  const fromAddress = GMAIL_USERNAME;
   const subject = `New Order - ${companyName}`;
 
   const mailOptions = {

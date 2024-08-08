@@ -6,6 +6,7 @@ import {
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthSignInValidator, SignInFormData } from '@/shared/validators/auth';
+import { defaultSignInFormValues } from '@/utils/constants';
 
 interface UseSignInForm {
   (): {
@@ -18,10 +19,7 @@ interface UseSignInForm {
 export const useSignInForm: UseSignInForm = () => {
   const { formState, register, handleSubmit } = useForm<SignInFormData>({
     resolver: zodResolver(AuthSignInValidator),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
+    defaultValues: defaultSignInFormValues,
   });
 
   return { register, handleSubmit, formState };

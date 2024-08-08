@@ -1,6 +1,9 @@
 import { db } from '@/lib/prisma';
 import { sendEmail } from '@/utils/email';
-import { SendEmailAPIResponse, TransporterResponse } from '@/types/email';
+import {
+  SendVerificationEmailResponse,
+  TransporterResponse,
+} from '@/types/email';
 import { authenticateSession } from '@/utils/auth';
 
 async function handler() {
@@ -11,12 +14,10 @@ async function handler() {
   const { id, email } = session;
 
   try {
-    //^ fetch token record
     const tokenRecord = await db.verificationToken.findUniqueOrThrow({
       where: { userId: id },
     });
 
-    //^ evoke sendEmail with data
     const sendEmailResponse: TransporterResponse = await sendEmail({
       verificationToken: tokenRecord.token,
       email: email,
@@ -24,7 +25,6 @@ async function handler() {
       .then((response) => response)
       .catch((error) => error);
 
-    //^ throw email response error
     if (sendEmailResponse instanceof Error) {
       return new Response(
         `Send Verification Email Error: ${sendEmailResponse.message}`,
@@ -34,8 +34,7 @@ async function handler() {
       );
     }
 
-    //^ handle success response & return
-    const verificationEmailResponse: SendEmailAPIResponse = {
+    const verificationEmailResponse: SendVerificationEmailResponse = {
       accepted: !!sendEmailResponse.accepted,
       transporterMessageId: sendEmailResponse.messageId,
       responseMessage: `Verification email successfully sent`,
@@ -44,7 +43,9 @@ async function handler() {
     return new Response(JSON.stringify(verificationEmailResponse));
   } catch (error) {
     if (error instanceof Error) {
-      if (error.message) return new Response(error.message, { status: 500 });
+      return new Response('Unable to send verification email at this time', {
+        status: 500,
+      });
     }
   }
 }

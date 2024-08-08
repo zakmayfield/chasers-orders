@@ -9,8 +9,8 @@ import type { StepProps } from '@/types/auth';
 export const StepTwo: FC<StepProps> = ({
   register,
   getValues,
-  handleStepChangeCallback,
-  handlePreviousStepCallback,
+  handleIncrementStep,
+  handleDecrementStep,
   errors,
   step,
 }) => {
@@ -62,13 +62,13 @@ export const StepTwo: FC<StepProps> = ({
 
         <PreviousStepButton
           step={step}
-          handlePreviousStepCallback={handlePreviousStepCallback}
+          handleDecrementStep={handleDecrementStep}
         />
 
         <NextStepButton
           step={step}
           getValues={getValues}
-          handleStepChange={handleStepChangeCallback}
+          handleIncrementStep={handleIncrementStep}
         />
       </div>
     </div>

@@ -1,17 +1,12 @@
 'use client';
 
-import { getCart } from '@/services/queries/getCart';
-import { CartCache, CartItem } from '@/types/cart';
-import { useQuery } from '@tanstack/react-query';
+import { useGetCart } from '@/shared/hooks/queries';
+import { CartItem } from '@/types/cart';
 import Link from 'next/link';
 import { CiShop } from 'react-icons/ci';
 
 export const SummaryDetails = () => {
-  const { data, isFetching } = useQuery<CartCache | undefined, Error>({
-    queryKey: ['cart'],
-    queryFn: getCart,
-    staleTime: Infinity,
-  });
+  const { data, isFetching } = useGetCart();
 
   return (
     <div className='col-span-3 min-h-[164px] mb-3'>

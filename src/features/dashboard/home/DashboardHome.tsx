@@ -1,19 +1,13 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { getUser } from '@/services/queries/getUser';
-import { UserData } from '@/types/user';
 import { AccountStatus } from './components/account';
 import { ContactDetails } from './components/contact';
 import { CompanyDetails } from './components/company';
 import { RecentOrderDetails } from './components/recent';
+import { useGetUser } from '@/shared/hooks/queries';
 
 const DashboardHome = () => {
-  const { data, isLoading, error, isError } = useQuery<UserData, Error>({
-    queryKey: ['user-dashboard'],
-    queryFn: getUser,
-    staleTime: 60 * 1000 * 10,
-  });
+  const { data, isLoading, error, isError } = useGetUser();
 
   const LoadingData = isLoading && <div>Loading dashboard...</div>;
   const ErrorData = isError && <div>{error && error.message}</div>;

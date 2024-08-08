@@ -1,10 +1,8 @@
-import { ExtendedFavorite } from '@/features/products/helpers.products';
-import { Actions } from '@/types/products';
+import { ExtendedFavorite, ActionTypes } from '@/types/products';
 import { fetchHandler } from '@/utils/fetch';
 
 export const toggleFavorite = async (
-  action: Actions,
-  id?: string
+  params: ActionTypes
 ): Promise<ExtendedFavorite> =>
   await fetchHandler({
     route: '/user/favorites/toggle',
@@ -13,9 +11,9 @@ export const toggleFavorite = async (
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
-          'X-Action': action,
+          'X-Action': params.action,
         },
-        body: JSON.stringify({ id }),
+        body: JSON.stringify({ id: params.id }),
       },
     },
   });

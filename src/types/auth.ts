@@ -12,8 +12,8 @@ export type Steps = '1' | '2' | '3' | '4';
 export interface StepProps {
   register: UseFormRegister<SignUpFormData>;
   getValues: UseFormGetValues<SignUpFormData>;
-  handleStepChangeCallback?(): void;
-  handlePreviousStepCallback?(): void;
+  handleIncrementStep?(): void;
+  handleDecrementStep?(): void;
   errors: FieldErrors<SignUpFormData>;
   step: Steps;
 }

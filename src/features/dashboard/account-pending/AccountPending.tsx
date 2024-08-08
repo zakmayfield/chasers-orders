@@ -1,34 +1,23 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import Link from 'next/link';
-import { useUserStatusQuery } from './helpers.account-pending';
 import { LoadingSpinner } from '@/shared/components';
-import { useSendVerificationEmail } from '@/features/verify/helpers.verify';
-import { useToast } from '@/shared/hooks';
+import { useCustomQuery } from '@/shared/hooks/queries';
+import { QueryKeys } from '@/types/hooks';
+import { getUserStatus } from '@/services/queries/getUserStatus';
+import { UserStatusAPIResponse } from '@/types/dashboard';
+import { ResendVerification } from '@/features/verify/components';
 
 interface AccountPendingProps {
   isApproved: boolean;
 }
 
 const AccountPending: FC<AccountPendingProps> = () => {
-  const { notify } = useToast();
-  const [hasRequestedNewEmail, setHasRequestedNewEmail] = useState(false);
-  const { status, isLoading } = useUserStatusQuery({});
-
-  const { send } = useSendVerificationEmail({
-    onSuccessCallback(data) {
-      notify(data.responseMessage);
-    },
-    onErrorCallback(error) {
-      notify(error.message, 'error');
-    },
+  const { data: status, isLoading } = useCustomQuery<UserStatusAPIResponse>({
+    queryKey: [QueryKeys.USER_STATUS],
+    queryFn: getUserStatus,
   });
-
-  function handleSend() {
-    setHasRequestedNewEmail(true);
-    send();
-  }
 
   if (isLoading) {
     return (
@@ -92,13 +81,7 @@ const AccountPending: FC<AccountPendingProps> = () => {
                 Verified on: {new Date(status.emailVerified).toDateString()}
               </p>
             ) : (
-              <button
-                onClick={() => handleSend()}
-                disabled={hasRequestedNewEmail}
-                className={`border rounded-lg py-2 px-4 ${hasRequestedNewEmail && 'text-gray-500 bg-slate-50'}`}
-              >
-                request a new verification email
-              </button>
+              <ResendVerification />
             )}
           </div>
         </div>

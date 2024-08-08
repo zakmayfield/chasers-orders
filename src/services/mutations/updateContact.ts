@@ -4,7 +4,7 @@ import { Contact } from '@prisma/client';
 
 export const updateContact = async (
   formData: ContactFormData
-): Promise<Contact | undefined> =>
+): Promise<Contact> =>
   await fetchHandler({
     route: '/user/contact/edit',
     options: {

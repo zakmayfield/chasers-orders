@@ -14,9 +14,13 @@ import {
   ContactValidator,
   getDefaultValues,
 } from '@/shared/validators/user/ContactValidator';
-import { useUpdateContact } from '@/shared/hooks/mutations';
+import { useCustomMutation } from '@/shared/hooks/mutations';
 import { useToast } from '@/shared/hooks';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
+import { updateContact } from '@/services/mutations/updateContact';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@/types/hooks';
+import { Contact } from '@prisma/client';
 
 interface ContactEditProps {
   userData: UserData;
@@ -42,11 +46,36 @@ export const ContactEdit: FC<ContactEditProps> = ({
   setIsEdit,
   reset,
 }) => {
+  const queryClient = useQueryClient();
   const { notify } = useToast();
+  const { mutate: edit } = useCustomMutation<Contact, ContactFormData>({
+    mutationFn: updateContact,
+    handleSuccess(data) {
+      notify('Succesfully updated contact information');
 
-  const { edit } = useUpdateContact({
-    handleSwitchEditCallback,
-    handleResetFormCB,
+      queryClient.setQueryData(
+        [QueryKeys.DASHBOARD],
+        (oldData: UserData | undefined) => {
+          return oldData ? { ...oldData, contact: data } : oldData;
+        }
+      );
+
+      reset(
+        {
+          name: data.name,
+          phoneNumber: data.phoneNumber,
+          position: data.position,
+        },
+        {
+          keepDirty: false,
+        }
+      );
+
+      handleSwitchEditCallback();
+    },
+    handleError(error) {
+      notify(error.message, 'error');
+    },
   });
 
   const onFormSubmit = () => {
@@ -63,12 +92,6 @@ export const ContactEdit: FC<ContactEditProps> = ({
       return;
     }
   };
-
-  function handleResetFormCB(data: ContactFormData) {
-    reset(data, {
-      keepDirty: false,
-    });
-  }
 
   function resetFormOnCancel() {
     const defaultValues = getDefaultValues(userData);

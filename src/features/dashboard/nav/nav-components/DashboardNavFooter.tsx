@@ -1,19 +1,9 @@
 import Link from 'next/link';
-import { useQuery } from '@tanstack/react-query';
 import { PiWarningDuotone } from 'react-icons/pi';
-import { getUser } from '@/services/queries/getUser';
-import { UserData } from '@/types/user';
+import { useGetUser } from '@/shared/hooks/queries';
 
 export const DashboardNavFooter = () => {
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useQuery<UserData>({
-    queryKey: ['user-dashboard'],
-    queryFn: getUser,
-    staleTime: 60 * 1000 * 10,
-  });
+  const { data, isLoading, isError } = useGetUser();
 
   if (isLoading) {
     return (
@@ -55,7 +45,7 @@ export const DashboardNavFooter = () => {
     );
   }
 
-  if (isError && !user) {
+  if (isError && !data) {
     return (
       <div
         className={`
@@ -89,7 +79,7 @@ export const DashboardNavFooter = () => {
               bg-light-primary
             `}
         >
-          {user.email.split('')[0]}
+          {data?.email.split('')[0]}
         </p>
       </div>
 
@@ -103,17 +93,17 @@ export const DashboardNavFooter = () => {
               text-sm
             `}
           >
-            {user.email}
+            {data?.email}
           </p>
         </div>
-        {!user.contact.position ? (
+        {!data?.contact.position ? (
           <p
             className={`
               rounded
               text-sm
             `}
           >
-            {user.contact.position}
+            {data?.contact.position}
           </p>
         ) : (
           <Link

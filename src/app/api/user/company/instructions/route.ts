@@ -1,7 +1,9 @@
-import { DeliveryInstructionsResponse } from '@/types/cart';
 import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
+import {
+  DeliveryInstructionsRequest,
+  DeliveryInstructionsResponse,
+} from '@/types/cart';
 
 export async function PUT(req: Request) {
   const session = await getAuthSession();
@@ -10,7 +12,7 @@ export async function PUT(req: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  type ReqBody = DeliveryInstructionsData;
+  type ReqBody = DeliveryInstructionsRequest;
   const body: ReqBody = await req.json();
   const { deliveryInstructions } = body;
 
@@ -40,9 +42,12 @@ export async function PUT(req: Request) {
     return new Response(JSON.stringify(response));
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, {
-        status: 500,
-      });
+      return new Response(
+        'Unable to update delivery instructions at this time',
+        {
+          status: 500,
+        }
+      );
     }
   }
 }

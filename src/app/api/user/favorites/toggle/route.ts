@@ -46,12 +46,6 @@ const handler = async (req: NextRequest) => {
             juiceId: add.juiceId,
             userId: session.user.id,
           },
-          select: {
-            id: true,
-            createdAt: true,
-            juiceId: true,
-            juice: true,
-          },
         });
         return new Response(JSON.stringify(added));
 
@@ -59,11 +53,6 @@ const handler = async (req: NextRequest) => {
         const remove: RemoveAction = { favoriteId: id };
         const removed = await db.favorite.delete({
           where: { id: remove.favoriteId },
-          select: {
-            id: true,
-            createdAt: true,
-            juiceId: true,
-          },
         });
         return new Response(JSON.stringify(removed));
 

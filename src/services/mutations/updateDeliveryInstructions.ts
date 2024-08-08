@@ -1,9 +1,12 @@
-import { DeliveryInstructionsResponse } from '@/types/cart';
 import { fetchHandler } from '@/utils/fetch';
+import {
+  DeliveryInstructionsRequest,
+  DeliveryInstructionsResponse,
+} from '@/types/cart';
 
-export const updateDeliveryInstructions = async (payload: {
-  deliveryInstructions: string;
-}): Promise<DeliveryInstructionsResponse> =>
+export const updateDeliveryInstructions = async (
+  payload: DeliveryInstructionsRequest
+): Promise<DeliveryInstructionsResponse> =>
   await fetchHandler({
     route: '/user/company/instructions',
     options: {

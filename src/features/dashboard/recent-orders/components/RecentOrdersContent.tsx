@@ -1,19 +1,9 @@
-import { useQuery } from '@tanstack/react-query';
-import { getRecentOrders } from '@/services/queries/getRecentOrders';
 import RecentOrdersSkeleton from './RecentOrdersSkeleton';
 import RecentOrder from './RecentOrder';
-import { OrderType } from '@/types/cart';
+import { useGetRecentOrders } from '@/shared/hooks/queries';
 
 function RecentOrdersContent() {
-  const {
-    data: orders,
-    error,
-    isLoading,
-  } = useQuery<OrderType[]>({
-    queryKey: ['recent-orders'],
-    queryFn: getRecentOrders,
-    staleTime: Infinity,
-  });
+  const { data, isLoading, error } = useGetRecentOrders();
 
   if (isLoading) {
     return <RecentOrdersSkeleton />;
@@ -23,14 +13,14 @@ function RecentOrdersContent() {
     return <div>{error.message}</div>;
   }
 
-  if (orders && orders.length === 0) {
+  if (data && data.length === 0) {
     return <p>No recent orders</p>;
   }
 
   return (
     <div className='flex flex-col gap-12'>
-      {orders &&
-        orders.map((order) => <RecentOrder key={order.id} order={order} />)}
+      {data &&
+        data.map((order) => <RecentOrder key={order.id} order={order} />)}
     </div>
   );
 }
