@@ -8,27 +8,21 @@ import { useCustomQuery } from '@/shared/hooks/queries';
 import { QueryKeys } from '@/types/hooks';
 
 type UpdateCartItemSizeProps = {
-  payload: {
-    cartId: string;
-    unitId: string;
-    sizeData: string;
-  };
+  cartId: string;
+  unitId: string;
+  sizeData: string;
 };
 
 export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
   props
 ) => {
-  const {
-    payload: { cartId, unitId, sizeData },
-  } = props;
-
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const [size, setSize] = useState<string | undefined>(sizeData);
+  const [size, setSize] = useState<string | undefined>(props.sizeData);
 
   const { data, isLoading: queryIsLoading } = useCustomQuery<CartSizesData>({
-    queryKey: [QueryKeys.SIZE, unitId],
-    queryFn: async () => await getCartSizes(unitId),
+    queryKey: [QueryKeys.SIZE, props.unitId],
+    queryFn: async () => await getCartSizes(props.unitId),
   });
 
   const { mutate: sizeMutation } = useMutation({
@@ -41,13 +35,13 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
           ? {
               ...oldData,
               items: oldData.items.map((item) =>
-                item.unitId === unitId ? data : item
+                item.unitId === props.unitId ? data : item
               ),
             }
           : oldData
       );
 
-      queryClient.invalidateQueries(['unit-sizes', unitId]);
+      queryClient.invalidateQueries(['unit-sizes', props.unitId]);
 
       notify(`Updated size to ${data?.unit.size}`);
     },
@@ -61,7 +55,11 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
     const selectedUnit = data?.product.units.find(
       (unit) => unit.size === sizeInput
     );
-    sizeMutation({ cartId, unitId, selectedUnitId: selectedUnit?.id });
+    sizeMutation({
+      cartId: props.cartId,
+      unitId: props.unitId,
+      selectedUnitId: selectedUnit?.id,
+    });
   };
 
   const options = data && data.product.units.map((unit) => unit.size);
@@ -75,7 +73,7 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
         ) : (
           <select
             name='size'
-            id={unitId + '-size'}
+            id={props.unitId + '-size'}
             value={size}
             onChange={handleSizeChange}
             className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-24'
