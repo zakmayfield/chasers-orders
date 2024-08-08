@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/shared/hooks';
 import { orderAgain } from '@/services/mutations/orderAgain';
 import { useCustomMutation } from '@/shared/hooks/mutations';
+import { QueryKeys } from '@/types/hooks';
 
 interface OrderAgainButtonProps {
   order: OrderType;
@@ -20,8 +21,10 @@ const OrderAgainButton: FC<OrderAgainButtonProps> = ({ order }) => {
   const { mutate } = useCustomMutation<OrderAgainData, OrderType>({
     mutationFn: orderAgain,
     handleSuccess(data) {
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData ? data.cartPayload : oldData
+      queryClient.setQueryData(
+        [QueryKeys.CART],
+        (oldData: CartCache | undefined) =>
+          oldData ? data.cartPayload : oldData
       );
 
       notify(`Added (${data.batchPayload.count}) items to cart`);

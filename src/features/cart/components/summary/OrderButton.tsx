@@ -45,9 +45,12 @@ export const OrderButton = () => {
         queryFn: getUser,
       });
 
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
-        return oldData ? { ...oldData, items: [] } : oldData;
-      });
+      queryClient.setQueryData(
+        [QueryKeys.CART],
+        (oldData: CartCache | undefined) => {
+          return oldData ? { ...oldData, items: [] } : oldData;
+        }
+      );
 
       router.push('/dashboard');
     },
@@ -57,7 +60,9 @@ export const OrderButton = () => {
   });
 
   const handlePlaceOrder = async () => {
-    const cartCache: CartCache | undefined = queryClient.getQueryData(['cart']);
+    const cartCache: CartCache | undefined = queryClient.getQueryData([
+      QueryKeys.CART,
+    ]);
     const payload: CreateOrderPayload = {
       items: cartCache!.items,
       cartId: cartCache!.id,

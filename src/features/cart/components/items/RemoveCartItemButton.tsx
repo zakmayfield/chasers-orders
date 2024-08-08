@@ -9,6 +9,7 @@ import {
   RemoveCartItemRequest,
   RemoveCartItemResponse,
 } from '@/types/cart';
+import { QueryKeys } from '@/types/hooks';
 
 export const RemoveCartItemButton: React.FC<RemoveCartItemRequest> = (
   props
@@ -22,18 +23,21 @@ export const RemoveCartItemButton: React.FC<RemoveCartItemRequest> = (
   >({
     mutationFn: removeFromCart,
     handleSuccess(data) {
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
-        const items = oldData?.items.filter(
-          (item) => item.unitId !== data.unitId
-        ) as CartItem[];
+      queryClient.setQueryData(
+        [QueryKeys.CART],
+        (oldData: CartCache | undefined) => {
+          const items = oldData?.items.filter(
+            (item) => item.unitId !== data.unitId
+          ) as CartItem[];
 
-        return oldData
-          ? {
-              ...oldData,
-              items,
-            }
-          : oldData;
-      });
+          return oldData
+            ? {
+                ...oldData,
+                items,
+              }
+            : oldData;
+        }
+      );
 
       notify('Removed item from cart');
     },
