@@ -21,6 +21,7 @@ import { paymentMethodOptions } from '@/utils/constants';
 import { updateCompany } from '@/services/mutations/updateCompany';
 import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/hooks';
+import { Company } from '@prisma/client';
 
 interface CompanyEditProps {
   userData: UserData;
@@ -50,7 +51,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  const { mutate: edit } = useCustomMutation({
+  const { mutate: edit } = useCustomMutation<Company, CompanyFormData>({
     mutationFn: updateCompany,
     handleSuccess(data) {
       notify('Successfully updated company');
