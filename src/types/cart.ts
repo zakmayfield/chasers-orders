@@ -34,7 +34,7 @@ export type UpdateCartItemQuantityRequest = {
   quantity: number;
 };
 
-export type UpdateCartItemSizeParams = {
+export type UpdateCartItemSizeRequest = {
   cartId: string;
   unitId: string;
   selectedUnitId: string | undefined;
