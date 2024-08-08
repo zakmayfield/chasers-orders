@@ -12,7 +12,6 @@ import { BsCartPlus } from 'react-icons/bs';
 import { useToast } from '@/shared/hooks';
 import { useUpdateQuantity } from '@/features/cart/helpers.cart';
 import { useSession } from 'next-auth/react';
-import { UpdateCartItemQuantityParams } from '@/types/cart';
 import { fetchCart } from '@/utils/cart';
 import { useAddToCart } from '@/shared/hooks/mutations';
 

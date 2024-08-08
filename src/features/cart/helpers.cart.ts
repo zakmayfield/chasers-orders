@@ -4,7 +4,6 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
-  CartCache,
   CartItem,
   DeliveryInstructionsResponse,
   UpdateCartItemQuantityParams,
