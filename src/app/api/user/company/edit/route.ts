@@ -23,7 +23,7 @@ export async function PUT(req: Request) {
     return new Response(JSON.stringify(updatedCompany));
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, {
+      return new Response('Unable to update company information at this time', {
         status: 500,
       });
     }

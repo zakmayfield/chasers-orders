@@ -1,119 +1,12 @@
 import { useEffect, useState } from 'react';
-
 import {
   UseMutateFunction,
   useMutation,
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import {
-  CellContext,
-  ColumnDef,
-  createColumnHelper,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
-
-import { toggleFavorite } from '@/services/mutations/toggleFavorite';
-import { getProducts } from '@/services/queries/getProducts';
 import { getFavorites } from '@/services/queries/getFavorites';
-
-import type { Favorite, Product, Unit } from '@prisma/client';
-import type { ProductWithUnits, ActionTypes } from '@/types/products';
-
-export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
-
-export const useTableConfig = (
-  data: ProductWithUnits[] | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: ColumnDef<ProductWithUnits, any>[]
-) => {
-  const options = {
-    enableFilters: true,
-    enableColumnFilters: true,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-  };
-
-  const reactTable = useReactTable({
-    data: data ? data : [],
-    columns,
-    ...options,
-  });
-
-  return { reactTable };
-};
-
-type GetRowPayload = {
-  (info: CellContext<ProductWithUnits, Unit[]>): {
-    rowPayload: RowPayload;
-  };
-};
-
-export type RowPayload = {
-  defaultUnit: Unit;
-  units: Unit[];
-  product: ProductWithUnits;
-};
-
-export const getRowPayload: GetRowPayload = (info) => {
-  const units = info.getValue();
-  const product = info.row.original;
-  const defaultUnit = units[0];
-
-  const rowPayload: RowPayload = {
-    defaultUnit,
-    units,
-    product,
-  };
-
-  return { rowPayload };
-};
-
-export const categoryData: string[] = [
-  'blends',
-  'singles',
-  'lemonades',
-  'limonades',
-  'ice pops',
-  'tea',
-  'mojito',
-  'chili peppers',
-  'ciders',
-  'dried',
-  'garnish',
-  'nut milks',
-  'organic',
-  'purees',
-  'smoothies',
-  'syrups',
-  'vegetables',
-  'zest',
-  'mocktail',
-  'cleanses',
-  'wholesale',
-];
-
-interface UseFetchProductsQueryProps {
-  (): {
-    data: ProductWithUnits[] | undefined;
-    isLoading: boolean;
-    isFetching: boolean;
-  };
-}
-
-export const useFetchProductsQuery: UseFetchProductsQueryProps = () => {
-  const { data, isLoading, isFetching } = useQuery<ProductWithUnits[], Error>({
-    queryKey: ['products'],
-    queryFn: getProducts,
-    staleTime: Infinity,
-  });
-
-  return { data, isLoading, isFetching };
-};
+import type { ExtendedFavorite } from '@/types/products';
 
 interface UseSizeCache {
   ({ productId }: { productId: string }): {
@@ -152,71 +45,6 @@ export const useSizeCache: UseSizeCache = ({ productId }) => {
   };
 };
 
-interface GetActionToggle {
-  ({
-    favoriteId,
-    productId,
-    isProductFavorited,
-  }: {
-    favoriteId?: string;
-    productId: string;
-    isProductFavorited: boolean;
-  }): {
-    actionPayload: ActionTypes;
-  };
-}
-
-export const getActionToggle: GetActionToggle = ({
-  favoriteId,
-  productId,
-  isProductFavorited,
-}) => {
-  let actionPayload: ActionTypes;
-
-  if (isProductFavorited && favoriteId) {
-    // remove favorite by id
-    actionPayload = { action: 'remove', id: favoriteId! };
-  } else {
-    // favorite product by id
-    actionPayload = { action: 'add', id: productId };
-  }
-
-  return { actionPayload };
-};
-
-interface UseToggleFavorite {
-  ({ onSuccess, onError }: ToggleFavoriteProps): {
-    toggleFavoriteMutation: UseMutateFunction<
-      ExtendedFavorite,
-      unknown,
-      ActionTypes,
-      unknown
-    >;
-  };
-}
-
-type ToggleFavoriteProps = {
-  onSuccess?: (data: ExtendedFavorite) => void;
-  onError?: (error: unknown) => void;
-};
-
-export const useToggleFavoriteMutation: UseToggleFavorite = ({
-  onSuccess,
-  onError,
-}) => {
-  const { mutate: toggleFavoriteMutation } = useMutation({
-    mutationFn: ({ action, id }: ActionTypes) => toggleFavorite(action, id),
-    onSuccess(data) {
-      onSuccess?.(data);
-    },
-    onError(error) {
-      onError?.(error);
-    },
-  });
-
-  return { toggleFavoriteMutation };
-};
-
 interface UseFavorites {
   ({ productId }: { productId?: string }): {
     query: {
@@ -229,10 +57,6 @@ interface UseFavorites {
     };
   };
 }
-
-export type ExtendedFavorite = Omit<Favorite, 'userId'> & {
-  juice: Product;
-};
 
 export const useFavorites: UseFavorites = ({ productId }) => {
   const [isProductFavorited, setIsProductFavorited] = useState(false);

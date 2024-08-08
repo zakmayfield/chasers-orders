@@ -1,12 +1,10 @@
 'use client';
 
 import { FC } from 'react';
+import { useSizeCache } from '@/features/products/helpers.products';
+import { getRowPayload } from '@/utils/helpers';
 import { Unit } from '@prisma/client';
 import { CellContext } from '@tanstack/react-table';
-import {
-  getRowPayload,
-  useSizeCache,
-} from '@/features/products/helpers.products';
 import type { ProductWithUnits } from '@/types/products';
 
 interface UnitColProps {

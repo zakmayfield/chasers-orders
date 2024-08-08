@@ -2,7 +2,7 @@ import { CartItem } from '@/types/cart';
 import { fetchHandler } from '@/utils/fetch';
 import { Order, OrderLineItem } from '@prisma/client';
 
-type OrderData = Order & {
+export type OrderData = Order & {
   lineItems: OrderLineItem[];
 };
 

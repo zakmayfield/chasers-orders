@@ -1,38 +1,34 @@
 import { useRouter } from 'next/navigation';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks';
 import {
   CreateOrderPayload,
+  OrderData,
   createOrder,
 } from '@/services/mutations/createOrder';
 import { CartCache, OrderType } from '@/types/cart';
 import { LoadingSpinner } from '@/shared/components';
 import { getUser } from '@/services/queries/getUser';
-import { getCart } from '@/services/queries/getCart';
+import { useGetCart } from '@/shared/hooks/queries';
+import { QueryKeys } from '@/types/hooks';
+import { useCustomMutation } from '@/shared/hooks/mutations';
 
 export const OrderButton = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  // Cart cache query
-  const { data: cartData, isFetching } = useQuery<CartCache | undefined, Error>(
-    {
-      queryKey: ['cart'],
-      queryFn: getCart,
-      staleTime: Infinity,
-    }
-  );
-
-  // Create order mutation
-  const { mutate, isSuccess, isLoading } = useMutation({
+  const { data: cartData, isFetching } = useGetCart();
+  const { mutate, isSuccess, isLoading } = useCustomMutation<
+    OrderData,
+    CreateOrderPayload
+  >({
     mutationFn: createOrder,
-    onSuccess(data) {
+    handleSuccess(data) {
       notify(`Order placed`);
 
-      // Set 'recent-orders' cache data to include new order
       queryClient.setQueryData(
-        ['recent-orders'],
+        [QueryKeys.ORDERS],
         (oldData: OrderType[] | undefined) => {
           // Limit to 5
           let x = oldData;
@@ -44,23 +40,19 @@ export const OrderButton = () => {
         }
       );
 
-      // fetch user dashboard since we are redirecting there
       queryClient.fetchQuery({
-        queryKey: ['user-dashboard'],
+        queryKey: [QueryKeys.DASHBOARD],
         queryFn: getUser,
       });
 
-      // Clear 'cart' items cache after successful order
       queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) => {
         return oldData ? { ...oldData, items: [] } : oldData;
       });
 
       router.push('/dashboard');
     },
-    onError(error) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
+    handleError(error) {
+      notify(error.message, 'error');
     },
   });
 

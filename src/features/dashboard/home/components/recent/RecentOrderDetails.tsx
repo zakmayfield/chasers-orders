@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { UserData } from '@/types/user';
 import { useQueryClient } from '@tanstack/react-query';
 import { getRecentOrders } from '@/services/queries/getRecentOrders';
+import { QueryKeys } from '@/types/hooks';
 
 interface RecentOrderDetailsProps {
   userData: UserData;
@@ -33,7 +34,7 @@ export const RecentOrderDetails: FC<RecentOrderDetailsProps> = ({
               <Link
                 href='/dashboard/recent-orders'
                 onMouseEnter={() =>
-                  queryClient.prefetchQuery(['recent-orders'], getRecentOrders)
+                  queryClient.prefetchQuery([QueryKeys.ORDERS], getRecentOrders)
                 }
               >
                 {lastOrderCreatedAt && lastOrderCreatedAt.toLocaleDateString()}

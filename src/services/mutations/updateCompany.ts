@@ -4,7 +4,7 @@ import { fetchHandler } from '@/utils/fetch';
 
 export const updateCompany = async (
   formData: CompanyFormData
-): Promise<Company | undefined> =>
+): Promise<Company> =>
   await fetchHandler({
     route: '/user/company/edit',
     options: {
