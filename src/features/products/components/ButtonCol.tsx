@@ -9,11 +9,12 @@ import {
 import { Unit, UnitsOnCart } from '@prisma/client';
 import { CellContext } from '@tanstack/react-table';
 import { BsCartPlus } from 'react-icons/bs';
-import { useToast } from '@/shared/hooks';
-import { useUpdateQuantity } from '@/features/cart/helpers.cart';
 import { useSession } from 'next-auth/react';
 import { fetchCart } from '@/utils/cart';
-import { useAddToCart } from '@/shared/hooks/mutations';
+import {
+  useAddToCart,
+  useUpdateCartItemQuantity,
+} from '@/shared/hooks/mutations';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
@@ -21,7 +22,6 @@ interface ButtonColProps {
 
 export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
   const { data: session } = useSession();
-  const { notify } = useToast();
 
   const {
     rowPayload: { defaultUnit, units, product },
@@ -31,14 +31,7 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     productId: product.id,
   });
 
-  const { updateQuantity } = useUpdateQuantity({
-    onSuccessCallback(data) {
-      notify(`Updated quantity to (${data.quantity})`);
-    },
-    onErrorCallback() {
-      notify('Unable to update quantity', 'error');
-    },
-  });
+  const { mutate: updateQuantity } = useUpdateCartItemQuantity({});
 
   const { mutate: addToCart } = useAddToCart({
     customErrorHandling: async (error, variables) => {

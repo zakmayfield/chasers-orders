@@ -1,49 +1,40 @@
 import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
-import {
-  CartCache,
-  CartItem,
-  UpdateCartItemQuantityParams,
-} from '@/types/cart';
-import { useToast } from '@/shared/hooks';
-import {
-  useQuantityUpdateForm,
-  useUpdateQuantity,
-} from '@/features/cart/helpers.cart';
+import { CartCache, UpdateCartItemQuantityRequest } from '@/types/cart';
+import { useQuantityUpdateForm } from '@/features/cart/helpers.cart';
 import { QuantityData } from '@/shared/validators/cart/QuantityValidator';
+import { useUpdateCartItemQuantity } from '@/shared/hooks/mutations';
+import { QueryKeys } from '@/types/hooks';
 
-export const QuantityUpdate: React.FC<UpdateCartItemQuantityParams> = ({
+export const QuantityUpdate: React.FC<UpdateCartItemQuantityRequest> = ({
   cartId,
   unitId,
   quantity,
 }) => {
   const queryClient = useQueryClient();
-  const { notify } = useToast();
 
-  const { updateQuantity, isSuccess } = useUpdateQuantity({
-    onSuccessCallback(data: CartItem) {
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              items: oldData.items.map((item) =>
-                item.unitId === data.unitId ? data : item
-              ),
-            }
-          : oldData
+  const { mutate, isSuccess } = useUpdateCartItemQuantity({
+    customSuccessHandling(data) {
+      queryClient.setQueryData(
+        [QueryKeys.CART],
+        (oldData: CartCache | undefined) =>
+          oldData
+            ? {
+                ...oldData,
+                items: oldData.items.map((item) =>
+                  item.unitId === data.unitId ? data : item
+                ),
+              }
+            : oldData
       );
-
-      notify(`Updated quantity to ${data.quantity}`);
     },
-    onErrorCallback() {
-      notify('Could not update quantity', 'error');
-    },
+    customErrorHandling(error) {},
   });
 
   function submitHandler(data: QuantityData) {
     const payload = { cartId, unitId, quantity: data.quantity };
-    updateQuantity(payload);
+    mutate(payload);
   }
 
   return (

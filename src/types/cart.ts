@@ -28,7 +28,7 @@ export type DeliveryInstructionsResponse = {
   shippingAddress: ShippingAddress;
 };
 
-export type UpdateCartItemQuantityParams = {
+export type UpdateCartItemQuantityRequest = {
   cartId: string;
   unitId: string;
   quantity: number;

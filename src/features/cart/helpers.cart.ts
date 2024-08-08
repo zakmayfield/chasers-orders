@@ -3,11 +3,7 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-import {
-  CartItem,
-  DeliveryInstructionsResponse,
-  UpdateCartItemQuantityParams,
-} from '@/types/cart';
+import { DeliveryInstructionsResponse } from '@/types/cart';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   DeliveryInstructionsData,
@@ -26,7 +22,6 @@ import {
   useForm,
 } from 'react-hook-form';
 import { FormEvent } from 'react';
-import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
 import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
 
 interface UseInstructionEditFormProps {
@@ -95,48 +90,6 @@ export const useEditInstructionsMutation: UseEditInstructionsMutation = ({
   }
 
   return { editDeliveryInstructions };
-};
-
-interface UseUpdateQuantityProps {
-  ({
-    onSuccessCallback,
-    onErrorCallback,
-  }: {
-    onSuccessCallback: (data: CartItem) => void;
-    onErrorCallback: (error: unknown) => void;
-  }): {
-    isLoading: boolean;
-    isSuccess: boolean;
-    updateQuantity: UseMutateFunction<
-      CartItem,
-      unknown,
-      UpdateCartItemQuantityParams,
-      unknown
-    >;
-  };
-}
-
-export const useUpdateQuantity: UseUpdateQuantityProps = ({
-  onSuccessCallback,
-  onErrorCallback,
-}) => {
-  const {
-    mutate: updateQuantity,
-    isLoading,
-    isSuccess,
-  } = useMutation({
-    mutationFn: updateCartItemQuantity,
-    onSuccess: (data) => {
-      onSuccessCallback(data);
-    },
-    onError(error) {
-      if (error instanceof Error) {
-        onErrorCallback(error);
-      }
-    },
-  });
-
-  return { updateQuantity, isLoading, isSuccess };
 };
 
 interface IUseQuantityUpdateForm {
