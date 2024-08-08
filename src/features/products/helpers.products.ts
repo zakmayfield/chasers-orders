@@ -17,7 +17,6 @@ import {
 } from '@tanstack/react-table';
 
 import { toggleFavorite } from '@/services/mutations/toggleFavorite';
-import { getProducts } from '@/services/queries/getProducts';
 import { getFavorites } from '@/services/queries/getFavorites';
 
 import type { Favorite, Product, Unit } from '@prisma/client';
@@ -71,48 +70,6 @@ export const getRowPayload: GetRowPayload = (info) => {
   };
 
   return { rowPayload };
-};
-
-export const categoryData: string[] = [
-  'blends',
-  'singles',
-  'lemonades',
-  'limonades',
-  'ice pops',
-  'tea',
-  'mojito',
-  'chili peppers',
-  'ciders',
-  'dried',
-  'garnish',
-  'nut milks',
-  'organic',
-  'purees',
-  'smoothies',
-  'syrups',
-  'vegetables',
-  'zest',
-  'mocktail',
-  'cleanses',
-  'wholesale',
-];
-
-interface UseFetchProductsQueryProps {
-  (): {
-    data: ProductWithUnits[] | undefined;
-    isLoading: boolean;
-    isFetching: boolean;
-  };
-}
-
-export const useFetchProductsQuery: UseFetchProductsQueryProps = () => {
-  const { data, isLoading, isFetching } = useQuery<ProductWithUnits[], Error>({
-    queryKey: ['products'],
-    queryFn: getProducts,
-    staleTime: Infinity,
-  });
-
-  return { data, isLoading, isFetching };
 };
 
 interface UseSizeCache {

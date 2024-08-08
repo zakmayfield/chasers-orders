@@ -12,6 +12,7 @@ export enum QueryKeys {
   ORDER = 'order',
   ORDERS = 'orders',
   DASHBOARD = 'dashboard',
+  PRODUCTS = 'products',
 }
 
 export type UseCustomQueryParams<T> = {

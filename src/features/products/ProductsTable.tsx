@@ -2,16 +2,21 @@
 
 import React from 'react';
 import {
-  useFetchProductsQuery,
   getColumnHelper,
   useTableConfig,
   useFavorites,
 } from '@/features/products/helpers.products';
 import { NameCol, CategoryCol, ButtonCol } from './components';
 import { Pagination, Table, TableLoadingSkeleton } from './components/table';
+import { useCustomQuery } from '@/shared/hooks/queries';
+import { QueryKeys } from '@/types/hooks';
+import { getProducts } from '@/services/queries/getProducts';
 
 export const ProductsTable = () => {
-  const { data, isFetching } = useFetchProductsQuery();
+  const { data, isFetching } = useCustomQuery({
+    queryKey: [QueryKeys.PRODUCTS],
+    queryFn: getProducts,
+  });
 
   // evoke here because remove favorite (NameCol) is broken without it
   const {} = useFavorites({});
