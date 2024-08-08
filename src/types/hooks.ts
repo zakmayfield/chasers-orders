@@ -13,6 +13,7 @@ export enum QueryKeys {
   ORDERS = 'orders',
   DASHBOARD = 'dashboard',
   PRODUCTS = 'products',
+  FAVORITES = 'favorites',
 }
 
 export type UseCustomQueryParams<T> = {
@@ -23,6 +24,6 @@ export type UseCustomQueryParams<T> = {
 
 export type UseCustomMutationParams<T, V> = {
   mutationFn: MutationFunction<T, V>;
-  handleSuccess?(data: T): void;
+  handleSuccess?(data: T, variables?: V): void;
   handleError?(error: Error, variables?: V): void;
 };

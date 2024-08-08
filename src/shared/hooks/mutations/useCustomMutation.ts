@@ -13,8 +13,8 @@ export const useCustomMutation = <T, V>({
     unknown
   >({
     mutationFn,
-    onSuccess(data) {
-      handleSuccess?.(data);
+    onSuccess(data, variables) {
+      handleSuccess?.(data, variables);
     },
     onError(error, variables) {
       handleError?.(error, variables);

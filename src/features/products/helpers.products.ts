@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-
 import {
   UseMutateFunction,
   useMutation,
@@ -15,12 +14,9 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-
-import { toggleFavorite } from '@/services/mutations/toggleFavorite';
 import { getFavorites } from '@/services/queries/getFavorites';
-
-import type { Favorite, Product, Unit } from '@prisma/client';
-import type { ProductWithUnits, ActionTypes } from '@/types/products';
+import type { Unit } from '@prisma/client';
+import type { ExtendedFavorite, ProductWithUnits } from '@/types/products';
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 
@@ -109,71 +105,6 @@ export const useSizeCache: UseSizeCache = ({ productId }) => {
   };
 };
 
-interface GetActionToggle {
-  ({
-    favoriteId,
-    productId,
-    isProductFavorited,
-  }: {
-    favoriteId?: string;
-    productId: string;
-    isProductFavorited: boolean;
-  }): {
-    actionPayload: ActionTypes;
-  };
-}
-
-export const getActionToggle: GetActionToggle = ({
-  favoriteId,
-  productId,
-  isProductFavorited,
-}) => {
-  let actionPayload: ActionTypes;
-
-  if (isProductFavorited && favoriteId) {
-    // remove favorite by id
-    actionPayload = { action: 'remove', id: favoriteId! };
-  } else {
-    // favorite product by id
-    actionPayload = { action: 'add', id: productId };
-  }
-
-  return { actionPayload };
-};
-
-interface UseToggleFavorite {
-  ({ onSuccess, onError }: ToggleFavoriteProps): {
-    toggleFavoriteMutation: UseMutateFunction<
-      ExtendedFavorite,
-      unknown,
-      ActionTypes,
-      unknown
-    >;
-  };
-}
-
-type ToggleFavoriteProps = {
-  onSuccess?: (data: ExtendedFavorite) => void;
-  onError?: (error: unknown) => void;
-};
-
-export const useToggleFavoriteMutation: UseToggleFavorite = ({
-  onSuccess,
-  onError,
-}) => {
-  const { mutate: toggleFavoriteMutation } = useMutation({
-    mutationFn: ({ action, id }: ActionTypes) => toggleFavorite(action, id),
-    onSuccess(data) {
-      onSuccess?.(data);
-    },
-    onError(error) {
-      onError?.(error);
-    },
-  });
-
-  return { toggleFavoriteMutation };
-};
-
 interface UseFavorites {
   ({ productId }: { productId?: string }): {
     query: {
@@ -186,10 +117,6 @@ interface UseFavorites {
     };
   };
 }
-
-export type ExtendedFavorite = Omit<Favorite, 'userId'> & {
-  juice: Product;
-};
 
 export const useFavorites: UseFavorites = ({ productId }) => {
   const [isProductFavorited, setIsProductFavorited] = useState(false);
