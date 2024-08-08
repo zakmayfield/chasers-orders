@@ -16,6 +16,7 @@ export const ProductsTable = () => {
   const { data, isFetching } = useCustomQuery({
     queryKey: [QueryKeys.PRODUCTS],
     queryFn: getProducts,
+    staleTime: Infinity,
   });
 
   // evoke here because remove favorite (NameCol) is broken without it
