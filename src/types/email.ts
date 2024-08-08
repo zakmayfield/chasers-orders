@@ -1,7 +1,7 @@
 import { Order, OrderLineItem } from '@prisma/client';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
-export type SendEmailAPIResponse = {
+export type SendVerificationEmailResponse = {
   accepted: boolean;
   transporterMessageId: string;
   responseMessage: string;
