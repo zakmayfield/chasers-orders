@@ -1,9 +1,3 @@
-import {
-  UseMutateFunction,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
-import { DeliveryInstructionsResponse } from '@/types/cart';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   DeliveryInstructionsData,
@@ -22,7 +16,6 @@ import {
   useForm,
 } from 'react-hook-form';
 import { FormEvent } from 'react';
-import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
 
 interface UseInstructionEditFormProps {
   ({
@@ -50,46 +43,6 @@ export const useInstructionEditForm: UseInstructionEditFormProps = ({
     });
 
   return { register, handleSubmit, getValues, reset, formState };
-};
-
-interface UseEditInstructionsMutation {
-  ({ successCallback }: { successCallback?: () => void }): {
-    editDeliveryInstructions: UseMutateFunction<
-      DeliveryInstructionsResponse,
-      unknown,
-      DeliveryInstructionsData,
-      unknown
-    >;
-  };
-}
-
-export const useEditInstructionsMutation: UseEditInstructionsMutation = ({
-  successCallback,
-}) => {
-  const queryClient = useQueryClient();
-
-  const { mutate: editDeliveryInstructions } = useMutation({
-    mutationFn: updateDeliveryInstructions,
-    onSuccess(data) {
-      setDataToCache(data);
-      successCallback?.();
-    },
-  });
-
-  function setDataToCache(data: DeliveryInstructionsResponse) {
-    queryClient.setQueryData(
-      ['shipping-address'],
-      (oldData: DeliveryInstructionsResponse | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              shippingAddress: data.shippingAddress,
-            }
-          : oldData
-    );
-  }
-
-  return { editDeliveryInstructions };
 };
 
 interface IUseQuantityUpdateForm {

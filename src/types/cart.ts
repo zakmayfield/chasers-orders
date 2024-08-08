@@ -1,3 +1,4 @@
+import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 import type {
   Cart,
   UnitsOnCart,
@@ -23,6 +24,7 @@ export type CartWithItems = Cart & {
   items: UnitsOnCart[];
 };
 
+export type DeliveryInstructionsRequest = DeliveryInstructionsData;
 export type DeliveryInstructionsResponse = {
   companyName: string;
   shippingAddress: ShippingAddress;
