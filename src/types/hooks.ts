@@ -3,6 +3,7 @@ import {
   QueryFunction,
   QueryKey,
 } from '@tanstack/react-query';
+import { DefaultValues, FieldValues, Resolver } from 'react-hook-form';
 
 export enum QueryKeys {
   USER_STATUS = 'user-status',
@@ -26,4 +27,9 @@ export type UseCustomMutationParams<T, V> = {
   mutationFn: MutationFunction<T, V>;
   handleSuccess?(data: T, variables?: V): void;
   handleError?(error: Error, variables?: V): void;
+};
+
+export type UseCustomFormParams<T extends FieldValues> = {
+  defaultValues: DefaultValues<T>;
+  resolver: Resolver<T>;
 };
