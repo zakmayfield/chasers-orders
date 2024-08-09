@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import FieldError from '@/features/auth/components/FieldError';
-import { useBillingAddressSync } from '@/features/auth/signup/helpers.signup';
 import {
   FinalStepButton,
   PreviousStepButton,
 } from '@/features/auth/signup/components/buttons';
+import { useSyncBillingAddress } from '@/shared/hooks/forms';
 import { provinceOptions } from '@/utils/constants';
 import type { StepFourProps } from '@/types/auth';
 
@@ -18,7 +18,7 @@ export const StepFour: FC<StepFourProps> = ({
   isSubmitted,
   isSubmitSuccessful,
 }) => {
-  const { isChecked, handleCheckbox } = useBillingAddressSync({
+  const { isChecked, handleCheckbox } = useSyncBillingAddress({
     getValues,
     setValue,
   });
