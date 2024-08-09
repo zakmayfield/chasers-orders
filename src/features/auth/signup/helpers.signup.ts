@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import {
   FormState,
   UseFormGetValues,
@@ -10,7 +9,6 @@ import {
 } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthSignUpValidator, SignUpFormData } from '@/shared/validators/auth';
-import { Steps } from '@/types/auth';
 import { defaultSignUpFormValues } from '@/utils/constants';
 
 interface UseSignUpForm {
@@ -40,26 +38,4 @@ export const useSignUpForm: UseSignUpForm = () => {
     formState,
     reset,
   };
-};
-
-interface UseStepTracker {
-  (): {
-    step: Steps;
-    setStep: Dispatch<SetStateAction<Steps>>;
-  };
-}
-
-export const useStepTracker: UseStepTracker = () => {
-  const [step, setStep] = useState<Steps>('1');
-  const hasRun = useRef(false);
-
-  useEffect(() => {
-    if (!hasRun.current) {
-      setStep('1');
-    }
-
-    hasRun.current = true;
-  }, []);
-
-  return { step, setStep };
 };
