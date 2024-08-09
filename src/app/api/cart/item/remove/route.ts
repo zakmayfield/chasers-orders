@@ -1,21 +1,19 @@
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import { RemoveCartItemProps } from '@/features/cart/components/items/RemoveCartItemButton';
+import { RemoveCartItemRequest } from '@/types/cart';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
 
-  // determine user auth
   if (!session?.user) {
     return new Response('Unauthorized. Please log in to continue.', {
       status: 401,
     });
   }
 
-  const body: RemoveCartItemProps['payload'] = await req.json();
-  const { unitId, cartId } = body;
+  const body: RemoveCartItemRequest = await req.json();
 
-  if (!unitId || !cartId) {
+  if (!body.unitId || !body.cartId) {
     return new Response("Valid ID's are required", {
       status: 400,
     });
@@ -24,10 +22,7 @@ async function handler(req: Request) {
   try {
     const deletedItemID = await db.unitsOnCart.delete({
       where: {
-        cartId_unitId: {
-          cartId,
-          unitId,
-        },
+        cartId_unitId: body,
       },
       select: {
         unitId: true,

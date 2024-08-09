@@ -1,8 +1,8 @@
-import { CartItem, UpdateCartItemSizeParams } from '@/types/cart';
+import { CartItem, UpdateCartItemSizeRequest } from '@/types/cart';
 import { fetchHandler } from '@/utils/fetch';
 
 export const updateCartItemSize = async (
-  params: UpdateCartItemSizeParams
+  params: UpdateCartItemSizeRequest
 ): Promise<CartItem> =>
   await fetchHandler({
     route: '/cart/item/size',

@@ -1,11 +1,16 @@
-import { FC, useEffect, useRef } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { LoadingSpinner } from '@/shared/components';
 import { ResendVerification } from './ResendVerification';
 import { merge } from '@/utils/styles';
-import { useVerify } from '@/features/verify/helpers.verify';
 import { useToast } from '@/shared/hooks';
+import { useCustomMutation } from '@/shared/hooks/mutations';
+import { updateUserVerification } from '@/services/mutations/updateUserVerification';
+import {
+  UpdateUserVerificationRequest,
+  UpdateUserVerificationResponse,
+} from '@/types/verification';
 
 interface VerificationResultsProps {
   className?: string;
@@ -19,42 +24,42 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
   isVerified,
 }) => {
   const router = useRouter();
-  const { notify } = useToast();
   const token = useSearchParams().get('token') ?? undefined;
-  const {
-    verifyEmail,
-    error,
-    isLoading,
-    isError,
-    isSuccess,
-    data,
-    isRedirecting,
-    userIsApproved,
-  } = useVerify({
-    onSuccessCallback({ data: user }) {
-      const successNotification = `Email verification successful: ${user.email}`;
-      notify(successNotification);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [userIsApproved, setUserIsApproved] = useState<boolean | null>(null);
 
-      if (user.isApproved) {
-        router.push('/products');
-        return;
-      }
-      router.push('/dashboard/account-pending');
-      return;
-    },
-    onErrorCallback({ error }) {
-      notify(error.message, 'error');
-    },
-  });
+  const { notify } = useToast();
+  const { mutate, error, isLoading, isError, isSuccess, data } =
+    useCustomMutation<
+      UpdateUserVerificationResponse,
+      UpdateUserVerificationRequest
+    >({
+      mutationFn: updateUserVerification,
+      handleSuccess(data) {
+        notify(`Email verification successful: ${data.email}`);
+
+        setUserIsApproved(data.isApproved);
+        setIsRedirecting(true);
+
+        if (data.isApproved) {
+          router.push('/products');
+          return;
+        }
+        router.push('/dashboard/account-pending');
+      },
+      handleError(error) {
+        notify(error.message, 'error');
+      },
+    });
 
   const hasRun = useRef(false);
   useEffect(() => {
     if (!hasRun.current && !isVerified) {
-      setTimeout(() => verifyEmail({ token }), 2000);
+      setTimeout(() => mutate({ token }), 2000);
 
       hasRun.current = true;
     }
-  }, [token, verifyEmail, isVerified]);
+  }, [token, mutate, isVerified]);
 
   const convertDate = (date: string) => {
     const x = new Date(date).toDateString();

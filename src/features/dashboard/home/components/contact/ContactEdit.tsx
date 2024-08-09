@@ -1,52 +1,67 @@
 'use client';
 import { Dispatch, FC, SetStateAction } from 'react';
-import {
-  FieldErrors,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormReset,
-  UseFormSetFocus,
-} from 'react-hook-form';
-import { UserData } from '@/types/user';
-import {
-  ContactFormData,
-  ContactValidator,
-  getDefaultValues,
-} from '@/shared/validators/user/ContactValidator';
-import { useUpdateContact } from '@/shared/hooks/mutations';
-import { useToast } from '@/shared/hooks';
+import { useQueryClient } from '@tanstack/react-query';
+import { UseFormReturn } from 'react-hook-form';
 import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
+import { ContactValidator } from '@/shared/validators/user/ContactValidator';
+import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks';
+import { updateContact } from '@/services/mutations/updateContact';
+import { ContactFormData, UserData } from '@/types/user';
+import { QueryKeys } from '@/types/hooks';
+import { Contact } from '@prisma/client';
 
 interface ContactEditProps {
   userData: UserData;
-  errors: FieldErrors<ContactFormData>;
-  isDirty: boolean;
-  handleSubmit: UseFormHandleSubmit<ContactFormData, undefined>;
-  register: UseFormRegister<ContactFormData>;
-  getValues: UseFormGetValues<ContactFormData>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  methods: UseFormReturn<ContactFormData, any, undefined>;
   handleSwitchEditCallback: () => void;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-  reset: UseFormReset<ContactFormData>;
-  setFocus: UseFormSetFocus<ContactFormData>;
 }
 
 export const ContactEdit: FC<ContactEditProps> = ({
   userData,
-  errors,
-  isDirty,
-  handleSubmit,
-  register,
-  getValues,
+  methods: {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors, isDirty },
+  },
   handleSwitchEditCallback,
   setIsEdit,
-  reset,
 }) => {
+  const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  const { edit } = useUpdateContact({
-    handleSwitchEditCallback,
-    handleResetFormCB,
+  const { mutate: edit } = useCustomMutation<Contact, ContactFormData>({
+    mutationFn: updateContact,
+    handleSuccess(data) {
+      notify('Succesfully updated contact information');
+
+      queryClient.setQueryData(
+        [QueryKeys.DASHBOARD],
+        (oldData: UserData | undefined) => {
+          return oldData ? { ...oldData, contact: data } : oldData;
+        }
+      );
+
+      reset(
+        {
+          name: data.name,
+          phoneNumber: data.phoneNumber,
+          position: data.position,
+        },
+        {
+          keepDirty: false,
+        }
+      );
+
+      handleSwitchEditCallback();
+    },
+    handleError(error) {
+      notify(error.message, 'error');
+    },
   });
 
   const onFormSubmit = () => {
@@ -64,14 +79,12 @@ export const ContactEdit: FC<ContactEditProps> = ({
     }
   };
 
-  function handleResetFormCB(data: ContactFormData) {
-    reset(data, {
-      keepDirty: false,
-    });
-  }
-
   function resetFormOnCancel() {
-    const defaultValues = getDefaultValues(userData);
+    const defaultValues = {
+      name: userData.contact.name,
+      phoneNumber: userData.contact.phoneNumber,
+      position: (userData.contact.position && userData.contact.position) || '',
+    };
     setIsEdit(false);
     reset(defaultValues);
   }

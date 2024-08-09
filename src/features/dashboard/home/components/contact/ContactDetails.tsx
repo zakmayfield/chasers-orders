@@ -1,14 +1,10 @@
 'use client';
 import { FC, useState } from 'react';
-import { UserData } from '@/types/user';
 import { ContactEdit } from './ContactEdit';
 import { DetailBody } from './DetailBody';
-import {
-  ContactFormData,
-  resolver,
-  getDefaultValues,
-} from '@/shared/validators/user/ContactValidator';
-import { useForm } from 'react-hook-form';
+import { contactResolver } from '@/shared/validators/resolvers';
+import { useCustomForm } from '@/shared/hooks/forms';
+import { ContactFormData, UserData } from '@/types/user';
 
 interface ContactDetailsProps {
   userData: UserData;
@@ -17,23 +13,18 @@ interface ContactDetailsProps {
 export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
   const [isEdit, setIsEdit] = useState(false);
 
-  // EDIT FORM STUFF
-  const {
-    formState: { errors, isDirty },
-    register,
-    handleSubmit,
-    getValues,
-    reset,
-    setFocus,
-  } = useForm<ContactFormData>({
-    resolver,
-    defaultValues: getDefaultValues(userData),
+  const { methods } = useCustomForm<ContactFormData>({
+    defaultValues: {
+      name: userData.contact.name,
+      phoneNumber: userData.contact.phoneNumber,
+      position: (userData.contact.position && userData.contact.position) || '',
+    },
+    resolver: contactResolver,
   });
 
   function handleSwitchEditCallback() {
     setIsEdit(false);
   }
-  // end of edit stuff
 
   return (
     <div className='grid grid-cols-8 gap-3'>
@@ -45,15 +36,9 @@ export const ContactDetails: FC<ContactDetailsProps> = ({ userData }) => {
         {isEdit ? (
           <ContactEdit
             userData={userData}
-            handleSubmit={handleSubmit}
-            register={register}
-            getValues={getValues}
-            errors={errors}
+            methods={methods}
             handleSwitchEditCallback={handleSwitchEditCallback}
-            isDirty={isDirty}
             setIsEdit={setIsEdit}
-            reset={reset}
-            setFocus={setFocus}
           />
         ) : (
           <DetailBody

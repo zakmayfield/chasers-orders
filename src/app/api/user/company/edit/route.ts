@@ -1,6 +1,6 @@
 import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { CompanyFormData } from '@/shared/validators/user/CompanyValidator';
+import { CompanyFormData } from '@/types/user';
 
 export async function PUT(req: Request) {
   const session = await getAuthSession();
@@ -9,8 +9,7 @@ export async function PUT(req: Request) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  type ReqBody = CompanyFormData;
-  const body: ReqBody = await req.json();
+  const body: CompanyFormData = await req.json();
 
   try {
     const updatedCompany = await db.company.update({
@@ -23,7 +22,7 @@ export async function PUT(req: Request) {
     return new Response(JSON.stringify(updatedCompany));
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, {
+      return new Response('Unable to update company information at this time', {
         status: 500,
       });
     }

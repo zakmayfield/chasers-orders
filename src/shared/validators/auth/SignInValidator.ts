@@ -8,5 +8,3 @@ export const AuthSignInValidator = z
       .min(3, { message: 'Password must be 3 or more characters' }),
   })
   .required();
-
-export type SignInFormData = z.infer<typeof AuthSignInValidator>;

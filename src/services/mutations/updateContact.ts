@@ -1,10 +1,10 @@
-import { ContactFormData } from '@/shared/validators/user/ContactValidator';
+import { ContactFormData } from '@/types/user';
 import { fetchHandler } from '@/utils/fetch';
 import { Contact } from '@prisma/client';
 
 export const updateContact = async (
   formData: ContactFormData
-): Promise<Contact | undefined> =>
+): Promise<Contact> =>
   await fetchHandler({
     route: '/user/contact/edit',
     options: {

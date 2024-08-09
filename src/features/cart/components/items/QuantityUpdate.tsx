@@ -1,49 +1,44 @@
 import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
+import { useUpdateCartItemQuantity } from '@/shared/hooks/mutations';
+import { useCustomForm } from '@/shared/hooks/forms';
+import { quantityResolver } from '@/shared/validators/resolvers';
+import { defaultQuantityFormValues } from '@/utils/constants';
+import { QueryKeys } from '@/types/hooks';
 import {
   CartCache,
-  CartItem,
-  UpdateCartItemQuantityParams,
+  QuantityData,
+  UpdateCartItemQuantityRequest,
 } from '@/types/cart';
-import { useToast } from '@/shared/hooks';
-import {
-  useQuantityUpdateForm,
-  useUpdateQuantity,
-} from '@/features/cart/helpers.cart';
-import { QuantityData } from '@/shared/validators/cart/QuantityValidator';
 
-export const QuantityUpdate: React.FC<UpdateCartItemQuantityParams> = ({
+export const QuantityUpdate: React.FC<UpdateCartItemQuantityRequest> = ({
   cartId,
   unitId,
   quantity,
 }) => {
   const queryClient = useQueryClient();
-  const { notify } = useToast();
 
-  const { updateQuantity, isSuccess } = useUpdateQuantity({
-    onSuccessCallback(data: CartItem) {
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              items: oldData.items.map((item) =>
-                item.unitId === data.unitId ? data : item
-              ),
-            }
-          : oldData
+  const { mutate, isSuccess } = useUpdateCartItemQuantity({
+    customSuccessHandling(data) {
+      queryClient.setQueryData(
+        [QueryKeys.CART],
+        (oldData: CartCache | undefined) =>
+          oldData
+            ? {
+                ...oldData,
+                items: oldData.items.map((item) =>
+                  item.unitId === data.unitId ? data : item
+                ),
+              }
+            : oldData
       );
-
-      notify(`Updated quantity to ${data.quantity}`);
-    },
-    onErrorCallback() {
-      notify('Could not update quantity', 'error');
     },
   });
 
   function submitHandler(data: QuantityData) {
     const payload = { cartId, unitId, quantity: data.quantity };
-    updateQuantity(payload);
+    mutate(payload);
   }
 
   return (
@@ -67,25 +62,29 @@ function QuantityForm({
   submitHandler(data: QuantityData): void;
 }) {
   const {
-    handleSubmit,
-    register,
-    getValues,
-    isDirty,
-    handleReset,
-    handleCancel,
-  } = useQuantityUpdateForm({
-    currentQuantity,
+    methods: {
+      register,
+      handleSubmit,
+      getValues,
+      reset,
+      formState: { isDirty },
+    },
+  } = useCustomForm({
+    defaultValues: defaultQuantityFormValues,
+    resolver: quantityResolver,
   });
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const formValues = getValues();
-    const quantity = formValues.quantity;
+    const quantity = Number(formValues.quantity);
     handleSubmit(() => submitHandler({ quantity }))();
   };
 
   useEffect(() => {
-    handleReset();
+    reset({
+      quantity: currentQuantity.toString(),
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
@@ -111,7 +110,14 @@ function QuantityForm({
           <button type='submit' onClick={submit} className=''>
             <PiCheckCircleDuotone className='text-light-green-400 text-2xl' />
           </button>
-          <button type='submit' onClick={handleCancel}>
+          <button
+            type='submit'
+            onClick={() =>
+              reset({
+                quantity: currentQuantity.toString(),
+              })
+            }
+          >
             <PiXCircleDuotone className='text-red-600 text-2xl' />
           </button>
         </div>
