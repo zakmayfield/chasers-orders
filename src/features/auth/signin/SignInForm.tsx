@@ -1,12 +1,12 @@
 'use client';
 import { FC } from 'react';
-import { SignInFormData } from '@/shared/validators/auth';
 import FieldError from '../components/FieldError';
 import { SignInButton } from './components';
 import { handleSignIn } from '@/utils/helpers';
 import { useCustomForm } from '@/shared/hooks/forms';
 import { defaultSignInFormValues } from '@/utils/constants';
 import { signInResolver } from '@/shared/validators/resolvers';
+import { SignInFormData } from '@/types/auth';
 
 interface SignInFormProps {}
 

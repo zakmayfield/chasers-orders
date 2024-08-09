@@ -1,6 +1,4 @@
-import { SignInFormData, SignUpFormData } from '@/shared/validators/auth';
-import { ProductWithUnits } from '@/types/products';
-import { Unit } from '@prisma/client';
+import { signIn } from 'next-auth/react';
 import {
   CellContext,
   ColumnDef,
@@ -10,7 +8,10 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { signIn } from 'next-auth/react';
+import { SignUpFormData } from '@/shared/validators/auth';
+import { Unit } from '@prisma/client';
+import { ProductWithUnits } from '@/types/products';
+import { SignInFormData } from '@/types/auth';
 
 //^ AUTH
 export const handleSignIn = async (data: SignInFormData) =>
