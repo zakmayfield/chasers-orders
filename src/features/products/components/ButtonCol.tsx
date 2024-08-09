@@ -12,7 +12,6 @@ import {
 import { CellContext } from '@tanstack/react-table';
 import { Unit, UnitsOnCart } from '@prisma/client';
 import { ProductWithUnits } from '@/types/products';
-import { useSizeCache } from '@/shared/hooks';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
@@ -22,12 +21,8 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
   const { data: session } = useSession();
 
   const {
-    rowPayload: { defaultUnit, units, product },
+    rowPayload: { defaultUnit },
   } = getRowPayload(info);
-
-  const { getSizeCache, setSizeCache } = useSizeCache({
-    productId: product.id,
-  });
 
   const { mutate: updateQuantity } = useUpdateCartItemQuantity({});
 
@@ -56,22 +51,8 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     },
   });
 
-  const handleAddToCart = async () => {
-    const sizeCache = getSizeCache();
-
-    function setToCacheAndReturnUnit(size: string) {
-      setSizeCache(size);
-      const unit = units[0];
-      return unit;
-    }
-
-    if (!sizeCache) {
-      const unit = setToCacheAndReturnUnit(defaultUnit.size);
-      addToCart(unit.id);
-      return;
-    }
-    const unit = units.find((unit) => unit.size === sizeCache);
-    addToCart(unit!.id);
+  const handleAddToCart = () => {
+    addToCart(defaultUnit.id);
   };
 
   return (
