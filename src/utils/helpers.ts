@@ -8,10 +8,9 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { SignUpFormData } from '@/shared/validators/auth';
 import { Unit } from '@prisma/client';
 import { ProductWithUnits } from '@/types/products';
-import { SignInFormData } from '@/types/auth';
+import { SignInFormData, SignUpFormData } from '@/types/auth';
 
 //^ AUTH
 export const handleSignIn = async (data: SignInFormData) =>

@@ -1,4 +1,7 @@
-import { AuthSignInValidator, SignUpFormData } from '@/shared/validators/auth';
+import {
+  AuthSignInValidator,
+  AuthSignUpValidator,
+} from '@/shared/validators/auth';
 import type {
   FieldErrors,
   UseFormGetValues,
@@ -8,6 +11,7 @@ import type {
 import { z } from 'zod';
 
 export type SignInFormData = z.infer<typeof AuthSignInValidator>;
+export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;
 
 export type Steps = '1' | '2' | '3' | '4';
 
