@@ -1,7 +1,7 @@
 import { db } from '@/lib/prisma';
 import { NextRequest } from 'next/server';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { ContactFormData } from '@/shared/validators/user/ContactValidator';
+import { ContactFormData } from '@/types/user';
 
 export async function PUT(req: NextRequest) {
   const session = await getAuthSession();
@@ -12,8 +12,7 @@ export async function PUT(req: NextRequest) {
     });
   }
 
-  type ReqBody = ContactFormData;
-  const body: ReqBody = await req.json();
+  const body: ContactFormData = await req.json();
 
   try {
     const updatedContact = await db.contact.update({

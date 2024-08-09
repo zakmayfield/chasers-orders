@@ -26,9 +26,9 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
   const { notify } = useToast();
   const [size, setSize] = useState<string | undefined>(props.sizeData);
 
-  const { data, isLoading: queryIsLoading } = useCustomQuery<CartSizesData>({
+  const { data, isLoading } = useCustomQuery<CartSizesData>({
     queryKey: [QueryKeys.SIZE, props.unitId],
-    queryFn: async () => await getCartSizes(props.unitId),
+    queryFn: () => getCartSizes(props.unitId),
   });
 
   const { mutate: updateSize } = useCustomMutation<
@@ -78,7 +78,7 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
     <div className='flex space-x-2'>
       <div className='flex items-start space-x-2'>
         <p className='text-sm text-gray-500'>Size</p>
-        {queryIsLoading ? (
+        {isLoading ? (
           <span className='pl-2'>Loading...</span>
         ) : (
           <select

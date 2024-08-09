@@ -1,11 +1,12 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { ImSpinner2 } from 'react-icons/im';
-import { useSignUpForm } from '@/features/auth/signup/helpers.signup';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
-import type { SignUpFormData } from '@/shared/validators/auth';
-import { Steps } from '@/types/auth';
+import { SignUpFormData, Steps } from '@/types/auth';
 import { handleSignUp } from '@/utils/helpers';
+import { useCustomForm } from '@/shared/hooks/forms';
+import { defaultSignUpFormValues } from '@/utils/constants';
+import { signUpResolver } from '@/shared/validators/resolvers';
 
 interface SignUpFormProps {
   setStep: Dispatch<SetStateAction<Steps>>;
@@ -16,12 +17,17 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
   const queryClient = useQueryClient();
 
   const {
-    getValues,
-    setValue,
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitted, isSubmitSuccessful },
-  } = useSignUpForm();
+    methods: {
+      getValues,
+      setValue,
+      register,
+      handleSubmit,
+      formState: { errors, isSubmitted, isSubmitSuccessful },
+    },
+  } = useCustomForm<SignUpFormData>({
+    defaultValues: defaultSignUpFormValues,
+    resolver: signUpResolver,
+  });
 
   const incrementStep = ({
     step,

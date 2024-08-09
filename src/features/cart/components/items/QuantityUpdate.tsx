@@ -1,11 +1,16 @@
 import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
-import { CartCache, UpdateCartItemQuantityRequest } from '@/types/cart';
-import { useQuantityUpdateForm } from '@/features/cart/helpers.cart';
-import { QuantityData } from '@/shared/validators/cart/QuantityValidator';
 import { useUpdateCartItemQuantity } from '@/shared/hooks/mutations';
+import { useCustomForm } from '@/shared/hooks/forms';
+import { quantityResolver } from '@/shared/validators/resolvers';
+import { defaultQuantityFormValues } from '@/utils/constants';
 import { QueryKeys } from '@/types/hooks';
+import {
+  CartCache,
+  QuantityData,
+  UpdateCartItemQuantityRequest,
+} from '@/types/cart';
 
 export const QuantityUpdate: React.FC<UpdateCartItemQuantityRequest> = ({
   cartId,
@@ -57,25 +62,29 @@ function QuantityForm({
   submitHandler(data: QuantityData): void;
 }) {
   const {
-    handleSubmit,
-    register,
-    getValues,
-    isDirty,
-    handleReset,
-    handleCancel,
-  } = useQuantityUpdateForm({
-    currentQuantity,
+    methods: {
+      register,
+      handleSubmit,
+      getValues,
+      reset,
+      formState: { isDirty },
+    },
+  } = useCustomForm({
+    defaultValues: defaultQuantityFormValues,
+    resolver: quantityResolver,
   });
 
   const submit = (event: FormEvent) => {
     event.preventDefault();
     const formValues = getValues();
-    const quantity = formValues.quantity;
+    const quantity = Number(formValues.quantity);
     handleSubmit(() => submitHandler({ quantity }))();
   };
 
   useEffect(() => {
-    handleReset();
+    reset({
+      quantity: currentQuantity.toString(),
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSuccess]);
 
@@ -101,7 +110,14 @@ function QuantityForm({
           <button type='submit' onClick={submit} className=''>
             <PiCheckCircleDuotone className='text-light-green-400 text-2xl' />
           </button>
-          <button type='submit' onClick={handleCancel}>
+          <button
+            type='submit'
+            onClick={() =>
+              reset({
+                quantity: currentQuantity.toString(),
+              })
+            }
+          >
             <PiXCircleDuotone className='text-red-600 text-2xl' />
           </button>
         </div>

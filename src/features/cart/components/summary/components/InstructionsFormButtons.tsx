@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { FormState } from 'react-hook-form';
 import { LoadingSpinner } from '@/shared/components';
-import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
+import { DeliveryInstructionsData } from '@/types/user';
 
 interface InstructionsFormButtonsProps {
   onSave: () => void;

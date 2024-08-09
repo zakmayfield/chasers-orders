@@ -3,7 +3,6 @@
 import { FC } from 'react';
 import { BsCartPlus } from 'react-icons/bs';
 import { useSession } from 'next-auth/react';
-import { useSizeCache } from '@/features/products/helpers.products';
 import { fetchCart } from '@/utils/cart';
 import { getRowPayload } from '@/utils/helpers';
 import {
@@ -22,28 +21,21 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
   const { data: session } = useSession();
 
   const {
-    rowPayload: { defaultUnit, units, product },
+    rowPayload: { defaultUnit },
   } = getRowPayload(info);
-
-  const { sizeQuery, sizeMutation } = useSizeCache({
-    productId: product.id,
-  });
 
   const { mutate: updateQuantity } = useUpdateCartItemQuantity({});
 
   const { mutate: addToCart } = useAddToCart({
     customErrorHandling: async (error, variables) => {
       if (error.message.includes('item already in cart')) {
-        // fetch cart from server use userId
         const userId = session?.user.id;
         const cart = await fetchCart(userId);
 
-        // find CartItem to update
         const cartItemToUpdate = cart?.items.find(
           (item) => item.unitId === variables
         );
 
-        // evoke update quantity mutation
         if (cart && cartItemToUpdate) {
           const item = cartItemToUpdate as Omit<UnitsOnCart, 'createdAt'>;
           const updatedQuantity = item.quantity + 1;
@@ -59,23 +51,8 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     },
   });
 
-  const handleAddToCart = async () => {
-    const { sizeCache } = sizeQuery();
-
-    function setToCacheAndReturnUnit(size: string) {
-      sizeMutation(size);
-      const unit = units[0];
-      return unit;
-    }
-
-    if (!sizeCache) {
-      const unit = setToCacheAndReturnUnit(defaultUnit.size);
-      addToCart(unit.id);
-      return;
-    }
-    const unit = units.find((unit) => unit.size === sizeCache);
-    addToCart(unit!.id);
-    return;
+  const handleAddToCart = () => {
+    addToCart(defaultUnit.id);
   };
 
   return (

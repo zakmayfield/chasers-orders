@@ -137,3 +137,13 @@ export const categories: string[] = [
   'cleanses',
   'wholesale',
 ];
+
+//^ User
+export const defaultDeliveryInstructionsFormValues = {
+  deliveryInstructions: '',
+};
+
+//^ Cart
+export const defaultQuantityFormValues = {
+  quantity: '',
+};

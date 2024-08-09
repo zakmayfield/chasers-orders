@@ -1,56 +1,40 @@
 'use client';
 import { Dispatch, FC, SetStateAction } from 'react';
-import { UserData } from '@/types/user';
-import {
-  FieldErrors,
-  UseFormGetValues,
-  UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormReset,
-  UseFormSetValue,
-} from 'react-hook-form';
-import {
-  CompanyFormData,
-  CompanyValidator,
-  getDefaultValues,
-} from '@/shared/validators/user/CompanyValidator';
+import { useQueryClient } from '@tanstack/react-query';
+import { UseFormReturn } from 'react-hook-form';
+import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
+import { CompanyValidator } from '@/shared/validators/user/CompanyValidator';
 import { useCustomMutation } from '@/shared/hooks/mutations';
 import { useToast } from '@/shared/hooks';
-import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { paymentMethodOptions } from '@/utils/constants';
 import { updateCompany } from '@/services/mutations/updateCompany';
-import { useQueryClient } from '@tanstack/react-query';
+import { CompanyFormData, UserData } from '@/types/user';
 import { QueryKeys } from '@/types/hooks';
 import { Company } from '@prisma/client';
 
 interface CompanyEditProps {
   userData: UserData;
-  isDirty: boolean;
-  errors: FieldErrors<CompanyFormData>;
-  handleSubmit: UseFormHandleSubmit<CompanyFormData, undefined>;
-  register: UseFormRegister<CompanyFormData>;
-  reset: UseFormReset<CompanyFormData>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  methods: UseFormReturn<CompanyFormData, any, undefined>;
   handleSwitchEditCallback: () => void;
-  getValues: UseFormGetValues<CompanyFormData>;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
-  setValue: UseFormSetValue<CompanyFormData>;
 }
 
 export const CompanyEdit: FC<CompanyEditProps> = ({
   userData,
-  isDirty,
-  errors,
-  handleSubmit,
-  register,
-  reset,
-  getValues,
+  methods: {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    setValue,
+    formState: { errors, isDirty },
+  },
   setIsEdit,
   handleSwitchEditCallback,
-  setValue,
 }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-
   const { mutate: edit } = useCustomMutation<Company, CompanyFormData>({
     mutationFn: updateCompany,
     handleSuccess(data) {
@@ -109,7 +93,11 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
   };
 
   function resetFormOnCancel() {
-    const defaultValues = getDefaultValues(userData);
+    const defaultValues = {
+      name: userData.company.name,
+      accountPayableEmail: userData.company.accountPayableEmail,
+      paymentMethod: userData.company.paymentMethod,
+    };
     setIsEdit(false);
     reset(defaultValues);
   }
