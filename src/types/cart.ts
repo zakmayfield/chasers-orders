@@ -1,3 +1,5 @@
+import { z } from 'zod';
+import { QuantityValidator } from '@/shared/validators/cart/QuantityValidator';
 import type {
   Cart,
   UnitsOnCart,
@@ -9,6 +11,8 @@ import type {
   OrderLineItem,
 } from '@prisma/client';
 import { DeliveryInstructionsData } from '@/types/user';
+
+export type QuantityData = z.infer<typeof QuantityValidator>;
 
 export type CartCache = Cart & {
   items: CartItem[];

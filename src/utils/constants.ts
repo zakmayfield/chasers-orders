@@ -142,3 +142,8 @@ export const categories: string[] = [
 export const defaultDeliveryInstructionsFormValues = {
   deliveryInstructions: '',
 };
+
+//^ Cart
+export const defaultQuantityFormValues = {
+  quantity: '',
+};
