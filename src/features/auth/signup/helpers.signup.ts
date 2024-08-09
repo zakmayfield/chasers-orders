@@ -1,11 +1,4 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import {
   FormState,
   UseFormGetValues,
@@ -18,7 +11,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { AuthSignUpValidator, SignUpFormData } from '@/shared/validators/auth';
 import { Steps } from '@/types/auth';
-import { Key, defaultSignUpFormValues } from '@/utils/constants';
+import { defaultSignUpFormValues } from '@/utils/constants';
 
 interface UseSignUpForm {
   (): {
@@ -47,63 +40,6 @@ export const useSignUpForm: UseSignUpForm = () => {
     formState,
     reset,
   };
-};
-
-interface UseBillingAddressSync {
-  ({ getValues, setValue }: UseBillingAddressSyncProps): {
-    isChecked: boolean;
-    handleCheckbox(event: ChangeEvent<HTMLInputElement>): void;
-  };
-}
-
-type UseBillingAddressSyncProps = {
-  getValues: UseFormGetValues<SignUpFormData>;
-  setValue: UseFormSetValue<SignUpFormData>;
-};
-
-export const useBillingAddressSync: UseBillingAddressSync = ({
-  getValues,
-  setValue,
-}) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  function handleCheckbox(event: ChangeEvent<HTMLInputElement>) {
-    const checked: boolean = event.target.checked;
-    const formValues: SignUpFormData = getValues();
-
-    setIsChecked(checked);
-
-    const fields: { shipping: string; billing: Key }[] = [
-      {
-        shipping: formValues.shippingStreetAddress,
-        billing: 'billingStreetAddress',
-      },
-      {
-        shipping: formValues.shippingUnit,
-        billing: 'billingUnit',
-      },
-      {
-        shipping: formValues.shippingState,
-        billing: 'billingState',
-      },
-      {
-        shipping: formValues.shippingCity,
-        billing: 'billingCity',
-      },
-      {
-        shipping: formValues.shippingPostalCode,
-        billing: 'billingPostalCode',
-      },
-    ];
-
-    fields.forEach((field) =>
-      checked
-        ? setValue(field.billing, field.shipping)
-        : setValue(field.billing, '')
-    );
-  }
-
-  return { isChecked, handleCheckbox };
 };
 
 interface UseStepTracker {
