@@ -2,6 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { UserData } from '@/types/user';
 import { getUser } from '@/services/queries/getUser';
+import { QueryKeys } from '@/types/hooks';
 
 type DashboardFetchState<T> = T | DashboardQueryError | null;
 type DashboardQueryError = {
@@ -28,7 +29,7 @@ export const useDashboardQuery = <T>(
       try {
         setIsLoading(true);
         const data: UserData | undefined = await queryClient.fetchQuery(
-          ['user-dashboard'],
+          [QueryKeys.DASHBOARD],
           getUser,
           {
             staleTime: 60 * 1000 * 5,

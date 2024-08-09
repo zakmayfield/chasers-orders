@@ -1,21 +1,20 @@
 import { FC } from 'react';
-import { requiredStepFields } from '@/features/auth/signup/helpers.signup';
-import type { UseFormGetValues } from 'react-hook-form';
-import type { SignUpFormData } from '@/shared/validators/auth';
 import { useQueryClient } from '@tanstack/react-query';
-import { useToast } from '@/shared/hooks';
 import { PiArrowRightLight } from 'react-icons/pi';
-import { Steps } from '@/types/auth';
+import { useToast } from '@/shared/hooks';
+import { requiredSignUpFormValues } from '@/utils/constants';
+import type { UseFormGetValues } from 'react-hook-form';
+import { SignUpFormData, Steps } from '@/types/auth';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;
-  handleStepChange?(): void;
+  handleIncrementStep?(): void;
   step: Steps;
 }
 
 export const NextStepButton: FC<NextStepProps> = ({
   getValues,
-  handleStepChange,
+  handleIncrementStep,
   step,
 }) => {
   const queryClient = useQueryClient();
@@ -23,7 +22,7 @@ export const NextStepButton: FC<NextStepProps> = ({
 
   function isStepComplete(currentStep: Steps) {
     const formValues = getValues();
-    const requiredFields = requiredStepFields[currentStep];
+    const requiredFields = requiredSignUpFormValues[currentStep];
     return requiredFields.every((field) => !!formValues[field]);
   }
 
@@ -40,7 +39,7 @@ export const NextStepButton: FC<NextStepProps> = ({
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...secureFormValues } = formValues;
       queryClient.setQueryData(['form-values'], secureFormValues);
-      handleStepChange?.();
+      handleIncrementStep?.();
     }
 
     isStepComplete(step) ? handleComplete() : handleNotComplete();

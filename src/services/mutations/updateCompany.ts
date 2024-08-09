@@ -1,10 +1,10 @@
 import type { Company } from '@prisma/client';
-import { CompanyFormData } from '@/shared/validators/user/CompanyValidator';
 import { fetchHandler } from '@/utils/fetch';
+import { CompanyFormData } from '@/types/user';
 
 export const updateCompany = async (
   formData: CompanyFormData
-): Promise<Company | undefined> =>
+): Promise<Company> =>
   await fetchHandler({
     route: '/user/company/edit',
     options: {

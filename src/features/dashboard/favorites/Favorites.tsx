@@ -1,17 +1,15 @@
 'use client';
 
-import { useFavorites } from '@/features/products/helpers.products';
 import Favorite from './components/Favorite';
 import FavoritesLoadingSkeleton from './components/FavoritesLoadingSkeleton';
 import EmptyFavorites from './components/EmptyFavorites';
 import { LoadingSpinner } from '@/shared/components';
+import { useGetFavorites } from '@/shared/hooks/queries';
 
 export default function Favorites() {
-  const {
-    query: { favorites, isLoading },
-  } = useFavorites({});
+  const { data, isLoading } = useGetFavorites();
 
-  if (favorites && favorites.length === 0) {
+  if (data && data.length === 0) {
     return <EmptyFavorites />;
   }
 
@@ -30,9 +28,11 @@ export default function Favorites() {
         <FavoritesLoadingSkeleton />
       ) : (
         <div>
-          {favorites &&
-            favorites.length > 0 &&
-            favorites.map((fav) => <Favorite key={fav.id} fav={fav} />)}
+          {data &&
+            data.length > 0 &&
+            data.map((favorite) => (
+              <Favorite key={favorite.id} fav={favorite} />
+            ))}
         </div>
       )}
     </div>

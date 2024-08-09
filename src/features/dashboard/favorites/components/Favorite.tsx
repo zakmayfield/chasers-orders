@@ -1,69 +1,24 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { PiHeartDuotone } from 'react-icons/pi';
-import { PiShoppingCartSimpleDuotone } from 'react-icons/pi';
-import { PiXCircleThin } from 'react-icons/pi';
-import { getUnitId } from '@/utils/products';
-import { useToast } from '@/shared/hooks';
-import { CartCache } from '@/types/cart';
 import {
-  useToggleFavoriteMutation,
-  ExtendedFavorite,
-} from '@/features/products/helpers.products';
-import { addToCart } from '@/services/mutations/addToCart';
+  PiHeartDuotone,
+  PiShoppingCartSimpleDuotone,
+  PiXCircleThin,
+} from 'react-icons/pi';
+import { getUnitId } from '@/utils/products';
+import { useAddToCart, useToggleFavorite } from '@/shared/hooks/mutations';
+import { ExtendedFavorite } from '@/types/products';
 
 export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
-  const queryClient = useQueryClient();
-  const { notify } = useToast();
-
-  const { toggleFavoriteMutation } = useToggleFavoriteMutation({
-    onSuccess() {
-      queryClient.setQueryData(
-        ['favorites'],
-        (oldData: ExtendedFavorite[] | undefined) => {
-          const filtered = oldData && oldData.filter(({ id }) => id !== fav.id);
-          return oldData ? filtered : oldData;
-        }
-      );
-
-      notify('Removed from favorites');
-    },
-    onError(error: unknown) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
-    },
-  });
-
-  const { mutate } = useMutation({
-    mutationFn: addToCart,
-    onSuccess(data) {
-      notify('Item added to cart');
-
-      // Update `cart` items cache with data from response
-      queryClient.setQueryData(['cart'], (oldData: CartCache | undefined) =>
-        oldData
-          ? {
-              ...oldData,
-              items: [data, ...oldData.items],
-            }
-          : oldData
-      );
-    },
-    onError(error) {
-      if (error instanceof Error) {
-        notify(error.message, 'error');
-      }
-    },
-  });
+  const { mutate: toggleFavorite } = useToggleFavorite({});
+  const { mutate: addToCart } = useAddToCart({});
 
   const favId = fav.id;
   const productId = fav.juice.id;
   const productName = fav.juice.name;
   const productCategory = fav.juice.category;
 
-  async function handleAddUnitToCart() {
+  async function handleAddToCart() {
     const unitId = await getUnitId(productId);
-    mutate(unitId!);
+    addToCart(unitId!);
   }
 
   return (
@@ -83,15 +38,11 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
       </div>
 
       <div className='flex items-center gap-6  ml-auto'>
-        <button onClick={() => handleAddUnitToCart()}>
+        <button onClick={() => handleAddToCart()}>
           <PiShoppingCartSimpleDuotone className='text-2xl hover:text-light-green-500' />
         </button>
 
-        <button
-          onClick={() =>
-            toggleFavoriteMutation({ action: 'remove', id: favId })
-          }
-        >
+        <button onClick={() => toggleFavorite({ action: 'remove', id: favId })}>
           <PiXCircleThin className='text-lg text-gray-500 hover:text-light-text' />
         </button>
       </div>

@@ -1,18 +1,26 @@
+'use client';
 import { FC } from 'react';
-import { useSignInForm } from './helpers.signin';
-import { SignInFormData } from '@/shared/validators/auth';
 import FieldError from '../components/FieldError';
 import { SignInButton } from './components';
 import { handleSignIn } from '@/utils/helpers';
+import { useCustomForm } from '@/shared/hooks/forms';
+import { defaultSignInFormValues } from '@/utils/constants';
+import { signInResolver } from '@/shared/validators/resolvers';
+import { SignInFormData } from '@/types/auth';
 
 interface SignInFormProps {}
 
 const SignInForm: FC<SignInFormProps> = ({}) => {
   const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitted, isSubmitSuccessful },
-  } = useSignInForm();
+    methods: {
+      register,
+      handleSubmit,
+      formState: { errors, isSubmitted, isSubmitSuccessful },
+    },
+  } = useCustomForm<SignInFormData>({
+    defaultValues: defaultSignInFormValues,
+    resolver: signInResolver,
+  });
 
   function submitHandler(data: SignInFormData) {
     handleSignIn(data);

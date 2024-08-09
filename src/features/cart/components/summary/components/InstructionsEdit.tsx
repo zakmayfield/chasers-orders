@@ -1,5 +1,5 @@
-import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 import { FC } from 'react';
+import { DeliveryInstructionsData } from '@/types/user';
 import { UseFormRegister } from 'react-hook-form';
 
 interface InstructionsEditProps {

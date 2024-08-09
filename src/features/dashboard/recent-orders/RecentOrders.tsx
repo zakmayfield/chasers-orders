@@ -1,21 +1,15 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { getRecentOrders } from '@/services/queries/getRecentOrders';
 import RecentOrdersHeader from './components/RecentOrdersHeader';
 import RecentOrdersContent from './components/RecentOrdersContent';
-import { OrderType } from '@/types/cart';
+import { useGetRecentOrders } from '@/shared/hooks/queries';
 
 const RecentOrders = () => {
-  const { data: orders, isLoading } = useQuery<OrderType[]>({
-    queryKey: ['recent-orders'],
-    queryFn: getRecentOrders,
-    staleTime: Infinity,
-  });
+  const { data, isLoading } = useGetRecentOrders();
 
   return (
     <div>
-      <RecentOrdersHeader isLoading={isLoading} orderCount={orders?.length} />
+      <RecentOrdersHeader isLoading={isLoading} orderCount={data?.length} />
       <RecentOrdersContent />
     </div>
   );
