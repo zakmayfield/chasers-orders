@@ -15,7 +15,7 @@ interface UseFavorites {
     };
   };
 }
-
+// TODO: rework this hook
 export const useFavorites: UseFavorites = ({ productId }) => {
   const [isProductFavorited, setIsProductFavorited] = useState(false);
   const [favoriteId, setFavoriteId] = useState<string | undefined>(undefined);
