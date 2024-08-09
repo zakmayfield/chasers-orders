@@ -1,4 +1,3 @@
-import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 import type {
   Cart,
   UnitsOnCart,
@@ -9,6 +8,7 @@ import type {
   Order,
   OrderLineItem,
 } from '@prisma/client';
+import { DeliveryInstructionsData } from '@/types/user';
 
 export type CartCache = Cart & {
   items: CartItem[];

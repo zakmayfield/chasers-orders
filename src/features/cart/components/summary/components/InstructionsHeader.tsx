@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { FormState } from 'react-hook-form';
 import { InstructionsFormButtons } from './InstructionsFormButtons';
-import { DeliveryInstructionsData } from '@/shared/validators/cart/DeliveryInstructionsValidator';
+import { DeliveryInstructionsData } from '@/types/user';
 
 interface InstructionsHeaderProps {
   isEdit: boolean;

@@ -7,7 +7,3 @@ export const DeliveryInstructionsValidator = z
       .min(3, { message: 'Instructions must be 3 or more characters' }),
   })
   .required();
-
-export type DeliveryInstructionsData = z.infer<
-  typeof DeliveryInstructionsValidator
->;

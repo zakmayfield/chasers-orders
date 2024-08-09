@@ -1,3 +1,4 @@
+import { DeliveryInstructionsValidator } from '@/shared/validators/cart/DeliveryInstructionsValidator';
 import {
   User,
   Contact,
@@ -7,6 +8,7 @@ import {
   BillingAddress,
   Favorite,
 } from '@prisma/client';
+import { z } from 'zod';
 
 export type SecureUser = Omit<User, 'password'>;
 
@@ -24,3 +26,7 @@ export type ShippingData = {
   companyName?: string;
   shippingAddress: ShippingAddress | null;
 };
+
+export type DeliveryInstructionsData = z.infer<
+  typeof DeliveryInstructionsValidator
+>;

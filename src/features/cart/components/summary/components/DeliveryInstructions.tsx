@@ -1,6 +1,5 @@
 import { FC, useState } from 'react';
 import { useToast } from '@/shared/hooks';
-import { useInstructionEditForm } from '@/features/cart/helpers.cart';
 import {
   InstructionsNotFound,
   InstructionsHeader,
@@ -12,6 +11,9 @@ import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryI
 import { useQueryClient } from '@tanstack/react-query';
 import { DeliveryInstructionsResponse } from '@/types/cart';
 import { QueryKeys } from '@/types/hooks';
+import { useCustomForm } from '@/shared/hooks/forms';
+import { deliveryInstructionsResolver } from '@/shared/validators/resolvers';
+import { defaultDeliveryInstructionsFormValues } from '@/utils/constants';
 
 interface DeliveryInstructionsProps {
   content: string | null | undefined;
@@ -24,10 +26,12 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
   const { notify } = useToast();
   const [isEdit, setIsEdit] = useState(false);
 
-  const { register, handleSubmit, getValues, reset, formState } =
-    useInstructionEditForm({
-      deliveryInstructions: deliveryInstructions,
-    });
+  const {
+    methods: { register, handleSubmit, getValues, reset, formState },
+  } = useCustomForm({
+    defaultValues: defaultDeliveryInstructionsFormValues,
+    resolver: deliveryInstructionsResolver,
+  });
 
   const { mutate: editDeliveryInstructions } = useCustomMutation({
     mutationFn: updateDeliveryInstructions,
@@ -73,6 +77,7 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
       deliveryInstructions: deliveryInstructions ? deliveryInstructions : '',
     });
   };
+
   function onCancel() {
     toggleEdit();
     resetFormState();
