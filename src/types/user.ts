@@ -1,4 +1,5 @@
 import { DeliveryInstructionsValidator } from '@/shared/validators/cart/DeliveryInstructionsValidator';
+import { CompanyValidator } from '@/shared/validators/user/CompanyValidator';
 import {
   User,
   Contact,
@@ -30,3 +31,26 @@ export type ShippingData = {
 export type DeliveryInstructionsData = z.infer<
   typeof DeliveryInstructionsValidator
 >;
+
+export type CompanyFormData = z.infer<typeof CompanyValidator>;
+
+type AdjustedContactForm = z.ZodObject<
+  {
+    name: z.ZodString;
+    position: z.ZodString;
+    phoneNumber: z.ZodString;
+  },
+  'strip',
+  z.ZodTypeAny,
+  {
+    name: string;
+    position: string | null;
+    phoneNumber: string;
+  },
+  {
+    name: string;
+    position: string | null;
+    phoneNumber: string;
+  }
+>;
+export type ContactFormData = z.infer<AdjustedContactForm>;
