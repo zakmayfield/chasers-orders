@@ -1,11 +1,11 @@
 'use client';
 
 import { FC } from 'react';
-import { useSizeCache } from '@/features/products/helpers.products';
 import { getRowPayload } from '@/utils/helpers';
 import { Unit } from '@prisma/client';
 import { CellContext } from '@tanstack/react-table';
 import type { ProductWithUnits } from '@/types/products';
+import { useSizeCache } from '@/shared/hooks';
 
 interface UnitColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
@@ -16,15 +16,15 @@ export const UnitCol: FC<UnitColProps> = ({ info }) => {
     rowPayload: { defaultUnit, units, product },
   } = getRowPayload(info);
 
-  const { sizeQuery, sizeMutation } = useSizeCache({
+  const { getSizeCache, setSizeCache } = useSizeCache({
     productId: product.id,
   });
 
-  const { sizeCache } = sizeQuery();
+  const sizeCache = getSizeCache();
 
   const handleSizeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    sizeMutation(value);
+    setSizeCache(value);
   };
 
   const unitOptions = units.map((unitInfo) => (

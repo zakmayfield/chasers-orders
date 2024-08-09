@@ -3,7 +3,6 @@
 import { FC } from 'react';
 import { BsCartPlus } from 'react-icons/bs';
 import { useSession } from 'next-auth/react';
-import { useSizeCache } from '@/features/products/helpers.products';
 import { fetchCart } from '@/utils/cart';
 import { getRowPayload } from '@/utils/helpers';
 import {
@@ -13,6 +12,7 @@ import {
 import { CellContext } from '@tanstack/react-table';
 import { Unit, UnitsOnCart } from '@prisma/client';
 import { ProductWithUnits } from '@/types/products';
+import { useSizeCache } from '@/shared/hooks';
 
 interface ButtonColProps {
   info: CellContext<ProductWithUnits, Unit[]>;
@@ -25,7 +25,7 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     rowPayload: { defaultUnit, units, product },
   } = getRowPayload(info);
 
-  const { sizeQuery, sizeMutation } = useSizeCache({
+  const { getSizeCache, setSizeCache } = useSizeCache({
     productId: product.id,
   });
 
@@ -34,16 +34,13 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
   const { mutate: addToCart } = useAddToCart({
     customErrorHandling: async (error, variables) => {
       if (error.message.includes('item already in cart')) {
-        // fetch cart from server use userId
         const userId = session?.user.id;
         const cart = await fetchCart(userId);
 
-        // find CartItem to update
         const cartItemToUpdate = cart?.items.find(
           (item) => item.unitId === variables
         );
 
-        // evoke update quantity mutation
         if (cart && cartItemToUpdate) {
           const item = cartItemToUpdate as Omit<UnitsOnCart, 'createdAt'>;
           const updatedQuantity = item.quantity + 1;
@@ -60,10 +57,10 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
   });
 
   const handleAddToCart = async () => {
-    const { sizeCache } = sizeQuery();
+    const sizeCache = getSizeCache();
 
     function setToCacheAndReturnUnit(size: string) {
-      sizeMutation(size);
+      setSizeCache(size);
       const unit = units[0];
       return unit;
     }
@@ -75,7 +72,6 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
     }
     const unit = units.find((unit) => unit.size === sizeCache);
     addToCart(unit!.id);
-    return;
   };
 
   return (

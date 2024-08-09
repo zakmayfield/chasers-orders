@@ -1,49 +1,7 @@
 import { useEffect, useState } from 'react';
-import {
-  UseMutateFunction,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { getFavorites } from '@/services/queries/getFavorites';
 import type { ExtendedFavorite } from '@/types/products';
-
-interface UseSizeCache {
-  ({ productId }: { productId: string }): {
-    sizeQuery: () => {
-      sizeCache: SizeCache;
-    };
-    sizeMutation: UseMutateFunction<void, unknown, string, unknown>;
-  };
-}
-
-type SizeCache = string | undefined;
-
-export const useSizeCache: UseSizeCache = ({ productId }) => {
-  const queryClient = useQueryClient();
-
-  function sizeQuery() {
-    const sizeCache: string | undefined = queryClient.getQueryData([
-      'size',
-      productId,
-    ]);
-
-    return {
-      sizeCache,
-    };
-  }
-
-  const { mutate: sizeMutation } = useMutation({
-    mutationFn: async (value: string) => {
-      queryClient.setQueryData(['size', productId], value);
-    },
-  });
-
-  return {
-    sizeQuery,
-    sizeMutation,
-  };
-};
 
 interface UseFavorites {
   ({ productId }: { productId?: string }): {
