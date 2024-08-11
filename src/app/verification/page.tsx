@@ -1,4 +1,4 @@
-import { Verify } from '@/features/verify';
+import { Verification } from '@/features/verification';
 import { getAuthSession } from '@/lib/auth/auth.options';
 
 export default async function Page() {
@@ -6,7 +6,7 @@ export default async function Page() {
 
   return (
     <div>
-      <Verify
+      <Verification
         email={session?.user.email}
         isVerified={session?.user.emailVerified}
       />
