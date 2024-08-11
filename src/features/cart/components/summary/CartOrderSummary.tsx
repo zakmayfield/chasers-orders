@@ -1,6 +1,6 @@
 'use client';
 
-import { ShippingDetails, SummaryDetails, OrderButton } from './components';
+import { OrderButton, ShippingDetails, SummaryDetails } from './components';
 
 export const CartOrderSummary = () => {
   return (
