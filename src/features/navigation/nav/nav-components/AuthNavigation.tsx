@@ -1,7 +1,7 @@
 'use client';
 import { signOut } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { navData } from '../navData';
+import { navData } from '@/utils/constants';
 import { AuthNavItem } from './AuthNavItem';
 
 export default function AuthNavigation() {
