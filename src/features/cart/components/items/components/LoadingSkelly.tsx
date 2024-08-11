@@ -1,10 +1,18 @@
-'use client';
-
 import { FC } from 'react';
 
-interface LoadingItemProps {}
+interface LoadingSkellyProps {}
 
-export const LoadingItem: FC<LoadingItemProps> = ({}) => {
+export const LoadingSkelly: FC<LoadingSkellyProps> = ({}) => {
+  return (
+    <div>
+      {[1, 2].map((item) => (
+        <LoadingItem key={item} />
+      ))}
+    </div>
+  );
+};
+
+export const LoadingItem = ({}) => {
   return (
     <div className='w-full h-24 pb-3 border-b flex items-center gap-10 animate-pulse'>
       <div className='w-4 h-4 bg-slate-200 rounded'></div>

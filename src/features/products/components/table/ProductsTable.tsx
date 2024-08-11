@@ -1,13 +1,17 @@
 'use client';
-
 import React from 'react';
-import { NameCol, CategoryCol, ButtonCol } from './components';
-import { Pagination, Table, TableLoadingSkeleton } from './components/table';
-import { useCustomQuery } from '@/shared/hooks/queries';
+import { useCustomQuery, useFavorites } from '@/shared/hooks/queries';
 import { getProducts } from '@/services/queries/getProducts';
-import { useFavorites } from '@/features/products/helpers.products';
 import { getColumnHelper, useTableConfig } from '@/utils/helpers';
 import { QueryKeys } from '@/types/hooks';
+import {
+  NameCol,
+  CategoryCol,
+  ButtonCol,
+  Pagination,
+  Table,
+  TableLoadingSkeleton,
+} from './components';
 
 export const ProductsTable = () => {
   const { data, isFetching } = useCustomQuery({

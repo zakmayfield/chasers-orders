@@ -7,7 +7,7 @@ import { useCustomQuery } from '@/shared/hooks/queries';
 import { QueryKeys } from '@/types/hooks';
 import { getUserStatus } from '@/services/queries/getUserStatus';
 import { UserStatusAPIResponse } from '@/types/dashboard';
-import { ResendVerification } from '@/features/verify/components';
+import { ResendVerification } from '@/features/verification/components';
 
 interface AccountPendingProps {
   isApproved: boolean;

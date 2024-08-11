@@ -150,7 +150,7 @@ export const sendEmail = async ({
       <p>We're excited to have you on board. To get started, please confirm your email address by clicking the button below:</p>
 
       <div class="cta-container">
-        <a href="${BASE_URL}/verify?token=${verificationToken}" class="button" style="color: #fff;">Confirm Email</a>
+        <a href="${BASE_URL}/verification?token=${verificationToken}" class="button" style="color: #fff;">Confirm Email</a>
         <p style="font-size: 12; font-style: italic; color: #999;">This link expires in 48 hours.</p>
       </div>
       

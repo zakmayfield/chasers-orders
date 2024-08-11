@@ -1,9 +1,7 @@
 'use client';
 
 import { CartItem as CartItemType } from '@/types/cart';
-import { RemoveCartItemButton } from './RemoveCartItemButton';
-import { UpdateCartItemSize } from './UpdateCartItemSize';
-import { QuantityUpdate } from './QuantityUpdate';
+import { RemoveCartItemButton, UpdateCartItemSize, QuantityUpdate } from './';
 
 type CartItemProps = {
   cartId: string;

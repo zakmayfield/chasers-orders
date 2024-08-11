@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { ContainerBody, ContainerError, ContainerHeader } from './components';
+import { ContainerBody, ContainerError, ContainerHeader } from './';
 import { ShippingData } from '@/types/user';
 import { getShippingAddress } from '@/services/queries/getShippingAddress';
 import { useCustomQuery } from '@/shared/hooks/queries';

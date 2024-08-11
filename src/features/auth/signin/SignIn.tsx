@@ -1,6 +1,6 @@
 'use client';
 import FormSwitchLink from '../components/FormSwitchLink';
-import SignInForm from './SignInForm';
+import SignInForm from './components/SignInForm';
 
 export const SignIn = () => {
   return (

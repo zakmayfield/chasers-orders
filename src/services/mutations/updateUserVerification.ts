@@ -8,7 +8,7 @@ export const updateUserVerification = async ({
   token,
 }: UpdateUserVerificationRequest): Promise<UpdateUserVerificationResponse> =>
   await fetchHandler({
-    route: '/verify',
+    route: '/verification',
     options: {
       config: {
         method: 'PUT',

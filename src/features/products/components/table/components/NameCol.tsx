@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from 'react';
-import { useFavorites } from '@/features/products/helpers.products';
+import { useFavorites } from '@/shared/hooks/queries';
 import { CellContext } from '@tanstack/react-table';
 import { PiHeartDuotone, PiHeart } from 'react-icons/pi';
 import { useToggleFavorite } from '@/shared/hooks/mutations';

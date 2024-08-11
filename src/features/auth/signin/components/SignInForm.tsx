@@ -1,7 +1,7 @@
 'use client';
 import { FC } from 'react';
-import FieldError from '../components/FieldError';
-import { SignInButton } from './components';
+import FieldError from '../../components/FieldError';
+import { SignInButton } from '.';
 import { handleSignIn } from '@/utils/helpers';
 import { useCustomForm } from '@/shared/hooks/forms';
 import { defaultSignInFormValues } from '@/utils/constants';

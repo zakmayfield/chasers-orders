@@ -4,5 +4,5 @@ import { fetchHandler } from '@/utils/fetch';
 export const sendVerificationEmail =
   async (): Promise<SendVerificationEmailResponse> =>
     await fetchHandler({
-      route: '/verify/send',
+      route: '/verification/send',
     });
