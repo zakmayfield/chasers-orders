@@ -3,8 +3,9 @@
 import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
-import { NavItem } from '@/types/general';
 import { getFavorites } from '@/services/queries/getFavorites';
+import { QueryKeys } from '@/types/hooks';
+import { NavItem } from '@/types/general';
 
 interface AuthNavItemProps {
   navItem: NavItem;
@@ -32,7 +33,7 @@ export const AuthNavItem: FC<AuthNavItemProps> = ({ navItem, pathname }) => {
 
     switch (pathname) {
       case 'products':
-        queryClient.prefetchQuery(['favorites'], {
+        queryClient.prefetchQuery([QueryKeys.FAVORITES], {
           queryFn: getFavorites,
           staleTime: 60 * 1000 * 5,
         });

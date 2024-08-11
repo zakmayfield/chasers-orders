@@ -2,14 +2,13 @@ import './globals.css';
 
 import type { Metadata } from 'next';
 import { Quicksand } from 'next/font/google';
-
-import Providers from '@/lib/Providers';
 import { ToastContainer } from 'react-toastify';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import Header from '@/features/navigation/header/Header';
+import Providers from '@/lib/Providers';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { Footer } from '@/features/footer';
+import { Header } from '@/features/core/header';
+import { Footer } from '@/features/core/footer';
 
 const quicksand = Quicksand({ subsets: ['latin'] });
 

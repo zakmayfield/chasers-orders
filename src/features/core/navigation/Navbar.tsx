@@ -1,13 +1,13 @@
 'use server';
 
 import { FC } from 'react';
-import type { Session } from 'next-auth';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { Navigation } from './nav-components';
+import { Navigation } from './components';
+import type { Session } from 'next-auth';
 
 interface NavProps {}
 
-const Navbar: FC<NavProps> = async ({}) => {
+export const Navbar: FC<NavProps> = async ({}) => {
   const session = await getAuthSession();
 
   const checkAuth = (data: unknown): data is Session => {
@@ -22,5 +22,3 @@ const Navbar: FC<NavProps> = async ({}) => {
     </nav>
   );
 };
-
-export default Navbar;
