@@ -211,11 +211,11 @@ model Favorite {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
 
-  juice   Product @relation(fields: [juiceId], references: [id])
-  juiceId String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 
-  @@unique([userId, juiceId])
+  @@unique([userId, productId])
 }
