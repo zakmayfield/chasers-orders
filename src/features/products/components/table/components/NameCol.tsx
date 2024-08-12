@@ -5,7 +5,7 @@ import { useFavorites } from '@/shared/hooks/queries';
 import { CellContext } from '@tanstack/react-table';
 import { PiHeartDuotone, PiHeart } from 'react-icons/pi';
 import { useToggleFavorite } from '@/shared/hooks/mutations';
-import { ActionTypes, ProductWithUnits } from '@/types/products';
+import { ProductWithUnits, ToggleFavoriteAction } from '@/types/products';
 
 export type NameColProps = {
   info: CellContext<ProductWithUnits, string>;
@@ -24,12 +24,12 @@ export const NameCol: FC<NameColProps> = ({ info }) => {
   const { mutate: toggleFavorite } = useToggleFavorite({});
 
   const handleToggleFavorite = () => {
-    let action: ActionTypes;
+    let action: ToggleFavoriteAction;
 
     if (isProductFavorited && favoriteId) {
-      action = { action: 'remove', id: favoriteId! };
+      action = { action: 'remove', productId: favoriteId! };
     } else {
-      action = { action: 'add', id: productId };
+      action = { action: 'add', productId: productId };
     }
 
     toggleFavorite(action);

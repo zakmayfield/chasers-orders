@@ -16,11 +16,8 @@ export async function GET() {
       orderBy: {
         createdAt: 'desc',
       },
-      select: {
-        id: true,
-        createdAt: true,
-        juiceId: true,
-        juice: true,
+      include: {
+        product: true,
       },
     });
 

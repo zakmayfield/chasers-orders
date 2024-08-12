@@ -13,7 +13,8 @@ export const useIsFavorite = ({
 
   useEffect(() => {
     const isFavorite =
-      favorites && favorites.find((product) => product.juiceId === productId);
+      favorites &&
+      favorites.find((favorite) => favorite.productId === productId);
 
     if (isFavorite) {
       setFavoriteId(isFavorite.id);

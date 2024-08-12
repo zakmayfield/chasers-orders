@@ -16,7 +16,8 @@ export const useFavorites = ({ productId }: { productId?: string }) => {
 
   useEffect(() => {
     const favorite =
-      favorites && favorites.find((item) => item.juiceId === productId);
+      favorites &&
+      favorites.find((favorite) => favorite.productId === productId);
 
     if (favorite) {
       setFavoriteId(favorite.id);

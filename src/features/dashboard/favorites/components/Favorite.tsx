@@ -12,9 +12,9 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
   const { mutate: addToCart } = useAddToCart({});
 
   const favId = fav.id;
-  const productId = fav.juice.id;
-  const productName = fav.juice.name;
-  const productCategory = fav.juice.category;
+  const productId = fav.product.id;
+  const productName = fav.product.name;
+  const productCategory = fav.product.category;
 
   async function handleAddToCart() {
     const unitId = await getUnitId(productId);
