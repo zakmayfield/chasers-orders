@@ -24,7 +24,9 @@ export async function GET() {
     return new Response(JSON.stringify(favorites));
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, { status: 500 });
+      return new Response('Unable to get favorites at this time', {
+        status: 500,
+      });
     }
   }
 }
