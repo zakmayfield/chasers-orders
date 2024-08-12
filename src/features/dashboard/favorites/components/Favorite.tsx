@@ -42,7 +42,9 @@ export default function Favorite({ fav }: { fav: ExtendedFavorite }) {
           <PiShoppingCartSimpleDuotone className='text-2xl hover:text-light-green-500' />
         </button>
 
-        <button onClick={() => toggleFavorite({ action: 'remove', id: favId })}>
+        <button
+          onClick={() => toggleFavorite({ action: 'remove', productId: favId })}
+        >
           <PiXCircleThin className='text-lg text-gray-500 hover:text-light-text' />
         </button>
       </div>
