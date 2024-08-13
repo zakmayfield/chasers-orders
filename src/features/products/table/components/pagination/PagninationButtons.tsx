@@ -57,7 +57,9 @@ const NextPage = ({ tableConfig }: PaginationButtonProps) => {
 const LastPage = ({ tableConfig }: PaginationButtonProps) => {
   return (
     <PagButton
-      handleClick={() => tableConfig.getPageCount() - 1}
+      handleClick={() =>
+        tableConfig.setPageIndex(tableConfig.getPageCount() - 1)
+      }
       isDisabled={!tableConfig.getCanNextPage()}
       content='>>'
     />
