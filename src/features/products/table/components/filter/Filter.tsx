@@ -1,5 +1,5 @@
-import { Table as ReactTable, Column } from '@tanstack/react-table';
-import { ProductWithUnits, TableConfig } from '@/types/products';
+import { Column } from '@tanstack/react-table';
+import { TableConfig } from '@/types/products';
 import { categories } from '@/utils/constants';
 
 export const Filter = ({

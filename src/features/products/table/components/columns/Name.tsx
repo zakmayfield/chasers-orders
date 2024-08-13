@@ -29,7 +29,7 @@ export const NameColumn = ({ info }: { info: NameColumnInfo }) => {
     <div className='flex items-center'>
       <div
         className='cursor-pointer hover:text-green-600 px-1'
-        onClick={() => console.log('toggle favorite')}
+        onClick={() => console.info('toggle favorite')}
       >
         <HeartOutlineIcon />
       </div>
