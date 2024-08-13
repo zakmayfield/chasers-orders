@@ -1,5 +1,6 @@
 import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
+import { fetchCart } from '@/utils/cart';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
@@ -12,38 +13,22 @@ async function handler(req: Request) {
 
   const userId = session.user.id;
   const unitId: string = await req.json();
-  let cartId: string | null = null;
+  let cartId: string;
 
   try {
-    const cart = await db.cart.findUnique({
-      where: { userId },
-      include: {
-        items: true,
-      },
-    });
-
+    const cart = await fetchCart(userId);
     cartId = cart!.id;
 
-    // create cart record if user does not have a cart
-    if (!cart) {
-      const createdCart = await db.cart.create({
-        data: {
-          userId,
-        },
-      });
+    const itemAlreadyInCart = cart?.items.find(
+      (item) => item.unitId === unitId
+    );
 
-      cartId = createdCart.id;
-    }
-
-    // check for existing unit in cart
-    const unitExistsInCart = cart!.items.find((item) => item.unitId === unitId);
-
-    if (unitExistsInCart) {
+    if (itemAlreadyInCart) {
       const updatedCartItem = await db.unitsOnCart.update({
-        where: { cartId, unitId: unitExistsInCart.unitId },
+        where: { cartId, unitId: itemAlreadyInCart.unitId },
         data: {
-          ...unitExistsInCart,
-          quantity: unitExistsInCart.quantity + 1,
+          ...itemAlreadyInCart,
+          quantity: itemAlreadyInCart.quantity + 1,
         },
         include: {
           unit: {
