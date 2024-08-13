@@ -1,5 +1,4 @@
 import { ProductWithUnits, UnitsColumnInfo } from '@/types/products';
-import { Unit } from '@prisma/client';
 import {
   ColumnDef,
   createColumnHelper,
@@ -11,7 +10,7 @@ import {
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 
-export const useTableConfig = (
+export const useTableConstructor = (
   data: ProductWithUnits[] | undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<ProductWithUnits, any>[]

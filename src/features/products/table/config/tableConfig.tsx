@@ -1,5 +1,5 @@
 'use client';
-import { getColumnHelper, useTableConfig } from '@/utils/table';
+import { getColumnHelper, useTableConstructor } from '@/utils/table';
 import { ProductWithUnits } from '@/types/products';
 import {
   CategoryColumn,
@@ -7,7 +7,7 @@ import {
   UnitsColumn,
 } from '@/features/products/table/components/columns';
 
-export const getTableConfig = (data: ProductWithUnits[] | undefined) => {
+export const useTableConfig = (data: ProductWithUnits[] | undefined) => {
   const columnHelper = getColumnHelper();
 
   const columns = [
@@ -29,7 +29,7 @@ export const getTableConfig = (data: ProductWithUnits[] | undefined) => {
     }),
   ];
 
-  const { tableConfig } = useTableConfig(data, columns);
+  const { tableConfig } = useTableConstructor(data, columns);
 
   return { tableConfig };
 };
