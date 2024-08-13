@@ -1,7 +1,6 @@
 import { ProductWithUnits, UnitsColumnInfo } from '@/types/products';
 import { Unit } from '@prisma/client';
 import {
-  CellContext,
   ColumnDef,
   createColumnHelper,
   getCoreRowModel,

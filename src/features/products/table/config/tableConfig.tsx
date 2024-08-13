@@ -14,12 +14,12 @@ export const getTableConfig = (data: ProductWithUnits[] | undefined) => {
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      // cell: (info) => <NameColumn info={info} />,
+      cell: (info) => <NameColumn info={info} />,
     }),
     columnHelper.accessor('category', {
       header: 'Category',
       enableColumnFilter: true,
-      // cell: (info) => <CategoryColumn info={info} />,
+      cell: (info) => <CategoryColumn info={info} />,
     }),
     columnHelper.accessor('units', {
       id: 'cta',
