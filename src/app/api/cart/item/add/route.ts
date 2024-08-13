@@ -12,7 +12,7 @@ async function handler(req: Request) {
 
   const userId = session.user.id;
   const unitId: string = await req.json();
-  let cartId: string | null | undefined = null;
+  let cartId: string | null = null;
 
   try {
     const cart = await db.cart.findUnique({
@@ -22,7 +22,7 @@ async function handler(req: Request) {
       },
     });
 
-    cartId = cart?.id;
+    cartId = cart!.id;
 
     // create cart record if user does not have a cart
     if (!cart) {
