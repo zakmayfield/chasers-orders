@@ -1,16 +1,15 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
-import { Quicksand } from 'next/font/google';
+
 import { ToastContainer } from 'react-toastify';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import Providers from '@/lib/Providers';
-import { getAuthSession } from '@/lib/auth/auth.options';
 import { Header } from '@/features/core/header';
 import { Footer } from '@/features/core/footer';
-
-const quicksand = Quicksand({ subsets: ['latin'] });
+import Providers from '@/lib/Providers';
+import { getAuthSession } from '@/lib/auth/auth.options';
+import { quicksand } from '@/utils/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -30,9 +29,12 @@ export default async function RootLayout({
         <body className={quicksand.className}>
           {isAuth && <Header />}
 
+          {/* Pages Container */}
           <div className='py-6 min-h-screen'>{children}</div>
-          <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer limit={4} autoClose={3000} position='bottom-right' />
+
+          {/* Dev Tools */}
+          <ReactQueryDevtools initialIsOpen={false} />
 
           {isAuth && <Footer />}
         </body>

@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { BsCartPlus } from 'react-icons/bs';
 import { useSession } from 'next-auth/react';
 import { fetchCart } from '@/utils/cart';
-import { getRowPayload } from '@/utils/helpers';
+import { getRowPayload } from '@/utils/table';
 import {
   useAddToCart,
   useUpdateCartItemQuantity,
