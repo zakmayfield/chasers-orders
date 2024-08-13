@@ -4,10 +4,14 @@ import { TableConfigParams } from '@/types/products';
 
 export const ReactTable = ({ tableConfig }: TableConfigParams) => {
   return (
-    <table>
+    <table className='w-full'>
       <thead>
         {tableConfig.getHeaderGroups().map((group) => (
-          <TableHeaders key={group.id} group={group} />
+          <TableHeaders
+            key={group.id}
+            group={group}
+            tableConfig={tableConfig}
+          />
         ))}
       </thead>
 

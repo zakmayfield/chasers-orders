@@ -1,16 +1,16 @@
 import { Table as ReactTable, Column } from '@tanstack/react-table';
-import { ProductWithUnits } from '@/types/products';
+import { ProductWithUnits, TableConfig } from '@/types/products';
 import { categories } from '@/utils/constants';
 
 export const Filter = ({
-  reactTable,
+  tableConfig,
   column,
 }: {
-  reactTable: ReactTable<ProductWithUnits>;
+  tableConfig: TableConfig;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   column: Column<any, any>;
 }) => {
-  const firstValue = reactTable
+  const firstValue = tableConfig
     .getPreFilteredRowModel()
     .flatRows[0]?.getValue(column.id);
 
