@@ -1,33 +1,28 @@
-import { getAuthSession } from '@/lib/auth/auth.options';
 import { db } from '@/lib/prisma';
-import {
-  PrismaClientKnownRequestError,
-  PrismaClientUnknownRequestError,
-} from '@prisma/client/runtime/library';
+import { getAuthSession } from '@/lib/auth/auth.options';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
 
-  // determine user auth
   if (!session?.user) {
     return new Response('Unauthorized. Please log in to continue.', {
       status: 401,
     });
   }
 
-  const body: { unitId: string } = await req.json();
-  const { unitId } = body;
   const userId = session.user.id;
-  let cartId: string | null = null;
+  const unitId: string = await req.json();
+  let cartId: string | null | undefined = null;
 
   try {
-    // find user + cart from session ID
     const cart = await db.cart.findUnique({
       where: { userId },
       include: {
         items: true,
       },
     });
+
+    cartId = cart?.id;
 
     // create cart record if user does not have a cart
     if (!cart) {
@@ -40,27 +35,35 @@ async function handler(req: Request) {
       cartId = createdCart.id;
     }
 
-    cartId = cart!.id;
-
     // check for existing unit in cart
-    const unitExistsInCart = cart!.items.find((unit) => unit.unitId === unitId);
+    const unitExistsInCart = cart!.items.find((item) => item.unitId === unitId);
 
     if (unitExistsInCart) {
-      // TODO: fix eventually: increase quantity depends on this on add to cart existing item error -- not a very good implementation
-      return new Response('item already in cart', {
-        status: 409,
+      const updatedCartItem = await db.unitsOnCart.update({
+        where: { cartId, unitId: unitExistsInCart.unitId },
+        data: {
+          ...unitExistsInCart,
+          quantity: unitExistsInCart.quantity + 1,
+        },
+        include: {
+          unit: {
+            include: {
+              product: true,
+            },
+          },
+        },
+      });
+
+      return new Response(JSON.stringify(updatedCartItem), {
+        status: 201,
       });
     }
 
-    // create new junction record with payload
-    const payload = {
-      unitId,
-      cartId,
-      quantity: 1,
-    };
-    const record = await db.unitsOnCart.create({
+    const cartIem = await db.unitsOnCart.create({
       data: {
-        ...payload,
+        unitId,
+        cartId,
+        quantity: 1,
       },
       include: {
         unit: {
@@ -71,22 +74,12 @@ async function handler(req: Request) {
       },
     });
 
-    return new Response(JSON.stringify(record), {
+    return new Response(JSON.stringify(cartIem), {
       status: 201,
     });
   } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      return new Response(error.message, {
-        status: 500,
-      });
-    } else if (error instanceof PrismaClientUnknownRequestError) {
-      return new Response(error.message, {
-        status: 500,
-      });
-    }
-
     if (error instanceof Error) {
-      return new Response(error.message, {
+      return new Response('Unable to add item to the cart at this time', {
         status: 500,
       });
     }

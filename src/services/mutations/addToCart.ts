@@ -10,7 +10,7 @@ export const addToCart = async (unitId: string): Promise<CartItem> =>
         headers: {
           'Content-type': 'application/json',
         },
-        body: JSON.stringify({ unitId }),
+        body: JSON.stringify(unitId),
       },
     },
   });
