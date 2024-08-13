@@ -1,11 +1,7 @@
-import { HeaderGroup, flexRender } from '@tanstack/react-table';
-import { ProductWithUnits } from '@/types/products';
+import { flexRender } from '@tanstack/react-table';
+import { TableHeadersGroup } from '@/types/products';
 
-export const TableHeaders = ({
-  group,
-}: {
-  group: HeaderGroup<ProductWithUnits>;
-}) => {
+export const TableHeaders = ({ group }: { group: TableHeadersGroup }) => {
   return (
     <tr>
       {group.headers.map((header) => (

@@ -1,7 +1,7 @@
-import { Row, flexRender } from '@tanstack/react-table';
-import { ProductWithUnits } from '@/types/products';
+import { flexRender } from '@tanstack/react-table';
+import { TableRow } from '@/types/products';
 
-export const TableBody = ({ row }: { row: Row<ProductWithUnits> }) => {
+export const TableBody = ({ row }: { row: TableRow }) => {
   return (
     <tr>
       {row.getVisibleCells().map((cell) => {

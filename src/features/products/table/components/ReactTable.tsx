@@ -1,13 +1,8 @@
-import { Table } from '@tanstack/react-table';
 import { TableHeaders } from './TableHeaders';
-import { ProductWithUnits } from '@/types/products';
 import { TableBody } from './TableBody';
+import { TableConfigParams } from '@/types/products';
 
-export const ReactTable = ({
-  tableConfig,
-}: {
-  tableConfig: Table<ProductWithUnits>;
-}) => {
+export const ReactTable = ({ tableConfig }: TableConfigParams) => {
   return (
     <table>
       <thead>

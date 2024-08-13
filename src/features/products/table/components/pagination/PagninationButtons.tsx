@@ -1,9 +1,4 @@
-import { Table } from '@tanstack/react-table';
-import { ProductWithUnits } from '@/types/products';
-
-type PaginationButtonProps = {
-  tableConfig: Table<ProductWithUnits>;
-};
+import { TableConfigParams } from '@/types/products';
 
 const PagButton = ({
   handleClick,
@@ -27,7 +22,7 @@ const PagButton = ({
   );
 };
 
-const FirstPage = ({ tableConfig }: PaginationButtonProps) => {
+const FirstPage = ({ tableConfig }: TableConfigParams) => {
   return (
     <PagButton
       handleClick={() => tableConfig.setPageIndex(0)}
@@ -36,7 +31,7 @@ const FirstPage = ({ tableConfig }: PaginationButtonProps) => {
     />
   );
 };
-const PreviousPage = ({ tableConfig }: PaginationButtonProps) => {
+const PreviousPage = ({ tableConfig }: TableConfigParams) => {
   return (
     <PagButton
       handleClick={() => tableConfig.previousPage()}
@@ -45,7 +40,7 @@ const PreviousPage = ({ tableConfig }: PaginationButtonProps) => {
     />
   );
 };
-const NextPage = ({ tableConfig }: PaginationButtonProps) => {
+const NextPage = ({ tableConfig }: TableConfigParams) => {
   return (
     <PagButton
       handleClick={() => tableConfig.nextPage()}
@@ -54,7 +49,7 @@ const NextPage = ({ tableConfig }: PaginationButtonProps) => {
     />
   );
 };
-const LastPage = ({ tableConfig }: PaginationButtonProps) => {
+const LastPage = ({ tableConfig }: TableConfigParams) => {
   return (
     <PagButton
       handleClick={() =>
@@ -66,9 +61,7 @@ const LastPage = ({ tableConfig }: PaginationButtonProps) => {
   );
 };
 
-export const PaginationButtonGroup = ({
-  tableConfig,
-}: PaginationButtonProps) => {
+export const PaginationButtonGroup = ({ tableConfig }: TableConfigParams) => {
   return (
     <div>
       <FirstPage tableConfig={tableConfig} />

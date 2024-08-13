@@ -1,6 +1,11 @@
 'use client';
 import { getColumnHelper, useTableConfig } from '@/utils/table';
 import { ProductWithUnits } from '@/types/products';
+import {
+  CategoryColumn,
+  NameColumn,
+  UnitsColumn,
+} from '@/features/products/table/components/columns';
 
 export const getTableConfig = (data: ProductWithUnits[] | undefined) => {
   const columnHelper = getColumnHelper();
@@ -9,18 +14,18 @@ export const getTableConfig = (data: ProductWithUnits[] | undefined) => {
     columnHelper.accessor('name', {
       header: 'Name',
       enableColumnFilter: true,
-      // cell: (info) => <NameCol info={info} />,
+      // cell: (info) => <NameColumn info={info} />,
     }),
     columnHelper.accessor('category', {
       header: 'Category',
       enableColumnFilter: true,
-      // cell: (info) => <CategoryCol info={info} />,
+      // cell: (info) => <CategoryColumn info={info} />,
     }),
     columnHelper.accessor('units', {
       id: 'cta',
       header: 'Size',
       enableColumnFilter: false,
-      // cell: (info) => <ButtonCol info={info} />,
+      cell: (info) => <UnitsColumn info={info} />,
     }),
   ];
 

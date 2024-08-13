@@ -1,11 +1,6 @@
-import { ProductWithUnits } from '@/types/products';
-import { Table } from '@tanstack/react-table';
+import { TableConfigParams } from '@/types/products';
 
-export const PageIndex = ({
-  tableConfig,
-}: {
-  tableConfig: Table<ProductWithUnits>;
-}) => {
+export const PageIndex = ({ tableConfig }: TableConfigParams) => {
   return (
     <span className='flex items-center gap-1'>
       <p>Page</p>

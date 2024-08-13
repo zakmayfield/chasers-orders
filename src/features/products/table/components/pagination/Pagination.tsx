@@ -1,13 +1,8 @@
-import { Table } from '@tanstack/react-table';
 import { PaginationButtonGroup } from './PagninationButtons';
-import { ProductWithUnits } from '@/types/products';
 import { PageIndex } from './PaginationIndex';
+import { TableConfigParams } from '@/types/products';
 
-export const Pagination = ({
-  tableConfig,
-}: {
-  tableConfig: Table<ProductWithUnits>;
-}) => {
+export const Pagination = ({ tableConfig }: TableConfigParams) => {
   return (
     <div>
       <div className='flex items-center gap-6'>

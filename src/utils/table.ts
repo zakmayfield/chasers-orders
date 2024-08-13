@@ -1,4 +1,4 @@
-import { ProductWithUnits } from '@/types/products';
+import { ProductWithUnits, UnitsColumnInfo } from '@/types/products';
 import { Unit } from '@prisma/client';
 import {
   CellContext,
@@ -34,16 +34,10 @@ export const useTableConfig = (
   return { tableConfig };
 };
 
-export const getRowPayload = (info: CellContext<ProductWithUnits, Unit[]>) => {
-  const units = info.getValue();
+export const getRowData = (info: UnitsColumnInfo) => {
   const product = info.row.original;
-  const defaultUnit = units[0];
 
-  const rowPayload = {
-    defaultUnit,
-    units,
+  return {
     product,
   };
-
-  return { rowPayload };
 };

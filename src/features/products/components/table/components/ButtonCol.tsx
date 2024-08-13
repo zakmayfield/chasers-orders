@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { BsCartPlus } from 'react-icons/bs';
 import { useSession } from 'next-auth/react';
 import { fetchCart } from '@/utils/cart';
-import { getRowPayload } from '@/utils/table';
+import { getRowData } from '@/utils/table';
 import {
   useAddToCart,
   useUpdateCartItemQuantity,
@@ -20,9 +20,7 @@ interface ButtonColProps {
 export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
   const { data: session } = useSession();
 
-  const {
-    rowPayload: { defaultUnit },
-  } = getRowPayload(info);
+  const { product } = getRowData(info);
 
   const { mutate: updateQuantity } = useUpdateCartItemQuantity({});
 
@@ -52,7 +50,7 @@ export const ButtonCol: FC<ButtonColProps> = ({ info }) => {
   });
 
   const handleAddToCart = () => {
-    addToCart(defaultUnit.id);
+    addToCart(product.units[0].id);
   };
 
   return (
