@@ -7,7 +7,9 @@ export const Favorites = () => {
 
   return (
     <div>
-      {favorites?.map((favorite) => <Favorite favoriteData={favorite} />)}
+      {favorites?.map((favorite) => (
+        <Favorite key={favorite.id} favoriteData={favorite} />
+      ))}
     </div>
   );
 };
