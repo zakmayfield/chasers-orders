@@ -1,41 +1,51 @@
-import { NameColumnInfo } from '@/types/products';
-import { HeartOutlineIcon } from '@/utils/icons';
+import { HeartDuotoneIcon, HeartOutlineIcon } from '@/utils/icons';
+import { useToggleFavorite } from '@/shared/hooks/mutations';
+import { useGetFavorites } from '@/shared/hooks/queries';
+import { NameColumnInfo, ToggleFavoriteAction } from '@/types/products';
 
-export const NameColumn = ({ info }: { info: NameColumnInfo }) => {
-  // const productId = info.row.original.id;
-
-  // const {
-  //   query: { isLoading },
-  //   favorite: { isProductFavorited, favoriteId },
-  // } = useFavorites({
-  //   productId,
-  // });
-
-  // const { mutate: toggleFavorite } = useToggleFavorite({});
-
-  // const handleToggleFavorite = () => {
-  //   let action: ToggleFavoriteAction;
-
-  //   if (isProductFavorited && favoriteId) {
-  //     action = { action: 'remove', productId: favoriteId! };
-  //   } else {
-  //     action = { action: 'add', productId: productId };
-  //   }
-
-  //   toggleFavorite(action);
-  // };
+export const NameColumn = ({
+  info,
+  isFavorite,
+}: {
+  info: NameColumnInfo;
+  isFavorite: boolean;
+}) => {
+  const productId = info.row.original.id;
 
   return (
     <div className='flex items-center'>
-      <div
-        className='cursor-pointer hover:text-green-600 px-1'
-        onClick={() => console.info('toggle favorite')}
-      >
-        <HeartOutlineIcon />
-      </div>
+      <FavoriteButton isFavorite={isFavorite} productId={productId} />
       <div className='overflow-hidden text-ellipsis whitespace-nowrap pl-3'>
         {info.getValue()}
       </div>
     </div>
   );
 };
+
+function FavoriteButton({
+  isFavorite,
+  productId,
+}: {
+  isFavorite: boolean;
+  productId: string;
+}) {
+  const { data: favorites } = useGetFavorites();
+  const { mutate: toggleFavorite } = useToggleFavorite({});
+
+  const toggleAction: ToggleFavoriteAction = {
+    action: isFavorite ? 'remove' : 'add',
+    productId,
+    favoriteId: favorites?.find((favorite) => favorite.productId === productId)
+      ?.id,
+  };
+
+  return (
+    <div
+      className={`cursor-pointer px-1 hover:text-green-500 ${isFavorite && 'text-green-600'}`}
+    >
+      <button onClick={() => toggleFavorite(toggleAction)}>
+        {isFavorite ? <HeartDuotoneIcon /> : <HeartOutlineIcon />}
+      </button>
+    </div>
+  );
+}

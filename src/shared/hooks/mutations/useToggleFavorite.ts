@@ -14,6 +14,7 @@ export const useToggleFavorite = ({
 }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
+
   const { mutate } = useCustomMutation<ExtendedFavorite, ToggleFavoriteAction>({
     mutationFn: toggleFavorite,
     handleSuccess(data, variables) {

@@ -6,8 +6,8 @@ import { Pagination } from './components/pagination';
 import { TableProvider } from '@/lib/providers/TableProvider';
 
 export const Table = () => {
-  const { data } = useGetProducts();
-  const { tableConfig } = useTableConfig(data);
+  const { data: products } = useGetProducts();
+  const { tableConfig } = useTableConfig(products);
 
   return (
     <div>

@@ -11,7 +11,13 @@ const handler = async (req: NextRequest) => {
     return new Response('Unauthenticated', { status: 401 });
   }
 
-  const productId: ToggleFavoriteAction['productId'] = await req.json();
+  const {
+    productId,
+    favoriteId,
+  }: {
+    productId: ToggleFavoriteAction['productId'];
+    favoriteId: ToggleFavoriteAction['favoriteId'];
+  } = await req.json();
 
   if (!productId) {
     return new Response('Invalid input', { status: 400 });
@@ -41,12 +47,17 @@ const handler = async (req: NextRequest) => {
             productId,
             userId: session.user.id,
           },
+          include: {
+            product: true,
+          },
         });
         return new Response(JSON.stringify(added));
 
       case 'remove':
         const removed = await db.favorite.delete({
-          where: { id: productId },
+          where: {
+            id: favoriteId,
+          },
         });
         return new Response(JSON.stringify(removed));
 
@@ -55,7 +66,7 @@ const handler = async (req: NextRequest) => {
     }
   } catch (error) {
     if (error instanceof Error) {
-      return new Response('Unable to toggle favorite at this time', {
+      return new Response(error.message, {
         status: 500,
       });
     }

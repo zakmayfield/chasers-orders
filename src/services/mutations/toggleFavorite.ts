@@ -13,7 +13,10 @@ export const toggleFavorite = async (
           'Content-type': 'application/json',
           'X-Action': params.action,
         },
-        body: JSON.stringify(params.productId),
+        body: JSON.stringify({
+          productId: params.productId,
+          favoriteId: params.favoriteId,
+        }),
       },
     },
   });

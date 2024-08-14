@@ -8,6 +8,7 @@ export type ProductWithUnits = Product & {
 export type ToggleFavoriteAction = {
   action: 'add' | 'remove';
   productId: string;
+  favoriteId?: string;
 };
 
 export type ExtendedFavorite = Favorite & {
