@@ -72,7 +72,7 @@ const LastPage = () => {
 
 export const PaginationButtonGroup = () => {
   return (
-    <div>
+    <div className='flex gap-1'>
       <FirstPage />
       <PreviousPage />
       <NextPage />
