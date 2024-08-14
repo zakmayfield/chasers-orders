@@ -41,9 +41,9 @@ function FavoriteButton({
 
   return (
     <div
-      className={`cursor-pointer px-1 hover:text-green-500 ${isFavorite && 'text-green-600'}`}
+      className={`cursor-pointer px-1 flex items-center hover:text-green-500 ${isFavorite && 'text-green-600'}`}
     >
-      <button onClick={() => toggleFavorite(toggleAction)}>
+      <button className='text-xl' onClick={() => toggleFavorite(toggleAction)}>
         {isFavorite ? <HeartDuotoneIcon /> : <HeartOutlineIcon />}
       </button>
     </div>
