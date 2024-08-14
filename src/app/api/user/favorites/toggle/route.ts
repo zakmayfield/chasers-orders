@@ -19,10 +19,6 @@ const handler = async (req: NextRequest) => {
     favoriteId: ToggleFavoriteAction['favoriteId'];
   } = await req.json();
 
-  if (!productId) {
-    return new Response('Invalid input', { status: 400 });
-  }
-
   // ACTION HEADER
   const actionFlag = headers().get('x-action');
   let action: ToggleFavoriteAction['action'];
@@ -44,8 +40,8 @@ const handler = async (req: NextRequest) => {
       case 'add':
         const added = await db.favorite.create({
           data: {
-            productId,
             userId: session.user.id,
+            productId: productId!,
           },
           include: {
             product: true,
@@ -66,9 +62,12 @@ const handler = async (req: NextRequest) => {
     }
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, {
-        status: 500,
-      });
+      return new Response(
+        `Unable to ${action === 'add' ? 'add' : 'remove'} favorite at this time`,
+        {
+          status: 500,
+        }
+      );
     }
   }
 };
