@@ -7,7 +7,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import { Header } from '@/features/core/header';
 import { Footer } from '@/features/core/footer';
-import Providers from '@/lib/Providers';
+import { CoreProvider } from '@/lib/providers/CoreProvider';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { quicksand } from '@/utils/fonts';
 
@@ -25,7 +25,7 @@ export default async function RootLayout({
   const isAuth = !!session?.user;
   return (
     <html lang='en'>
-      <Providers>
+      <CoreProvider>
         <body className={quicksand.className}>
           {isAuth && <Header />}
 
@@ -38,7 +38,7 @@ export default async function RootLayout({
 
           {isAuth && <Footer />}
         </body>
-      </Providers>
+      </CoreProvider>
     </html>
   );
 }

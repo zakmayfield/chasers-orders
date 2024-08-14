@@ -9,10 +9,10 @@ interface ProvidersProps {
 }
 const queryClient = new QueryClient();
 
-export default function Providers({ children }: ProvidersProps) {
+export const CoreProvider = ({ children }: ProvidersProps) => {
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>{children}</SessionProvider>
     </QueryClientProvider>
   );
-}
+};
