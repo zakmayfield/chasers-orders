@@ -1,6 +1,5 @@
 'use client';
 
-import { FC } from 'react';
 import Link from 'next/link';
 import { LoadingSpinner } from '@/shared/components';
 import { useCustomQuery } from '@/shared/hooks/queries';
@@ -9,11 +8,7 @@ import { getUserStatus } from '@/services/queries/getUserStatus';
 import { UserStatusAPIResponse } from '@/types/dashboard';
 import { ResendVerification } from '@/features/verification/components';
 
-interface AccountPendingProps {
-  isApproved: boolean;
-}
-
-const AccountPending: FC<AccountPendingProps> = () => {
+export const AccountPending = () => {
   const { data: status, isLoading } = useCustomQuery<UserStatusAPIResponse>({
     queryKey: [QueryKeys.USER_STATUS],
     queryFn: getUserStatus,
@@ -89,5 +84,3 @@ const AccountPending: FC<AccountPendingProps> = () => {
     </div>
   );
 };
-
-export default AccountPending;
