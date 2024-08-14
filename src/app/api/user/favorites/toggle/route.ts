@@ -2,7 +2,7 @@ import { getAuthSession } from '@/lib/auth/auth.options';
 import { NextRequest } from 'next/server';
 import { headers } from 'next/headers';
 import { db } from '@/lib/prisma';
-import { Actions } from '@/types/products';
+import { ToggleFavoriteAction } from '@/types/products';
 
 const handler = async (req: NextRequest) => {
   const session = await getAuthSession();
@@ -11,19 +11,21 @@ const handler = async (req: NextRequest) => {
     return new Response('Unauthenticated', { status: 401 });
   }
 
-  const body: { id: string } = await req.json();
-  const { id } = body;
-
-  if (!id) {
-    return new Response('Invalid input', { status: 400 });
-  }
+  const {
+    productId,
+    favoriteId,
+  }: {
+    productId: ToggleFavoriteAction['productId'];
+    favoriteId: ToggleFavoriteAction['favoriteId'];
+  } = await req.json();
 
   // ACTION HEADER
-  const headersList = headers();
-  const actionFlag = headersList.get('x-action');
-  let action: Actions;
+  const actionFlag = headers().get('x-action');
+  let action: ToggleFavoriteAction['action'];
 
-  function isValidAction(data: unknown): data is Actions {
+  function isValidAction(
+    data: unknown
+  ): data is ToggleFavoriteAction['action'] {
     return typeof data === 'string' && (data === 'add' || data === 'remove');
   }
 
@@ -33,26 +35,25 @@ const handler = async (req: NextRequest) => {
     return new Response('Invalid action', { status: 400 });
   }
 
-  // ACTION TYPES
-  type AddAction = { juiceId: string };
-  type RemoveAction = { favoriteId: string };
-
   try {
     switch (action) {
       case 'add':
-        const add: AddAction = { juiceId: id };
         const added = await db.favorite.create({
           data: {
-            juiceId: add.juiceId,
             userId: session.user.id,
+            productId: productId!,
+          },
+          include: {
+            product: true,
           },
         });
         return new Response(JSON.stringify(added));
 
       case 'remove':
-        const remove: RemoveAction = { favoriteId: id };
         const removed = await db.favorite.delete({
-          where: { id: remove.favoriteId },
+          where: {
+            id: favoriteId,
+          },
         });
         return new Response(JSON.stringify(removed));
 
@@ -61,7 +62,12 @@ const handler = async (req: NextRequest) => {
     }
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, { status: 500 });
+      return new Response(
+        `Unable to ${action === 'add' ? 'add' : 'remove'} favorite at this time`,
+        {
+          status: 500,
+        }
+      );
     }
   }
 };

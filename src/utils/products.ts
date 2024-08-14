@@ -1,9 +1,7 @@
 'use server';
 import { db } from '@/lib/prisma';
 
-export const getUnitId = async (
-  productId: string
-): Promise<string | undefined> => {
+export const getUnitId = async (productId: string): Promise<string> => {
   const product = await db.product.findUnique({
     where: { id: productId },
     select: {
@@ -16,8 +14,5 @@ export const getUnitId = async (
     },
   });
 
-  const units = product?.units;
-  const firstUnitId = units && units[0].id;
-
-  return firstUnitId;
+  return product!.units[0].id;
 };

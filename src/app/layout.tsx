@@ -1,17 +1,15 @@
 import './globals.css';
 
 import type { Metadata } from 'next';
-import { Quicksand } from 'next/font/google';
 
-import Providers from '@/lib/Providers';
 import { ToastContainer } from 'react-toastify';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import Header from '@/features/navigation/header/Header';
+import { Header } from '@/features/core/header';
+import { Footer } from '@/features/core/footer';
+import { CoreProvider } from '@/lib/providers/CoreProvider';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { Footer } from '@/features/footer';
-
-const quicksand = Quicksand({ subsets: ['latin'] });
+import { quicksand } from '@/utils/fonts';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -27,17 +25,20 @@ export default async function RootLayout({
   const isAuth = !!session?.user;
   return (
     <html lang='en'>
-      <Providers>
+      <CoreProvider>
         <body className={quicksand.className}>
           {isAuth && <Header />}
 
+          {/* Pages Container */}
           <div className='py-6 min-h-screen'>{children}</div>
-          <ReactQueryDevtools initialIsOpen={false} />
           <ToastContainer limit={4} autoClose={3000} position='bottom-right' />
+
+          {/* Dev Tools */}
+          <ReactQueryDevtools initialIsOpen={false} />
 
           {isAuth && <Footer />}
         </body>
-      </Providers>
+      </CoreProvider>
     </html>
   );
 }

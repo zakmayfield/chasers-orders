@@ -1,4 +1,4 @@
-import { ActionTypes, ExtendedFavorite } from '@/types/products';
+import { ExtendedFavorite, ToggleFavoriteAction } from '@/types/products';
 import { useCustomMutation } from './useCustomMutation';
 import { toggleFavorite } from '@/services/mutations/toggleFavorite';
 import { useToast } from '../useToast';
@@ -14,7 +14,8 @@ export const useToggleFavorite = ({
 }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const { mutate } = useCustomMutation<ExtendedFavorite, ActionTypes>({
+
+  const { mutate } = useCustomMutation<ExtendedFavorite, ToggleFavoriteAction>({
     mutationFn: toggleFavorite,
     handleSuccess(data, variables) {
       notify(
@@ -41,7 +42,7 @@ export const useToggleFavorite = ({
       customSuccessHandling?.(data);
     },
     handleError(error) {
-      notify('Unable to toggle favorites at this time', 'error');
+      notify(error.message, 'error');
 
       customErrorHandling?.(error);
     },

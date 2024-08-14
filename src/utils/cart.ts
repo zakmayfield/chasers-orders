@@ -5,7 +5,7 @@ import { CartWithItems } from '@/types/cart';
 import type { Cart } from '@prisma/client';
 
 export const fetchCart = async (
-  userId?: string
+  userId: string
 ): Promise<CartWithItems | null> =>
   await db.cart.findUnique({
     where: { userId },

@@ -22,13 +22,28 @@ export const useAddToCart = ({
 
       queryClient.setQueryData(
         [QueryKeys.CART],
-        (oldData: CartCache | undefined) =>
-          oldData
-            ? {
-                ...oldData,
-                items: [data, ...oldData.items],
-              }
-            : oldData
+        (oldData: CartCache | undefined) => {
+          const itemAlreadyInCart = !!oldData?.items.find(
+            (item) => item.unitId === data.unitId
+          );
+
+          if (oldData && itemAlreadyInCart) {
+            return {
+              ...oldData,
+              items: [
+                data,
+                ...oldData.items.filter((item) => item.unitId !== data.unitId),
+              ],
+            };
+          } else if (oldData && !itemAlreadyInCart) {
+            return {
+              ...oldData,
+              items: [data, ...oldData.items],
+            };
+          } else {
+            return oldData;
+          }
+        }
       );
 
       customSuccessHandling?.(data);

@@ -1,5 +1,5 @@
-import { Products } from '@/features/products';
+import { ProductsLayout } from '@/features/products';
 
 export default async function Page() {
-  return <Products />;
+  return <ProductsLayout />;
 }

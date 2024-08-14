@@ -16,18 +16,17 @@ export async function GET() {
       orderBy: {
         createdAt: 'desc',
       },
-      select: {
-        id: true,
-        createdAt: true,
-        juiceId: true,
-        juice: true,
+      include: {
+        product: true,
       },
     });
 
     return new Response(JSON.stringify(favorites));
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, { status: 500 });
+      return new Response('Unable to get favorites at this time', {
+        status: 500,
+      });
     }
   }
 }
