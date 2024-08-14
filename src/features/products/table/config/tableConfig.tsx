@@ -34,7 +34,7 @@ export const useTableConfig = (data: ProductWithUnits[] | undefined) => {
     }),
     columnHelper.accessor('units', {
       id: 'cta',
-      header: 'Size',
+      header: '',
       enableColumnFilter: false,
       cell: (info) => <UnitsColumn info={info} />,
     }),

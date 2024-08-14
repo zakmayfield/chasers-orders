@@ -1,4 +1,3 @@
-import { ProductWithUnits, UnitsColumnInfo } from '@/types/products';
 import {
   ColumnDef,
   createColumnHelper,
@@ -7,6 +6,7 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import { ProductWithUnits } from '@/types/products';
 
 export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
 
@@ -30,12 +30,4 @@ export const useTableConstructor = (
   });
 
   return { tableConfig };
-};
-
-export const getRowData = (info: UnitsColumnInfo) => {
-  const product = info.row.original;
-
-  return {
-    product,
-  };
 };
