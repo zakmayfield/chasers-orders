@@ -3,6 +3,7 @@ import { useGetProducts } from '@/shared/hooks/queries';
 import { useTableConfig } from './config';
 import { ReactTable } from './components';
 import { Pagination } from './components/pagination';
+import { TableProvider } from '@/lib/providers/TableProvider';
 
 export const Table = () => {
   const { data } = useGetProducts();
@@ -10,8 +11,10 @@ export const Table = () => {
 
   return (
     <div>
-      <ReactTable tableConfig={tableConfig} />
-      <Pagination tableConfig={tableConfig} />
+      <TableProvider tableConfig={tableConfig}>
+        <ReactTable />
+        <Pagination />
+      </TableProvider>
     </div>
   );
 };

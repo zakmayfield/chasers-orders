@@ -1,6 +1,9 @@
-import { TableConfigParams } from '@/types/products';
+'use client';
+import { useTableContext } from '@/lib/providers/TableProvider';
 
-export const PageIndex = ({ tableConfig }: TableConfigParams) => {
+export const PageIndex = () => {
+  const { tableConfig } = useTableContext();
+
   return (
     <span className='flex items-center gap-1'>
       <p>Page</p>

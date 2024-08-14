@@ -1,17 +1,16 @@
+'use client';
 import { TableHeaders } from './TableHeaders';
 import { TableBody } from './TableBody';
-import { TableConfigParams } from '@/types/products';
+import { useTableContext } from '@/lib/providers/TableProvider';
 
-export const ReactTable = ({ tableConfig }: TableConfigParams) => {
+export const ReactTable = () => {
+  const { tableConfig } = useTableContext();
+
   return (
     <table className='w-full'>
       <thead>
         {tableConfig.getHeaderGroups().map((group) => (
-          <TableHeaders
-            key={group.id}
-            group={group}
-            tableConfig={tableConfig}
-          />
+          <TableHeaders key={group.id} group={group} />
         ))}
       </thead>
 

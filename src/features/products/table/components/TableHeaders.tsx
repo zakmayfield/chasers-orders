@@ -1,14 +1,12 @@
+'use client';
 import { flexRender } from '@tanstack/react-table';
-import { TableConfig, TableHeadersGroup } from '@/types/products';
 import { Filter } from './filter';
+import { useTableContext } from '@/lib/providers/TableProvider';
+import { TableHeadersGroup } from '@/types/products';
 
-export const TableHeaders = ({
-  group,
-  tableConfig,
-}: {
-  group: TableHeadersGroup;
-  tableConfig: TableConfig;
-}) => {
+export const TableHeaders = ({ group }: { group: TableHeadersGroup }) => {
+  const { tableConfig } = useTableContext();
+
   return (
     <tr>
       {group.headers.map((header) => (

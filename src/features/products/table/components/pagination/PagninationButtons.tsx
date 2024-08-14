@@ -1,4 +1,5 @@
-import { TableConfigParams } from '@/types/products';
+'use client';
+import { useTableContext } from '@/lib/providers/TableProvider';
 
 const PagButton = ({
   handleClick,
@@ -22,7 +23,9 @@ const PagButton = ({
   );
 };
 
-const FirstPage = ({ tableConfig }: TableConfigParams) => {
+const FirstPage = () => {
+  const { tableConfig } = useTableContext();
+
   return (
     <PagButton
       handleClick={() => tableConfig.setPageIndex(0)}
@@ -31,7 +34,9 @@ const FirstPage = ({ tableConfig }: TableConfigParams) => {
     />
   );
 };
-const PreviousPage = ({ tableConfig }: TableConfigParams) => {
+const PreviousPage = () => {
+  const { tableConfig } = useTableContext();
+
   return (
     <PagButton
       handleClick={() => tableConfig.previousPage()}
@@ -40,7 +45,9 @@ const PreviousPage = ({ tableConfig }: TableConfigParams) => {
     />
   );
 };
-const NextPage = ({ tableConfig }: TableConfigParams) => {
+const NextPage = () => {
+  const { tableConfig } = useTableContext();
+
   return (
     <PagButton
       handleClick={() => tableConfig.nextPage()}
@@ -49,7 +56,9 @@ const NextPage = ({ tableConfig }: TableConfigParams) => {
     />
   );
 };
-const LastPage = ({ tableConfig }: TableConfigParams) => {
+const LastPage = () => {
+  const { tableConfig } = useTableContext();
+
   return (
     <PagButton
       handleClick={() =>
@@ -61,13 +70,13 @@ const LastPage = ({ tableConfig }: TableConfigParams) => {
   );
 };
 
-export const PaginationButtonGroup = ({ tableConfig }: TableConfigParams) => {
+export const PaginationButtonGroup = () => {
   return (
     <div>
-      <FirstPage tableConfig={tableConfig} />
-      <PreviousPage tableConfig={tableConfig} />
-      <NextPage tableConfig={tableConfig} />
-      <LastPage tableConfig={tableConfig} />
+      <FirstPage />
+      <PreviousPage />
+      <NextPage />
+      <LastPage />
     </div>
   );
 };
