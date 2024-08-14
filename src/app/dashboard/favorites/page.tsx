@@ -1,9 +1,5 @@
-import Favorites from '@/features/dashboard/favorites/Favorites';
+import { FavoritesLayout } from '@/features/dashboard/favorites/';
 
 export default function Page() {
-  return (
-    <div>
-      <Favorites />
-    </div>
-  );
+  return <FavoritesLayout />;
 }
