@@ -1,9 +1,9 @@
 'use client';
 
-import { useGetCart } from '@/shared/hooks/queries';
-import { CartItem } from '@/types/cart';
 import Link from 'next/link';
-import { CiShop } from 'react-icons/ci';
+import { useGetCart } from '@/shared/hooks/queries';
+import { ShopIcon } from '@/utils/icons';
+import { CartItem } from '@/types/cart';
 
 export const SummaryDetails = () => {
   const { data, isFetching } = useGetCart();
@@ -17,7 +17,7 @@ export const SummaryDetails = () => {
           <p className='flex items-center h-full justify-center'>
             Visit the{' '}
             <Link href='/products' className='underline flex items-center px-1'>
-              <CiShop />
+              <ShopIcon />
               shop
             </Link>{' '}
             to get started

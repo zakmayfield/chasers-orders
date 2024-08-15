@@ -1,10 +1,14 @@
 'use client';
 import { useState } from 'react';
-import { ContainerBody, ContainerError, ContainerHeader } from './';
-import { ShippingData } from '@/types/user';
 import { getShippingAddress } from '@/services/queries/getShippingAddress';
 import { useCustomQuery } from '@/shared/hooks/queries';
+import {
+  ContainerBody,
+  ContainerError,
+  ContainerHeader,
+} from './components/container';
 import { QueryKeys } from '@/types/hooks';
+import { ShippingData } from '@/types/user';
 
 export const ShippingDetails = () => {
   const { data, error, isFetching } = useCustomQuery<ShippingData>({

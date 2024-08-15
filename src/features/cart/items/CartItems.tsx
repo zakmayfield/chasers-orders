@@ -1,38 +1,27 @@
 'use client';
-
+import { useGetCart } from '@/shared/hooks/queries';
 import {
   EmptyItems,
   ItemsContainer,
   ItemsHeader,
   LoadingSkelly,
 } from './components';
-import { useGetCart } from '@/shared/hooks/queries';
 
 export const CartItems = () => {
   const { data, isFetching } = useGetCart();
 
-  if (isFetching) {
-    return (
-      <div>
-        <ItemsHeader isFetching={isFetching} cart={data} />
-        <LoadingSkelly />
-      </div>
-    );
-  }
-
-  if (data && data.items.length === 0) {
-    return (
-      <div>
-        <ItemsHeader isFetching={isFetching} cart={data} />
-        <EmptyItems />
-      </div>
-    );
-  }
-
   return (
-    <div>
-      <ItemsHeader isFetching={isFetching} cart={data} />
-      <ItemsContainer cart={data} />
+    <div className='col-start-2 col-span-5'>
+      <div>
+        <ItemsHeader isFetching={isFetching} cart={data} />
+        {isFetching ? (
+          <LoadingSkelly />
+        ) : !data?.items.length ? (
+          <EmptyItems />
+        ) : (
+          <ItemsContainer cart={data} />
+        )}
+      </div>
     </div>
   );
 };
