@@ -1,19 +1,19 @@
 import { FC, useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks';
+import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useCustomForm } from '@/shared/hooks/forms';
+import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
+import { deliveryInstructionsResolver } from '@/shared/validators/resolvers';
+import { defaultDeliveryInstructionsFormValues } from '@/utils/constants';
 import {
   InstructionsNotFound,
   InstructionsHeader,
   InstructionsContent,
   InstructionsEdit,
 } from './index';
-import { useCustomMutation } from '@/shared/hooks/mutations';
-import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
-import { useQueryClient } from '@tanstack/react-query';
-import { DeliveryInstructionsResponse } from '@/types/cart';
 import { QueryKeys } from '@/types/hooks';
-import { useCustomForm } from '@/shared/hooks/forms';
-import { deliveryInstructionsResolver } from '@/shared/validators/resolvers';
-import { defaultDeliveryInstructionsFormValues } from '@/utils/constants';
+import { DeliveryInstructionsResponse } from '@/types/cart';
 
 interface DeliveryInstructionsProps {
   content: string | null | undefined;
@@ -60,17 +60,9 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
     handleSubmit(() => editDeliveryInstructions(formValues))();
   }
 
-  function onSave() {
-    submitHandler();
-  }
-
   const toggleEdit = () => {
     setIsEdit(!isEdit);
   };
-
-  function onEdit() {
-    toggleEdit();
-  }
 
   const resetFormState = () => {
     reset({
@@ -88,8 +80,8 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
       <InstructionsHeader
         isEdit={isEdit}
         formState={formState}
-        onSave={onSave}
-        onEdit={onEdit}
+        submitHandler={submitHandler}
+        toggleEdit={toggleEdit}
         onCancel={onCancel}
       />
 

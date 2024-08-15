@@ -6,29 +6,28 @@ import { DeliveryInstructionsData } from '@/types/user';
 interface InstructionsHeaderProps {
   isEdit: boolean;
   formState: FormState<DeliveryInstructionsData>;
-  onSave: () => void;
+  submitHandler(): void;
   onCancel: () => void;
-  onEdit: () => void;
+  toggleEdit: () => void;
 }
 
 export const InstructionsHeader: FC<InstructionsHeaderProps> = ({
   isEdit,
   formState,
-  onSave,
+  submitHandler,
   onCancel,
-  onEdit,
+  toggleEdit,
 }) => {
   return (
     <div className='mb-3 flex items-center justify-between'>
       <h5 className='font-light text-lg'>Delivery Instructions:</h5>
 
-      {/* Btns Container */}
       <InstructionsFormButtons
         isEdit={isEdit}
         formState={formState}
-        onSave={onSave}
+        submitHandler={submitHandler}
         onCancel={onCancel}
-        onEdit={onEdit}
+        toggleEdit={toggleEdit}
       />
     </div>
   );

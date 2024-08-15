@@ -4,31 +4,30 @@ import { LoadingSpinner } from '@/shared/components';
 import { DeliveryInstructionsData } from '@/types/user';
 
 interface InstructionsFormButtonsProps {
-  onSave: () => void;
+  submitHandler(): void;
   onCancel: () => void;
-  onEdit: () => void;
+  toggleEdit: () => void;
   isEdit: boolean;
   formState: FormState<DeliveryInstructionsData>;
 }
 
 export const InstructionsFormButtons: FC<InstructionsFormButtonsProps> = ({
-  onSave,
+  submitHandler,
   onCancel,
-  onEdit,
+  toggleEdit,
   isEdit,
   formState,
 }) => {
   return (
     <div className='h-8'>
       {!isEdit ? (
-        <EditButton onEdit={onEdit} />
+        <EditButton toggleEdit={toggleEdit} />
       ) : isEdit && !formState.isDirty ? (
         <CancelButton onCancel={onCancel} />
       ) : (
         <div className='flex items-center gap-1 h-full'>
           <CancelButton onCancel={onCancel} />
-
-          <SaveButton onSave={onSave} formState={formState} />
+          <SaveButton submitHandler={submitHandler} formState={formState} />
         </div>
       )}
     </div>
@@ -36,15 +35,15 @@ export const InstructionsFormButtons: FC<InstructionsFormButtonsProps> = ({
 };
 
 function SaveButton({
-  onSave,
+  submitHandler,
   formState,
 }: {
-  onSave: () => void;
+  submitHandler(): void;
   formState: FormState<DeliveryInstructionsData>;
 }) {
   return (
     <button
-      onClick={onSave}
+      onClick={submitHandler}
       className='bg-light-green-400 rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
     >
       {formState.isSubmitted && formState.isSubmitSuccessful ? (
@@ -67,10 +66,10 @@ function CancelButton({ onCancel }: { onCancel: () => void }) {
   );
 }
 
-function EditButton({ onEdit }: { onEdit: () => void }) {
+function EditButton({ toggleEdit }: { toggleEdit: () => void }) {
   return (
     <button
-      onClick={onEdit}
+      onClick={toggleEdit}
       className='border rounded-md hover:ring-2 px-2 w-12 h-full flex items-center justify-center'
     >
       edit
