@@ -1,3 +1,3 @@
-export * from './ContainerBody';
-export * from './ContainerError';
-export * from './ContainerHeader';
+export * from './ShippingBody';
+export * from './ShippingError';
+export * from './ShippingHeader';

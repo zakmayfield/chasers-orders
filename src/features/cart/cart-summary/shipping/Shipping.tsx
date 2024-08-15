@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { getShippingAddress } from '@/services/queries/getShippingAddress';
 import { useCustomQuery } from '@/shared/hooks/queries';
 import {
-  ContainerBody,
-  ContainerError,
-  ContainerHeader,
+  ShippingBody,
+  ShippingError,
+  ShippingHeader,
 } from './components/container';
 import { QueryKeys } from '@/types/hooks';
 import { ShippingData } from '@/types/user';
@@ -19,23 +19,23 @@ export const Shipping = () => {
 
   const [expanded, setExpanded] = useState(false);
 
-  if (!error) {
-    return <ContainerError setExpanded={setExpanded} />;
-  }
-
   return (
     <div className='col-span-3 mt-3 font-light'>
-      <ContainerHeader
+      <ShippingHeader
         expanded={expanded}
         isFetching={isFetching}
+        error={error}
         setExpanded={setExpanded}
       />
 
-      {/* Dropdown */}
-      {expanded && (
-        <div>
-          <ContainerBody data={data} />
-        </div>
+      {error ? (
+        <ShippingError />
+      ) : (
+        expanded && (
+          <div>
+            <ShippingBody data={data} />
+          </div>
+        )
       )}
     </div>
   );

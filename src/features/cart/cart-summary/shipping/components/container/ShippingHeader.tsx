@@ -5,12 +5,14 @@ import { LoadingSpinner } from '@/shared/components';
 interface ContainerHeaderProps {
   expanded?: boolean;
   isFetching?: boolean;
+  error: Error | null;
   setExpanded: Dispatch<SetStateAction<boolean>>;
 }
 
-export const ContainerHeader: FC<ContainerHeaderProps> = ({
+export const ShippingHeader: FC<ContainerHeaderProps> = ({
   expanded,
   isFetching,
+  error,
   setExpanded,
 }) => {
   function handleExpand() {
@@ -26,12 +28,14 @@ export const ContainerHeader: FC<ContainerHeaderProps> = ({
           <LoadingSpinner className='mx-auto' />
         </div>
       ) : (
-        <button
-          className={`text-slate-600 px-6 py-2 transform  ${expanded ? 'rotate-180' : ''}`}
-          onClick={handleExpand}
-        >
-          <FaChevronDown />
-        </button>
+        !error && (
+          <button
+            className={`text-slate-600 px-6 py-2 transform  ${expanded ? 'rotate-180' : ''}`}
+            onClick={handleExpand}
+          >
+            <FaChevronDown />
+          </button>
+        )
       )}
     </div>
   );

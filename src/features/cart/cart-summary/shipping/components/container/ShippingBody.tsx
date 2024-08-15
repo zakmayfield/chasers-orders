@@ -3,11 +3,11 @@ import { DeliveryInstructions } from '@/features/cart/cart-summary/shipping/comp
 import { ShippingAddress } from '@prisma/client';
 import { ShippingData } from '@/types/user';
 
-interface ContainerBodyProps {
+interface ShippingBodyProps {
   data: ShippingData | undefined;
 }
 
-export const ContainerBody: FC<ContainerBodyProps> = ({ data }) => {
+export const ShippingBody: FC<ShippingBodyProps> = ({ data }) => {
   const shippingAddress = data?.shippingAddress;
   const companyName = data?.companyName;
   return (
