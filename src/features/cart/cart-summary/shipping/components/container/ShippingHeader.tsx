@@ -1,39 +1,35 @@
-import { Dispatch, FC, SetStateAction } from 'react';
-import { FaChevronDown } from 'react-icons/fa';
+import { FC } from 'react';
 import { LoadingSpinner } from '@/shared/components';
+import { DownArrow } from '@/utils/icons';
 
 interface ContainerHeaderProps {
-  expanded?: boolean;
-  isFetching?: boolean;
+  isFetching: boolean;
   error: Error | null;
-  setExpanded: Dispatch<SetStateAction<boolean>>;
+  expanded: boolean;
+  handleExpand(): void;
 }
 
 export const ShippingHeader: FC<ContainerHeaderProps> = ({
   expanded,
   isFetching,
   error,
-  setExpanded,
+  handleExpand,
 }) => {
-  function handleExpand() {
-    setExpanded(!expanded);
-  }
   return (
     <div className='flex items-center justify-between mb-6'>
       <h4>Shipping information</h4>
 
-      {/* Render Spinner when fetching shipping info */}
       {isFetching ? (
-        <div>
-          <LoadingSpinner className='mx-auto' />
+        <div className='px-6'>
+          <LoadingSpinner />
         </div>
       ) : (
         !error && (
           <button
-            className={`text-slate-600 px-6 py-2 transform  ${expanded ? 'rotate-180' : ''}`}
+            className={`text-slate-600 px-6 transform ${expanded && 'rotate-180'}`}
             onClick={handleExpand}
           >
-            <FaChevronDown />
+            <DownArrow />
           </button>
         )
       )}

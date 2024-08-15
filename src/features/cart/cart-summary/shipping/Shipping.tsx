@@ -19,24 +19,20 @@ export const Shipping = () => {
 
   const [expanded, setExpanded] = useState(false);
 
+  function handleExpand() {
+    setExpanded(!expanded);
+  }
+
   return (
     <div className='col-span-3 mt-3 font-light'>
       <ShippingHeader
-        expanded={expanded}
         isFetching={isFetching}
         error={error}
-        setExpanded={setExpanded}
+        expanded={expanded}
+        handleExpand={handleExpand}
       />
 
-      {error ? (
-        <ShippingError />
-      ) : (
-        expanded && (
-          <div>
-            <ShippingBody data={data} />
-          </div>
-        )
-      )}
+      {error ? <ShippingError /> : expanded && <ShippingBody data={data} />}
     </div>
   );
 };
