@@ -1,3 +1,3 @@
 export * from './EmptySummary';
 export * from './LoadingSummary';
-export * from './SummaryItemDetail';
+export * from './SummaryItem';

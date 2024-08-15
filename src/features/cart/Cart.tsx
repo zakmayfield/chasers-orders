@@ -1,12 +1,12 @@
 'use client';
 import { CartItems } from './items/CartItems';
-import { CartOrderSummary } from './summary/CartOrderSummary';
+import { Summary } from './cart-summary/Summary';
 
 export const Cart = () => {
   return (
     <div className='grid grid-cols-12 gap-4'>
       <CartItems />
-      <CartOrderSummary />
+      <Summary />
     </div>
   );
 };

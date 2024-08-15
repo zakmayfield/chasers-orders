@@ -1,9 +1,9 @@
 'use client';
 
 import { useGetCart } from '@/shared/hooks/queries';
-import { LoadingSummary, EmptySummary, SummaryItemDetail } from './components';
+import { LoadingSummary, EmptySummary, SummaryItem } from './components';
 
-export const SummaryDetails = () => {
+export const SummaryItems = () => {
   const { data, isFetching } = useGetCart();
 
   return (
@@ -15,7 +15,7 @@ export const SummaryDetails = () => {
       ) : (
         <div className='flex flex-col gap-3'>
           {data?.items.map((item) => (
-            <SummaryItemDetail key={item.unitId} item={item} />
+            <SummaryItem key={item.unitId} item={item} />
           ))}
         </div>
       )}

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { DeliveryInstructions } from '@/features/cart/summary/shipping-details/components/instructions';
+import { DeliveryInstructions } from '@/features/cart/cart-summary/shipping-details/components/instructions';
 import { ShippingAddress } from '@prisma/client';
 import { ShippingData } from '@/types/user';
 

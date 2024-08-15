@@ -1,6 +1,6 @@
 import { CartItem } from '@/types/cart';
 
-export const SummaryItemDetail = ({ item }: { item: CartItem }) => {
+export const SummaryItem = ({ item }: { item: CartItem }) => {
   return (
     <div className='flex flex-col bg-slate-50 rounded-lg p-3 last-of-type:border-none'>
       <div className='flex gap-3 text-sm'>
