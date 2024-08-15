@@ -10,7 +10,7 @@ import {
 import { QueryKeys } from '@/types/hooks';
 import { ShippingData } from '@/types/user';
 
-export const ShippingDetails = () => {
+export const Shipping = () => {
   const { data, error, isFetching } = useCustomQuery<ShippingData>({
     queryKey: [QueryKeys.SHIPPING],
     queryFn: getShippingAddress,
@@ -19,7 +19,7 @@ export const ShippingDetails = () => {
 
   const [expanded, setExpanded] = useState(false);
 
-  if (error) {
+  if (!error) {
     return <ContainerError setExpanded={setExpanded} />;
   }
 

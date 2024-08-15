@@ -1,6 +1,6 @@
 'use client';
 import { SummaryItems } from './summary-items';
-import { ShippingDetails } from './shipping-details';
+import { Shipping } from './shipping';
 import { OrderButton } from './order-button';
 
 export const Summary = () => {
@@ -10,7 +10,7 @@ export const Summary = () => {
 
       <div className='grid grid-cols-3'>
         <SummaryItems />
-        <ShippingDetails />
+        <Shipping />
         <OrderButton />
       </div>
     </div>
