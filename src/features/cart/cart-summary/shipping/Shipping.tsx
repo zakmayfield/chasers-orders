@@ -1,21 +1,14 @@
 'use client';
 import { useState } from 'react';
-import { getShippingAddress } from '@/services/queries/getShippingAddress';
-import { useCustomQuery } from '@/shared/hooks/queries';
+import { useGetShippingAddress } from '@/shared/hooks/queries';
 import {
   ShippingBody,
   ShippingError,
   ShippingHeader,
 } from './components/container';
-import { QueryKeys } from '@/types/hooks';
-import { ShippingData } from '@/types/user';
 
 export const Shipping = () => {
-  const { data, error, isFetching } = useCustomQuery<ShippingData>({
-    queryKey: [QueryKeys.SHIPPING],
-    queryFn: getShippingAddress,
-    staleTime: 60 * 1000 * 60,
-  });
+  const { error, isFetching } = useGetShippingAddress();
 
   const [expanded, setExpanded] = useState(false);
 
@@ -32,7 +25,7 @@ export const Shipping = () => {
         handleExpand={handleExpand}
       />
 
-      {error ? <ShippingError /> : expanded && <ShippingBody data={data} />}
+      {error ? <ShippingError /> : expanded && <ShippingBody />}
     </div>
   );
 };

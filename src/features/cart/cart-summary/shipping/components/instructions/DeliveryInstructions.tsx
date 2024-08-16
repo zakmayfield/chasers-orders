@@ -1,39 +1,19 @@
-import { FC, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks';
 import { useCustomMutation } from '@/shared/hooks/mutations';
-import { useCustomForm } from '@/shared/hooks/forms';
+import { useDeliveryInstructionsForm } from '@/shared/hooks/forms';
 import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
-import { deliveryInstructionsResolver } from '@/shared/validators/resolvers';
-import { defaultDeliveryInstructionsFormValues } from '@/utils/constants';
-import {
-  InstructionsNotFound,
-  InstructionsHeader,
-  InstructionsContent,
-  InstructionsEdit,
-} from './index';
+import { FormButtons } from './index';
 import { QueryKeys } from '@/types/hooks';
 import { DeliveryInstructionsResponse } from '@/types/cart';
+import { useGetShippingAddress } from '@/shared/hooks/queries';
 
-interface DeliveryInstructionsProps {
-  content: string | null | undefined;
-}
-
-export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
-  content: deliveryInstructions,
-}) => {
+export const DeliveryInstructions = () => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const [isEdit, setIsEdit] = useState(false);
+  const { data } = useGetShippingAddress();
 
-  const {
-    methods: { register, handleSubmit, getValues, reset, formState },
-  } = useCustomForm({
-    defaultValues: defaultDeliveryInstructionsFormValues,
-    resolver: deliveryInstructionsResolver,
-  });
-
-  const { mutate: editDeliveryInstructions } = useCustomMutation({
+  const { mutate } = useCustomMutation({
     mutationFn: updateDeliveryInstructions,
     handleSuccess(data) {
       notify('Updated delivery instructions');
@@ -44,75 +24,73 @@ export const DeliveryInstructions: FC<DeliveryInstructionsProps> = ({
           oldData
             ? {
                 ...oldData,
-                shippingAddress: data.shippingAddress,
+                shippingAddress: {
+                  ...data.shippingAddress,
+                  deliveryInstructions:
+                    data.shippingAddress.deliveryInstructions,
+                },
               }
             : oldData
       );
 
-      setIsEdit(false);
-
-      resetFormState();
+      cancel();
+    },
+    handleError(error) {
+      notify(error.message, 'error');
     },
   });
 
-  function submitHandler() {
-    const formValues = getValues();
-    handleSubmit(() => editDeliveryInstructions(formValues))();
-  }
-
-  const toggleEdit = () => {
-    setIsEdit(!isEdit);
-  };
-
-  const resetFormState = () => {
-    reset({
-      deliveryInstructions: deliveryInstructions ? deliveryInstructions : '',
-    });
-  };
-
-  function onCancel() {
-    toggleEdit();
-    resetFormState();
-  }
+  const { register, formState, isEdit, toggleEdit, submit, cancel } =
+    useDeliveryInstructionsForm({ mutation: mutate });
 
   return (
     <div className='mt-3 '>
-      <InstructionsHeader
-        isEdit={isEdit}
-        formState={formState}
-        submitHandler={submitHandler}
-        toggleEdit={toggleEdit}
-        onCancel={onCancel}
-      />
+      {/* Section Header w/ Buttons */}
+      <div className='mb-3 flex items-center justify-between'>
+        <h5 className='font-light text-lg'>Delivery Instructions:</h5>
 
+        <FormButtons
+          isEdit={isEdit}
+          formState={formState}
+          toggleEdit={toggleEdit}
+          submit={submit}
+          cancel={cancel}
+        />
+      </div>
+
+      {/* Content & Form */}
       <div className='flex flex-col gap-1'>
         <div className='min-h-[6rem]'>
           {/* No instructions found */}
-          {!deliveryInstructions && !isEdit && (
-            <InstructionsNotFound toggleEdit={toggleEdit} />
+          {!data?.shippingAddress.deliveryInstructions && !isEdit && (
+            <div className='p-3 min-h-[5rem] bg-light-primary rounded-lg'>
+              <button
+                onClick={toggleEdit}
+                className='underline text-purple-800'
+              >
+                add delivery instructions
+              </button>
+            </div>
           )}
 
           {/* To edit */}
-          {((!deliveryInstructions && isEdit) ||
-            (deliveryInstructions && isEdit)) && (
-            <InstructionsEdit register={register} />
+          {((!data?.shippingAddress.deliveryInstructions && isEdit) ||
+            (data?.shippingAddress.deliveryInstructions && isEdit)) && (
+            <form className='m-0 p-0 box-border'>
+              <textarea
+                {...register('deliveryInstructions')}
+                className='border rounded-lg p-3 w-full bg-white min-h-[5rem]'
+              />
+            </form>
           )}
 
           {/* To read */}
-          {deliveryInstructions && !isEdit && (
-            <InstructionsContent deliveryInstructions={deliveryInstructions} />
+          {data?.shippingAddress.deliveryInstructions && !isEdit && (
+            <div className='p-3 min-h-[5rem] bg-light-primary rounded-lg'>
+              <p>{data?.shippingAddress.deliveryInstructions}</p>
+            </div>
           )}
         </div>
-
-        {/* Errors */}
-        <p
-          className='min-h-[3rem] text-red-600'
-          aria-hidden={!formState.errors.deliveryInstructions}
-        >
-          {formState.errors &&
-            formState.errors.deliveryInstructions &&
-            formState.errors.deliveryInstructions.message}
-        </p>
       </div>
     </div>
   );

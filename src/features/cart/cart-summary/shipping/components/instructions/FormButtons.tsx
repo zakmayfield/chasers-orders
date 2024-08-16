@@ -3,31 +3,31 @@ import { FormState } from 'react-hook-form';
 import { LoadingSpinner } from '@/shared/components';
 import { DeliveryInstructionsData } from '@/types/user';
 
-interface InstructionsFormButtonsProps {
-  submitHandler(): void;
-  onCancel: () => void;
-  toggleEdit: () => void;
+interface FormButtonsProps {
   isEdit: boolean;
   formState: FormState<DeliveryInstructionsData>;
+  toggleEdit: () => void;
+  submit: () => Promise<void>;
+  cancel: () => void;
 }
 
-export const InstructionsFormButtons: FC<InstructionsFormButtonsProps> = ({
-  submitHandler,
-  onCancel,
-  toggleEdit,
+export const FormButtons: FC<FormButtonsProps> = ({
   isEdit,
   formState,
+  toggleEdit,
+  submit,
+  cancel,
 }) => {
   return (
     <div className='h-8'>
       {!isEdit ? (
         <EditButton toggleEdit={toggleEdit} />
       ) : isEdit && !formState.isDirty ? (
-        <CancelButton onCancel={onCancel} />
+        <CancelButton cancel={cancel} />
       ) : (
         <div className='flex items-center gap-1 h-full'>
-          <CancelButton onCancel={onCancel} />
-          <SaveButton submitHandler={submitHandler} formState={formState} />
+          <CancelButton cancel={cancel} />
+          <SaveButton submit={submit} formState={formState} />
         </div>
       )}
     </div>
@@ -35,15 +35,15 @@ export const InstructionsFormButtons: FC<InstructionsFormButtonsProps> = ({
 };
 
 function SaveButton({
-  submitHandler,
+  submit,
   formState,
 }: {
-  submitHandler(): void;
+  submit: () => Promise<void>;
   formState: FormState<DeliveryInstructionsData>;
 }) {
   return (
     <button
-      onClick={submitHandler}
+      onClick={submit}
       className='bg-light-green-400 rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
     >
       {formState.isSubmitted && formState.isSubmitSuccessful ? (
@@ -55,10 +55,10 @@ function SaveButton({
   );
 }
 
-function CancelButton({ onCancel }: { onCancel: () => void }) {
+function CancelButton({ cancel }: { cancel: () => void }) {
   return (
     <button
-      onClick={onCancel}
+      onClick={cancel}
       className='border rounded-md px-2 h-full w-8 bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
     >
       x
