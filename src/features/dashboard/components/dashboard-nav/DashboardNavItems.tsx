@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { usePathname } from 'next/navigation';
-import { navData } from '../navData';
+import { navData } from './navData';
 import DashNavItem from './DashboardNavItem';
 
 interface DashboardNavItemsProps {}

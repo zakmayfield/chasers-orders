@@ -1,10 +1,9 @@
 'use client';
 
-import { DashboardNavItems } from './nav-components';
-import { DashboardNavHeader } from './nav-components/DashboardNavHeader';
+import { DashboardNavItems } from './DashboardNavItems';
+import { DashboardNavHeader } from './DashboardNavHeader';
 
 export const DashboardNav = () => {
-  // TODO: add footer back and implement loading state
   return (
     <div
       className={`
