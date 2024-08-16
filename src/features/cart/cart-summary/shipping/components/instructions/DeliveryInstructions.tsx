@@ -45,7 +45,6 @@ export const DeliveryInstructions = () => {
 
   return (
     <div className='mt-3 '>
-      {/* Section Header w/ Buttons */}
       <div className='mb-3 flex items-center justify-between'>
         <h5 className='font-light text-lg'>Delivery Instructions:</h5>
 
@@ -61,15 +60,10 @@ export const DeliveryInstructions = () => {
       {/* Content & Form */}
       <div className='flex flex-col gap-1'>
         <div className='min-h-[6rem]'>
-          {/* No instructions found */}
-          {!data?.shippingAddress.deliveryInstructions && !isEdit && (
+          {/* To read */}
+          {data?.shippingAddress.deliveryInstructions && !isEdit && (
             <div className='p-3 min-h-[5rem] bg-light-primary rounded-lg'>
-              <button
-                onClick={toggleEdit}
-                className='underline text-purple-800'
-              >
-                add delivery instructions
-              </button>
+              <p>{data?.shippingAddress.deliveryInstructions}</p>
             </div>
           )}
 
@@ -84,10 +78,15 @@ export const DeliveryInstructions = () => {
             </form>
           )}
 
-          {/* To read */}
-          {data?.shippingAddress.deliveryInstructions && !isEdit && (
+          {/* No instructions found */}
+          {!data?.shippingAddress.deliveryInstructions && !isEdit && (
             <div className='p-3 min-h-[5rem] bg-light-primary rounded-lg'>
-              <p>{data?.shippingAddress.deliveryInstructions}</p>
+              <button
+                onClick={toggleEdit}
+                className='underline text-purple-800'
+              >
+                Add delivery instructions
+              </button>
             </div>
           )}
         </div>
