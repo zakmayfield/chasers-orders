@@ -1,6 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
-import { useToast } from '@/shared/hooks';
+import { useToast } from '@/shared/hooks/utils';
 import {
   CreateOrderPayload,
   OrderData,
@@ -9,9 +9,9 @@ import {
 import { CartCache, OrderType } from '@/types/cart';
 import { LoadingSpinner } from '@/shared/components';
 import { getUser } from '@/services/queries/getUser';
-import { useGetCart } from '@/shared/hooks/queries';
+import { useGetCart } from '@/shared/hooks/data';
 import { QueryKeys } from '@/types/hooks';
-import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useCustomMutation } from '@/shared/hooks/custom';
 
 export const OrderButton = () => {
   const router = useRouter();

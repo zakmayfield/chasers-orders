@@ -1,5 +1,4 @@
-export * from './useCustomQuery';
-export * from './useDashboardQuery';
+export * from './useDashboardData';
 export * from './useGetCart';
 export * from './useGetFavorites';
 export * from './useGetProducts';

@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { ContactEdit } from './ContactEdit';
 import { DetailBody } from './DetailBody';
 import { contactResolver } from '@/shared/validators/resolvers';
-import { useCustomForm } from '@/shared/hooks/forms';
+import { useCustomForm } from '@/shared/hooks/custom';
 import { ContactFormData, UserData } from '@/types/user';
 
 interface ContactDetailsProps {

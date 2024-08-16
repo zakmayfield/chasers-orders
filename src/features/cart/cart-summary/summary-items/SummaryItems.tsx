@@ -1,6 +1,6 @@
 'use client';
 
-import { useGetCart } from '@/shared/hooks/queries';
+import { useGetCart } from '@/shared/hooks/data';
 import { LoadingSummary, EmptySummary, SummaryItem } from './components';
 
 export const SummaryItems = () => {

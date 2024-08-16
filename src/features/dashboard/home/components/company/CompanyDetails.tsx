@@ -4,7 +4,7 @@ import { CompanyFormData, UserData } from '@/types/user';
 import DetailBody from './DetailBody';
 import { CompanyEdit } from './CompanyEdit';
 import { companyResolver } from '@/shared/validators/resolvers';
-import { useCustomForm } from '@/shared/hooks/forms';
+import { useCustomForm } from '@/shared/hooks/custom';
 
 interface CompanyDetailsProps {
   userData: UserData;

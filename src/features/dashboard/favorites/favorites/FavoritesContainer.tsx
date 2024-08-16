@@ -1,5 +1,5 @@
 'use client';
-import { useGetFavorites } from '@/shared/hooks/queries';
+import { useGetFavorites } from '@/shared/hooks/data';
 import { LoadingSpinner } from '@/shared/components';
 import { Favorites, FavoritesEmpty, FavoritesLoading } from './components';
 

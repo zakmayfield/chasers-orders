@@ -1,5 +1,5 @@
 'use client';
-import { useGetProducts } from '@/shared/hooks/queries';
+import { useGetProducts } from '@/shared/hooks/data';
 import { useTableConfig } from './config';
 import { ReactTable } from './components';
 import { TableLoading } from './components/TableLoading';

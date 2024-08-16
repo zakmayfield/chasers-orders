@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { PiArrowRightLight } from 'react-icons/pi';
-import { useToast } from '@/shared/hooks';
+import { useToast } from '@/shared/hooks/utils';
 import { requiredSignUpFormValues } from '@/utils/constants';
 import type { UseFormGetValues } from 'react-hook-form';
 import { SignUpFormData, Steps } from '@/types/auth';

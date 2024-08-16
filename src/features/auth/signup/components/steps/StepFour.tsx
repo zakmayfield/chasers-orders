@@ -4,7 +4,7 @@ import {
   FinalStepButton,
   PreviousStepButton,
 } from '@/features/auth/signup/components/buttons';
-import { useSyncBillingAddress } from '@/features/auth/signup/useSyncBillingAddress';
+import { useSyncBillingAddress } from '@/shared/hooks/utils';
 import { provinceOptions } from '@/utils/constants';
 import type { StepFourProps } from '@/types/auth';
 

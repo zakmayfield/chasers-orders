@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useCustomForm } from '../../shared/hooks/forms/useCustomForm';
+import { useCustomForm } from '@/shared/hooks/custom';
 import { deliveryInstructionsResolver } from '@/shared/validators/resolvers';
 import { defaultDeliveryInstructionsFormValues } from '@/utils/constants';
 import { UseMutateFunction } from '@tanstack/react-query';

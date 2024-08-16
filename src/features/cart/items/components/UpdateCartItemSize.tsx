@@ -6,12 +6,12 @@ import {
   CartSizesData,
   UpdateCartItemSizeRequest,
 } from '@/types/cart';
-import { useToast } from '@/shared/hooks';
+import { useToast } from '@/shared/hooks/utils';
 import { getCartSizes } from '@/services/queries/getCartSizes';
 import { updateCartItemSize } from '@/services/mutations/updateCartItemSize';
-import { useCustomQuery } from '@/shared/hooks/queries';
+import { useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
-import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useCustomMutation } from '@/shared/hooks/custom';
 
 type UpdateCartItemSizeProps = {
   cartId: string;

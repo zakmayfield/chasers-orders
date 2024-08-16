@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { PiWarningDuotone } from 'react-icons/pi';
-import { useGetUser } from '@/shared/hooks/queries';
+import { useGetUser } from '@/shared/hooks/data';
 
 export const DashboardNavFooter = () => {
   const { data, isLoading, isError } = useGetUser();

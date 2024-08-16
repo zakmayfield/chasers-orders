@@ -1,7 +1,7 @@
 import { merge } from '@/utils/styles';
 import { FC } from 'react';
-import { useToast } from '@/shared/hooks';
-import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks/utils';
+import { useCustomMutation } from '@/shared/hooks/custom';
 import { sendVerificationEmail } from '@/services/queries/sendVerificationEmail';
 import { SendVerificationEmailResponse } from '@/types/email';
 

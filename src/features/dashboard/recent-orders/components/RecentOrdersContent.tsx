@@ -1,6 +1,6 @@
 import RecentOrdersSkeleton from './RecentOrdersSkeleton';
 import RecentOrder from './RecentOrder';
-import { useGetRecentOrders } from '@/shared/hooks/queries';
+import { useGetRecentOrders } from '@/shared/hooks/data';
 
 function RecentOrdersContent() {
   const { data, isLoading, error } = useGetRecentOrders();

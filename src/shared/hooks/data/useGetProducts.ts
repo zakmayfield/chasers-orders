@@ -1,4 +1,4 @@
-import { useCustomQuery } from '@/shared/hooks/queries';
+import { useCustomQuery } from '@/shared/hooks/custom';
 import { getProducts } from '@/services/queries/getProducts';
 import { ProductWithUnits } from '@/types/products';
 import { QueryKeys } from '@/types/hooks';

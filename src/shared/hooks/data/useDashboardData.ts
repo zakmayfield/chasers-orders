@@ -9,7 +9,7 @@ type DashboardQueryError = {
   error: string;
 };
 
-export const useDashboardQuery = <T>(
+export const useDashboardData = <T>(
   property?: 'contact' | 'orders' | 'company' | 'favorites'
 ) => {
   const queryClient = useQueryClient();

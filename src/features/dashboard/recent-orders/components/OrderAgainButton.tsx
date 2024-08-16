@@ -4,9 +4,9 @@ import { useQueryClient } from '@tanstack/react-query';
 import { FC } from 'react';
 import { CartCache, OrderAgainData, OrderType } from '@/types/cart';
 import { useRouter } from 'next/navigation';
-import { useToast } from '@/shared/hooks';
+import { useToast } from '@/shared/hooks/utils';
 import { orderAgain } from '@/services/mutations/orderAgain';
-import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useCustomMutation } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
 
 interface OrderAgainButtonProps {

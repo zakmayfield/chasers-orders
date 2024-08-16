@@ -1,6 +1,6 @@
 import { getShippingAddress } from '@/services/queries/getShippingAddress';
 import { QueryKeys } from '@/types/hooks';
-import { useCustomQuery } from './useCustomQuery';
+import { useCustomQuery } from '@/shared/hooks/custom';
 import { ShippingData } from '@/types/user';
 
 export const useGetShippingAddress = () => {

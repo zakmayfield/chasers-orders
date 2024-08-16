@@ -1,4 +1,4 @@
-import { useCustomQuery } from './useCustomQuery';
+import { useCustomQuery } from '@/shared/hooks/custom';
 import { getFavorites } from '@/services/queries/getFavorites';
 import { QueryKeys } from '@/types/hooks';
 

@@ -4,7 +4,7 @@ import { AccountStatus } from './components/account';
 import { ContactDetails } from './components/contact';
 import { CompanyDetails } from './components/company';
 import { RecentOrderDetails } from './components/recent';
-import { useGetUser } from '@/shared/hooks/queries';
+import { useGetUser } from '@/shared/hooks/data';
 
 const DashboardHome = () => {
   const { data, isLoading, error, isError } = useGetUser();

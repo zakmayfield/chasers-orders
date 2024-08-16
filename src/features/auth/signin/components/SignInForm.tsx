@@ -3,7 +3,7 @@ import { FC } from 'react';
 import FieldError from '../../components/FieldError';
 import { SignInButton } from '.';
 import { handleSignIn } from '@/utils/helpers';
-import { useCustomForm } from '@/shared/hooks/forms';
+import { useCustomForm } from '@/shared/hooks/custom';
 import { defaultSignInFormValues } from '@/utils/constants';
 import { signInResolver } from '@/shared/validators/resolvers';
 import { SignInFormData } from '@/types/auth';

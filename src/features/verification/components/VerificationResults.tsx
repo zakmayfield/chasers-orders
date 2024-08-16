@@ -4,8 +4,8 @@ import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { LoadingSpinner } from '@/shared/components';
 import { ResendVerification } from './ResendVerification';
 import { merge } from '@/utils/styles';
-import { useToast } from '@/shared/hooks';
-import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks/utils';
+import { useCustomMutation } from '@/shared/hooks/custom';
 import { updateUserVerification } from '@/services/mutations/updateUserVerification';
 import {
   UpdateUserVerificationRequest,

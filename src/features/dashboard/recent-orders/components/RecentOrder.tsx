@@ -3,7 +3,7 @@ import { getLineItems } from '@/services/queries/getLineItems';
 import OrderAgainButton from './OrderAgainButton';
 import { RecentOrderItems } from './RecentOrderItems';
 import { OrderType } from '@/types/cart';
-import { useCustomQuery } from '@/shared/hooks/queries';
+import { useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
 
 const RecentOrder = ({ order }: { order: OrderType }) => {

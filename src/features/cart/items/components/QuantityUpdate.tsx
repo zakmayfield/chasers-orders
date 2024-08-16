@@ -2,7 +2,7 @@ import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { useUpdateCartItemQuantity } from '@/shared/hooks/mutations';
-import { useCustomForm } from '@/shared/hooks/forms';
+import { useCustomForm } from '@/shared/hooks/custom';
 import { quantityResolver } from '@/shared/validators/resolvers';
 import { defaultQuantityFormValues } from '@/utils/constants';
 import { QueryKeys } from '@/types/hooks';

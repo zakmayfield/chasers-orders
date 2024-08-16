@@ -4,7 +4,7 @@ import { ImSpinner2 } from 'react-icons/im';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 import { SignUpFormData, Steps } from '@/types/auth';
 import { handleSignUp } from '@/utils/helpers';
-import { useCustomForm } from '@/shared/hooks/forms';
+import { useCustomForm } from '@/shared/hooks/custom';
 import { defaultSignUpFormValues } from '@/utils/constants';
 import { signUpResolver } from '@/shared/validators/resolvers';
 

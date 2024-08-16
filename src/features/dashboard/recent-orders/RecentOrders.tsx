@@ -2,7 +2,7 @@
 
 import RecentOrdersHeader from './components/RecentOrdersHeader';
 import RecentOrdersContent from './components/RecentOrdersContent';
-import { useGetRecentOrders } from '@/shared/hooks/queries';
+import { useGetRecentOrders } from '@/shared/hooks/data';
 
 const RecentOrders = () => {
   const { data, isLoading } = useGetRecentOrders();

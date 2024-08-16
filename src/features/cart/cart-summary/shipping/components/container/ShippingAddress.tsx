@@ -1,4 +1,4 @@
-import { useGetShippingAddress } from '@/shared/hooks/queries';
+import { useGetShippingAddress } from '@/shared/hooks/data';
 
 export const ShippingAddress = () => {
   const { data } = useGetShippingAddress();

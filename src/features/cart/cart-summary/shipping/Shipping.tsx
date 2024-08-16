@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { useGetShippingAddress } from '@/shared/hooks/queries';
+import { useGetShippingAddress } from '@/shared/hooks/data';
 import {
   ShippingBody,
   ShippingError,

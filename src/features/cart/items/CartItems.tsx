@@ -1,5 +1,5 @@
 'use client';
-import { useGetCart } from '@/shared/hooks/queries';
+import { useGetCart } from '@/shared/hooks/data';
 import {
   EmptyItems,
   ItemsContainer,

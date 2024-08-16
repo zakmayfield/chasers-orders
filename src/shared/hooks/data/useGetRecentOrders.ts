@@ -1,4 +1,4 @@
-import { useCustomQuery } from '@/shared/hooks/queries';
+import { useCustomQuery } from '@/shared/hooks/custom';
 import { getRecentOrders } from '@/services/queries/getRecentOrders';
 import { OrderType } from '@/types/cart';
 import { QueryKeys } from '@/types/hooks';

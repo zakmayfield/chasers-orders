@@ -5,7 +5,7 @@ import {
   NameColumn,
   UnitsColumn,
 } from '@/features/products/table/components/columns';
-import { useGetFavorites } from '@/shared/hooks/queries';
+import { useGetFavorites } from '@/shared/hooks/data';
 import { ProductWithUnits } from '@/types/products';
 
 export const useTableConfig = (data: ProductWithUnits[] | undefined) => {
