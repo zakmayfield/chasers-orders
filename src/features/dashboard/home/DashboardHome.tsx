@@ -1,9 +1,9 @@
 'use client';
 
-import { AccountStatus } from './components/account';
-import { ContactDetails } from './components/contact';
-import { CompanyDetails } from './components/company';
-import { RecentOrderDetails } from './components/recent';
+import { AccountStatus } from './account';
+import { ContactDetails } from './contact';
+import { CompanyDetails } from './company';
+import { RecentOrderDetails } from './recent';
 import { useGetUser } from '@/shared/hooks/data';
 
 const DashboardHome = () => {

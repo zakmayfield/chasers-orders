@@ -1,6 +1,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { UserData } from '@/types/user';
-import { EditButton } from '../Buttons';
+import { EditButton } from '../components/Buttons';
 
 interface DetailBodyProps {
   userData: UserData;
