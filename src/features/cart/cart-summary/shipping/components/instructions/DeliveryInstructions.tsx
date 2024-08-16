@@ -1,12 +1,12 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks';
 import { useCustomMutation } from '@/shared/hooks/mutations';
-import { useDeliveryInstructionsForm } from '@/shared/hooks/forms';
+import { useDeliveryInstructionsForm } from '@/features/cart/useDeliveryInstructionsForm';
 import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
 import { FormButtons } from './index';
-import { QueryKeys } from '@/types/hooks';
-import { DeliveryInstructionsResponse } from '@/types/cart';
 import { useGetShippingAddress } from '@/shared/hooks/queries';
+import { DeliveryInstructionsResponse } from '@/types/cart';
+import { QueryKeys } from '@/types/hooks';
 
 export const DeliveryInstructions = () => {
   const queryClient = useQueryClient();

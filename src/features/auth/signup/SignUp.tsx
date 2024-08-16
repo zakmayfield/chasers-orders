@@ -1,6 +1,6 @@
 'use client';
 
-import { useStepTracker } from '@/shared/hooks/forms';
+import { useStepTracker } from '@/features/auth/signup/useStepTracker';
 import { SignUpForm, StepTracker } from './components';
 import FormSwitchLink from '@/features/auth/components/FormSwitchLink';
 
