@@ -1,4 +1,4 @@
-import { SignUp } from '@/features/auth/signup';
+import { SignUp } from './SignUp';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { redirect } from 'next/navigation';
 
