@@ -116,6 +116,7 @@ async function handler(req: NextRequest) {
       select: {
         id: true,
         isApproved: true,
+        emailVerified: true,
       },
     });
 
@@ -125,6 +126,7 @@ async function handler(req: NextRequest) {
       email,
       verifiedOn: currentDate,
       isApproved: user.isApproved,
+      emailVerified: user.emailVerified,
     };
 
     return new Response(JSON.stringify(updateVerificationResponse));

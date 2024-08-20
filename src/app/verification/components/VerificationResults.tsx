@@ -11,24 +11,27 @@ import {
   UpdateUserVerificationResponse,
 } from '@/types/verification';
 import { CheckIcon, XIcon } from '@/utils/icons';
+import { useGetUserStatus } from '@/shared/hooks/data';
+import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@/types/hooks';
 
 interface VerificationResultsProps {
   className?: string;
-  email: string | null | undefined;
-  isVerified: Date | null | undefined;
+  email: string | undefined;
 }
 
 export const VerificationResults: FC<VerificationResultsProps> = ({
   className,
   email,
-  isVerified,
 }) => {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const token = useSearchParams().get('token') ?? undefined;
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [userIsApproved, setUserIsApproved] = useState<boolean | null>(null);
 
   const { notify } = useToast();
+  const { data: userStatus } = useGetUserStatus();
   const { mutate, error, isLoading, isError, isSuccess, data } =
     useCustomMutation<
       UpdateUserVerificationResponse,
@@ -40,6 +43,8 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
 
         setUserIsApproved(data.isApproved);
         setIsRedirecting(true);
+
+        queryClient.invalidateQueries([QueryKeys.USER_STATUS]);
 
         if (data.isApproved) {
           router.push('/products');
@@ -54,20 +59,15 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
 
   const hasRun = useRef(false);
   useEffect(() => {
-    if (!hasRun.current && !isVerified) {
+    if (!hasRun.current && userStatus && !userStatus.emailVerified) {
       setTimeout(() => mutate({ token }), 2000);
 
       hasRun.current = true;
     }
-  }, [token, mutate, isVerified]);
-
-  const convertDate = (date: string) => {
-    const x = new Date(date).toDateString();
-    return x;
-  };
+  }, [token, mutate, userStatus?.emailVerified]);
 
   const getDateString = (date: string) => {
-    return convertDate(date);
+    return new Date(date).toDateString();
   };
 
   return (
@@ -78,11 +78,11 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
     >
       <div className='bg-light-primary p-12 rounded-lg w-full'>
         <p className='mb-3'>
-          {isVerified
+          {userStatus?.emailVerified
             ? 'Your email is verified'
             : 'Sit tight while we verify your email'}
         </p>
-        {isVerified ? (
+        {userStatus?.emailVerified ? (
           <p className='flex items-center h-11'>
             <CheckIcon className='text-light-green-500' />
             <span className='ml-3 text-gray-500 text-sm'>{email}</span>

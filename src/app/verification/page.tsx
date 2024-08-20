@@ -6,10 +6,7 @@ export default async function Page() {
 
   return (
     <div>
-      <Verification
-        email={session?.user.email}
-        isVerified={session?.user.emailVerified}
-      />
+      <Verification email={session ? session.user.email! : undefined} />
     </div>
   );
 }
