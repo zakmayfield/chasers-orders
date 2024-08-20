@@ -5,11 +5,11 @@ import { useCustomMutation } from '@/shared/hooks/custom';
 import { sendVerificationEmail } from '@/services/queries/sendVerificationEmail';
 import { SendVerificationEmailResponse } from '@/types/email';
 
-interface ResendVerificationProps {
+interface SendVerificationEmailProps {
   className?: string;
 }
 
-export const ResendVerification: FC<ResendVerificationProps> = ({
+export const SendVerificationEmail: FC<SendVerificationEmailProps> = ({
   className,
 }) => {
   const { notify } = useToast();

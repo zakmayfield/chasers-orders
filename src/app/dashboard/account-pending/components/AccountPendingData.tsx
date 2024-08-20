@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useGetUserStatus } from '@/shared/hooks/data';
-import { ResendVerification } from '@/app/verification/components';
+import { SendVerificationEmail } from '@/shared/components/buttons';
 import { AccountPendingLoading } from './AccountPendingLoading';
 
 export const AccountPendingData = () => {
@@ -55,7 +55,7 @@ export const AccountPendingData = () => {
                   Verified on: {new Date(status?.emailVerified).toDateString()}
                 </p>
               ) : (
-                <ResendVerification />
+                <SendVerificationEmail />
               )}
             </div>
           </div>

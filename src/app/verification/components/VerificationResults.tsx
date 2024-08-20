@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { LoadingSpinner } from '@/shared/components';
-import { ResendVerification } from './ResendVerification';
+import { SendVerificationEmail } from '@/shared/components/buttons';
 import { merge } from '@/utils/styles';
 import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation } from '@/shared/hooks/custom';
@@ -133,7 +133,7 @@ export const VerificationResults: FC<VerificationResultsProps> = ({
         aria-hidden={isError}
         aria-describedby='response information containter'
       >
-        {isError && <ResendVerification />}
+        {isError && <SendVerificationEmail />}
       </div>
 
       {isRedirecting && (
