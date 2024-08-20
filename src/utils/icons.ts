@@ -15,6 +15,8 @@ import {
 } from 'react-icons/pi';
 import { CiShop } from 'react-icons/ci';
 import { FaChevronDown } from 'react-icons/fa';
+import { LuTrash2 } from 'react-icons/lu';
+import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
 export const CartIcon = BsCartPlus;
 export const HeartDuotoneIcon = PiHeartDuotone;
@@ -31,3 +33,5 @@ export const CheckIcon = PiCheckCircleDuotone;
 export const ArrowRight = PiArrowRightLight;
 export const FacebookIcon = PiFacebookLogoDuotone;
 export const InstagramIcon = PiInstagramLogoDuotone;
+export const TrashIcon = LuTrash2;
+export const EmptyCartIcon = MdOutlineRemoveShoppingCart;

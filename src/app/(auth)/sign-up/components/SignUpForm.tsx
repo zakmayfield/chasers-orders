@@ -1,6 +1,5 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { ImSpinner2 } from 'react-icons/im';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 import { SignUpFormData, Steps } from '@/types/auth';
 import { handleSignUp } from '@/utils/helpers';
@@ -89,12 +88,6 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
 
   return (
     <form onSubmit={handleSubmit(signupCallback)}>
-      {!step && (
-        <div className='w-full flex justify-center items-center'>
-          <ImSpinner2 className='animate-spin' />
-        </div>
-      )}
-
       <div className='flex flex-col gap-24'>
         {/*//^ STEP ONE */}
         {step === '1' && (

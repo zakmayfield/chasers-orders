@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { LuTrash2 } from 'react-icons/lu';
 import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { removeFromCart } from '@/services/mutations/removeFromCart';
@@ -10,6 +9,7 @@ import {
   RemoveCartItemResponse,
 } from '@/types/cart';
 import { QueryKeys } from '@/types/hooks';
+import { TrashIcon } from '@/utils/icons';
 
 export const RemoveCartItemButton: React.FC<RemoveCartItemRequest> = (
   props
@@ -52,7 +52,7 @@ export const RemoveCartItemButton: React.FC<RemoveCartItemRequest> = (
       onClick={() => mutate(props)}
       className=' text-gray-700 text-xl hover:text-red-600 rounded focus:outline-none focus:ring-2 focus:ring-red-600 focus:text-red-600'
     >
-      <LuTrash2 />
+      <TrashIcon />
     </button>
   );
 };

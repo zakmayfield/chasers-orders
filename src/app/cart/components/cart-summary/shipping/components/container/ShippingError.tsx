@@ -1,4 +1,4 @@
-import { CiWarning } from 'react-icons/ci';
+import { WarningIcon } from '@/utils/icons';
 
 export const ShippingError = () => {
   return (
@@ -6,7 +6,7 @@ export const ShippingError = () => {
       <p className=' flex items-center gap-3 font-extralight'>
         Could not locate shipping information{' '}
         <span className='text-yellow-600 text-xl'>
-          <CiWarning />
+          <WarningIcon />
         </span>
       </p>
     </div>
