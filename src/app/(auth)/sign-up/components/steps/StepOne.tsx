@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import FieldError from '@/app/(auth)/components/FieldError';
-import { NextStepButton } from '@/features/auth/signup/components/buttons';
+import { NextStepButton } from '@/app/(auth)/sign-up/components/buttons';
 import type { StepProps } from '@/types/auth';
 
 export const StepOne: FC<StepProps> = ({

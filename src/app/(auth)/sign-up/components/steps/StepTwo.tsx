@@ -3,7 +3,7 @@ import FieldError from '@/app/(auth)/components/FieldError';
 import {
   NextStepButton,
   PreviousStepButton,
-} from '@/features/auth/signup/components/buttons';
+} from '@/app/(auth)/sign-up/components/buttons';
 import type { StepProps } from '@/types/auth';
 
 export const StepTwo: FC<StepProps> = ({

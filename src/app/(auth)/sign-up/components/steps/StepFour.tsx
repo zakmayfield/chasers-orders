@@ -3,7 +3,7 @@ import FieldError from '@/app/(auth)/components/FieldError';
 import {
   FinalStepButton,
   PreviousStepButton,
-} from '@/features/auth/signup/components/buttons';
+} from '@/app/(auth)/sign-up/components/buttons';
 import { useSyncBillingAddress } from '@/shared/hooks/utils';
 import { provinceOptions } from '@/utils/constants';
 import type { StepFourProps } from '@/types/auth';
