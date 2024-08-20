@@ -5,6 +5,7 @@ import { RecentOrderItems } from './RecentOrderItems';
 import { OrderType } from '@/types/cart';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
+import { Heading } from '@/shared/components/ui';
 
 const RecentOrder = ({ order }: { order: OrderType }) => {
   const { data, isLoading, isError } = useCustomQuery({
@@ -29,7 +30,7 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
   return (
     <div key={order.id} className=''>
       <div className='mb-2 w-full flex items-center gap-3 '>
-        <h5>{createdAtDate}</h5>
+        <Heading as='h5' content={createdAtDate} />
         <OrderAgainButton order={order} />
       </div>
 

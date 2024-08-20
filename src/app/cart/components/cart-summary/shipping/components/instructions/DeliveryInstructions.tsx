@@ -7,6 +7,7 @@ import { FormButtons } from './index';
 import { useGetShippingAddress } from '@/shared/hooks/data';
 import { DeliveryInstructionsResponse } from '@/types/cart';
 import { QueryKeys } from '@/types/hooks';
+import { Heading } from '@/shared/components/ui';
 
 export const DeliveryInstructions = () => {
   const queryClient = useQueryClient();
@@ -46,7 +47,7 @@ export const DeliveryInstructions = () => {
   return (
     <div className='mt-3 '>
       <div className='mb-3 flex items-center justify-between'>
-        <h5 className='font-light text-lg'>Delivery Instructions:</h5>
+        <Heading as='h5' content='Delivery Instructions:' />
 
         <FormButtons
           isEdit={isEdit}
