@@ -1,42 +1,49 @@
-type Children = React.ReactNode;
+import { merge } from '@/utils/styles';
 
-const H1 = ({ children }: { children: Children }) => {
-  return <h1>{children}</h1>;
+type Children = React.ReactNode;
+type Props = {
+  children: Children;
+  className?: string;
 };
-const H2 = ({ children }: { children: Children }) => {
-  return <h2>{children}</h2>;
+
+const H1 = ({ children, className }: Props) => {
+  return <h1 className={merge(`${className}`)}>{children}</h1>;
 };
-const H3 = ({ children }: { children: Children }) => {
-  return <h3>{children}</h3>;
+const H2 = ({ children, className }: Props) => {
+  return <h2 className={merge(`${className}`)}>{children}</h2>;
 };
-const H4 = ({ children }: { children: Children }) => {
-  return <h4>{children}</h4>;
+const H3 = ({ children, className }: Props) => {
+  return <h3 className={merge(`${className}`)}>{children}</h3>;
 };
-const H5 = ({ children }: { children: Children }) => {
-  return <h5>{children}</h5>;
+const H4 = ({ children, className }: Props) => {
+  return <h4 className={merge(`${className}`)}>{children}</h4>;
 };
-const H6 = ({ children }: { children: Children }) => {
-  return <h6>{children}</h6>;
+const H5 = ({ children, className }: Props) => {
+  return <h5 className={merge(`${className}`)}>{children}</h5>;
+};
+const H6 = ({ children, className }: Props) => {
+  return <h6 className={merge(`${className}`)}>{children}</h6>;
 };
 
 type HeadingProps = {
   as: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   content: string;
+  className?: string;
 };
 
-export const Heading = ({ as = 'h1', content }: HeadingProps) => {
+export const Heading = ({ as = 'h1', content, className }: HeadingProps) => {
   switch (as) {
     case 'h1':
-      return <H1>{content}</H1>;
+      return <H1 className={className}>{content}</H1>;
     case 'h2':
-      return <H2>{content}</H2>;
+      return <H2 className={className}>{content}</H2>;
     case 'h3':
-      return <H3>{content}</H3>;
+      return <H3 className={className}>{content}</H3>;
     case 'h4':
-      return <H4>{content}</H4>;
+      return <H4 className={className}>{content}</H4>;
     case 'h5':
-      return <H5>{content}</H5>;
+      return <H5 className={className}>{content}</H5>;
     case 'h6':
-      return <H6>{content}</H6>;
+      return <H6 className={className}>{content}</H6>;
   }
 };
