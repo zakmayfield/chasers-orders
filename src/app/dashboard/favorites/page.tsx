@@ -1,5 +1,5 @@
-import { FavoritesLayout } from './FavoritesLayout';
+import { FavoritesContainer } from './components/favorites';
 
 export default function Page() {
-  return <FavoritesLayout />;
+  return <FavoritesContainer />;
 }

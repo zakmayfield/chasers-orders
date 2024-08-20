@@ -1,1 +1,1 @@
-export * from './RecentOrdersContent';
+export * from './RecentOrders';

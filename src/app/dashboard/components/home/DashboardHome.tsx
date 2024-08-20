@@ -6,7 +6,7 @@ import { CompanyDetails } from './company';
 import { RecentOrderDetails } from './recent';
 import { useGetUser } from '@/shared/hooks/data';
 
-const DashboardHome = () => {
+export const DashboardHome = () => {
   const { data, isLoading, error, isError } = useGetUser();
 
   const LoadingData = isLoading && <div>Loading dashboard...</div>;
@@ -28,5 +28,3 @@ const DashboardHome = () => {
     </div>
   );
 };
-
-export default DashboardHome;

@@ -1,5 +1,5 @@
-import RecentOrdersSkeleton from './RecentOrdersSkeleton';
-import RecentOrder from './RecentOrder';
+import { RecentOrdersSkeleton } from './RecentOrdersSkeleton';
+import { RecentOrder } from './RecentOrder';
 import { useGetRecentOrders } from '@/shared/hooks/data';
 
 export const RecentOrdersContent = () => {

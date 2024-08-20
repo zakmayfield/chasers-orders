@@ -1,4 +1,4 @@
-import RecentOrders from './RecentOrders';
+import RecentOrders from './components/RecentOrders';
 
 export default function Page() {
   return (

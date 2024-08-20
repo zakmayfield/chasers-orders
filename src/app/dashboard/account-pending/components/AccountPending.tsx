@@ -1,6 +1,6 @@
 'use client';
 import { Heading, LoadingSpinner } from '@/shared/components/ui';
-import { AccountPendingData } from './components';
+import { AccountPendingData } from './AccountPendingData';
 import { useGetUserStatus } from '@/shared/hooks/data';
 
 export const AccountPending = () => {

@@ -7,7 +7,7 @@ import { QueryKeys } from '@/types/hooks';
 import { Heading, LoadingSpinner } from '@/shared/components/ui';
 import { WarningIcon } from '@/utils/icons';
 
-const RecentOrder = ({ order }: { order: OrderType }) => {
+export const RecentOrder = ({ order }: { order: OrderType }) => {
   const { data, isLoading, isError } = useCustomQuery({
     queryKey: [QueryKeys.ORDER, order.id],
     queryFn: async () => await getLineItems(order.id),
@@ -40,5 +40,3 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
     </div>
   );
 };
-
-export default RecentOrder;

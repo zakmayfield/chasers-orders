@@ -1,7 +1,7 @@
 'use client';
 
 import { Heading, LoadingSpinner } from '@/shared/components/ui';
-import { RecentOrdersContent } from './components';
+import { RecentOrdersContent } from './RecentOrdersContent';
 import { useGetRecentOrders } from '@/shared/hooks/data';
 
 const RecentOrders = () => {

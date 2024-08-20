@@ -1,4 +1,4 @@
-function RecentOrdersSkeleton() {
+export const RecentOrdersSkeleton = () => {
   return (
     <div className='w-4/5 flex flex-col gap-6'>
       {[1, 2, 3, 4, 5].map((item) => (
@@ -13,6 +13,4 @@ function RecentOrdersSkeleton() {
       ))}
     </div>
   );
-}
-
-export default RecentOrdersSkeleton;
+};
