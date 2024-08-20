@@ -1,6 +1,6 @@
 'use client';
-import { CartItems } from './items/CartItems';
-import { Summary } from './cart-summary/Summary';
+import { CartItems } from './components/items/CartItems';
+import { Summary } from './components/cart-summary/Summary';
 
 export const Cart = () => {
   return (
