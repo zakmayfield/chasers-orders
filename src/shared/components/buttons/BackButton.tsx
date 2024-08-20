@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 
 import { FC } from 'react';
 
-interface GoBackProps {
+interface BackButtonProps {
   className?: string;
 }
 
-export const GoBack: FC<GoBackProps> = ({ className }) => {
+export const BackButton: FC<BackButtonProps> = ({ className }) => {
   const router = useRouter();
 
   return (

@@ -1,4 +1,4 @@
-import { GoBack } from '@/shared/components';
+import { BackButton } from '@/shared/components/buttons';
 
 export default function Page({
   searchParams,
@@ -17,7 +17,7 @@ export default function Page({
           </p>
         </div>
 
-        <GoBack className='border p-2 rounded-lg w-36 mx-auto bg-light-green-400 text-white' />
+        <BackButton className='border p-2 rounded-lg w-36 mx-auto bg-light-green-400 text-white' />
       </div>
     </div>
   );
