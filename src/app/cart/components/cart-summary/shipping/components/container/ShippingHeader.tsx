@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LoadingSpinner } from '@/shared/components/ui';
+import { Heading, LoadingSpinner } from '@/shared/components/ui';
 import { DownArrow } from '@/utils/icons';
 
 interface ContainerHeaderProps {
@@ -17,7 +17,7 @@ export const ShippingHeader: FC<ContainerHeaderProps> = ({
 }) => {
   return (
     <div className='flex items-center justify-between mb-6'>
-      <h4>Shipping information</h4>
+      <Heading as='h4' content='Shipping Information' />
 
       {isFetching ? (
         <div className='px-6'>

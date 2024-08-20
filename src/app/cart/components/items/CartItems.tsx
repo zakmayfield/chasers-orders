@@ -12,8 +12,9 @@ export const CartItems = () => {
 
   return (
     <div className='col-start-2 col-span-5'>
-      <div>
+      <div className='flex flex-col gap-3'>
         <ItemsHeader isFetching={isFetching} cart={data} />
+
         {isFetching ? (
           <LoadingSkelly />
         ) : !data?.items.length ? (

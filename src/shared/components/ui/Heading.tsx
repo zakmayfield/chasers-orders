@@ -7,22 +7,22 @@ type Props = {
 };
 
 const H1 = ({ children, className }: Props) => {
-  return <h1 className={merge(`pb-6 ${className}`)}>{children}</h1>;
+  return <h1 className={merge(`${className}`)}>{children}</h1>;
 };
 const H2 = ({ children, className }: Props) => {
-  return <h2 className={merge(`pb-5 ${className}`)}>{children}</h2>;
+  return <h2 className={merge(`${className}`)}>{children}</h2>;
 };
 const H3 = ({ children, className }: Props) => {
-  return <h3 className={merge(`pb-4 ${className}`)}>{children}</h3>;
+  return <h3 className={merge(`${className}`)}>{children}</h3>;
 };
 const H4 = ({ children, className }: Props) => {
-  return <h4 className={merge(`pb-4 ${className}`)}>{children}</h4>;
+  return <h4 className={merge(`${className}`)}>{children}</h4>;
 };
 const H5 = ({ children, className }: Props) => {
-  return <h5 className={merge(`pb-3 ${className}`)}>{children}</h5>;
+  return <h5 className={merge(`${className}`)}>{children}</h5>;
 };
 const H6 = ({ children, className }: Props) => {
-  return <h6 className={merge(`pb-3 ${className}`)}>{children}</h6>;
+  return <h6 className={merge(`${className}`)}>{children}</h6>;
 };
 
 type HeadingProps = {

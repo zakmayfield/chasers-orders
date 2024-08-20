@@ -1,6 +1,6 @@
 import { FC } from 'react';
+import { Heading, LoadingSpinner } from '@/shared/components/ui';
 import type { CartCache } from '@/types/cart';
-import { LoadingSpinner } from '@/shared/components/ui';
 
 interface ItemsHeaderProps {
   isFetching: boolean;
@@ -9,8 +9,8 @@ interface ItemsHeaderProps {
 
 export const ItemsHeader: FC<ItemsHeaderProps> = ({ isFetching, cart }) => {
   return (
-    <div className='flex items-center gap-3 mb-6'>
-      <h4>Cart</h4>
+    <div className='flex items-center gap-3'>
+      <Heading as='h4' content='Cart' />
 
       {isFetching ? (
         <LoadingSpinner />
