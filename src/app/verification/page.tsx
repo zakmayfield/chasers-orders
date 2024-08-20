@@ -1,4 +1,4 @@
-import { Verification } from '@/features/verification';
+import { Verification } from './Verification';
 import { getAuthSession } from '@/lib/auth/auth.options';
 
 export default async function Page() {

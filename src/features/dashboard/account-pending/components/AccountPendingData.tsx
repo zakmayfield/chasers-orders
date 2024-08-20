@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import { useGetUserStatus } from '@/shared/hooks/data';
-import { ResendVerification } from '@/features/verification/components';
+import { ResendVerification } from '@/app/verification/components';
 import { AccountPendingLoading } from './AccountPendingLoading';
 
 export const AccountPendingData = () => {
