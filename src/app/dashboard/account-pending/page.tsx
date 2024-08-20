@@ -1,4 +1,4 @@
-import { AccountPending } from '@/features/dashboard/account-pending';
+import { AccountPending } from './AccountPending';
 
 export default async function Page() {
   return <AccountPending />;
