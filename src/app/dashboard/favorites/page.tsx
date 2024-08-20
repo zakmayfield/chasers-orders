@@ -1,4 +1,4 @@
-import { FavoritesLayout } from '@/features/dashboard/favorites/';
+import { FavoritesLayout } from './FavoritesLayout';
 
 export default function Page() {
   return <FavoritesLayout />;

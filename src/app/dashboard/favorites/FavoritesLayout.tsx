@@ -1,4 +1,4 @@
-import { FavoritesContainer } from './favorites/FavoritesContainer';
+import { FavoritesContainer } from './components/favorites';
 
 export const FavoritesLayout = () => {
   return (
