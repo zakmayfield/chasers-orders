@@ -11,7 +11,7 @@ export default async function DashboardLayout({
       <Heading
         as='h1'
         content='Dashboard'
-        className='col-span-12 border-b px-6'
+        className='col-span-12 border-b px-6 pb-6'
       />
 
       <div className='m-6 col-span-11 2xl:col-span-9'>{children}</div>
