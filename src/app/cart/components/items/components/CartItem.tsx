@@ -2,6 +2,7 @@
 
 import { CartItem as CartItemType } from '@/types/cart';
 import { RemoveCartItemButton, UpdateCartItemSize, QuantityUpdate } from './';
+import { Heading } from '@/shared/components/ui';
 
 type CartItemProps = {
   cartId: string;
@@ -18,9 +19,11 @@ export const CartItem: React.FC<CartItemProps> = (props) => {
 
       <div>
         <div className='flex items-start mt-3 flex-col xl:flex-row xl:items-center xl:space-x-2'>
-          <h3 className='text-base xl:text-lg font-medium'>
-            {props.cartItem.unit.product.name}
-          </h3>
+          <Heading
+            as='h3'
+            content={props.cartItem.unit.product.name}
+            className='text-base xl:text-lg font-medium'
+          />
           <p className='text-sm text-gray-500'>
             {props.cartItem.unit.product.category}
           </p>

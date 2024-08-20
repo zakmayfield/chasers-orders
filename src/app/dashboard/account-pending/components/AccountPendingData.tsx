@@ -13,15 +13,16 @@ export const AccountPendingData = () => {
         <AccountPendingLoading />
       ) : (
         <div className='flex flex-col gap-6'>
+          {/* Account Approval Data */}
           <div>
-            <h3 className='flex items-center gap-2'>
+            <p className='text-2xl flex items-center gap-2'>
               Your account is{' '}
               <span
                 className={`text-2xl ${status?.isApproved ? 'text-light-green-500' : 'text-red-400'}`}
               >
                 {status?.isApproved ? 'approved' : 'pending approval'}
               </span>
-            </h3>
+            </p>
 
             <p className='flex items-center gap-1'>
               Visit the{' '}
@@ -39,15 +40,16 @@ export const AccountPendingData = () => {
             </p>
           </div>
 
+          {/* Email Verification Data */}
           <div>
-            <h3 className='flex items-center gap-2'>
+            <p className='text-2xl flex items-center gap-2'>
               Your email is{' '}
               <span
                 className={`text-2xl ${status?.emailVerified ? 'text-light-green-500' : 'text-red-400'}`}
               >
                 {status?.emailVerified ? 'verified' : 'pending verification'}
               </span>
-            </h3>
+            </p>
 
             <div>
               {status?.emailVerified ? (

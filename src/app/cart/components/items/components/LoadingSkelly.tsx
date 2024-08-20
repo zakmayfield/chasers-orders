@@ -19,7 +19,7 @@ export const LoadingItem = ({}) => {
 
       <div>
         <div className='flex space-x-2 items-center mt-3 rounded'>
-          <h3 className='h-4 w-48 rounded bg-slate-300'></h3>
+          <p className='h-4 w-48 rounded bg-slate-300'></p>
           <p className='bg-slate-200 rounded h-4 w-16'></p>
         </div>
 
