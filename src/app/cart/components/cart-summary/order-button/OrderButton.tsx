@@ -7,7 +7,7 @@ import {
   createOrder,
 } from '@/services/mutations/createOrder';
 import { CartCache, OrderType } from '@/types/cart';
-import { LoadingSpinner } from '@/shared/components';
+import { LoadingSpinner } from '@/shared/components/ui';
 import { getUser } from '@/services/queries/getUser';
 import { useGetCart } from '@/shared/hooks/data';
 import { QueryKeys } from '@/types/hooks';

@@ -1,6 +1,6 @@
 'use client';
 import { useGetFavorites } from '@/shared/hooks/data';
-import { LoadingSpinner } from '@/shared/components';
+import { LoadingSpinner } from '@/shared/components/ui';
 import { Favorites, FavoritesEmpty, FavoritesLoading } from './components';
 
 export const FavoritesContainer = () => {

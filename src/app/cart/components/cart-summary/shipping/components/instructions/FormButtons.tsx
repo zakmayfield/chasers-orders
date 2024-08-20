@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { FormState } from 'react-hook-form';
-import { LoadingSpinner } from '@/shared/components';
+import { LoadingSpinner } from '@/shared/components/ui';
 import { DeliveryInstructionsData } from '@/types/user';
 
 interface FormButtonsProps {

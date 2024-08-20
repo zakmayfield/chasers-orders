@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LoadingSpinner } from '@/shared/components';
+import { LoadingSpinner } from '@/shared/components/ui';
 import { DownArrow } from '@/utils/icons';
 
 interface ContainerHeaderProps {
