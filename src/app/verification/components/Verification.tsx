@@ -1,3 +1,4 @@
+'use client';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { LoadingSpinner } from '@/shared/components/ui';
@@ -15,15 +16,12 @@ import { useGetUserStatus } from '@/shared/hooks/data';
 import { useQueryClient } from '@tanstack/react-query';
 import { QueryKeys } from '@/types/hooks';
 
-interface VerificationResultsProps {
+interface VerificationProps {
   className?: string;
   email: string | undefined;
 }
 
-export const VerificationResults: FC<VerificationResultsProps> = ({
-  className,
-  email,
-}) => {
+export const Verification: FC<VerificationProps> = ({ className, email }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const token = useSearchParams().get('token') ?? undefined;
