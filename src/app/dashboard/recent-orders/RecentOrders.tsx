@@ -1,6 +1,7 @@
 'use client';
 
-import { RecentOrdersHeader, RecentOrdersContent } from './components';
+import { Heading, LoadingSpinner } from '@/shared/components/ui';
+import { RecentOrdersContent } from './components';
 import { useGetRecentOrders } from '@/shared/hooks/data';
 
 const RecentOrders = () => {
@@ -8,7 +9,13 @@ const RecentOrders = () => {
 
   return (
     <div>
-      <RecentOrdersHeader isLoading={isLoading} orderCount={data?.length} />
+      {/* Recent Orders Header */}
+      <div className='flex items-center mb-6 gap-3'>
+        <Heading as='h2' content='Recent Orders' />
+        {isLoading ? <LoadingSpinner /> : <span>({data?.length})</span>}
+      </div>
+
+      {/* Recent Orders Data */}
       <RecentOrdersContent />
     </div>
   );
