@@ -1,11 +1,11 @@
-import { PiSpinnerGapThin, PiWarningDuotone } from 'react-icons/pi';
 import { getLineItems } from '@/services/queries/getLineItems';
 import OrderAgainButton from './OrderAgainButton';
 import { RecentOrderItems } from './RecentOrderItems';
 import { OrderType } from '@/types/cart';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
-import { Heading } from '@/shared/components/ui';
+import { Heading, LoadingSpinner } from '@/shared/components/ui';
+import { WarningIcon } from '@/utils/icons';
 
 const RecentOrder = ({ order }: { order: OrderType }) => {
   const { data, isLoading, isError } = useCustomQuery({
@@ -20,7 +20,7 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
     return (
       <div>
         <p className='flex items-center gap-3'>
-          <PiWarningDuotone className='text-yellow-500' />
+          <WarningIcon className='text-yellow-500' />
           <span className='text-sm'>Could not locate order</span>
         </p>
       </div>
@@ -35,11 +35,7 @@ const RecentOrder = ({ order }: { order: OrderType }) => {
       </div>
 
       <div className='px-6 py-3'>
-        {isLoading ? (
-          <PiSpinnerGapThin className='animate-spin' />
-        ) : (
-          <RecentOrderItems order={data} />
-        )}
+        {isLoading ? <LoadingSpinner /> : <RecentOrderItems order={data} />}
       </div>
     </div>
   );

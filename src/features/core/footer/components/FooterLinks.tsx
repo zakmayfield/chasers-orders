@@ -3,8 +3,8 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { PiFacebookLogoDuotone, PiInstagramLogoDuotone } from 'react-icons/pi';
 import { Heading } from '@/shared/components/ui';
+import { FacebookIcon, InstagramIcon } from '@/utils/icons';
 
 interface FooterLinksProps {}
 
@@ -43,13 +43,13 @@ function FooterSocials() {
           href='https://www.facebook.com/chasersjuicetoronto/'
           target='_blank'
         >
-          <PiFacebookLogoDuotone />
+          <FacebookIcon />
         </Link>
         <Link
           href='https://www.instagram.com/chasersjuicetoronto/'
           target='_blank'
         >
-          <PiInstagramLogoDuotone />
+          <InstagramIcon />
         </Link>
       </div>
     </div>

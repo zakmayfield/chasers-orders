@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { PiWarningDuotone } from 'react-icons/pi';
 import { useGetUser } from '@/shared/hooks/data';
+import { WarningIcon } from '@/utils/icons';
 
 export const DashboardNavFooter = () => {
   const { data, isLoading, isError } = useGetUser();
@@ -55,7 +55,7 @@ export const DashboardNavFooter = () => {
       `}
       >
         <div className='text-2xl'>
-          <PiWarningDuotone className='text-yellow-500' />
+          <WarningIcon className='text-yellow-500' />
         </div>
         <p className='text-red-700 text-sm'>could not locate user</p>
       </div>

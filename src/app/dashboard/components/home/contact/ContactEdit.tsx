@@ -2,7 +2,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { UseFormReturn } from 'react-hook-form';
-import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { ContactValidator } from '@/shared/validators/user/ContactValidator';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { useToast } from '@/shared/hooks/utils';
@@ -10,6 +9,7 @@ import { updateContact } from '@/services/mutations/updateContact';
 import { ContactFormData, UserData } from '@/types/user';
 import { QueryKeys } from '@/types/hooks';
 import { Contact } from '@prisma/client';
+import { WarningCircleIcon, XBoldIcon } from '@/utils/icons';
 
 interface ContactEditProps {
   userData: UserData;
@@ -96,7 +96,7 @@ export const ContactEdit: FC<ContactEditProps> = ({
           Name:
         </label>
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
-          {errors.name && <PiWarningCircleDuotone />}
+          {errors.name && <WarningCircleIcon />}
         </span>
         <input
           id='name'
@@ -110,7 +110,7 @@ export const ContactEdit: FC<ContactEditProps> = ({
           Phone number:{' '}
         </label>
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
-          {errors.phoneNumber && <PiWarningCircleDuotone />}
+          {errors.phoneNumber && <WarningCircleIcon />}
         </span>
         <input
           id='phoneNumber'
@@ -124,7 +124,7 @@ export const ContactEdit: FC<ContactEditProps> = ({
           Position:{' '}
         </label>
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
-          {errors.position && <PiWarningCircleDuotone />}
+          {errors.position && <WarningCircleIcon />}
         </span>
         <input
           id='position'
@@ -144,7 +144,7 @@ export const ContactEdit: FC<ContactEditProps> = ({
                 onClick={resetFormOnCancel}
                 className='w-1/3 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
               >
-                <PiXBold />
+                <XBoldIcon />
               </button>
               <button className='w-2/3 h-full rounded-lg bg-light-green-400 text-white hover:ring-2 hover:ring-sky-500'>
                 save
@@ -156,7 +156,7 @@ export const ContactEdit: FC<ContactEditProps> = ({
               onClick={() => setIsEdit(false)}
               className='col-span-1 w-1/2 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
             >
-              <PiXBold />
+              <XBoldIcon />
             </button>
           )}
         </div>

@@ -1,6 +1,5 @@
 import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { PiCheckCircleDuotone, PiXCircleDuotone } from 'react-icons/pi';
 import { useUpdateCartItemQuantity } from '@/shared/hooks/mutations';
 import { useCustomForm } from '@/shared/hooks/custom';
 import { quantityResolver } from '@/shared/validators/resolvers';
@@ -11,6 +10,7 @@ import {
   QuantityData,
   UpdateCartItemQuantityRequest,
 } from '@/types/cart';
+import { CheckIcon, XIcon } from '@/utils/icons';
 
 export const QuantityUpdate: React.FC<UpdateCartItemQuantityRequest> = ({
   cartId,
@@ -108,7 +108,7 @@ function QuantityForm({
       {isDirty && (
         <div className='flex items centergap-3'>
           <button type='submit' onClick={submit} className=''>
-            <PiCheckCircleDuotone className='text-light-green-400 text-2xl' />
+            <CheckIcon className='text-light-green-400 text-2xl' />
           </button>
           <button
             type='submit'
@@ -118,7 +118,7 @@ function QuantityForm({
               })
             }
           >
-            <PiXCircleDuotone className='text-red-600 text-2xl' />
+            <XIcon className='text-red-600 text-2xl' />
           </button>
         </div>
       )}

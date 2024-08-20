@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { PiArrowRightLight } from 'react-icons/pi';
 import { useToast } from '@/shared/hooks/utils';
 import { requiredSignUpFormValues } from '@/utils/constants';
 import type { UseFormGetValues } from 'react-hook-form';
 import { SignUpFormData, Steps } from '@/types/auth';
+import { ArrowRight } from '@/utils/icons';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;
@@ -51,7 +51,7 @@ export const NextStepButton: FC<NextStepProps> = ({
       className={`mt-6 active:shadow-inner col-start-4 col-span-3 border-2 flex items-center justify-center gap-3 p-2 rounded-lg focus:ring-4 focus:ring-blue-400 bg-light-green-500`}
     >
       <span className='text-white font-bold'>Next</span>
-      <PiArrowRightLight className='text-white' />
+      <ArrowRight className='text-white' />
     </button>
   );
 };

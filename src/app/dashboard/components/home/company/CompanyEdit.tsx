@@ -2,7 +2,6 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { UseFormReturn } from 'react-hook-form';
-import { PiWarningCircleDuotone, PiXBold } from 'react-icons/pi';
 import { CompanyValidator } from '@/shared/validators/user/CompanyValidator';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { useToast } from '@/shared/hooks/utils';
@@ -11,6 +10,7 @@ import { updateCompany } from '@/services/mutations/updateCompany';
 import { CompanyFormData, UserData } from '@/types/user';
 import { QueryKeys } from '@/types/hooks';
 import { Company } from '@prisma/client';
+import { WarningCircleIcon, XBoldIcon } from '@/utils/icons';
 
 interface CompanyEditProps {
   userData: UserData;
@@ -109,7 +109,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
           Name:{' '}
         </label>
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
-          {errors.name && <PiWarningCircleDuotone />}
+          {errors.name && <WarningCircleIcon />}
         </span>
         <input
           id='name'
@@ -123,7 +123,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
           Account payable email:{' '}
         </label>
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
-          {errors.accountPayableEmail && <PiWarningCircleDuotone />}
+          {errors.accountPayableEmail && <WarningCircleIcon />}
         </span>
         <input
           id='accountPayableEmail'
@@ -137,7 +137,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
           Payment method:{' '}
         </label>
         <span className='col-start-4 flex items-center justify-end text-2xl text-red-500'>
-          {errors.paymentMethod && <PiWarningCircleDuotone />}
+          {errors.paymentMethod && <WarningCircleIcon />}
         </span>
         <select
           id='paymentMethod'
@@ -163,7 +163,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
                 onClick={resetFormOnCancel}
                 className='w-1/3 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
               >
-                <PiXBold />
+                <XBoldIcon />
               </button>
               <button className='w-2/3 h-full rounded-lg bg-light-green-400 text-white hover:ring-2 hover:ring-sky-500'>
                 save
@@ -175,7 +175,7 @@ export const CompanyEdit: FC<CompanyEditProps> = ({
               onClick={() => setIsEdit(false)}
               className='col-span-1 w-1/2 h-full ml-auto rounded-lg bg-red-300 text-white hover:ring-2 hover:ring-sky-500 flex items-center justify-center'
             >
-              <PiXBold />
+              <XBoldIcon />
             </button>
           )}
         </div>
