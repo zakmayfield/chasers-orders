@@ -4,7 +4,7 @@ import {
   CategoryColumn,
   NameColumn,
   UnitsColumn,
-} from '@/features/products/table/components/columns';
+} from '@/app/products/components/table/components/columns';
 import { useGetFavorites } from '@/shared/hooks/data';
 import { ProductWithUnits } from '@/types/products';
 
