@@ -2,7 +2,7 @@ import RecentOrdersSkeleton from './RecentOrdersSkeleton';
 import RecentOrder from './RecentOrder';
 import { useGetRecentOrders } from '@/shared/hooks/data';
 
-function RecentOrdersContent() {
+export const RecentOrdersContent = () => {
   const { data, isLoading, error } = useGetRecentOrders();
 
   if (isLoading) {
@@ -23,6 +23,4 @@ function RecentOrdersContent() {
         data.map((order) => <RecentOrder key={order.id} order={order} />)}
     </div>
   );
-}
-
-export default RecentOrdersContent;
+};

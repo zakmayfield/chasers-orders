@@ -1,12 +1,12 @@
 import { LoadingSpinner } from '@/shared/components';
 
-function RecentOrdersHeader({
+export const RecentOrdersHeader = ({
   isLoading,
   orderCount,
 }: {
   isLoading: boolean;
   orderCount?: number;
-}) {
+}) => {
   return (
     <h2 className='flex items-center mb-6 gap-3'>
       Recent Orders
@@ -15,6 +15,4 @@ function RecentOrdersHeader({
       </div>
     </h2>
   );
-}
-
-export default RecentOrdersHeader;
+};

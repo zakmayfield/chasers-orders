@@ -1,7 +1,6 @@
 'use client';
 
-import RecentOrdersHeader from './components/RecentOrdersHeader';
-import RecentOrdersContent from './components/RecentOrdersContent';
+import { RecentOrdersHeader, RecentOrdersContent } from './components';
 import { useGetRecentOrders } from '@/shared/hooks/data';
 
 const RecentOrders = () => {

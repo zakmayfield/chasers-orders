@@ -1,4 +1,4 @@
-import RecentOrders from '@/features/dashboard/recent-orders/RecentOrders';
+import RecentOrders from './RecentOrders';
 
 export default function Page() {
   return (
