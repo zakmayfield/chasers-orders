@@ -1,5 +1,7 @@
 'use client';
 
+import { Heading } from '@/shared/components/ui';
+
 export default function Error({
   error,
   reset,
@@ -10,7 +12,12 @@ export default function Error({
   return (
     <div className='min-h-[35rem] flex items-center justify-center'>
       <div className='py-12 px-3 flex flex-col gap-6 max-w-md w-full '>
-        <h1 className='text-2xl font-light'>Something went wrong!</h1>
+        <Heading
+          as='h1'
+          content='Something went wrong!'
+          className='text-2xl font-light'
+        />
+
         <div className='bg-light-primary rounded-lg px-3 py-12'>
           <p className='text-red-500'>
             {error && typeof error === 'string' && error}
