@@ -1,4 +1,4 @@
-import { DeliveryInstructions } from '@/features/cart/cart-summary/shipping/components/instructions';
+import { DeliveryInstructions } from '@/app/cart/components/cart-summary/shipping/components/instructions';
 import { ShippingAddress } from './ShippingAddress';
 
 export const ShippingBody = () => {
