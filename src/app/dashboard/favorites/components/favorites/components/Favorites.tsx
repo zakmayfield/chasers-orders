@@ -1,6 +1,6 @@
 'use client';
 import { useGetFavorites } from '@/shared/hooks/data';
-import { Favorite } from '@/app/dashboard/favorites/components/favorites/favorite';
+import { Favorite } from '@/app/dashboard/favorites/components/favorite';
 
 export const Favorites = () => {
   const { data: favorites } = useGetFavorites();
