@@ -17,7 +17,7 @@ export default function Page({
           </p>
         </div>
 
-        <BackButton className='border p-2 rounded-lg w-36 mx-auto bg-light-green-400 text-white' />
+        <BackButton className='mx-auto' />
       </div>
     </div>
   );

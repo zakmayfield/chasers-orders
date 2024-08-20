@@ -1,3 +1,4 @@
+'use client';
 import { merge } from '@/utils/styles';
 import { FC } from 'react';
 import { useToast } from '@/shared/hooks/utils';

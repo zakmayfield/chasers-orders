@@ -15,7 +15,9 @@ export const BackButton: FC<BackButtonProps> = ({ className }) => {
   return (
     <button
       onClick={() => router.back()}
-      className={merge(`${className || ''}`)}
+      className={merge(
+        `p-2 rounded-lg w-36 bg-light-green-400 text-white ${className}`
+      )}
     >
       Go Back
     </button>
