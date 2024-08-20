@@ -1,6 +1,6 @@
 'use client';
 import { FC } from 'react';
-import FieldError from '../../components/FieldError';
+import FieldError from '@/app/(auth)/components/FieldError';
 import { SignInButton } from '.';
 import { handleSignIn } from '@/utils/helpers';
 import { useCustomForm } from '@/shared/hooks/custom';
@@ -10,7 +10,7 @@ import { SignInFormData } from '@/types/auth';
 
 interface SignInFormProps {}
 
-const SignInForm: FC<SignInFormProps> = ({}) => {
+export const SignInForm: FC<SignInFormProps> = ({}) => {
   const {
     methods: {
       register,
@@ -70,5 +70,3 @@ const SignInForm: FC<SignInFormProps> = ({}) => {
     </form>
   );
 };
-
-export default SignInForm;

@@ -1,4 +1,4 @@
-import { SignIn } from '@/features/auth/signin/SignIn';
+import { SignIn } from '@/app/(auth)/sign-in/SignIn';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { redirect } from 'next/navigation';
 

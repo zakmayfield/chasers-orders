@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FieldError from '@/features/auth/components/FieldError';
+import FieldError from '@/app/(auth)/components/FieldError';
 import { NextStepButton } from '@/features/auth/signup/components/buttons';
 import type { StepProps } from '@/types/auth';
 

@@ -2,7 +2,7 @@
 
 import { useStepTracker } from '@/shared/hooks/utils';
 import { SignUpForm, StepTracker } from './components';
-import FormSwitchLink from '@/features/auth/components/FormSwitchLink';
+import FormSwitchLink from '@/app/(auth)/components/FormSwitchLink';
 
 export const SignUp = () => {
   const { step, setStep } = useStepTracker();
