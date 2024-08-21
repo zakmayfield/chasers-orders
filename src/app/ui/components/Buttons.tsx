@@ -1,3 +1,4 @@
+'use client';
 import { BackButton, SendVerificationEmail } from '@/shared/components/buttons';
 import { Button } from '@/shared/components/ui';
 import { TrashIcon } from '@/utils/icons';
@@ -15,6 +16,7 @@ export const Buttons = () => {
           textColor='white'
           rounded='md'
           width='sm'
+          handleClick={() => console.log('clicked')}
         />
         <BackButton />
         <SendVerificationEmail />

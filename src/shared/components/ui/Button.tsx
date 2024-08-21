@@ -1,3 +1,4 @@
+'use client';
 import { IconType } from 'react-icons';
 import { Container, ContainerProps } from './Container';
 import { merge } from '@/utils/styles';
@@ -14,6 +15,7 @@ export const Button = ({
   textSize,
   bg,
   isLoading,
+  handleClick,
 }: {
   text: string;
   Icon?: IconType;
@@ -25,9 +27,11 @@ export const Button = ({
   textSize?: 'sm' | 'md' | 'lg';
   bg?: 'green' | 'translucent';
   isLoading?: boolean;
+  handleClick?(): void;
 }) => {
   return (
     <button
+      onClick={handleClick}
       className={merge(`
         hover:bg-opacity-90 
         ${width === 'xs' ? 'max-w-[5rem] w-full' : width === 'sm' ? 'max-w-[8rem] w-full' : width === 'md' ? 'max-w-[12rem] w-full' : width === 'lg' ? 'max-w-[15rem] w-full' : width === 'full' ? 'w-full' : 'w-fit'}
