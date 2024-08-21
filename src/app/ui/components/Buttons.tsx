@@ -1,5 +1,4 @@
 'use client';
-import { BackButton, SendVerificationEmail } from '@/shared/components/buttons';
 import { Button } from '@/shared/components/ui';
 import { TrashIcon } from '@/utils/icons';
 
