@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '@/shared/components/ui';
+import { LoadingSpinner, PulseLoader } from '@/shared/components/ui';
 
 export const Loading = () => {
   return (
@@ -7,6 +7,8 @@ export const Loading = () => {
 
       <div className='flex flex-col gap-3'>
         <LoadingSpinner />
+        <PulseLoader />
+        <PulseLoader rows='multi' width='md' />
       </div>
     </div>
   );
