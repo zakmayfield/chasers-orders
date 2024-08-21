@@ -62,7 +62,7 @@ export const Verification: FC<VerificationProps> = ({ className, email }) => {
 
       hasRun.current = true;
     }
-  }, [token, mutate, userStatus?.emailVerified]);
+  }, [token, mutate, userStatus]);
 
   const getDateString = (date: string) => {
     return new Date(date).toDateString();

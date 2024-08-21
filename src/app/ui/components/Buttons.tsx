@@ -15,7 +15,7 @@ export const Buttons = () => {
           textColor='white'
           rounded='md'
           width='sm'
-          handleClick={() => console.log('clicked')}
+          handleClick={() => console.info('clicked')}
         />
         <Button
           text='Custom'
@@ -23,7 +23,7 @@ export const Buttons = () => {
           textColor='white'
           rounded='md'
           width='sm'
-          handleClick={() => console.log('clicked')}
+          handleClick={() => console.info('clicked')}
         />
         <Button
           text='Custom'
@@ -33,7 +33,7 @@ export const Buttons = () => {
           rounded='md'
           width='lg'
           isLoading={true}
-          handleClick={() => console.log('clicked')}
+          handleClick={() => console.info('clicked')}
         />
       </div>
     </div>
