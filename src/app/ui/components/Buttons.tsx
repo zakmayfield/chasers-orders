@@ -18,8 +18,24 @@ export const Buttons = () => {
           width='sm'
           handleClick={() => console.log('clicked')}
         />
-        <BackButton />
-        <SendVerificationEmail />
+        <Button
+          text='Custom'
+          padding='sm'
+          textColor='white'
+          rounded='md'
+          width='sm'
+          handleClick={() => console.log('clicked')}
+        />
+        <Button
+          text='Custom'
+          padding='sm'
+          textColor='white'
+          bg='translucent'
+          rounded='md'
+          width='lg'
+          isLoading={true}
+          handleClick={() => console.log('clicked')}
+        />
       </div>
     </div>
   );
