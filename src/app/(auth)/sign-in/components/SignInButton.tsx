@@ -1,4 +1,4 @@
-import { LoadingSpinner } from '@/shared/components/ui';
+import { SpinLoader } from '@/shared/components/ui';
 import { FC } from 'react';
 
 interface SignInButtonProps {
@@ -21,7 +21,7 @@ export const SignInButton: FC<SignInButtonProps> = ({
       disabled={isSubmitted && isSubmitSuccessful}
     >
       {isSubmitted && isSubmitSuccessful ? (
-        <LoadingSpinner className='mx-auto text-2xl' />
+        <SpinLoader className='mx-auto text-2xl' />
       ) : (
         'Sign In'
       )}

@@ -1,5 +1,5 @@
 'use client';
-import { Heading, LoadingSpinner } from '@/shared/components/ui';
+import { Heading, SpinLoader } from '@/shared/components/ui';
 import { AccountPendingData } from './AccountPendingData';
 import { useGetUserStatus } from '@/shared/hooks/data';
 
@@ -11,7 +11,7 @@ export const AccountPending = () => {
       {/* Account Pending Header */}
       <div className='flex items-center gap-3'>
         <Heading as='h2' content='Account Status' />
-        {isLoading && <LoadingSpinner />}
+        {isLoading && <SpinLoader />}
       </div>
 
       {/* Account Pending Data */}

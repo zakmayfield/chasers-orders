@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { LoadingSpinner } from '@/shared/components/ui';
+import { SpinLoader } from '@/shared/components/ui';
 
 interface FinalStepButtonProps {
   isSubmitted: boolean;
@@ -22,7 +22,7 @@ export const FinalStepButton: FC<FinalStepButtonProps> = ({
       disabled={isSubmitted && isSubmitSuccessful}
     >
       {isSubmitted && isSubmitSuccessful ? (
-        <LoadingSpinner className='text-white' />
+        <SpinLoader className='text-white' />
       ) : (
         'Create Account'
       )}

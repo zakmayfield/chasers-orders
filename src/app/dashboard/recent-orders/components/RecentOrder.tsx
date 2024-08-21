@@ -4,7 +4,7 @@ import { RecentOrderItems } from './RecentOrderItems';
 import { OrderType } from '@/types/cart';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
-import { Heading, LoadingSpinner } from '@/shared/components/ui';
+import { Heading, SpinLoader } from '@/shared/components/ui';
 import { WarningIcon } from '@/utils/icons';
 
 export const RecentOrder = ({ order }: { order: OrderType }) => {
@@ -35,7 +35,7 @@ export const RecentOrder = ({ order }: { order: OrderType }) => {
       </div>
 
       <div className='px-6 py-3'>
-        {isLoading ? <LoadingSpinner /> : <RecentOrderItems order={data} />}
+        {isLoading ? <SpinLoader /> : <RecentOrderItems order={data} />}
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Heading, LoadingSpinner } from '@/shared/components/ui';
+import { Heading, SpinLoader } from '@/shared/components/ui';
 import { DownArrow } from '@/utils/icons';
 
 interface ContainerHeaderProps {
@@ -21,7 +21,7 @@ export const ShippingHeader: FC<ContainerHeaderProps> = ({
 
       {isFetching ? (
         <div className='px-6'>
-          <LoadingSpinner />
+          <SpinLoader />
         </div>
       ) : (
         !error && (

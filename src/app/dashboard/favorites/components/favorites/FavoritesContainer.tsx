@@ -1,6 +1,6 @@
 'use client';
 import { useGetFavorites } from '@/shared/hooks/data';
-import { Heading, LoadingSpinner } from '@/shared/components/ui';
+import { Heading, SpinLoader } from '@/shared/components/ui';
 import { Favorites, FavoritesEmpty, FavoritesLoading } from './components';
 
 export const FavoritesContainer = () => {
@@ -10,7 +10,7 @@ export const FavoritesContainer = () => {
       {/* Favorites Header */}
       <div className='flex items-center gap-3 mb-3'>
         <Heading as='h2' content='Favorites' />
-        {isLoading && <LoadingSpinner />}
+        {isLoading && <SpinLoader />}
       </div>
 
       {/* Favorites Data */}

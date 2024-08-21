@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Heading, LoadingSpinner } from '@/shared/components/ui';
+import { Heading, SpinLoader } from '@/shared/components/ui';
 import type { CartCache } from '@/types/cart';
 
 interface ItemsHeaderProps {
@@ -13,7 +13,7 @@ export const ItemsHeader: FC<ItemsHeaderProps> = ({ isFetching, cart }) => {
       <Heading as='h4' content='Cart' />
 
       {isFetching ? (
-        <LoadingSpinner />
+        <SpinLoader />
       ) : (
         <p>
           (<span>{cart?.items.length}</span>)

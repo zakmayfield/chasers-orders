@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { FormState } from 'react-hook-form';
-import { LoadingSpinner } from '@/shared/components/ui';
+import { SpinLoader } from '@/shared/components/ui';
 import { DeliveryInstructionsData } from '@/types/user';
 
 interface FormButtonsProps {
@@ -47,7 +47,7 @@ function SaveButton({
       className='bg-light-green-400 rounded-lg text-white hover:ring-2 hover:ring-sky-500 px-2 w-12 h-full flex items-center justify-center'
     >
       {formState.isSubmitted && formState.isSubmitSuccessful ? (
-        <LoadingSpinner />
+        <SpinLoader />
       ) : (
         'save'
       )}

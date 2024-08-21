@@ -7,7 +7,7 @@ import {
   createOrder,
 } from '@/services/mutations/createOrder';
 import { CartCache, OrderType } from '@/types/cart';
-import { LoadingSpinner } from '@/shared/components/ui';
+import { SpinLoader } from '@/shared/components/ui';
 import { getUser } from '@/services/queries/getUser';
 import { useGetCart } from '@/shared/hooks/data';
 import { QueryKeys } from '@/types/hooks';
@@ -90,7 +90,7 @@ export const OrderButton = () => {
       }
     >
       {isLoading ? (
-        <LoadingSpinner className='mx-auto text-white text-xl' />
+        <SpinLoader className='mx-auto text-white text-xl' />
       ) : (
         <span className={`text-white text-lg font-normal`}>Place Order</span>
       )}

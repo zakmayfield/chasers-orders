@@ -1,7 +1,7 @@
 'use client';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { LoadingSpinner } from '@/shared/components/ui';
+import { SpinLoader } from '@/shared/components/ui';
 import { SendVerificationEmail } from '@/shared/components/buttons';
 import { merge } from '@/utils/styles';
 import { useToast } from '@/shared/hooks/utils';
@@ -88,7 +88,7 @@ export const Verification: FC<VerificationProps> = ({ className, email }) => {
         ) : (
           <p className='flex items-center h-11'>
             {isLoading ? (
-              <LoadingSpinner />
+              <SpinLoader />
             ) : isError ? (
               <XIcon className='text-red-500' />
             ) : isSuccess ? (
@@ -137,7 +137,7 @@ export const Verification: FC<VerificationProps> = ({ className, email }) => {
       {isRedirecting && (
         <div className=' bg-slate-50 rounded-lg p-2 mt-6'>
           <div className='flex items-center justify-center gap-6'>
-            <LoadingSpinner className='text-3xl' />
+            <SpinLoader className='text-3xl' />
             <p className='text-gray-500'>
               redirecting to:{' '}
               <span>{userIsApproved ? 'shop' : 'dashboard'}</span>
