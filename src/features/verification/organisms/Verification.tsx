@@ -69,11 +69,7 @@ export const Verification: FC<VerificationProps> = ({ className, email }) => {
   };
 
   return (
-    <div
-      className={merge(
-        `mx-auto w-full min-h-[35rem] flex flex-col gap-6 ${className}`
-      )}
-    >
+    <div className={merge(`mx-auto w-full flex flex-col gap-6 ${className}`)}>
       <div className='bg-light-primary p-12 rounded-lg w-full'>
         <p className='mb-3'>
           {userStatus?.emailVerified
