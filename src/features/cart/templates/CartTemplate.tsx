@@ -18,7 +18,7 @@ export const CartTemplate = () => {
           <CartItems />
         </Container>
 
-        <Container as='div' width='sm' padding='sm' border={true}>
+        <Container as='div' width='sm' padding='sm' rounded='sm' border={true}>
           <OrderSummary />
         </Container>
       </Container>

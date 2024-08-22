@@ -36,6 +36,7 @@ async function handler(req: Request) {
         cartId: true,
         unitId: true,
         quantity: true,
+        createdAt: true,
         unit: {
           select: {
             size: true,

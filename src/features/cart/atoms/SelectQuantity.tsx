@@ -1,16 +1,19 @@
 import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useUpdateCartItemQuantity } from '@/shared/hooks/mutations';
-import { useCustomForm } from '@/shared/hooks/custom';
+import { useCustomForm, useCustomMutation } from '@/shared/hooks/custom';
 import { quantityResolver } from '@/shared/validators/resolvers';
 import { defaultQuantityFormValues } from '@/utils/constants';
 import { QueryKeys } from '@/types/hooks';
 import {
   CartCache,
+  CartItem,
   QuantityData,
   UpdateCartItemQuantityRequest,
 } from '@/types/cart';
 import { CheckIcon, XIcon } from '@/utils/icons';
+import { Container } from '@/shared/components/ui';
+import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
+import { useToast } from '@/shared/hooks/utils';
 
 export const SelectQuantity: React.FC<UpdateCartItemQuantityRequest> = ({
   cartId,
@@ -18,9 +21,21 @@ export const SelectQuantity: React.FC<UpdateCartItemQuantityRequest> = ({
   quantity,
 }) => {
   const queryClient = useQueryClient();
+  const { notify } = useToast();
 
-  const { mutate, isSuccess } = useUpdateCartItemQuantity({
-    customSuccessHandling(data) {
+  const { methods } = useCustomForm({
+    defaultValues: { quantity: quantity.toString() },
+    resolver: quantityResolver,
+  });
+
+  const { mutate: updateQuantity } = useCustomMutation<
+    CartItem,
+    UpdateCartItemQuantityRequest
+  >({
+    mutationFn: updateCartItemQuantity,
+    handleSuccess(data) {
+      notify(`Updated quantity to (${data.quantity})`);
+
       queryClient.setQueryData(
         [QueryKeys.CART],
         (oldData: CartCache | undefined) =>
@@ -28,27 +43,63 @@ export const SelectQuantity: React.FC<UpdateCartItemQuantityRequest> = ({
             ? {
                 ...oldData,
                 items: oldData.items.map((item) =>
-                  item.unitId === data.unitId ? data : item
+                  item.unitId === unitId ? data : item
                 ),
               }
             : oldData
       );
+
+      methods.reset({ quantity: data.quantity.toString() });
+    },
+    handleError() {
+      notify('Could not update quantity', 'error');
     },
   });
 
-  function submitHandler(data: QuantityData) {
-    const payload = { cartId, unitId, quantity: data.quantity };
-    mutate(payload);
+  function submitHandler(event: FormEvent) {
+    event.preventDefault();
+    const formValues = methods.getValues();
+    const quantity = Number(formValues.quantity);
+    methods.handleSubmit(() => updateQuantity({ cartId, unitId, quantity }))();
   }
 
   return (
-    <div className='flex items-center space-x-2'>
-      <QuantityForm
-        currentQuantity={quantity}
-        isSuccess={isSuccess}
-        submitHandler={submitHandler}
-      />
-    </div>
+    <Container as='div'>
+      <form>
+        <Container as='div' flex='row'>
+          <Container as='div' flex='row'>
+            <label htmlFor='quantity' className='text-sm text-gray-500'>
+              Qty
+            </label>
+            <input
+              type='number'
+              id='quantity'
+              min={1}
+              {...methods.register('quantity', { valueAsNumber: true })}
+              className='w-24 border rounded-md px-2 py-1'
+            />
+          </Container>
+
+          {methods.formState.isDirty && (
+            <Container as='div' flex='row' className='gap-1'>
+              <button type='submit' onClick={submitHandler} className=''>
+                <CheckIcon className='text-light-green-400 text-2xl' />
+              </button>
+              <button
+                type='submit'
+                onClick={() =>
+                  methods.reset({
+                    quantity: quantity.toString(),
+                  })
+                }
+              >
+                <XIcon className='text-red-600 text-2xl' />
+              </button>
+            </Container>
+          )}
+        </Container>
+      </form>
+    </Container>
   );
 };
 

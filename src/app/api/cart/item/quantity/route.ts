@@ -42,8 +42,10 @@ export async function PUT(req: Request) {
       where: { cartId_unitId: { cartId, unitId } },
       data: { quantity },
       select: {
+        cartId: true,
         unitId: true,
         quantity: true,
+        createdAt: true,
         unit: {
           select: {
             size: true,
