@@ -23,7 +23,6 @@ type SelectSizeProps = {
 export const SelectSize: React.FC<SelectSizeProps> = (props) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
-  const [size, setSize] = useState<string | undefined>(props.currentSize);
 
   const { data, isLoading } = useCustomQuery<CartSizesData>({
     queryKey: [QueryKeys.SIZE, props.unitId],
@@ -37,8 +36,6 @@ export const SelectSize: React.FC<SelectSizeProps> = (props) => {
     mutationFn: updateCartItemSize,
     handleSuccess(data) {
       notify(`Updated size to ${data.unit.size}`);
-
-      setSize(data.unit.size);
 
       queryClient.setQueryData(
         [QueryKeys.CART],
