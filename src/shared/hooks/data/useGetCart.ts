@@ -4,11 +4,11 @@ import { QueryKeys } from '@/types/hooks';
 import { CartCache } from '@/types/cart';
 
 export const useGetCart = () => {
-  const { data, isFetching } = useCustomQuery<CartCache>({
+  const { data, isFetching, isLoading, error } = useCustomQuery<CartCache>({
     queryKey: [QueryKeys.CART],
     queryFn: getCart,
     staleTime: Infinity,
   });
 
-  return { data, isFetching };
+  return { data, isFetching, isLoading, error };
 };
