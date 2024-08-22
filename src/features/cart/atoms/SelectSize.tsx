@@ -89,28 +89,5 @@ export const SelectSize: React.FC<SelectSizeProps> = (props) => {
         </select>
       </Container>
     </Container>
-    // <div className='flex space-x-2'>
-    //   <div className='flex items-start space-x-2'>
-    //     <p className='text-sm text-gray-500'>Size</p>
-    //     {isLoading ? (
-    //       <span className='pl-2'>Loading...</span>
-    //     ) : (
-    //       <select
-    //         name='size'
-    //         id={props.unitId + '-size'}
-    //         value={size}
-    //         onChange={handleSizeChange}
-    //         className='border rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-24'
-    //       >
-    //         {options &&
-    //           options.map((size) => (
-    //             <option key={size} value={size}>
-    //               {size}
-    //             </option>
-    //           ))}
-    //       </select>
-    //     )}
-    //   </div>
-    // </div>
   );
 };
