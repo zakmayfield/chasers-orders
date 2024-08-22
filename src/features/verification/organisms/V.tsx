@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Container } from '@/shared/components/ui';
 import { useGetAuthorization } from '@/shared/hooks/data';
@@ -25,7 +24,10 @@ export const V = () => {
     <VerificationError errorMessage={mutation.error.message} />
   );
   // Data
-  const data = mutation.data && <VerificationData data={mutation.data} />;
+  const data = (mutation.data ||
+    (authorization && authorization.data?.emailVerified)) && (
+    <VerificationData data={mutation.data} authorization={authorization.data} />
+  );
 
   return (
     <Container as='div' className='bg-slate-100' padding='lg' rounded='sm'>
