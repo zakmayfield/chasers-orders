@@ -7,7 +7,7 @@ import { VerificationMutationLoading } from '../molecules/VerificationMutationLo
 import { VerificationError } from '../molecules/VerificationError';
 import { VerificationData } from '../molecules/VerificationData';
 
-export const V = () => {
+export const Verification = () => {
   const token = useSearchParams().get('token') ?? undefined;
 
   const authorization = useGetAuthorization();
