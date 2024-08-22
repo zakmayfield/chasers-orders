@@ -5,16 +5,15 @@ import { OrderSummary } from '../organisms/OrderSummary';
 
 export const CartTemplate = () => {
   return (
-    <PageTemplate title='Cart' width='full' className='border'>
+    <PageTemplate title='Cart' width='full'>
       <Container
         as='div'
         flex='row'
         padding='md'
         flexCenter={true}
-        border={true}
         className='items-start'
       >
-        <Container as='div' width='lg' padding='sm' rounded='sm' border={true}>
+        <Container as='div' width='lg' padding='sm' rounded='sm'>
           <CartItems />
         </Container>
 

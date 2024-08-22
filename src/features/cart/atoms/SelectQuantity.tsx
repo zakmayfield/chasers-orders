@@ -1,13 +1,11 @@
-import { FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCustomForm, useCustomMutation } from '@/shared/hooks/custom';
 import { quantityResolver } from '@/shared/validators/resolvers';
-import { defaultQuantityFormValues } from '@/utils/constants';
 import { QueryKeys } from '@/types/hooks';
 import {
   CartCache,
   CartItem,
-  QuantityData,
   UpdateCartItemQuantityRequest,
 } from '@/types/cart';
 import { CheckIcon, XIcon } from '@/utils/icons';
@@ -58,8 +56,7 @@ export const SelectQuantity: React.FC<UpdateCartItemQuantityRequest> = ({
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();
-    const formValues = methods.getValues();
-    const quantity = Number(formValues.quantity);
+    const quantity = Number(methods.getValues().quantity);
     methods.handleSubmit(() => updateQuantity({ cartId, unitId, quantity }))();
   }
 
