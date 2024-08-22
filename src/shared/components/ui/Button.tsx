@@ -15,6 +15,7 @@ export const Button = ({
   textSize,
   bg,
   isLoading,
+  fontWeight,
   handleClick,
 }: {
   text: string;
@@ -27,6 +28,7 @@ export const Button = ({
   textSize?: 'sm' | 'md' | 'lg';
   bg?: 'green' | 'translucent';
   isLoading?: boolean;
+  fontWeight?: 'normal' | 'bold';
   handleClick?(): void;
 }) => {
   return (
@@ -35,7 +37,7 @@ export const Button = ({
       className={merge(`
         hover:bg-opacity-90 
         ${width === 'xs' ? 'max-w-[5rem] w-full' : width === 'sm' ? 'max-w-[8rem] w-full' : width === 'md' ? 'max-w-[12rem] w-full' : width === 'lg' ? 'max-w-[15rem] w-full' : width === 'full' ? 'w-full' : 'w-fit'}
-        ${padding === 'sm' ? 'p-2 px-4' : padding === 'md' ? 'p-4 px-6' : padding === 'lg' ? 'p-6 px-8' : 'p-0'}
+        ${padding === 'sm' ? 'p-2 px-4' : padding === 'md' ? 'p-4 px-6' : padding === 'lg' ? 'p-6 px-8' : 'p-2 px-4'}
         ${rounded === 'sm' ? 'rounded-md' : rounded === 'md' ? 'rounded-lg' : rounded === 'lg' ? 'rounded-xl' : 'rounded-md'}
         ${bg === 'green' ? 'bg-green-500' : bg === 'translucent' ? 'bg-none border' : 'bg-green-500'}
         ${className}
@@ -46,7 +48,7 @@ export const Button = ({
           <Container as='span'>
             <Icon
               className={`
-                ${textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : ''}
+                ${textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : 'text-white'}
                 ${textSize === 'sm' ? 'text-base' : textSize === 'md' ? 'text-lg' : textSize === 'lg' ? 'text-xl' : ''}
                 ${bg === 'translucent' && 'text-black'}
                 `}
@@ -56,7 +58,7 @@ export const Button = ({
         {isLoading && (
           <SpinLoader
             className={`
-              ${textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : ''}
+              ${textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : 'text-white'}
               ${textSize === 'sm' ? 'text-base' : textSize === 'md' ? 'text-lg' : textSize === 'lg' ? 'text-xl' : ''}
               ${bg === 'translucent' && 'text-black'}
               `}
@@ -65,8 +67,9 @@ export const Button = ({
         <Container
           as='span'
           className={`
-            ${textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : ''}
+            ${textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : 'text-white'}
             ${textSize === 'sm' ? 'text-base' : textSize === 'md' ? 'text-lg' : textSize === 'lg' ? 'text-xl' : ''}
+            ${fontWeight === 'normal' ? 'font-normal' : fontWeight === 'bold' ? 'font-semibold' : ''}
             ${bg === 'translucent' && 'text-black'}
               `}
         >

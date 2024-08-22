@@ -1,15 +1,14 @@
+import { useEffect, useRef } from 'react';
+import { useToast } from '../utils';
+import { useQueryClient } from '@tanstack/react-query';
+import { useCustomMutation } from '../custom';
+import { updateUserVerification } from '@/services/mutations/updateUserVerification';
+import { QueryKeys } from '@/types/hooks';
+import { UserAuthorization } from '@/types/user';
 import {
   UpdateUserVerificationRequest,
   UpdateUserVerificationResponse,
 } from '@/types/verification';
-import { useCustomMutation } from '../custom';
-import { updateUserVerification } from '@/services/mutations/updateUserVerification';
-import { useToast } from '../utils';
-import { QueryKeys } from '@/types/hooks';
-import { useRouter } from 'next/navigation';
-import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
-import { UserAuthorization } from '@/types/user';
 
 export const useUpdateUserVerification = ({
   token,
@@ -18,7 +17,6 @@ export const useUpdateUserVerification = ({
   token: string | undefined;
   authorization: UserAuthorization | undefined;
 }) => {
-  const router = useRouter();
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
@@ -32,12 +30,6 @@ export const useUpdateUserVerification = ({
         notify(`Email verification successful: ${data.email}`);
 
         queryClient.invalidateQueries([QueryKeys.USER_STATUS]);
-
-        if (data.isApproved) {
-          router.push('/products');
-          return;
-        }
-        router.push('/dashboard/account-pending');
       },
       handleError(error) {
         notify(error.message, 'error');
@@ -47,7 +39,7 @@ export const useUpdateUserVerification = ({
   const hasRun = useRef(false);
 
   useEffect(() => {
-    if (!hasRun.current && authorization && authorization.emailVerified) {
+    if (!hasRun.current && authorization && !authorization.emailVerified) {
       mutate({ token });
 
       hasRun.current = true;

@@ -89,7 +89,7 @@ async function handler(req: NextRequest) {
       });
 
       return new Response(
-        'Expired Token: Please check your email for a new verification link.',
+        'Expired Token: Please check your email for a new verification link',
         { status: 400 }
       );
     }
