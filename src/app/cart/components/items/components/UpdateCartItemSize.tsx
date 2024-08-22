@@ -7,7 +7,7 @@ import {
   UpdateCartItemSizeRequest,
 } from '@/types/cart';
 import { useToast } from '@/shared/hooks/utils';
-import { getCartSizes } from '@/services/queries/getCartSizes';
+import { getUnitSizes } from '@/services/queries/getUnitSizes';
 import { updateCartItemSize } from '@/services/mutations/updateCartItemSize';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
@@ -28,7 +28,7 @@ export const UpdateCartItemSize: React.FC<UpdateCartItemSizeProps> = (
 
   const { data, isLoading } = useCustomQuery<CartSizesData>({
     queryKey: [QueryKeys.SIZE, props.unitId],
-    queryFn: () => getCartSizes(props.unitId),
+    queryFn: () => getUnitSizes(props.unitId),
   });
 
   const { mutate: updateSize } = useCustomMutation<
