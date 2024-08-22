@@ -1,10 +1,10 @@
 'use client';
 import { Heading, SpinLoader } from '@/shared/components/ui';
 import { AccountPendingData } from './AccountPendingData';
-import { useGetUserStatus } from '@/shared/hooks/data';
+import { useGetAuthorization } from '@/shared/hooks/data';
 
 export const AccountPending = () => {
-  const { isLoading } = useGetUserStatus();
+  const { isLoading } = useGetAuthorization();
 
   return (
     <div className='min-h-[35rem] flex flex-col gap-6'>

@@ -1,11 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { useGetUserStatus } from '@/shared/hooks/data';
+import { useGetAuthorization } from '@/shared/hooks/data';
 import { SendVerificationEmail } from '@/shared/components/buttons';
 import { AccountPendingLoading } from './AccountPendingLoading';
 
 export const AccountPendingData = () => {
-  const { data: status, isLoading } = useGetUserStatus();
+  const { data: status, isLoading } = useGetAuthorization();
 
   return (
     <div>
