@@ -8,7 +8,7 @@ export const PageTemplate = ({
   width,
   center,
 }: {
-  title: string;
+  title?: string;
   children: React.ReactNode;
   className?: string;
   width?: ContainerProps['width'];
@@ -23,7 +23,7 @@ export const PageTemplate = ({
       center={center}
       className={className}
     >
-      <Heading as='h1' content={title} />
+      {title && <Heading as='h1' content={title} />}
       {children}
     </Container>
   );
