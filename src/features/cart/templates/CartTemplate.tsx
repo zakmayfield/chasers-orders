@@ -5,7 +5,7 @@ import { OrderSummary } from '../organisms/OrderSummary';
 
 export const CartTemplate = () => {
   return (
-    <PageTemplate title='Cart' width='full'>
+    <PageTemplate width='full'>
       <Container
         as='div'
         flex='row'
@@ -13,7 +13,7 @@ export const CartTemplate = () => {
         flexCenter={true}
         className='items-start'
       >
-        <Container as='div' width='lg' padding='sm' rounded='sm'>
+        <Container as='div' width='lg' padding='sm' rounded='sm' border={true}>
           <CartItems />
         </Container>
 

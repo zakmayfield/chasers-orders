@@ -4,6 +4,7 @@ import { CartItemsLoading } from '../molecules/CartItemsLoading';
 import { CartItemsError } from '../molecules/CartItemsError';
 import { CartItemsEmpty } from '../molecules/CartItemsEmpty';
 import { CartItem } from '../molecules/CartItem';
+import { CartHeading } from '../molecules/CartHeading';
 
 export const CartItems = () => {
   const cart = useGetCart();
@@ -20,6 +21,8 @@ export const CartItems = () => {
 
   return (
     <Container as='div' flex='col'>
+      <CartHeading />
+
       {loading}
       {error}
       {emptyCart}

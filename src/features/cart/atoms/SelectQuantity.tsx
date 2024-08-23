@@ -64,7 +64,7 @@ export const SelectQuantity: React.FC<UpdateCartItemQuantityRequest> = ({
     <Container as='div'>
       <form>
         <Container as='div' flex='row'>
-          <Container as='div' flex='row'>
+          <Container as='div' flex='row' className='items-start'>
             <label htmlFor='quantity' className='text-sm text-gray-500'>
               Qty
             </label>
