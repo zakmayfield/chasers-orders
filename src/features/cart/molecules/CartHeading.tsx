@@ -4,15 +4,16 @@ import { useGetCart } from '@/shared/hooks/data';
 
 export const CartHeading = () => {
   const cart = useGetCart();
+
+  const loading = cart.isLoading && <SpinLoader />;
+  const count = cart.data && <CartCount count={cart.data.items.length} />;
+
   return (
     <Container as='div' flex='row'>
       <Heading as='h1' content='Cart' />
 
-      {cart.isLoading ? (
-        <SpinLoader />
-      ) : (
-        <CartCount count={cart.data?.items.length} />
-      )}
+      {loading}
+      {count}
     </Container>
   );
 };
