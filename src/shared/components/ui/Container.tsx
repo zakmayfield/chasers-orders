@@ -52,7 +52,7 @@ export const Container = ({
       return (
         <Div
           className={`
-            ${flex === 'row' ? 'flex items-start gap-3' : flex === 'col' ? 'flex flex-col gap-3' : 'block'} 
+            ${flex === 'row' ? 'flex items-center gap-3' : flex === 'col' ? 'flex flex-col gap-3' : 'block'} 
             ${flexCenter && 'items-center justify-center'} 
             ${padding === 'sm' ? 'p-2' : padding === 'md' ? 'p-4' : padding === 'lg' ? 'p-6' : 'p-0'}
             ${margin === 'sm' ? 'm-2' : margin === 'md' ? 'm-4' : margin === 'lg' ? 'm-6' : 'm-0'}
