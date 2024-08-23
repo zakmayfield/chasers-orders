@@ -10,7 +10,7 @@ export const CartItemsEmpty = () => {
       padding='lg'
       rounded='sm'
       flexCenter={true}
-      className='bg-slate-100'
+      className='bg-slate-50'
     >
       <Container as='div' flex='col'>
         <Container as='div' flex='row' className='items-center'>
