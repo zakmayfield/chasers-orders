@@ -2,6 +2,7 @@
 import { Container, PageTemplate } from '@/shared/components/ui';
 import { CartItems } from '../organisms/CartItems';
 import { OrderSummary } from '../organisms/OrderSummary';
+import { Shipping } from '../organisms/Shipping';
 
 export const CartTemplate = () => {
   return (
@@ -17,8 +18,26 @@ export const CartTemplate = () => {
           <CartItems />
         </Container>
 
-        <Container as='div' width='sm' padding='sm' rounded='sm' border={true}>
-          <OrderSummary />
+        <Container as='div' width='sm' flex='col'>
+          <Container
+            as='div'
+            width='full'
+            padding='sm'
+            rounded='sm'
+            border={true}
+          >
+            <OrderSummary />
+          </Container>
+
+          <Container
+            as='div'
+            width='full'
+            padding='sm'
+            rounded='sm'
+            border={true}
+          >
+            <Shipping />
+          </Container>
         </Container>
       </Container>
     </PageTemplate>

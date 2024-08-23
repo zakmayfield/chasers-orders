@@ -4,11 +4,11 @@ import { useCustomQuery } from '@/shared/hooks/custom';
 import { ShippingData } from '@/types/user';
 
 export const useGetShippingAddress = () => {
-  const { data, isFetching, error } = useCustomQuery<ShippingData>({
+  const { data, isLoading, isFetching, error } = useCustomQuery<ShippingData>({
     queryKey: [QueryKeys.SHIPPING],
     queryFn: getShippingAddress,
     staleTime: Infinity,
   });
 
-  return { data, isFetching, error };
+  return { data, isLoading, isFetching, error };
 };
