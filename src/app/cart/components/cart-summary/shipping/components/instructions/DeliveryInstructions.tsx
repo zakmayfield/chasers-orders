@@ -42,7 +42,7 @@ export const DeliveryInstructions = () => {
   });
 
   const { register, formState, isEdit, toggleEdit, submit, cancel } =
-    useDeliveryInstructionsForm({ mutation: mutate });
+    useDeliveryInstructionsForm({ mutation: mutate, defaultValues: '' });
 
   return (
     <div className='mt-3 '>

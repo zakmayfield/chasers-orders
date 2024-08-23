@@ -18,7 +18,7 @@ export const Button = ({
   fontWeight,
   handleClick,
 }: {
-  text: string;
+  text?: string;
   Icon?: IconType;
   className?: string;
   width?: 'xs' | 'sm' | 'md' | 'lg' | 'full';
@@ -64,17 +64,19 @@ export const Button = ({
               `}
           />
         )}
-        <Container
-          as='span'
-          className={`
+        {text && (
+          <Container
+            as='span'
+            className={`
             ${textColor === 'white' ? 'text-white' : textColor === 'black' ? 'text-black' : 'text-white'}
             ${textSize === 'sm' ? 'text-base' : textSize === 'md' ? 'text-lg' : textSize === 'lg' ? 'text-xl' : ''}
             ${fontWeight === 'normal' ? 'font-normal' : fontWeight === 'bold' ? 'font-semibold' : ''}
             ${bg === 'translucent' && 'text-black'}
-              `}
-        >
-          {text}
-        </Container>
+            `}
+          >
+            {text}
+          </Container>
+        )}
       </Container>
     </button>
   );
