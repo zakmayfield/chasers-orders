@@ -5,6 +5,16 @@ import { SelectSize } from '../atoms/SelectSize';
 import { SelectQuantity } from '../atoms/SelectQuantity';
 
 export const CartItem = ({ cartItem }: { cartItem: CartItemType }) => {
+  const {
+    quantity,
+    unitId,
+    cartId,
+    unit: {
+      size,
+      product: { name, category },
+    },
+  } = cartItem;
+
   return (
     <Container
       as='div'
@@ -13,25 +23,17 @@ export const CartItem = ({ cartItem }: { cartItem: CartItemType }) => {
       rounded='sm'
       className='items-center gap-6 bg-slate-50'
     >
-      <RemoveCartItemButton unitId={cartItem.unitId} cartId={cartItem.cartId} />
+      <RemoveCartItemButton unitId={unitId} cartId={cartId} />
 
       <Container as='div' flex='col'>
         <Container as='div' flex='row' className='items-center'>
-          <Container as='p'>{cartItem.unit.product.name}</Container>
-          <Container as='p'>{cartItem.unit.product.category}</Container>
+          <Container as='p'>{name}</Container>
+          <Container as='p'>{category}</Container>
         </Container>
 
         <Container as='div' flex='row' className='items-center gap-6'>
-          <SelectSize
-            cartId={cartItem.cartId}
-            unitId={cartItem.unitId}
-            currentSize={cartItem.unit.size}
-          />
-          <SelectQuantity
-            cartId={cartItem.cartId}
-            unitId={cartItem.unitId}
-            quantity={cartItem.quantity}
-          />
+          <SelectSize cartId={cartId} unitId={unitId} currentSize={size} />
+          <SelectQuantity cartId={cartId} unitId={unitId} quantity={quantity} />
         </Container>
       </Container>
     </Container>
