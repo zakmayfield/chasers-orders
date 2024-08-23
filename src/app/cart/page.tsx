@@ -1,6 +1,4 @@
 import { CartTemplate } from '@/features/cart/templates/CartTemplate';
-import { Summary } from './components/cart-summary/Summary';
-import { CartItems } from './components/items/CartItems';
 
 export default async function Page() {
   return (
