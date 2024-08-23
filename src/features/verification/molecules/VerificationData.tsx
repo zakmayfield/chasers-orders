@@ -19,7 +19,7 @@ export const VerificationData = ({
         className='text-green-600'
       />
 
-      <Container as='div' flex='row' className='items-center'>
+      <Container as='div' flex='row'>
         <Container as='span'>
           <CheckIcon className='text-green-500 text-xl' />
         </Container>
