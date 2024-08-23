@@ -6,7 +6,13 @@ import { SelectQuantity } from '../atoms/SelectQuantity';
 
 export const CartItem = ({ cartItem }: { cartItem: CartItemType }) => {
   return (
-    <Container as='div' padding='sm' flex='row' className='items-center gap-6'>
+    <Container
+      as='div'
+      padding='md'
+      flex='row'
+      rounded='sm'
+      className='items-center gap-6 bg-slate-50'
+    >
       <RemoveCartItemButton unitId={cartItem.unitId} cartId={cartItem.cartId} />
 
       <Container as='div' flex='col'>
