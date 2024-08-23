@@ -16,7 +16,9 @@ export const OrderSummary = () => {
   const data =
     cart.data &&
     cart.data.items.length !== 0 &&
-    cart.data.items.map((cartItem) => <OrderSummaryItem cartItem={cartItem} />);
+    cart.data.items.map((cartItem) => (
+      <OrderSummaryItem key={cartItem.unitId} cartItem={cartItem} />
+    ));
 
   return (
     <Container as='div' flex='col'>
