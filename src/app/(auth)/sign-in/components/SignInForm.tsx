@@ -7,6 +7,7 @@ import { useCustomForm } from '@/shared/hooks/custom';
 import { defaultSignInFormValues } from '@/utils/constants';
 import { signInResolver } from '@/shared/validators/resolvers';
 import { SignInFormData } from '@/types/auth';
+import { Container } from '@/shared/components/ui';
 
 interface SignInFormProps {}
 
@@ -62,10 +63,12 @@ export const SignInForm: FC<SignInFormProps> = ({}) => {
           </div>
         )}
 
-        <SignInButton
-          isSubmitted={isSubmitted}
-          isSubmitSuccessful={isSubmitSuccessful}
-        />
+        <Container as='div' className='col-span-full'>
+          <SignInButton
+            isSubmitted={isSubmitted}
+            isSubmitSuccessful={isSubmitSuccessful}
+          />
+        </Container>
       </div>
     </form>
   );

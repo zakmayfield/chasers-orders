@@ -1,4 +1,4 @@
-import { SpinLoader } from '@/shared/components/ui';
+import { Btn } from '@/shared/components/ui';
 import { FC } from 'react';
 
 interface SignInButtonProps {
@@ -11,20 +11,14 @@ export const SignInButton: FC<SignInButtonProps> = ({
   isSubmitSuccessful,
 }) => {
   return (
-    <button
-      type='submit'
-      className={`border-2 rounded-lg p-2 col-span-6 focus:ring-4 focus:ring-blue-400 mt-6 h-12
-        bg-light-green-500 text-lg text-white font-medium 
-        hover:bg-light-green-400
-        ${isSubmitted && isSubmitSuccessful && 'bg-light-green-300'}
-      `}
-      disabled={isSubmitted && isSubmitSuccessful}
-    >
-      {isSubmitted && isSubmitSuccessful ? (
-        <SpinLoader className='mx-auto text-2xl' />
-      ) : (
-        'Sign In'
-      )}
-    </button>
+    <Btn
+      text='Sign In'
+      width='full'
+      bgColor='green'
+      height='lg'
+      fontSize='lg'
+      isDisabled={isSubmitted && isSubmitSuccessful}
+      isLoading={isSubmitted && isSubmitSuccessful}
+    />
   );
 };
