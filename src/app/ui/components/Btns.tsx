@@ -13,24 +13,65 @@ export const Btns = () => {
         <Container as='div' flex='row' className='items-start'>
           <Btn
             handleClick={() => console.info('clicked')}
-            text='Place Order'
+            text='Small'
             Icon={CartIcon}
             border={true}
-            size='sm'
+            height='sm'
           />
           <Btn
             handleClick={() => console.info('clicked')}
-            text='Place Order'
+            text='Medium (default)'
             Icon={CartIcon}
             border={true}
-            size='md'
+            height='md'
           />
           <Btn
             handleClick={() => console.info('clicked')}
-            text='Place Order'
+            text='Large'
             Icon={CartIcon}
             border={true}
-            size='lg'
+            height='lg'
+          />
+        </Container>
+      </Container>
+
+      <Container as='div' flex='col'>
+        <Heading as='h3' content='Width' />
+
+        <Container as='div' flex='row' className='items-start'>
+          <Btn
+            handleClick={() => console.info('clicked')}
+            text='Auto'
+            Icon={CartIcon}
+            border={true}
+          />
+          <Btn
+            handleClick={() => console.info('clicked')}
+            text='Small'
+            Icon={CartIcon}
+            border={true}
+            width='sm'
+          />
+          <Btn
+            handleClick={() => console.info('clicked')}
+            text='Medium'
+            Icon={CartIcon}
+            border={true}
+            width='md'
+          />
+          <Btn
+            handleClick={() => console.info('clicked')}
+            text='Large'
+            Icon={CartIcon}
+            border={true}
+            width='lg'
+          />
+          <Btn
+            handleClick={() => console.info('clicked')}
+            text='Full'
+            Icon={CartIcon}
+            border={true}
+            width='full'
           />
         </Container>
       </Container>
@@ -103,7 +144,6 @@ export const Btns = () => {
             handleClick={() => console.info('clicked')}
             text='Place Order'
             Icon={CartIcon}
-            border={true}
             bgColor='green'
             isDisabled={true}
           />
@@ -111,9 +151,33 @@ export const Btns = () => {
             handleClick={() => console.info('clicked')}
             text='Place Order'
             Icon={CartIcon}
-            border={true}
             bgColor='red'
             isDisabled={true}
+          />
+        </Container>
+      </Container>
+
+      <Container as='div' flex='col'>
+        <Heading as='h3' content='Loading (needs width property)' />
+
+        <Container as='div' flex='row'>
+          <Btn
+            handleClick={() => console.info('clicked')}
+            text='Place Order'
+            Icon={CartIcon}
+            border={true}
+            isLoading={true}
+            isDisabled={true}
+            width='sm'
+          />
+          <Btn
+            handleClick={() => console.info('clicked')}
+            text='Place Order'
+            Icon={CartIcon}
+            bgColor='green'
+            isLoading={true}
+            isDisabled={true}
+            width='lg'
           />
         </Container>
       </Container>
