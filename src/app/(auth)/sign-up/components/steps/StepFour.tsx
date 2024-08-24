@@ -7,6 +7,7 @@ import {
 import { useSyncBillingAddress } from '@/shared/hooks/utils';
 import { provinceOptions } from '@/utils/constants';
 import type { StepFourProps } from '@/types/auth';
+import { Container } from '@/shared/components/ui';
 
 export const StepFour: FC<StepFourProps> = ({
   register,
@@ -214,10 +215,12 @@ export const StepFour: FC<StepFourProps> = ({
           handleDecrementStep={handleDecrementStep}
         />
 
-        <FinalStepButton
-          isSubmitted={isSubmitted}
-          isSubmitSuccessful={isSubmitSuccessful}
-        />
+        <Container as='div' className='col-span-full'>
+          <FinalStepButton
+            isSubmitted={isSubmitted}
+            isSubmitSuccessful={isSubmitSuccessful}
+          />
+        </Container>
       </div>
     </div>
   );

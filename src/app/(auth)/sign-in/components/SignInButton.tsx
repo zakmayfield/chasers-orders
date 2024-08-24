@@ -16,7 +16,6 @@ export const SignInButton: FC<SignInButtonProps> = ({
       width='full'
       bgColor='green'
       height='lg'
-      fontSize='lg'
       isDisabled={isSubmitted && isSubmitSuccessful}
       isLoading={isSubmitted && isSubmitSuccessful}
     />

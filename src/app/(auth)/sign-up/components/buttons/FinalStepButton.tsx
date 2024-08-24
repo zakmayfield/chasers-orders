@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { SpinLoader } from '@/shared/components/ui';
+import { Btn, SpinLoader } from '@/shared/components/ui';
 
 interface FinalStepButtonProps {
   isSubmitted: boolean;
@@ -11,21 +11,14 @@ export const FinalStepButton: FC<FinalStepButtonProps> = ({
   isSubmitSuccessful,
 }) => {
   return (
-    <button
+    <Btn
+      text='Create Account'
       type='submit'
-      className={`
-        border-2 rounded-lg mt-6 col-span-6 p-2 h-12 font-medium text-white
-        flex items-center justify-center gap-3
-        focus:ring-4 focus:ring-blue-400 bg-light-green-500 hover:bg-light-green-400
-        ${isSubmitted && isSubmitSuccessful && 'bg-light-green-300'}
-      `}
-      disabled={isSubmitted && isSubmitSuccessful}
-    >
-      {isSubmitted && isSubmitSuccessful ? (
-        <SpinLoader className='text-white' />
-      ) : (
-        'Create Account'
-      )}
-    </button>
+      bgColor='green'
+      width='full'
+      height='lg'
+      isDisabled={isSubmitted && isSubmitSuccessful}
+      isLoading={isSubmitted && isSubmitSuccessful}
+    />
   );
 };

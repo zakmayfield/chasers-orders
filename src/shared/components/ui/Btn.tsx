@@ -18,6 +18,7 @@ export type BtnStyleProps = {
 };
 
 type BtnProps = BtnStyleProps & {
+  type?: 'button' | 'reset' | 'submit';
   text?: string;
   isLoading?: boolean;
   Icon?: IconType;
