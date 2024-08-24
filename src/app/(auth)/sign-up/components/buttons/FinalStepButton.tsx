@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Btn, SpinLoader } from '@/shared/components/ui';
+import { Btn } from '@/shared/components/ui';
 
 interface FinalStepButtonProps {
   isSubmitted: boolean;
