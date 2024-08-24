@@ -38,6 +38,8 @@ export const CartTemplate = () => {
           >
             <Shipping />
           </Container>
+
+          {/* TODO: Place Order Component */}
         </Container>
       </Container>
     </PageTemplate>
