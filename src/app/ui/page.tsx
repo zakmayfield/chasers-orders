@@ -1,4 +1,11 @@
-import { Buttons, Containers, Headings, Loading, Logos } from './components';
+import {
+  Btns,
+  Buttons,
+  Containers,
+  Headings,
+  Loading,
+  Logos,
+} from './components';
 
 export default async function Page() {
   return (
@@ -11,6 +18,7 @@ export default async function Page() {
       <Loading />
       {/* Buttons */}
       <Buttons />
+      <Btns />
       {/* Logos */}
       <Logos />
     </div>

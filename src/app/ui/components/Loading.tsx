@@ -1,10 +1,9 @@
 import { SpinLoader, PulseLoader } from '@/shared/components/ui';
+import { UiFeatureLayout } from '../UiFeatureLayout';
 
 export const Loading = () => {
   return (
-    <div className='flex flex-col gap-6'>
-      <h1 className='border-b'>Loading</h1>
-
+    <UiFeatureLayout title='Loading' flex='col'>
       <div className='flex flex-col gap-3'>
         <h3>Spin</h3>
         <div className='flex items-start gap-3'>
@@ -17,6 +16,6 @@ export const Loading = () => {
         <PulseLoader />
         <PulseLoader rows='multi' width='md' />
       </div>
-    </div>
+    </UiFeatureLayout>
   );
 };
