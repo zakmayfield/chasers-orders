@@ -1,4 +1,4 @@
-import { Button, Container, Heading } from '@/shared/components/ui';
+import { Btn, Container, Heading } from '@/shared/components/ui';
 import { FormState } from 'react-hook-form';
 
 export const ShippingDeliveryInstructionsHeading = ({
@@ -17,20 +17,15 @@ export const ShippingDeliveryInstructionsHeading = ({
   }>;
 }) => {
   const toRead = !isEdit && (
-    <Button
-      handleClick={toggleEdit}
-      text='edit'
-      bg='translucent'
-      className='p-1 px-2'
-    />
+    <Btn handleClick={toggleEdit} text='edit' border={true} height='sm' />
   );
 
   const toSave = isEdit && formState.isDirty && (
-    <Button handleClick={submit} text='save' className='p-1 px-2' />
+    <Btn handleClick={submit} text='save' bgColor='green' height='sm' />
   );
 
   const toCancel = isEdit && (
-    <Button handleClick={cancel} text='X' className='p-1 px-2 bg-red-400' />
+    <Btn handleClick={cancel} text='X' bgColor='red' height='sm' />
   );
 
   return (
