@@ -2,6 +2,30 @@ import * as fs from 'fs';
 import productData from './products-final.json';
 import { categories as categoryData } from '@/utils/constants';
 
+// Old
+interface OldProduct {
+  name: string;
+  category: string;
+  units: OldUnit[];
+}
+
+type OldUnit = {
+  size: string;
+  code: string;
+  price: number;
+};
+
+function catGen() {
+  const categories = productData.map((product) =>
+    product.category.toLowerCase()
+  );
+  const cats = Array.from(new Set(categories));
+  return { length: cats.length, cats };
+}
+
+const cats = catGen();
+
+// New
 type Product = {
   product_id: string;
   category_id: string;
@@ -13,6 +37,7 @@ type Product = {
 type Category = {
   category_id: string;
   name: string;
+  // products: Product[]
 };
 
 type Size = {
