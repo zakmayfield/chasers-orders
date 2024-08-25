@@ -7,6 +7,7 @@ datasource db {
   url      = env("POSTGRES_PRISMA_URL")
 }
 
+// ----- NEXTAUTH
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -44,6 +45,9 @@ model VerificationToken {
   userId String @unique
 }
 
+// ----- END NEXTAUTH
+
+// ----- USER
 model User {
   // auth
   id                String              @id @default(cuid())
@@ -51,15 +55,15 @@ model User {
   password          String
   emailVerified     DateTime?
   // additional data
-  contact           Contact? // 1:1
-  company           Company? // 1:1
-  cart              Cart? // 1:1
-  orders            Order[] // 1:m
+  contact           Contact?
+  company           Company?
+  cart              Cart?
+  orders            Order[]
   favorites         Favorite[]
   username          String?             @unique
   // authorization
   isApproved        Boolean             @default(false)
-  verificationToken VerificationToken[] // 1:m
+  verificationToken VerificationToken[]
   role              Role                @default(USER)
   permissions       UserPermission[]
   // NextAuth
@@ -144,78 +148,106 @@ model BillingAddress {
   companyId String  @unique
 }
 
+// ----- END USER
+
+// ----- PRODUCTS
+model Category {
+  category_id String @id @default(cuid())
+  name        String
+
+  products Product[]
+}
+
 model Product {
-  id        String     @id @default(cuid())
-  name      String // Product name, e.g., "Banana-Mango-Pineapple"
-  category  String // Product category, e.g., "BLENDS"
-  units     Unit[]
+  product_id  String @id @default(cuid())
+  category_id String
+
+  name String
+
+  variants  ProductVariant[]
   favorites Favorite[]
+  category  Category         @relation(fields: [category_id], references: [category_id])
 }
 
-model Unit {
-  id String @id @default(cuid())
+model ProductVariant {
+  product_variant_id String @id @default(cuid())
+  product_id         String
 
-  size  String
-  price Float
+  variant    Variant?
+  line_items LineItem[]
+  carts      CartItem[]
+  product    Product    @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
+}
+
+model Variant {
+  variant_id         String @id @default(cuid())
+  product_variant_id String @unique
+
+  name  String
   code  String
+  price Float
 
-  productId String
-  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-
-  carts         UnitsOnCart[]
-  OrderLineItem OrderLineItem[]
-}
-
-model Cart {
-  id String @id @default(cuid())
-
-  items UnitsOnCart[]
-
-  user   User?  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
-}
-
-model UnitsOnCart {
-  cart   Cart   @relation(fields: [cartId], references: [id], onDelete: Cascade)
-  cartId String
-  unit   Unit   @relation(fields: [unitId], references: [id])
-  unitId String @unique
-
-  quantity  Int
-  createdAt DateTime @default(now())
-
-  @@id([cartId, unitId])
-}
-
-model Order {
-  id        String          @id @default(cuid())
-  createdAt DateTime        @default(now())
-  lineItems OrderLineItem[]
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
-}
-
-model OrderLineItem {
-  id       String @id @default(cuid())
-  quantity Int
-
-  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  unit  Unit  @relation(fields: [unitId], references: [id])
-
-  orderId String
-  unitId  String
+  product_variant ProductVariant? @relation(fields: [product_variant_id], references: [product_variant_id], onDelete: Cascade)
 }
 
 model Favorite {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
+  favorite_id String @id @default(cuid())
+  product_id  String
+  userId      String
 
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
+  created_at DateTime @default(now())
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String
+  product Product @relation(fields: [product_id], references: [product_id])
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, productId])
+  @@unique([userId, product_id])
 }
+
+// ----- END PRODUCTS
+
+// ----- CART
+model Cart {
+  cart_id String     @id @default(cuid())
+  userId  String     @unique
+  items   CartItem[]
+  user    User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CartItem {
+  cart_id            String
+  product_variant_id String @unique
+
+  quantity   Int
+  created_at DateTime @default(now())
+
+  cart            Cart           @relation(fields: [cart_id], references: [cart_id], onDelete: Cascade)
+  product_variant ProductVariant @relation(fields: [product_variant_id], references: [product_variant_id])
+
+  @@id([cart_id, product_variant_id])
+}
+
+// ----- END CART
+
+// ----- ORDER
+model Order {
+  order_id String @id @default(cuid())
+  userId   String
+
+  created_at DateTime   @default(now())
+  line_items LineItem[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model LineItem {
+  line_item_id       String @id @default(cuid())
+  order_id           String
+  product_variant_id String
+
+  quantity Int
+
+  order           Order          @relation(fields: [order_id], references: [order_id], onDelete: Cascade)
+  product_variant ProductVariant @relation(fields: [product_variant_id], references: [product_variant_id])
+}
+
+// ----- END ORDER

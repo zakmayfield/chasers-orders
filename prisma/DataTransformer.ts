@@ -26,35 +26,35 @@ function catGen() {
 const cats = catGen();
 
 // New
+type Category = {
+  category_id: string;
+  name: string;
+  // products: Product[];
+};
+
 type Product = {
   product_id: string;
   category_id: string;
   name: string;
   // category: Category;
-  // sizes: ProductSize[];
+  // variants: ProductVariant[];
 };
 
-type Category = {
-  category_id: string;
-  name: string;
-  // products: Product[]
-};
-
-type Size = {
-  size_id: string;
-  product_size_id: string;
-  name: string;
-  code: string;
-  price: number;
-  // productSize: ProductSize
-};
-
-type ProductSize = {
-  product_size_id: string;
+type ProductVariant = {
+  product_variant_id: string;
   product_id: string;
   size_id: string;
   // product: Product;
-  // size: Size;
+  // variant: Variant;
+};
+
+type Variant = {
+  size_id: string;
+  product_variant_id: string;
+  name: string;
+  code: string;
+  price: number;
+  // product_variant: ProductVariant;
 };
 
 /* SEED
