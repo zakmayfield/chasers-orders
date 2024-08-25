@@ -13,7 +13,11 @@ export async function POST(req: Request) {
   const body: CreateOrderPayload = await req.json();
   const { items, cartId } = body;
 
-  const orderLineItemData = items.map((item) => {
+  if (items?.length === 0 || !cartId) {
+    return new Response('Invalid request', { status: 400 });
+  }
+
+  const orderLineItemData = items?.map((item) => {
     return {
       unitId: item.unitId,
       quantity: item.quantity,
@@ -65,7 +69,9 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(order), { status: 201 });
   } catch (error) {
     if (error instanceof Error) {
-      return new Response(error.message, { status: 500 });
+      return new Response('Unable to place order at this time', {
+        status: 500,
+      });
     }
   }
 }

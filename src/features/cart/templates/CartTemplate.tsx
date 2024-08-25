@@ -3,6 +3,7 @@ import { Container, PageTemplate } from '@/shared/components/ui';
 import { CartItems } from '../organisms/CartItems';
 import { OrderSummary } from '../organisms/OrderSummary';
 import { Shipping } from '../organisms/Shipping';
+import { PlaceOrder } from '../organisms/PlaceOrder';
 
 export const CartTemplate = () => {
   return (
@@ -39,7 +40,9 @@ export const CartTemplate = () => {
             <Shipping />
           </Container>
 
-          {/* TODO: Place Order Component */}
+          <Container as='div' width='full'>
+            <PlaceOrder />
+          </Container>
         </Container>
       </Container>
     </PageTemplate>
