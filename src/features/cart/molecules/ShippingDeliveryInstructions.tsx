@@ -16,7 +16,7 @@ export const ShippingDeliveryInstructions = ({
     toggleEdit,
     isEdit,
   } = useDeliveryInstructionsForm({
-    defaultValues: deliveryInstructions,
+    defaultValues: '',
   });
 
   const data = isEdit ? (
