@@ -1,6 +1,6 @@
 import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
-import { useToast } from '@/shared/hooks';
-import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks/utils';
+import { useCustomMutation } from '@/shared/hooks/custom';
 import { CartItem, UpdateCartItemQuantityRequest } from '@/types/cart';
 
 export const useUpdateCartItemQuantity = ({

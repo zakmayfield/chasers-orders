@@ -1,5 +1,9 @@
-import { ProductsLayout } from '@/features/products';
+import { Table } from './components/table';
 
 export default async function Page() {
-  return <ProductsLayout />;
+  return (
+    <div>
+      <Table />
+    </div>
+  );
 }

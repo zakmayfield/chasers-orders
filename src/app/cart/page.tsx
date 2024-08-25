@@ -1,5 +1,5 @@
-import { Cart } from '@/features/cart';
+import { CartTemplate } from '@/features/cart/templates/CartTemplate';
 
 export default async function Page() {
-  return <Cart />;
+  return <CartTemplate />;
 }

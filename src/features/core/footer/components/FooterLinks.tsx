@@ -3,7 +3,8 @@
 import { FC } from 'react';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
-import { PiFacebookLogoDuotone, PiInstagramLogoDuotone } from 'react-icons/pi';
+import { Heading } from '@/shared/components/ui';
+import { FacebookIcon, InstagramIcon } from '@/utils/icons';
 
 interface FooterLinksProps {}
 
@@ -11,12 +12,12 @@ export const FooterLinks: FC<FooterLinksProps> = ({}) => {
   return (
     <div className='flex flex-col gap-4 w-full'>
       <div>
-        <h6 className='mb-1'>Chasers Fresh Juice</h6>
+        <Heading as='h6' content='Chasers Fresh Juice' className='mb-1' />
         <FooterNav />
       </div>
 
       <div>
-        <h6 className='mb-1'>Socials</h6>
+        <Heading as='h6' content='Socials' className='mb-1' />
         <FooterSocials />
       </div>
     </div>
@@ -42,13 +43,13 @@ function FooterSocials() {
           href='https://www.facebook.com/chasersjuicetoronto/'
           target='_blank'
         >
-          <PiFacebookLogoDuotone />
+          <FacebookIcon />
         </Link>
         <Link
           href='https://www.instagram.com/chasersjuicetoronto/'
           target='_blank'
         >
-          <PiInstagramLogoDuotone />
+          <InstagramIcon />
         </Link>
       </div>
     </div>

@@ -7,8 +7,8 @@ export type OrderData = Order & {
 };
 
 export type CreateOrderPayload = {
-  items: CartItem[];
-  cartId: string;
+  items?: CartItem[];
+  cartId?: string;
 };
 
 export const createOrder = async (

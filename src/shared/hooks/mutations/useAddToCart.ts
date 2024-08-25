@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { addToCart } from '@/services/mutations/addToCart';
-import { useToast } from '@/shared/hooks';
-import { useCustomMutation } from '@/shared/hooks/mutations';
+import { useToast } from '@/shared/hooks/utils';
+import { useCustomMutation } from '@/shared/hooks/custom';
 import { CartCache, CartItem } from '@/types/cart';
 import { QueryKeys } from '@/types/hooks';
 

@@ -19,23 +19,25 @@ export async function GET() {
       select: {
         id: true,
         name: true,
+        shippingAddress: true,
       },
     });
 
-    const shippingAddress = await db.shippingAddress.findUnique({
-      where: { companyId: company?.id },
-    });
+    if (!company || !company.shippingAddress) {
+      return new Response('Could not get shipping address at this time', {
+        status: 401,
+      });
+    }
 
     const payload: ShippingData = {
-      companyName: company?.name,
-      shippingAddress,
+      companyName: company.name,
+      shippingAddress: company.shippingAddress,
     };
 
     return new Response(JSON.stringify(payload));
   } catch (err) {
-    return new Response(
-      'Could not update company at this time. Please try later',
-      { status: 500 }
-    );
+    return new Response('Could not get shipping address at this time', {
+      status: 500,
+    });
   }
 }

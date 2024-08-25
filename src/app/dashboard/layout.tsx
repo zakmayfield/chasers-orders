@@ -1,4 +1,5 @@
-import { DashboardNav } from '@/features/dashboard/nav/DashboardNav';
+import { DashboardNav } from '@/app/dashboard/components/nav';
+import { Heading } from '@/shared/components/ui';
 
 export default async function DashboardLayout({
   children,
@@ -7,9 +8,11 @@ export default async function DashboardLayout({
 }) {
   return (
     <div className='w-3/4 mx-auto grid grid-cols-12'>
-      <h1 className='col-span-12 h-20 flex items-center px-6 border-b'>
-        Dashboard
-      </h1>
+      <Heading
+        as='h1'
+        content='Dashboard'
+        className='col-span-12 border-b px-6 pb-6'
+      />
 
       <div className='m-6 col-span-11 2xl:col-span-9'>{children}</div>
 

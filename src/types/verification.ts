@@ -7,4 +7,5 @@ export type UpdateUserVerificationResponse = {
   email: string;
   verifiedOn: string;
   isApproved: boolean;
+  emailVerified: Date | null;
 };

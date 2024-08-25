@@ -23,9 +23,16 @@ export type UserData = SecureUser & {
   };
 };
 
+export type UserAuthorization = {
+  id: string;
+  email: string;
+  isApproved: boolean;
+  emailVerified: Date | null;
+};
+
 export type ShippingData = {
-  companyName?: string;
-  shippingAddress: ShippingAddress | null;
+  companyName: string;
+  shippingAddress: ShippingAddress;
 };
 
 export type DeliveryInstructionsData = z.infer<

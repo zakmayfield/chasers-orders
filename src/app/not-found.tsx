@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import notfound from '@/assets/notfound.png';
 import Image from 'next/image';
+import { Heading } from '@/shared/components/ui';
 
 export default function NotFound() {
   return (
@@ -29,7 +30,7 @@ function NotFoundInfo() {
   return (
     <div className='flex items-end'>
       <div className='2xl:py-12'>
-        <h1>Not Found</h1>
+        <Heading as='h1' content='Not Found' />
         <p className='mb-6 text-lg'>
           We couldn&apos;t find that requested resource
         </p>

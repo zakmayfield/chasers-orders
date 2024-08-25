@@ -1,4 +1,4 @@
-import { UserStatusAPIResponse } from '@/types/dashboard';
+import { UserAuthorization } from '@/types/user';
 import { db } from '@/lib/prisma';
 import { authenticateSession } from '@/utils/auth';
 
@@ -16,12 +16,13 @@ async function handler() {
       },
       select: {
         id: true,
+        email: true,
         isApproved: true,
         emailVerified: true,
       },
     });
 
-    const responsePayload: UserStatusAPIResponse = {
+    const responsePayload: UserAuthorization = {
       ...user,
     };
 

@@ -33,8 +33,10 @@ async function handler(req: Request) {
       where: { cartId_unitId: { cartId, unitId } },
       data: { unitId: selectedUnitId },
       select: {
+        cartId: true,
         unitId: true,
         quantity: true,
+        createdAt: true,
         unit: {
           select: {
             size: true,
