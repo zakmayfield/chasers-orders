@@ -15,7 +15,7 @@ export const CartTemplate = () => {
         flexCenter={true}
         className='items-start'
       >
-        <Container as='div' width='lg' padding='sm' rounded='sm' border={true}>
+        <Container as='div' width='lg' padding='sm' rounded='sm'>
           <CartItems />
         </Container>
 
