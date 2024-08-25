@@ -30,7 +30,7 @@ export const Verification = () => {
   );
 
   return (
-    <Container as='div' className='bg-slate-100' padding='lg' rounded='sm'>
+    <Container as='div' className='bg-slate-50' padding='lg' rounded='sm'>
       {queryLoading}
       {mutationLoading}
       {error}
