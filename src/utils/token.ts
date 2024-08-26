@@ -1,6 +1,6 @@
 import { verify, sign, JwtPayload } from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
-import { NEXTAUTH_SECRET } from './constants';
+import { NEXTAUTH_SECRET } from '@/shared/utils/constants';
 
 function getSecretOrThrow(secret: string | undefined): string {
   if (!secret) {
