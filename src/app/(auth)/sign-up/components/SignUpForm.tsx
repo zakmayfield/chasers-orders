@@ -2,7 +2,7 @@ import { Dispatch, FC, SetStateAction } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 import { SignUpFormData, Steps } from '@/types/auth';
-import { handleSignUp } from '@/utils/helpers';
+import { handleSignUp } from '@/shared/utils/helpers';
 import { useCustomForm } from '@/shared/hooks/custom';
 import { defaultSignUpFormValues } from '@/utils/constants';
 import { signUpResolver } from '@/shared/validators/resolvers';

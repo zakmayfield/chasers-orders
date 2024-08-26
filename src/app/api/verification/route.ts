@@ -2,7 +2,10 @@ import { NextRequest } from 'next/server';
 import { db } from '@/lib/prisma';
 import { authenticateSession } from '@/shared/utils/api/authenticateSession';
 import { sendEmail } from '@/shared/utils/email/sendEmail';
-import { extractExpiration, generateVerificationToken } from '@/utils/token';
+import {
+  extractExpiration,
+  generateVerificationToken,
+} from '@/shared/utils/helpers';
 import {
   TUpdateUserVerificationRequest,
   TUpdateUserVerificationResponse,

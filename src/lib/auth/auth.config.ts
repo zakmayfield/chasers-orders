@@ -7,7 +7,10 @@ import {
   AuthSignInValidator,
   AuthSignUpValidator,
 } from '@/shared/validators/auth';
-import { extractExpiration, generateVerificationToken } from '@/utils/token';
+import {
+  extractExpiration,
+  generateVerificationToken,
+} from '@/shared/utils/helpers';
 import { db } from '@/lib/prisma';
 import { createCart } from '@/shared/utils/db/cart';
 import { getUser, registerUser } from '@/shared/utils/db/user';

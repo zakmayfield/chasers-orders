@@ -1,7 +1,32 @@
 import { verify, sign, JwtPayload } from 'jsonwebtoken';
 import { JsonWebTokenError } from 'jsonwebtoken';
 import { NEXTAUTH_SECRET } from '@/shared/utils/constants';
+import { signIn } from 'next-auth/react';
+import { SignInFormData, SignUpFormData } from '@/shared/types/Forms';
 
+//^ AUTH
+export const handleSignIn = async (data: SignInFormData) =>
+  await signIn('sign-in', {
+    ...data,
+  });
+
+export const handleSignUp = async (data: SignUpFormData) => {
+  try {
+    await signIn('sign-up', {
+      ...data,
+    });
+
+    return {
+      isSuccess: true,
+    };
+  } catch (err) {
+    return {
+      isSuccess: false,
+    };
+  }
+};
+
+//^ TOKEN
 function getSecretOrThrow(secret: string | undefined): string {
   if (!secret) {
     throw new Error('Verification token needs a secret');
