@@ -2,7 +2,7 @@
 import { Container, Heading } from '@/shared/components/ui';
 import { UiFeatureLayout } from '../UiFeatureLayout';
 import { Btn } from '@/shared/components/ui/Btn';
-import { CartIcon, StoreIcon } from '@/utils/icons';
+import { CartIcon, StoreIcon } from '@/shared/utils/ui';
 
 export const Btns = () => {
   return (

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useGetUser } from '@/shared/hooks/data';
-import { WarningIcon } from '@/utils/icons';
+import { WarningIcon } from '@/shared/utils/ui';
 
 export const DashboardNavFooter = () => {
   const { data, isLoading, isError } = useGetUser();

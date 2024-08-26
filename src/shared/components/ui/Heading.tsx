@@ -1,4 +1,4 @@
-import { merge } from '@/utils/styles';
+import { merge } from '@/shared/utils/ui';
 
 type Children = React.ReactNode;
 type Props = {

@@ -4,7 +4,7 @@ import { useToast } from '@/shared/hooks/utils';
 import { requiredSignUpFormValues } from '@/utils/constants';
 import type { UseFormGetValues } from 'react-hook-form';
 import { SignUpFormData, Steps } from '@/types/auth';
-import { ArrowRight } from '@/utils/icons';
+import { ArrowRight } from '@/shared/utils/ui';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;

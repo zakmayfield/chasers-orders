@@ -1,5 +1,5 @@
 import { Container } from '@/shared/components/ui';
-import { DownArrow } from '@/utils/icons';
+import { DownArrow } from '@/shared/utils/ui';
 
 export const ShippingDropDownArrow = ({
   handleOpen,

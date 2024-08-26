@@ -1,5 +1,5 @@
 import { Container } from '@/shared/components/ui';
-import { EmptyCartIcon } from '@/utils/icons';
+import { EmptyCartIcon } from '@/shared/utils/ui';
 
 export const OrderSummaryEmpty = () => {
   return (

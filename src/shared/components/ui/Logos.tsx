@@ -1,7 +1,7 @@
 import { FC } from 'react';
 
 import Image from 'next/image';
-import { merge } from '@/utils/styles';
+import { merge } from '@/shared/utils/ui';
 import logoBase from '@/assets/logo-base.png';
 import logoSm from '@/assets/logo-sm.png';
 

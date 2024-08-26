@@ -4,7 +4,7 @@ import { FC } from 'react';
 import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { Heading } from '@/shared/components/ui';
-import { FacebookIcon, InstagramIcon } from '@/utils/icons';
+import { FacebookIcon, InstagramIcon } from '@/shared/utils/ui';
 
 interface FooterLinksProps {}
 

@@ -1,5 +1,5 @@
 'use client';
-import { merge } from '@/utils/styles';
+import { merge } from '@/shared/utils/ui';
 import { FC } from 'react';
 import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation } from '@/shared/hooks/custom';

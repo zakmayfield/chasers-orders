@@ -9,7 +9,7 @@ import { Header } from '@/features/core/header';
 import { Footer } from '@/features/core/footer';
 import { CoreProvider } from '@/lib/providers/CoreProvider';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { quicksand } from '@/utils/fonts';
+import { quicksand } from '@/shared/utils/ui';
 
 export const metadata: Metadata = {
   title: 'Create Next App',

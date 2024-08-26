@@ -10,7 +10,7 @@ import { updateCompany } from '@/services/mutations/updateCompany';
 import { CompanyFormData, UserData } from '@/types/user';
 import { QueryKeys } from '@/types/hooks';
 import { Company } from '@prisma/client';
-import { WarningCircleIcon, XBoldIcon } from '@/utils/icons';
+import { WarningCircleIcon, XBoldIcon } from '@/shared/utils/ui';
 
 interface CompanyEditProps {
   userData: UserData;

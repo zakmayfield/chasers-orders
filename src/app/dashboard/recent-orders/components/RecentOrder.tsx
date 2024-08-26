@@ -5,7 +5,7 @@ import { OrderType } from '@/types/cart';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/types/hooks';
 import { Heading, SpinLoader } from '@/shared/components/ui';
-import { WarningIcon } from '@/utils/icons';
+import { WarningIcon } from '@/shared/utils/ui';
 
 export const RecentOrder = ({ order }: { order: OrderType }) => {
   const { data, isLoading, isError } = useCustomQuery({

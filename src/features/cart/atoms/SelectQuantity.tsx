@@ -8,7 +8,7 @@ import {
   CartItem,
   UpdateCartItemQuantityRequest,
 } from '@/types/cart';
-import { CheckIcon, XIcon } from '@/utils/icons';
+import { CheckIcon, XIcon } from '@/shared/utils/ui';
 import { Container } from '@/shared/components/ui';
 import { updateCartItemQuantity } from '@/services/mutations/updateCartItemQuantity';
 import { useToast } from '@/shared/hooks/utils';

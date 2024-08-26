@@ -9,7 +9,7 @@ import {
   RemoveCartItemResponse,
 } from '@/types/cart';
 import { QueryKeys } from '@/types/hooks';
-import { TrashIcon } from '@/utils/icons';
+import { TrashIcon } from '@/shared/utils/ui';
 
 export const RemoveCartItemButton: React.FC<RemoveCartItemRequest> = (
   props

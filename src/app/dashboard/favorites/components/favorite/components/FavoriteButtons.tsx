@@ -1,4 +1,4 @@
-import { CartIcon, XIcon } from '@/utils/icons';
+import { CartIcon, XIcon } from '@/shared/utils/ui';
 
 export const FavoriteButtonGroup = ({
   handleAddToCart,

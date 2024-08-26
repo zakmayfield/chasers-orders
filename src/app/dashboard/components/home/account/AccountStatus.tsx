@@ -2,7 +2,7 @@
 
 import { FC } from 'react';
 import type { UserData } from '@/types/user';
-import { CheckIcon, XIcon } from '@/utils/icons';
+import { CheckIcon, XIcon } from '@/shared/utils/ui';
 
 interface AccountStatusProps {
   userData: UserData;

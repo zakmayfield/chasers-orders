@@ -1,5 +1,5 @@
-import { merge } from '@/utils/styles';
-import { SpinnerIcon } from '@/utils/icons';
+import { merge } from '@/shared/utils/ui';
+import { SpinnerIcon } from '@/shared/utils/ui';
 
 export const SpinLoader = ({
   className,

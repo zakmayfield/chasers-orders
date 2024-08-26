@@ -1,5 +1,5 @@
 import { Container, Heading } from '@/shared/components/ui';
-import { CheckIcon } from '@/utils/icons';
+import { CheckIcon } from '@/shared/utils/ui';
 import { ReturnToDashboardButton } from '../atoms/ReturnToDashboardButton';
 import { TUserExtendedAuthorization } from '@/shared/types/User';
 import { TUpdateUserVerificationResponse } from '@/shared/types/API';

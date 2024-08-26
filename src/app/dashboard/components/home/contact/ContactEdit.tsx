@@ -9,7 +9,7 @@ import { updateContact } from '@/services/mutations/updateContact';
 import { ContactFormData, UserData } from '@/types/user';
 import { QueryKeys } from '@/types/hooks';
 import { Contact } from '@prisma/client';
-import { WarningCircleIcon, XBoldIcon } from '@/utils/icons';
+import { WarningCircleIcon, XBoldIcon } from '@/shared/utils/ui';
 
 interface ContactEditProps {
   userData: UserData;

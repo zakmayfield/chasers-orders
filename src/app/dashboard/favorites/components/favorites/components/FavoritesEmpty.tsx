@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { StoreIcon } from '@/utils/icons';
+import { StoreIcon } from '@/shared/utils/ui';
 
 export const FavoritesEmpty = () => {
   return (

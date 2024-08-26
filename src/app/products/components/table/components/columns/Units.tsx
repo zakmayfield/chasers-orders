@@ -1,5 +1,5 @@
 import { useAddToCart } from '@/shared/hooks/mutations';
-import { CartIcon } from '@/utils/icons';
+import { CartIcon } from '@/shared/utils/ui';
 
 import { UnitsColumnInfo } from '@/types/products';
 

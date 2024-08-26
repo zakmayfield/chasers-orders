@@ -1,5 +1,5 @@
 import { ExtendedFavorite } from '@/types/products';
-import { HeartDuotoneIcon } from '@/utils/icons';
+import { HeartDuotoneIcon } from '@/shared/utils/ui';
 
 export const FavoriteContent = ({
   favoriteData,

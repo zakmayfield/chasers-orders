@@ -1,4 +1,4 @@
-import { HeartDuotoneIcon, HeartOutlineIcon } from '@/utils/icons';
+import { HeartDuotoneIcon, HeartOutlineIcon } from '@/shared/utils/ui';
 import { useToggleFavorite } from '@/shared/hooks/mutations';
 import { useGetFavorites } from '@/shared/hooks/data';
 import { NameColumnInfo, ToggleFavoriteAction } from '@/types/products';

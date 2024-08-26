@@ -1,5 +1,5 @@
 import { Container } from '@/shared/components/ui';
-import { WarningIcon } from '@/utils/icons';
+import { WarningIcon } from '@/shared/utils/ui';
 
 export const CartItemsError = () => {
   return (

@@ -1,3 +1,6 @@
+import { Inter, Quicksand } from 'next/font/google';
+import { ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 import { BsCartPlus } from 'react-icons/bs';
 import {
   PiHeart,
@@ -18,6 +21,23 @@ import { FaChevronDown } from 'react-icons/fa';
 import { LuTrash2 } from 'react-icons/lu';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
 
+//^ FONTS
+export const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+export const quicksand = Quicksand({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
+//^ CLASSNAME MERGE
+export function merge(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+//^ ICONS
 export const CartIcon = BsCartPlus;
 export const HeartDuotoneIcon = PiHeartDuotone;
 export const HeartOutlineIcon = PiHeart;

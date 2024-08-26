@@ -1,7 +1,7 @@
 'use client';
 import { IconType } from 'react-icons';
 import { Container } from './Container';
-import { merge } from '@/utils/styles';
+import { merge } from '@/shared/utils/ui';
 import { SpinLoader } from './SpinLoader';
 import { useButtonClasses } from '@/shared/hooks/utils';
 
