@@ -159,35 +159,27 @@ model Category {
 }
 
 model Product {
-  product_id  String @id @default(cuid())
-  category_id String
+  product_id  String  @id @default(cuid())
+  category_id String?
 
   name String
 
   variants  ProductVariant[]
   favorites Favorite[]
-  category  Category         @relation(fields: [category_id], references: [category_id])
+  category  Category?        @relation(fields: [category_id], references: [category_id])
 }
 
 model ProductVariant {
   product_variant_id String @id @default(cuid())
   product_id         String
 
-  variant    Variant?
-  line_items LineItem[]
-  carts      CartItem[]
-  product    Product    @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
-}
-
-model Variant {
-  variant_id         String @id @default(cuid())
-  product_variant_id String @unique
-
-  name  String
+  size  String
   code  String
   price Float
 
-  product_variant ProductVariant? @relation(fields: [product_variant_id], references: [product_variant_id], onDelete: Cascade)
+  line_items LineItem[]
+  carts      CartItem[]
+  product    Product    @relation(fields: [product_id], references: [product_id], onDelete: Cascade)
 }
 
 model Favorite {

@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import products_original from './products-original.json';
+import products_original from '../data/products-original.json';
 
 type TransformedItem = {
   name: string;
