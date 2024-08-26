@@ -9,8 +9,9 @@ datasource db {
 
 // ----- NEXTAUTH
 model Account {
-  id                String  @id @default(cuid())
-  userId            String
+  id      String @id @default(cuid())
+  user_id String
+
   type              String
   provider          String
   providerAccountId String
@@ -22,27 +23,29 @@ model Account {
   id_token          String? @db.Text
   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
   id           String   @id @default(cuid())
+  user_id      String
   sessionToken String   @unique
-  userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 model VerificationToken {
+  verification_token_id String @id @default(cuid())
+  user_id               String @unique
+
   identifier String   @unique
   token      String   @unique
   expires    DateTime
-  valid      Boolean  @default(true)
+  is_valid   Boolean  @default(true)
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
+  user User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 // ----- END NEXTAUTH
@@ -50,26 +53,26 @@ model VerificationToken {
 // ----- USER
 model User {
   // auth
-  id                String              @id @default(cuid())
-  email             String              @unique
-  password          String
-  emailVerified     DateTime?
+  user_id            String              @id @default(cuid())
+  email              String              @unique
+  password           String
+  email_verified_on  DateTime?
   // additional data
-  contact           Contact?
-  company           Company?
-  cart              Cart?
-  orders            Order[]
-  favorites         Favorite[]
-  username          String?             @unique
+  contact            Contact?
+  company            Company?
+  cart               Cart?
+  orders             Order[]
+  favorites          Favorite[]
+  username           String?             @unique
   // authorization
-  isApproved        Boolean             @default(false)
-  verificationToken VerificationToken[]
-  role              Role                @default(USER)
-  permissions       UserPermission[]
+  is_approved        Boolean             @default(false)
+  verification_token VerificationToken[]
+  role               Role                @default(USER)
+  permissions        UserPermission[]
   // NextAuth
-  image             String?
-  accounts          Account[]
-  sessions          Session[]
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
 }
 
 enum Role {
@@ -84,7 +87,8 @@ model AuthorizedAdmin {
 }
 
 model Permission {
-  id          String  @id @default(cuid())
+  permission_id String @id @default(cuid())
+
   name        String  @unique
   description String?
 
@@ -92,39 +96,44 @@ model Permission {
 }
 
 model UserPermission {
-  userId       String
-  permissionId String
+  user_id       String
+  permission_id String
 
-  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  permission Permission @relation(fields: [permissionId], references: [id])
+  user       User       @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  permission Permission @relation(fields: [permission_id], references: [permission_id])
 
-  @@unique([userId, permissionId])
+  @@id([user_id, permission_id])
+  @@unique([user_id, permission_id])
 }
 
 model Contact {
-  id          String  @id @default(cuid())
+  contact_id String @id @default(cuid())
+  user_id    String @unique
+
   name        String
   position    String?
   phoneNumber String
 
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String @unique
+  user User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 model Company {
-  id                  String           @id @default(cuid())
+  company_id String @id @default(cuid())
+  user_id    String @unique
+
   name                String
-  shippingAddress     ShippingAddress?
-  billingAddress      BillingAddress?
   accountPayableEmail String
   paymentMethod       String
+  shipping            Shipping?
+  billing             Billing?
 
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
-model ShippingAddress {
-  id                   String  @id @default(cuid())
+model Shipping {
+  shipping_id String @id @default(cuid())
+  company_id  String @unique
+
   streetAddress        String
   unit                 String?
   city                 String
@@ -132,20 +141,20 @@ model ShippingAddress {
   postalCode           String
   deliveryInstructions String?
 
-  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId String  @unique
+  company Company @relation(fields: [company_id], references: [company_id], onDelete: Cascade)
 }
 
-model BillingAddress {
-  id            String  @id @default(cuid())
+model Billing {
+  billing_id String @id @default(cuid())
+  company_id String @unique
+
   streetAddress String
   unit          String?
   city          String
   state         String
   postalCode    String
 
-  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId String  @unique
+  company Company @relation(fields: [company_id], references: [company_id], onDelete: Cascade)
 }
 
 // ----- END USER
@@ -185,24 +194,26 @@ model ProductVariant {
 model Favorite {
   favorite_id String @id @default(cuid())
   product_id  String
-  userId      String
+  user_id     String
 
   created_at DateTime @default(now())
 
   product Product @relation(fields: [product_id], references: [product_id])
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 
-  @@unique([userId, product_id])
+  @@unique([user_id, product_id])
 }
 
 // ----- END PRODUCTS
 
 // ----- CART
 model Cart {
-  cart_id String     @id @default(cuid())
-  userId  String     @unique
-  items   CartItem[]
-  user    User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cart_id String @id @default(cuid())
+  user_id String @unique
+
+  items CartItem[]
+
+  user User? @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 model CartItem {
@@ -223,12 +234,12 @@ model CartItem {
 // ----- ORDER
 model Order {
   order_id String @id @default(cuid())
-  userId   String
+  user_id  String
 
   created_at DateTime   @default(now())
   line_items LineItem[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
 }
 
 model LineItem {

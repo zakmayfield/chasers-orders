@@ -29,10 +29,10 @@ export const getSecureUser = async (
   await db.user.findUnique({
     where: { email },
     select: {
-      id: true,
+      user_id: true,
       email: true,
-      isApproved: true,
-      emailVerified: true,
+      is_approved: true,
+      email_verified_on: true,
       role: true,
       username: true,
       image: true,
@@ -46,7 +46,7 @@ export const registerUser = async (
     data: {
       email: payload.credentials.email,
       password: payload.hashedPassword,
-      verificationToken: {
+      verification_token: {
         create: {
           identifier: `email-verification-${payload.credentials.email}`,
           token: payload.verificationToken,
@@ -65,7 +65,7 @@ export const registerUser = async (
           name: payload.credentials.companyName,
           accountPayableEmail: payload.credentials.accountPayableEmail,
           paymentMethod: payload.credentials.paymentMethod,
-          shippingAddress: {
+          shipping: {
             create: {
               streetAddress: payload.credentials.shippingStreetAddress,
               unit: payload.credentials.shippingUnit,
@@ -75,7 +75,7 @@ export const registerUser = async (
               deliveryInstructions: payload.credentials.deliveryInstructions,
             },
           },
-          billingAddress: {
+          billing: {
             create: {
               streetAddress: payload.credentials.billingStreetAddress,
               unit: payload.credentials.billingUnit,
@@ -88,10 +88,10 @@ export const registerUser = async (
       },
     },
     select: {
-      id: true,
+      user_id: true,
       email: true,
-      isApproved: true,
-      emailVerified: true,
+      is_approved: true,
+      email_verified_on: true,
       role: true,
       username: true,
       image: true,

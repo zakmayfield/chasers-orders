@@ -101,7 +101,7 @@ const providers: NextAuthProviders = [
       // throw if a user exists with desired email
       const existingUser = await db.user.findUnique({
         where: { email },
-        select: { id: true },
+        select: { user_id: true },
       });
 
       if (existingUser) {
@@ -137,7 +137,7 @@ const providers: NextAuthProviders = [
       }
 
       // initialize cart record with user data
-      await createCart(user.id);
+      await createCart(user.user_id);
 
       // send verification email
       await sendEmail({
@@ -157,10 +157,10 @@ type NextAuthCallbacks = NextAuthOptions['callbacks'];
 const callbacks: NextAuthCallbacks = {
   async session({ token, session }) {
     if (token) {
-      session.user.id = token.id;
+      session.user.user_id = token.user_id;
       session.user.email = token.email;
-      session.user.isApproved = token.isApproved;
-      session.user.emailVerified = token.emailVerified;
+      session.user.is_approved = token.is_approved;
+      session.user.email_verified_on = token.email_verified_on;
     }
 
     return session;
@@ -170,15 +170,15 @@ const callbacks: NextAuthCallbacks = {
     const u = await getSecureUser(token.email!);
 
     if (!u) {
-      token.id = user!.id;
+      token.user_id = user!.id;
       return token;
     }
 
     return {
-      id: u.id,
+      user_id: u.user_id,
       email: u.email,
-      isApproved: u.isApproved,
-      emailVerified: u.emailVerified,
+      is_approved: u.is_approved,
+      email_verified_on: u.email_verified_on,
     };
   },
 

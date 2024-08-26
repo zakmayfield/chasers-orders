@@ -3,24 +3,24 @@ import { User } from 'next-auth';
 declare module 'next-auth' {
   interface Session {
     user: User & {
-      id: string;
-      isApproved: boolean;
-      emailVerified: Date | null;
+      user_id: string;
+      is_approved: boolean;
+      email_verified_on: Date | null;
     };
   }
 }
 
 declare module 'next-auth' {
   interface User {
-    isApproved: boolean;
-    emailVerified: Date | null;
+    is_approved: boolean;
+    email_verified_on: Date | null;
   }
 }
 
 declare module 'next-auth/jwt' {
   interface JWT {
-    id: string;
-    isApproved: boolean;
-    emailVerified: Date | null;
+    user_id: string;
+    is_approved: boolean;
+    email_verified_on: Date | null;
   }
 }
