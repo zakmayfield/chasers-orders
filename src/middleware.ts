@@ -1,24 +1,24 @@
-import { JWT, getToken } from 'next-auth/jwt';
+import { getToken } from 'next-auth/jwt';
 import { NextResponse, NextRequest } from 'next/server';
-import { getUserAuthorization } from '@/services/queries/getUserAuthorization';
+import { getUserAuth } from './shared/utils/db/user';
 
 /*
   TODO: Implement wrapped middleware: https://next-auth.js.org/configuration/nextjs#advanced-usage
 */
 
 export async function middleware(req: NextRequest) {
-  const token: JWT | null = await getToken({ req });
+  const token = await getToken({ req });
 
   if (!token) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
-  const { isApproved, emailVerified } = await getUserAuthorization(token);
+  const authorization = await getUserAuth({ token });
 
   //^ All routes except /dashboard will redirect conditionally
   if (
     !req.nextUrl.pathname.includes('/dashboard') &&
-    (!isApproved || !emailVerified)
+    (!authorization?.is_approved || !authorization.email_verified_on)
   ) {
     return NextResponse.redirect(
       new URL('/dashboard/account-pending', req.nextUrl)

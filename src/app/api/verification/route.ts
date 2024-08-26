@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { db } from '@/lib/prisma';
-import { authenticateSession } from '@/utils/auth';
+import { authenticateSession } from '@/shared/utils/api/authenticateSession';
 import { sendEmail } from '@/utils/email';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import {

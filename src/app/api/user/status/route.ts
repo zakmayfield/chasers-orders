@@ -1,6 +1,6 @@
 import { UserAuthorization } from '@/types/user';
 import { db } from '@/lib/prisma';
-import { authenticateSession } from '@/utils/auth';
+import { authenticateSession } from '@/shared/utils/api/authenticateSession';
 
 async function handler() {
   const sessionResponse = await authenticateSession();

@@ -39,6 +39,10 @@ export type TUserPermission = UserPermission;
 export type TUserAuthorization = Pick<
   TUser,
   'is_approved' | 'email_verified_on'
+>;
+export type TUserExtendedAuthorization = Pick<
+  TUser,
+  'is_approved' | 'email_verified_on'
 > & {
   role: TRole;
   permissions: TUserPermission[];

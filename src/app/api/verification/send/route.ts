@@ -4,7 +4,7 @@ import {
   SendVerificationEmailResponse,
   TransporterResponse,
 } from '@/types/email';
-import { authenticateSession } from '@/utils/auth';
+import { authenticateSession } from '@/shared/utils/api/authenticateSession';
 
 async function handler() {
   const session = await authenticateSession();
