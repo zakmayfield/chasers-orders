@@ -9,9 +9,8 @@ import {
 } from '@/shared/validators/auth';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
-
 import { sendEmail } from '@/utils/email';
-import { createCart } from '@/utils/cart';
+import { createCart } from '@/shared/utils/db/cart';
 import { getUser, registerUser } from '@/shared/utils/db/user';
 
 //^ adapter
@@ -135,7 +134,7 @@ const providers: NextAuthProviders = [
       }
 
       // initialize cart record with user data
-      await createCart(user.id);
+      await createCart({ user_id: user.id });
 
       // send verification email
       await sendEmail({

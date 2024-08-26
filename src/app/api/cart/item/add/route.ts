@@ -1,6 +1,6 @@
 import { db } from '@/lib/prisma';
 import { getAuthSession } from '@/lib/auth/auth.options';
-import { fetchCart } from '@/utils/cart';
+import { getCartWithItems } from '@/shared/utils/db/cart';
 
 async function handler(req: Request) {
   const session = await getAuthSession();
@@ -11,13 +11,13 @@ async function handler(req: Request) {
     });
   }
 
-  const userId = session.user.id;
+  const user_id = session.user.id;
   const unitId: string = await req.json();
   let cartId: string;
 
   try {
-    const cart = await fetchCart(userId);
-    cartId = cart!.id;
+    const cart = await getCartWithItems({ user_id });
+    cartId = cart!.cart_id;
 
     const itemAlreadyInCart = cart?.items.find(
       (item) => item.unitId === unitId
