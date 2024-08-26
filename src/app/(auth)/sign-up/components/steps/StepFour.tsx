@@ -5,7 +5,7 @@ import {
   PreviousStepButton,
 } from '@/app/(auth)/sign-up/components/buttons';
 import { useSyncBillingAddress } from '@/shared/hooks/utils';
-import { provinceOptions } from '@/utils/constants';
+import { provinceOptions } from '@/shared/utils/constants';
 import type { StepFourProps } from '@/types/auth';
 import { Container } from '@/shared/components/ui';
 

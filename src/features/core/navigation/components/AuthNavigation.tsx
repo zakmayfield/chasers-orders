@@ -2,7 +2,26 @@
 import { signOut } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { AuthNavItem } from './AuthNavItem';
-import { navData } from '@/utils/constants';
+
+export type NavItem = {
+  path: string;
+  content: string;
+};
+
+const navData: NavItem[] = [
+  {
+    path: '/products',
+    content: 'Shop',
+  },
+  {
+    path: '/cart',
+    content: 'Cart',
+  },
+  {
+    path: '/dashboard',
+    content: 'Dashboard',
+  },
+];
 
 export default function AuthNavigation() {
   const pathname = usePathname();

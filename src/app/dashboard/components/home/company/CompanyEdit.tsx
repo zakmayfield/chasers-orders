@@ -5,7 +5,7 @@ import { UseFormReturn } from 'react-hook-form';
 import { CompanyValidator } from '@/shared/validators/user/CompanyValidator';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { useToast } from '@/shared/hooks/utils';
-import { paymentMethodOptions } from '@/utils/constants';
+import { paymentMethodOptions } from '@/shared/utils/constants';
 import { updateCompany } from '@/services/mutations/updateCompany';
 import { CompanyFormData, UserData } from '@/types/user';
 import { QueryKeys } from '@/types/hooks';

@@ -4,7 +4,7 @@ import {
   NextStepButton,
   PreviousStepButton,
 } from '@/app/(auth)/sign-up/components/buttons';
-import { paymentMethodOptions } from '@/utils/constants';
+import { paymentMethodOptions } from '@/shared/utils/constants';
 import type { StepProps } from '@/types/auth';
 
 export const StepThree: FC<StepProps> = ({

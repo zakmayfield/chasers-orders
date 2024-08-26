@@ -1,6 +1,6 @@
 import { Column } from '@tanstack/react-table';
 import { TableConfig } from '@/types/products';
-import { categories } from '@/utils/constants';
+import { categories } from '@/shared/utils/constants';
 
 export const Filter = ({
   tableConfig,

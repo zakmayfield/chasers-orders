@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import { getFavorites } from '@/services/queries/getFavorites';
 import { QueryKeys } from '@/types/hooks';
-import { NavItem } from '@/types/general';
+import { NavItem } from './AuthNavigation';
 
 interface AuthNavItemProps {
   navItem: NavItem;
