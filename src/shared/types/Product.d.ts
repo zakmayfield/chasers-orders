@@ -6,14 +6,14 @@ export type TProductVariant = ProductVariant;
 export type TFavorite = Favorite;
 
 export type TProductWithCategory = TProduct & {
-  category: TCategory;
+  category: TCategory | null;
 };
 export type TProductWithVariants = TProductWithCategory & {
-  variants: TProductVariant;
+  variants: TProductVariant[];
 };
 export type TProductVariantWithProduct = TProductVariant & {
   product: TProduct;
 };
 export type TCategoryWithProducts = TCategory & {
-  products: TProduct;
+  products: TProduct[];
 };

@@ -1,0 +1,85 @@
+('use server');
+
+import { db } from '@/lib/prisma';
+import {
+  TProductVariant,
+  TProductWithCategory,
+  TProductVariantWithProduct,
+  TCategoryWithProducts,
+  TProductWithVariants,
+} from '@/shared/types/Product';
+
+type TGetProducts = () => Promise<TProductWithCategory[]>;
+
+export const getProducts: TGetProducts = async () => {
+  const products = await db.product.findMany({
+    include: { category: true },
+  });
+  return products;
+};
+
+type TGetProductById = (props: {
+  product_id: string;
+}) => Promise<TProductWithCategory | null>;
+
+export const getProductById: TGetProductById = async ({ product_id }) => {
+  const product = await db.product.findUnique({
+    where: { product_id },
+    include: { category: true },
+  });
+  return product;
+};
+
+type TGetProductVariants = (props: {
+  product_id: string;
+}) => Promise<TProductVariant[]>;
+
+export const getProductVariants: TGetProductVariants = async ({
+  product_id,
+}) => {
+  const productVariants = await db.productVariant.findMany({
+    where: { product_id },
+  });
+  return productVariants;
+};
+
+type TGetProductWithVariants = (props: {
+  product_id: string;
+}) => Promise<TProductWithVariants | null>;
+
+export const getProductWithVariants: TGetProductWithVariants = async ({
+  product_id,
+}) => {
+  const productWithVariants = await db.product.findUnique({
+    where: { product_id },
+    include: { category: true, variants: true },
+  });
+  return productWithVariants;
+};
+
+type TGetProductVariantWithProduct = (props: {
+  product_variant_id: string;
+}) => Promise<TProductVariantWithProduct | null>;
+
+export const getProductVariantWithProduct: TGetProductVariantWithProduct =
+  async ({ product_variant_id }) => {
+    const productVariantWithProduct = await db.productVariant.findUnique({
+      where: { product_variant_id },
+      include: { product: true },
+    });
+    return productVariantWithProduct;
+  };
+
+type TGetCategoryWithProducts = (props: {
+  category_id: string;
+}) => Promise<TCategoryWithProducts | null>;
+
+export const getCategoryWithProducts: TGetCategoryWithProducts = async ({
+  category_id,
+}) => {
+  const categoryWithProducts = await db.category.findUnique({
+    where: { category_id },
+    include: { products: true },
+  });
+  return categoryWithProducts;
+};
