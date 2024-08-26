@@ -1,5 +1,5 @@
 import { OrderAgainData, OrderType } from '@/types/cart';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const orderAgain = async (order: OrderType): Promise<OrderAgainData> =>
   await fetchHandler({

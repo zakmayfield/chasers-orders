@@ -1,5 +1,5 @@
 import type { Company } from '@prisma/client';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 import { CompanyFormData } from '@/types/user';
 
 export const updateCompany = async (

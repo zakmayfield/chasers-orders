@@ -1,5 +1,5 @@
 import { TUserExtendedAuthorization } from '@/shared/types/User';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const getAuthorization = async (): Promise<TUserExtendedAuthorization> =>
   await fetchHandler({

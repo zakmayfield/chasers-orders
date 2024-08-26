@@ -1,5 +1,5 @@
 import { CartItem } from '@/types/cart';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const addToCart = async (unitId: string): Promise<CartItem> =>
   fetchHandler({

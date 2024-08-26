@@ -1,5 +1,5 @@
 import { ExtendedFavorite, ToggleFavoriteAction } from '@/types/products';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const toggleFavorite = async (
   params: ToggleFavoriteAction

@@ -1,4 +1,4 @@
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export type LineItemProducts = {
   id: string;

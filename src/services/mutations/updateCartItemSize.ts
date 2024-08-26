@@ -1,5 +1,5 @@
 import { CartItem, UpdateCartItemSizeRequest } from '@/types/cart';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const updateCartItemSize = async (
   params: UpdateCartItemSizeRequest

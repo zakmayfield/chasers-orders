@@ -1,5 +1,5 @@
 import { CartSizesData } from '@/types/cart';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const getUnitSizes = async (unitId: string): Promise<CartSizesData> =>
   await fetchHandler({

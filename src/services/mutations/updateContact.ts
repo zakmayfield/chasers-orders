@@ -1,5 +1,5 @@
 import { ContactFormData } from '@/types/user';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Contact } from '@prisma/client';
 
 export const updateContact = async (

@@ -1,5 +1,5 @@
 import { RemoveCartItemRequest, RemoveCartItemResponse } from '@/types/cart';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const removeFromCart = async (
   payload: RemoveCartItemRequest

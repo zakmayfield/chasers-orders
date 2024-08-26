@@ -1,5 +1,5 @@
 import { SendVerificationEmailResponse } from '@/types/email';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const sendVerificationEmail =
   async (): Promise<SendVerificationEmailResponse> =>

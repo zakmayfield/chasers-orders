@@ -1,5 +1,5 @@
 import { CartItem } from '@/types/cart';
-import { fetchHandler } from '@/utils/fetch';
+import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Order, OrderLineItem } from '@prisma/client';
 
 export type OrderData = Order & {
