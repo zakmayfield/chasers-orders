@@ -1,9 +1,6 @@
 import { db } from '@/lib/prisma';
-import { sendEmail } from '@/utils/email';
-import {
-  SendVerificationEmailResponse,
-  TransporterResponse,
-} from '@/types/email';
+import { TransporterResponse, sendEmail } from '@/shared/utils/email/sendEmail';
+import { SendVerificationEmailResponse } from '@/types/email';
 import { authenticateSession } from '@/shared/utils/api/authenticateSession';
 
 async function handler() {
@@ -15,12 +12,13 @@ async function handler() {
 
   try {
     const tokenRecord = await db.verificationToken.findUniqueOrThrow({
-      where: { userId: id },
+      where: { user_id: id },
     });
 
     const sendEmailResponse: TransporterResponse = await sendEmail({
+      type: 'verification',
+      to: email,
       verificationToken: tokenRecord.token,
-      email: email,
     })
       .then((response) => response)
       .catch((error) => error);

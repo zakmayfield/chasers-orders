@@ -9,9 +9,9 @@ import {
 } from '@/shared/validators/auth';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
-import { sendEmail } from '@/utils/email';
 import { createCart } from '@/shared/utils/db/cart';
 import { getUser, registerUser } from '@/shared/utils/db/user';
+import { sendEmail } from '@/shared/utils/email/sendEmail';
 
 //^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
@@ -138,8 +138,9 @@ const providers: NextAuthProviders = [
 
       // send verification email
       await sendEmail({
+        type: 'verification',
+        to: email,
         verificationToken,
-        email,
       })
         .then((response) => response)
         .catch((error) => error);

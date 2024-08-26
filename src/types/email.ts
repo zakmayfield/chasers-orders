@@ -7,8 +7,6 @@ export type SendVerificationEmailResponse = {
   responseMessage: string;
 };
 
-export type TransporterResponse = SMTPTransport.SentMessageInfo | Error;
-
 export type SendOrderEmailPayload = {
   order: Order & {
     lineItems: OrderLineItem[];

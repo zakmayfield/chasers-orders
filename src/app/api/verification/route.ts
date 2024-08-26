@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server';
 import { db } from '@/lib/prisma';
 import { authenticateSession } from '@/shared/utils/api/authenticateSession';
-import { sendEmail } from '@/utils/email';
+import { sendEmail } from '@/shared/utils/email/sendEmail';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import {
   UpdateUserVerificationRequest,
@@ -51,13 +51,13 @@ async function handler(req: NextRequest) {
       });
     }
 
-    if (verificationToken.userId !== id) {
+    if (verificationToken.user_id !== id) {
       return new Response('Unauthorized attempt: please log in to continue', {
         status: 401,
       });
     }
 
-    if (!verificationToken.valid) {
+    if (!verificationToken.is_valid) {
       return new Response('Invalid token: a valid token is required', {
         status: 400,
       });
@@ -76,7 +76,7 @@ async function handler(req: NextRequest) {
       const newTokenExpiresAt = new Date(newTokenExpiration * 1000);
 
       await db.verificationToken.update({
-        where: { userId: id },
+        where: { user_id: id },
         data: {
           token: newVerificationToken,
           expires: newTokenExpiresAt,
@@ -84,8 +84,9 @@ async function handler(req: NextRequest) {
       });
 
       await sendEmail({
+        type: 'verification',
+        to: email,
         verificationToken: newVerificationToken,
-        email,
       });
 
       return new Response(
@@ -101,32 +102,33 @@ async function handler(req: NextRequest) {
     const user = await db.user.update({
       where: { id },
       data: {
-        emailVerified: currentDate,
-        verificationToken: {
+        email_verified_on: currentDate,
+        verification_token: {
           update: {
             where: {
               identifier: uniqueIdentifier,
             },
             data: {
-              valid: false,
+              is_valid: false,
             },
           },
         },
       },
       select: {
         id: true,
-        isApproved: true,
-        emailVerified: true,
+        is_approved: true,
+        email_verified_on: true,
       },
     });
 
+    // TODO: Update these prop names
     const updateVerificationResponse: UpdateUserVerificationResponse = {
       accepted: true,
       id,
       email,
       verifiedOn: currentDate,
-      isApproved: user.isApproved,
-      emailVerified: user.emailVerified,
+      isApproved: user.is_approved,
+      emailVerified: user.email_verified_on,
     };
 
     return new Response(JSON.stringify(updateVerificationResponse));
