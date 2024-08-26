@@ -29,7 +29,7 @@ export const getSecureUser = async (
   await db.user.findUnique({
     where: { email },
     select: {
-      user_id: true,
+      id: true,
       email: true,
       is_approved: true,
       email_verified_on: true,
@@ -88,7 +88,7 @@ export const registerUser = async (
       },
     },
     select: {
-      user_id: true,
+      id: true,
       email: true,
       is_approved: true,
       email_verified_on: true,

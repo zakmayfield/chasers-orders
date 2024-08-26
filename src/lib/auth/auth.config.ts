@@ -9,9 +9,10 @@ import {
 } from '@/shared/validators/auth';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import { db } from '@/lib/prisma';
-import { getSecureUser, registerUser } from '@/utils/auth';
+
 import { sendEmail } from '@/utils/email';
 import { createCart } from '@/utils/cart';
+import { getUser, registerUser } from '@/shared/utils/db/user';
 
 //^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
@@ -101,7 +102,7 @@ const providers: NextAuthProviders = [
       // throw if a user exists with desired email
       const existingUser = await db.user.findUnique({
         where: { email },
-        select: { user_id: true },
+        select: { id: true },
       });
 
       if (existingUser) {
@@ -122,22 +123,19 @@ const providers: NextAuthProviders = [
       const salt = await genSalt(12);
       const hashedPassword = await hash(password, salt);
 
-      // register user with payload
-      const registerUserPayload = {
+      const user = await registerUser({
         credentials: parsedCreds.data,
         hashedPassword,
         verificationToken,
         expires,
-      };
-
-      const user = await registerUser(registerUserPayload);
+      });
 
       if (!user) {
         throw new Error('Error creating account');
       }
 
       // initialize cart record with user data
-      await createCart(user.user_id);
+      await createCart(user.id);
 
       // send verification email
       await sendEmail({
@@ -157,7 +155,7 @@ type NextAuthCallbacks = NextAuthOptions['callbacks'];
 const callbacks: NextAuthCallbacks = {
   async session({ token, session }) {
     if (token) {
-      session.user.user_id = token.user_id;
+      session.user.id = token.id;
       session.user.email = token.email;
       session.user.is_approved = token.is_approved;
       session.user.email_verified_on = token.email_verified_on;
@@ -167,18 +165,18 @@ const callbacks: NextAuthCallbacks = {
   },
 
   async jwt({ token, user }) {
-    const u = await getSecureUser(token.email!);
+    const dbUser = await getUser({ email: token.email! });
 
-    if (!u) {
-      token.user_id = user!.id;
+    if (!dbUser) {
+      token.id = user!.id;
       return token;
     }
 
     return {
-      user_id: u.user_id,
-      email: u.email,
-      is_approved: u.is_approved,
-      email_verified_on: u.email_verified_on,
+      id: dbUser.id,
+      email: dbUser.email,
+      is_approved: dbUser.is_approved,
+      email_verified_on: dbUser.email_verified_on,
     };
   },
 
