@@ -1,6 +1,6 @@
-import { UserAuthorization } from '@/types/user';
 import { db } from '@/lib/prisma';
 import { authenticateSession } from '@/shared/utils/api/authenticateSession';
+import { TUserExtendedAuthorization } from '@/shared/types/User';
 
 async function handler() {
   const sessionResponse = await authenticateSession();
@@ -15,14 +15,15 @@ async function handler() {
         id,
       },
       select: {
-        id: true,
         email: true,
-        isApproved: true,
-        emailVerified: true,
+        is_approved: true,
+        email_verified_on: true,
+        role: true,
+        permissions: true,
       },
     });
 
-    const responsePayload: UserAuthorization = {
+    const responsePayload: TUserExtendedAuthorization = {
       ...user,
     };
 

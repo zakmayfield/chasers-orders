@@ -3,10 +3,12 @@ import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/shared/types/Forms';
 import { TUser, TUserAuthorization } from '@/shared/types/User';
 import { JWT } from 'next-auth/jwt';
+import { BASE_URL } from '../constants';
 
 //^ USER DATA
 type TGetUser = (props: { email: TUser['email'] }) => Promise<TUser | null>;
 
+// TODO: verify password is omitted
 export const getUser: TGetUser = async ({ email }) => {
   const user = await db.user.findUnique({
     where: { email },
@@ -21,15 +23,19 @@ type TGetUserAuth = (props: {
 
 export const getUserAuth: TGetUserAuth = async ({ token }) => {
   if (!token.is_approved || !token.email_verified_on) {
-    const userAuth = await db.user.findUnique({
-      where: { id: token.id },
-      select: {
-        is_approved: true,
-        email_verified_on: true,
-      },
-    });
+    const apiUrl = new URL(`/api/auth/user?userId=${token.id}`, BASE_URL);
 
-    return userAuth;
+    try {
+      const response = await fetch(apiUrl);
+      const { is_approved, email_verified_on } = await response.json();
+
+      return {
+        is_approved,
+        email_verified_on,
+      };
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return {

@@ -18,16 +18,16 @@ export const AccountPendingData = () => {
             <p className='text-2xl flex items-center gap-2'>
               Your account is{' '}
               <span
-                className={`text-2xl ${status?.isApproved ? 'text-light-green-500' : 'text-red-400'}`}
+                className={`text-2xl ${status?.is_approved ? 'text-light-green-500' : 'text-red-400'}`}
               >
-                {status?.isApproved ? 'approved' : 'pending approval'}
+                {status?.is_approved ? 'approved' : 'pending approval'}
               </span>
             </p>
 
             <p className='flex items-center gap-1'>
               Visit the{' '}
               <span>
-                {!status?.isApproved || !status?.emailVerified ? (
+                {!status?.is_approved || !status?.email_verified_on ? (
                   <Link href='/dashboard' className='underline text-purple-800'>
                     dashboard
                   </Link>
@@ -45,16 +45,19 @@ export const AccountPendingData = () => {
             <p className='text-2xl flex items-center gap-2'>
               Your email is{' '}
               <span
-                className={`text-2xl ${status?.emailVerified ? 'text-light-green-500' : 'text-red-400'}`}
+                className={`text-2xl ${status?.email_verified_on ? 'text-light-green-500' : 'text-red-400'}`}
               >
-                {status?.emailVerified ? 'verified' : 'pending verification'}
+                {status?.email_verified_on
+                  ? 'verified'
+                  : 'pending verification'}
               </span>
             </p>
 
             <div>
-              {status?.emailVerified ? (
+              {status?.email_verified_on ? (
                 <p>
-                  Verified on: {new Date(status?.emailVerified).toDateString()}
+                  Verified on:{' '}
+                  {new Date(status?.email_verified_on).toDateString()}
                 </p>
               ) : (
                 <SendVerificationEmail />
