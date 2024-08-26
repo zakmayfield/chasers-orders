@@ -43,6 +43,19 @@ export const getProductVariants: TGetProductVariants = async ({
   return productVariants;
 };
 
+type TGetProductVariantById = (props: {
+  product_variant_id: string;
+}) => Promise<TProductVariant | null>;
+
+export const getProductVariantById: TGetProductVariantById = async ({
+  product_variant_id,
+}) => {
+  const productVariant = await db.productVariant.findUnique({
+    where: { product_variant_id },
+  });
+  return productVariant;
+};
+
 type TGetProductWithVariants = (props: {
   product_id: string;
 }) => Promise<TProductWithVariants | null>;
@@ -69,6 +82,19 @@ export const getProductVariantWithProduct: TGetProductVariantWithProduct =
     });
     return productVariantWithProduct;
   };
+
+type TGetFirstVariantId = (props: {
+  product_id: string;
+}) => Promise<string | undefined>;
+
+export const getFirstVariantId: TGetFirstVariantId = async ({ product_id }) => {
+  const product = await db.product.findUnique({
+    where: { product_id },
+    include: { variants: true },
+  });
+  const firstVariantId = product?.variants[0].product_variant_id;
+  return firstVariantId;
+};
 
 type TGetCategoryWithProducts = (props: {
   category_id: string;

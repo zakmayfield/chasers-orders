@@ -1,6 +1,6 @@
 'use client';
 import { useAddToCart, useToggleFavorite } from '@/shared/hooks/mutations';
-import { getUnitId } from '@/utils/products';
+import { getFirstVariantId } from '@/shared/utils/db/products';
 import { FavoriteButtonGroup, FavoriteContent } from './components';
 import { ExtendedFavorite } from '@/types/products';
 
@@ -13,12 +13,14 @@ export const Favorite = ({
   const { mutate: toggleFavorite } = useToggleFavorite({});
 
   async function handleAddToCart() {
-    const unitId = await getUnitId(favoriteData.productId);
-    addToCart(unitId);
+    const variantId = await getFirstVariantId({
+      product_id: favoriteData.product_id,
+    });
+    addToCart(variantId || '');
   }
 
   function handleToggleFavorite() {
-    toggleFavorite({ action: 'remove', favoriteId: favoriteData.id });
+    toggleFavorite({ action: 'remove', favoriteId: favoriteData.favorite_id });
   }
   return (
     <div className='flex items-center border-b last-of-type:border-0 px-6'>
