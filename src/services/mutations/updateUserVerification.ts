@@ -1,12 +1,12 @@
 import { fetchHandler } from '@/utils/fetch';
 import {
-  UpdateUserVerificationRequest,
-  UpdateUserVerificationResponse,
-} from '@/types/verification';
+  TUpdateUserVerificationRequest,
+  TUpdateUserVerificationResponse,
+} from '@/shared/types/API';
 
 export const updateUserVerification = async ({
   token,
-}: UpdateUserVerificationRequest): Promise<UpdateUserVerificationResponse> =>
+}: TUpdateUserVerificationRequest): Promise<TUpdateUserVerificationResponse> =>
   await fetchHandler({
     route: '/verification',
     options: {

@@ -1,15 +1,15 @@
 import { Container, Heading } from '@/shared/components/ui';
-import { UserAuthorization } from '@/types/user';
-import { UpdateUserVerificationResponse } from '@/types/verification';
 import { CheckIcon } from '@/utils/icons';
 import { ReturnToDashboardButton } from '../atoms/ReturnToDashboardButton';
+import { TUserExtendedAuthorization } from '@/shared/types/User';
+import { TUpdateUserVerificationResponse } from '@/shared/types/API';
 
 export const VerificationData = ({
   data,
   authorization,
 }: {
-  data: UpdateUserVerificationResponse | undefined;
-  authorization: UserAuthorization | undefined;
+  data: TUpdateUserVerificationResponse | undefined;
+  authorization: TUserExtendedAuthorization | undefined;
 }) => {
   return (
     <Container as='div' flex='col'>

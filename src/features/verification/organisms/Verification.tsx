@@ -25,7 +25,7 @@ export const Verification = () => {
   );
   // Data
   const data = (mutation.data ||
-    (authorization && authorization.data?.emailVerified)) && (
+    (authorization && authorization.data?.email_verified_on)) && (
     <VerificationData data={mutation.data} authorization={authorization.data} />
   );
 

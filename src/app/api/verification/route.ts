@@ -4,9 +4,9 @@ import { authenticateSession } from '@/shared/utils/api/authenticateSession';
 import { sendEmail } from '@/shared/utils/email/sendEmail';
 import { extractExpiration, generateVerificationToken } from '@/utils/token';
 import {
-  UpdateUserVerificationRequest,
-  UpdateUserVerificationResponse,
-} from '@/types/verification';
+  TUpdateUserVerificationRequest,
+  TUpdateUserVerificationResponse,
+} from '@/shared/types/API';
 
 const dateNow = () => new Date().toISOString();
 
@@ -29,7 +29,7 @@ async function handler(req: NextRequest) {
 
   const { id, email } = session;
 
-  const body: UpdateUserVerificationRequest = await req.json();
+  const body: TUpdateUserVerificationRequest = await req.json();
 
   if (!body.token) {
     return new Response(`Token required`, {
@@ -122,13 +122,11 @@ async function handler(req: NextRequest) {
     });
 
     // TODO: Update these prop names
-    const updateVerificationResponse: UpdateUserVerificationResponse = {
-      accepted: true,
+    const updateVerificationResponse: TUpdateUserVerificationResponse = {
       id,
       email,
-      verifiedOn: currentDate,
-      isApproved: user.is_approved,
-      emailVerified: user.email_verified_on,
+      is_approved: user.is_approved,
+      email_verified_on: user.email_verified_on,
     };
 
     return new Response(JSON.stringify(updateVerificationResponse));

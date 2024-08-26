@@ -4,27 +4,20 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useCustomMutation } from '../custom';
 import { updateUserVerification } from '@/services/mutations/updateUserVerification';
 import { QueryKeys } from '@/types/hooks';
-import { UserAuthorization } from '@/types/user';
-import {
-  UpdateUserVerificationRequest,
-  UpdateUserVerificationResponse,
-} from '@/types/verification';
+import { TUserAuthorization } from '@/shared/types/User';
 
 export const useUpdateUserVerification = ({
   token,
   authorization,
 }: {
   token: string | undefined;
-  authorization: UserAuthorization | undefined;
+  authorization: TUserAuthorization | undefined;
 }) => {
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
   const { mutate, error, isLoading, isError, isSuccess, data } =
-    useCustomMutation<
-      UpdateUserVerificationResponse,
-      UpdateUserVerificationRequest
-    >({
+    useCustomMutation({
       mutationFn: updateUserVerification,
       handleSuccess(data) {
         notify(`Email verification successful: ${data.email}`);
@@ -39,7 +32,7 @@ export const useUpdateUserVerification = ({
   const hasRun = useRef(false);
 
   useEffect(() => {
-    if (!hasRun.current && authorization && !authorization.emailVerified) {
+    if (!hasRun.current && authorization && !authorization.email_verified_on) {
       mutate({ token });
 
       hasRun.current = true;
