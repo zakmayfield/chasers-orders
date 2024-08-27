@@ -65,7 +65,12 @@ type TGetFavoritesByUserId = (props: {
 export const getFavoritesByUserId: TGetFavoritesByUserId = async ({
   user_id,
 }) => {
-  const favorites = await db.favorite.findMany({ where: { user_id } });
+  const favorites = await db.favorite.findMany({
+    where: { user_id },
+    orderBy: {
+      created_at: 'desc',
+    },
+  });
   return favorites;
 };
 
