@@ -2,7 +2,6 @@ import {
   Billing,
   Company,
   Contact,
-  Favorite,
   Permission,
   Role,
   Shipping,
@@ -12,6 +11,7 @@ import {
 } from '@prisma/client';
 import { TOrder } from './Order';
 import { TCart } from './Cart';
+import { TFavorite } from './Favorite';
 
 //^ USER
 export type TUser = Omit<User, 'password'>;
@@ -19,7 +19,6 @@ export type TContact = Contact;
 export type TCompany = Company;
 export type TShipping = Shipping;
 export type TBilling = Billing;
-export type TFavorite = Favorite;
 
 export type TFullUser = TUser & {
   contact: TContact | null;
