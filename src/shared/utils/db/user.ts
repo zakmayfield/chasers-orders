@@ -6,10 +6,11 @@ import { JWT } from 'next-auth/jwt';
 import { BASE_URL } from '../constants';
 
 //^ USER DATA
-type TGetUser = (props: { email: TUser['email'] }) => Promise<TUser | null>;
+type TGetUserByEmail = (props: {
+  email: TUser['email'];
+}) => Promise<TUser | null>;
 
-// TODO: verify password is omitted
-export const getUser: TGetUser = async ({ email }) => {
+export const getUserByEmail: TGetUserByEmail = async ({ email }) => {
   const user = await db.user.findUnique({
     where: { email },
   });

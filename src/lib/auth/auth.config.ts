@@ -13,7 +13,7 @@ import {
 } from '@/shared/utils/helpers';
 import { db } from '@/lib/prisma';
 import { createCart } from '@/shared/utils/db/cart';
-import { getUser, registerUser } from '@/shared/utils/db/user';
+import { getUserByEmail, registerUser } from '@/shared/utils/db/user';
 import { sendEmail } from '@/shared/utils/email/sendEmail';
 
 //^ adapter
@@ -168,7 +168,7 @@ const callbacks: NextAuthCallbacks = {
   },
 
   async jwt({ token, user }) {
-    const dbUser = await getUser({ email: token.email! });
+    const dbUser = await getUserByEmail({ email: token.email! });
 
     if (!dbUser) {
       token.id = user!.id;

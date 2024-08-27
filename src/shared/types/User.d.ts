@@ -23,14 +23,6 @@ export type TUserWithContact = TUser & {
 export type TUserWithCompany = TUser & {
   company: TCompany;
 };
-export type TCompanyWithAddress = TCompany & {
-  shipping: TShipping;
-  billing: TBilling;
-};
-export type TFullUserData = TUser & {
-  contact: TContact;
-  company: TCompanyWithAddress;
-};
 
 //^ AUTHORIZATION
 export type TRole = Role;
