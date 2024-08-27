@@ -1,13 +1,13 @@
-import { Steps } from '@/types/auth';
+import { SignUpFormSteps } from '@/shared/types/Forms';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 type UseStepTrackerData = {
-  step: Steps;
-  setStep: Dispatch<SetStateAction<Steps>>;
+  step: SignUpFormSteps;
+  setStep: Dispatch<SetStateAction<SignUpFormSteps>>;
 };
 
 export const useStepTracker = (): UseStepTrackerData => {
-  const [step, setStep] = useState<Steps>('1');
+  const [step, setStep] = useState<SignUpFormSteps>('1');
   const hasRun = useRef(false);
 
   useEffect(() => {

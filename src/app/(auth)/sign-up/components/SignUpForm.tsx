@@ -1,15 +1,29 @@
 import { Dispatch, FC, SetStateAction } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { StepOne, StepTwo, StepThree, StepFour } from './steps';
-import { SignUpFormData, Steps } from '@/types/auth';
+import { SignUpFormData, SignUpFormSteps } from '@/shared/types/Forms';
 import { handleSignUp } from '@/shared/utils/helpers';
 import { useCustomForm } from '@/shared/hooks/custom';
 import { defaultSignUpFormValues } from '@/utils/constants';
 import { signUpResolver } from '@/shared/validators/resolvers';
+import {
+  FieldErrors,
+  UseFormGetValues,
+  UseFormRegister,
+} from 'react-hook-form';
+
+export interface StepProps {
+  register: UseFormRegister<SignUpFormData>;
+  getValues: UseFormGetValues<SignUpFormData>;
+  handleIncrementStep?(): void;
+  handleDecrementStep?(): void;
+  errors: FieldErrors<SignUpFormData>;
+  step: SignUpFormSteps;
+}
 
 interface SignUpFormProps {
-  setStep: Dispatch<SetStateAction<Steps>>;
-  step: Steps;
+  setStep: Dispatch<SetStateAction<SignUpFormSteps>>;
+  step: SignUpFormSteps;
 }
 
 export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
@@ -32,8 +46,8 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
     step,
     setStep,
   }: {
-    step: Steps;
-    setStep: Dispatch<SetStateAction<Steps>>;
+    step: SignUpFormSteps;
+    setStep: Dispatch<SetStateAction<SignUpFormSteps>>;
   }) => {
     let stepToNumber = Number(step);
     if (stepToNumber >= 4) {
@@ -42,7 +56,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
 
     const nextStep = (stepToNumber = stepToNumber + 1);
 
-    setStep(nextStep.toString() as Steps);
+    setStep(nextStep.toString() as SignUpFormSteps);
   };
 
   function handleIncrementStep() {
@@ -53,8 +67,8 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
     step,
     setStep,
   }: {
-    step: Steps;
-    setStep: Dispatch<SetStateAction<Steps>>;
+    step: SignUpFormSteps;
+    setStep: Dispatch<SetStateAction<SignUpFormSteps>>;
   }) => {
     let stepToNumber = Number(step);
     if (stepToNumber <= 1) {
@@ -63,7 +77,7 @@ export const SignUpForm: FC<SignUpFormProps> = ({ setStep, step }) => {
 
     const nextStep = (stepToNumber = stepToNumber - 1);
 
-    setStep(nextStep.toString() as Steps);
+    setStep(nextStep.toString() as SignUpFormSteps);
   };
 
   function handleDecrementStep() {

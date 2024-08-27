@@ -6,8 +6,16 @@ import {
 } from '@/app/(auth)/sign-up/components/buttons';
 import { useSyncBillingAddress } from '@/shared/hooks/utils';
 import { provinceOptions } from '@/shared/utils/constants';
-import type { StepFourProps } from '@/types/auth';
 import { Container } from '@/shared/components/ui';
+import { StepProps } from '../SignUpForm';
+import { UseFormSetValue } from 'react-hook-form';
+import { SignUpFormData } from '@/shared/types/Forms';
+
+export interface StepFourProps extends StepProps {
+  setValue: UseFormSetValue<SignUpFormData>;
+  isSubmitted: boolean;
+  isSubmitSuccessful: boolean;
+}
 
 export const StepFour: FC<StepFourProps> = ({
   register,

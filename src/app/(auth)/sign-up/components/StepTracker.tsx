@@ -1,8 +1,8 @@
 import { FC } from 'react';
-import { Steps } from '@/types/auth';
+import { SignUpFormSteps } from '@/shared/types/Forms';
 
 interface StepTrackerProps {
-  activeStep: Steps;
+  activeStep: SignUpFormSteps;
 }
 
 export const StepTracker: FC<StepTrackerProps> = ({ activeStep }) => {

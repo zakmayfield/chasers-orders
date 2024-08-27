@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { Key } from '@/utils/constants';
-import { SignUpFormData } from '@/types/auth';
+import { SignUpFormData } from '@/shared/types/Forms';
 
 type UseSyncBillingAddressProps = {
   getValues: UseFormGetValues<SignUpFormData>;

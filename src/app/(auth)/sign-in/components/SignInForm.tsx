@@ -6,7 +6,7 @@ import { handleSignIn } from '@/shared/utils/helpers';
 import { useCustomForm } from '@/shared/hooks/custom';
 import { defaultSignInFormValues } from '@/utils/constants';
 import { signInResolver } from '@/shared/validators/resolvers';
-import { SignInFormData } from '@/types/auth';
+import { SignInFormData } from '@/shared/types/Forms';
 import { Container } from '@/shared/components/ui';
 
 interface SignInFormProps {}

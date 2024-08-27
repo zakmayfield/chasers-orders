@@ -3,13 +3,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks/utils';
 import { requiredSignUpFormValues } from '@/utils/constants';
 import type { UseFormGetValues } from 'react-hook-form';
-import { SignUpFormData, Steps } from '@/types/auth';
+import { SignUpFormData, SignUpFormSteps } from '@/shared/types/Forms';
 import { ArrowRight } from '@/shared/utils/ui';
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;
   handleIncrementStep?(): void;
-  step: Steps;
+  step: SignUpFormSteps;
 }
 
 export const NextStepButton: FC<NextStepProps> = ({
@@ -20,7 +20,7 @@ export const NextStepButton: FC<NextStepProps> = ({
   const queryClient = useQueryClient();
   const { notify } = useToast();
 
-  function isStepComplete(currentStep: Steps) {
+  function isStepComplete(currentStep: SignUpFormSteps) {
     const formValues = getValues();
     const requiredFields = requiredSignUpFormValues[currentStep];
     return requiredFields.every((field) => !!formValues[field]);
