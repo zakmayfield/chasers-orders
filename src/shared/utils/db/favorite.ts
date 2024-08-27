@@ -1,3 +1,4 @@
+'use server';
 import { db } from '@/lib/prisma';
 import { TFavorite, TFavoriteWithProduct } from '@/shared/types/Favorite';
 

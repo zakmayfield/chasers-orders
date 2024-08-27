@@ -1,3 +1,4 @@
+'use server';
 import { db } from '@/lib/prisma';
 import { TOrder, TOrderWithLineItems } from '@/shared/types/Order';
 

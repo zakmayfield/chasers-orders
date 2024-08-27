@@ -1,3 +1,7 @@
+export type TBatchPayload = {
+  count: number;
+};
+
 export type TUpdateUserVerificationRequest = {
   token?: string;
 };
