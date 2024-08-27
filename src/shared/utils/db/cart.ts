@@ -37,12 +37,26 @@ export const addItemToCart: TAddItemToCart = async ({
 };
 
 //^ DELETE
-type TDeleteCartItems = (props: { cart_id: string }) => Promise<TBatchPayload>;
-export const deleteCartItems: TDeleteCartItems = async ({ cart_id }) => {
+type TEmptyCart = (props: { cart_id: string }) => Promise<TBatchPayload>;
+export const emptyCart: TEmptyCart = async ({ cart_id }) => {
   const del = await db.cartItem.deleteMany({
     where: { cart_id },
   });
   return { count: del.count };
+};
+
+type TDeleteCartItem = (props: {
+  cart_id: string;
+  product_variant_id: string;
+}) => Promise<TCartItem>;
+export const deleteCartItem: TDeleteCartItem = async ({
+  cart_id,
+  product_variant_id,
+}) => {
+  const cartItem = await db.cartItem.delete({
+    where: { cart_id, product_variant_id },
+  });
+  return cartItem;
 };
 
 //^ PUT
