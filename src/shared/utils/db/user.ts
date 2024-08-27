@@ -11,6 +11,7 @@ import {
   TUser,
   TUserAuthorization,
   TUserExtendedAuthorization,
+  TVerificationToken,
 } from '@/shared/types/User';
 import { JWT } from 'next-auth/jwt';
 import { BASE_URL } from '../constants';
@@ -76,6 +77,49 @@ export const registerUser: TRegisterUser = async ({
   });
 
   return registeredUser;
+};
+
+//^ PUT
+type TUpdateExpiredVerificationToken = (props: {
+  user_id: string;
+  new_token: string;
+  expires_on: Date;
+}) => Promise<TVerificationToken>;
+export const updateExpiredVerificationToken: TUpdateExpiredVerificationToken =
+  async ({ user_id, new_token, expires_on }) => {
+    const verificationToken = await db.verificationToken.update({
+      where: { user_id },
+      data: {
+        token: new_token,
+        expires: expires_on,
+      },
+    });
+    return verificationToken;
+  };
+
+type TVerifyUserEmail = (props: {
+  user_id: string;
+  identifier: string;
+}) => Promise<TUser>;
+export const verifyUserEmail: TVerifyUserEmail = async ({
+  user_id,
+  identifier,
+}) => {
+  const user = await db.user.update({
+    where: { id: user_id },
+    data: {
+      email_verified_on: new Date().toISOString(),
+      verification_token: {
+        update: {
+          where: { identifier },
+          data: {
+            is_valid: false,
+          },
+        },
+      },
+    },
+  });
+  return user;
 };
 
 //^ GET
