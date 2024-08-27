@@ -1,7 +1,17 @@
 'use server';
 import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/shared/types/Forms';
-import { TUser, TUserAuthorization } from '@/shared/types/User';
+import {
+  TBilling,
+  TCompany,
+  TCompanyWithAddress,
+  TContact,
+  TFullUser,
+  TShipping,
+  TUser,
+  TUserAuthorization,
+  TUserExtendedAuthorization,
+} from '@/shared/types/User';
 import { JWT } from 'next-auth/jwt';
 import { BASE_URL } from '../constants';
 
@@ -16,6 +26,108 @@ export const getUserByEmail: TGetUserByEmail = async ({ email }) => {
   });
   return user;
 };
+
+type TGetFullUserByEmail = (props: {
+  email: TUser['email'];
+}) => Promise<TFullUser | null>;
+
+export const getFullUserByEmail: TGetFullUserByEmail = async ({ email }) => {
+  const fullUser = await db.user.findUnique({
+    where: { email },
+    include: {
+      contact: true,
+      company: true,
+      cart: true,
+      favorites: true,
+      orders: true,
+    },
+  });
+  return fullUser;
+};
+
+type TGetContactByUserId = (props: {
+  user_id: string;
+}) => Promise<TContact | null>;
+
+export const getContactByUserId: TGetContactByUserId = async ({ user_id }) => {
+  const contact = await db.contact.findUnique({
+    where: { user_id },
+  });
+  return contact;
+};
+
+type TGetCompanyByUserId = (props: {
+  user_id: string;
+}) => Promise<TCompany | null>;
+
+export const getCompanyByUserId: TGetCompanyByUserId = async ({ user_id }) => {
+  const company = await db.company.findUnique({
+    where: { user_id },
+  });
+  return company;
+};
+
+type TGetShippingByCompanyId = (props: {
+  company_id: string;
+}) => Promise<TShipping | null>;
+
+export const getShippingByCompanyId: TGetShippingByCompanyId = async ({
+  company_id,
+}) => {
+  const shipping = await db.shipping.findUnique({
+    where: { company_id },
+  });
+  return shipping;
+};
+
+type TGetBillingByCompanyId = (props: {
+  company_id: string;
+}) => Promise<TBilling | null>;
+
+export const getBillingByCompanyId: TGetBillingByCompanyId = async ({
+  company_id,
+}) => {
+  const billing = await db.billing.findUnique({
+    where: { company_id },
+  });
+  return billing;
+};
+
+type TGetCompanyWithAddress = (props: {
+  user_id: string;
+}) => Promise<TCompanyWithAddress | null>;
+
+export const getCompanyWithAddressByUserId: TGetCompanyWithAddress = async ({
+  user_id,
+}) => {
+  const companyWithAddress = await db.company.findUnique({
+    where: { user_id },
+    include: {
+      shipping: true,
+      billing: true,
+    },
+  });
+  return companyWithAddress;
+};
+
+type TGetUserAuthorizationByEmail = (props: {
+  email: TUser['email'];
+}) => Promise<TUserExtendedAuthorization | null>;
+
+export const getUserAuthorizationByEmail: TGetUserAuthorizationByEmail =
+  async ({ email }) => {
+    const userAuthorization = await db.user.findUnique({
+      where: { email },
+      select: {
+        email: true,
+        email_verified_on: true,
+        is_approved: true,
+        role: true,
+        permissions: true,
+      },
+    });
+    return userAuthorization;
+  };
 
 //^ AUTHORIZATION
 type TGetUserAuth = (props: {
