@@ -7,6 +7,7 @@ export async function GET() {
   const session = await getAuthSession();
   try {
     await checkAuthentication();
+
     const data = await getCartWithItemsAndProductVariants({
       user_id: session?.user.id!,
     });
