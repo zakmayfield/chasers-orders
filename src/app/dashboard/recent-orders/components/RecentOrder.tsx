@@ -3,7 +3,7 @@ import OrderAgainButton from './OrderAgainButton';
 import { RecentOrderItems } from './RecentOrderItems';
 import { OrderType } from '@/types/cart';
 import { useCustomQuery } from '@/shared/hooks/custom';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { Heading, SpinLoader } from '@/shared/components/ui';
 import { WarningIcon } from '@/shared/utils/ui';
 

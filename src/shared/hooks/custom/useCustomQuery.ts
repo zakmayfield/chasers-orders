@@ -1,5 +1,10 @@
-import { UseCustomQueryParams } from '@/types/hooks';
-import { useQuery } from '@tanstack/react-query';
+import { QueryFunction, QueryKey, useQuery } from '@tanstack/react-query';
+
+export type UseCustomQueryParams<T> = {
+  queryKey: QueryKey;
+  queryFn: QueryFunction<T>;
+  staleTime?: number;
+};
 
 export const useCustomQuery = <T>({
   queryKey,

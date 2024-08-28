@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { UserData } from '@/types/user';
 import { getUser } from '@/services/queries/getUser';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 
 type DashboardFetchState<T> = T | DashboardQueryError | null;
 type DashboardQueryError = {

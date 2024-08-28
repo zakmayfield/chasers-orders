@@ -1,6 +1,6 @@
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { getFavorites } from '@/services/queries/getFavorites';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 
 export const useGetFavorites = () => {
   const { data, error, isLoading } = useCustomQuery({

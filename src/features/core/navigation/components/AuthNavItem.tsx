@@ -4,7 +4,7 @@ import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useQueryClient } from '@tanstack/react-query';
 import { getFavorites } from '@/services/queries/getFavorites';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { NavItem } from './AuthNavigation';
 
 interface AuthNavItemProps {

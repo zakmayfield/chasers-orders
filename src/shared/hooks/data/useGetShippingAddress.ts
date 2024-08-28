@@ -1,5 +1,5 @@
 import { getShippingAddress } from '@/services/queries/getShippingAddress';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { ShippingData } from '@/types/user';
 

@@ -1,6 +1,6 @@
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { getCart } from '@/services/queries/getCart';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { CartCache } from '@/types/cart';
 
 export const useGetCart = () => {

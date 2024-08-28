@@ -8,7 +8,7 @@ import { useToast } from '@/shared/hooks/utils';
 import { paymentMethodOptions } from '@/shared/utils/constants';
 import { updateCompany } from '@/services/mutations/updateCompany';
 import { CompanyFormData, UserData } from '@/types/user';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { Company } from '@prisma/client';
 import { WarningCircleIcon, XBoldIcon } from '@/shared/utils/ui';
 

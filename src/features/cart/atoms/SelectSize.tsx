@@ -5,7 +5,7 @@ import { updateCartItemSize } from '@/services/mutations/updateCartItemSize';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { Container } from '@/shared/components/ui';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import {
   CartCache,
   CartItem,

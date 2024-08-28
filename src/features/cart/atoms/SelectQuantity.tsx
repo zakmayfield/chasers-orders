@@ -2,7 +2,7 @@ import { FormEvent } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCustomForm, useCustomMutation } from '@/shared/hooks/custom';
 import { quantityResolver } from '@/shared/validators/resolvers';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import {
   CartCache,
   CartItem,

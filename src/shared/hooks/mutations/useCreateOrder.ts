@@ -6,7 +6,7 @@ import {
 import { useCustomMutation } from '../custom';
 import { useToast } from '../utils';
 import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { CartCache, OrderType } from '@/types/cart';
 
 export const useCreateOrder = ({

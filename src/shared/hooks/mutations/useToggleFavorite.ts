@@ -3,7 +3,7 @@ import { useCustomMutation } from '@/shared/hooks/custom';
 import { toggleFavorite } from '@/services/mutations/toggleFavorite';
 import { useToast } from '@/shared/hooks/utils';
 import { useQueryClient } from '@tanstack/react-query';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 
 export const useToggleFavorite = ({
   customSuccessHandling,

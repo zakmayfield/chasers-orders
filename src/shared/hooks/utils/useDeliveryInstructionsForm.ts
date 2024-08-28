@@ -6,7 +6,7 @@ import { DeliveryInstructionsResponse } from '@/types/cart';
 import { DeliveryInstructionsData } from '@/types/user';
 import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
 import { useToast } from './useToast';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 
 export const useDeliveryInstructionsForm = ({
   defaultValues,

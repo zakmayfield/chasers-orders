@@ -1,5 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
-import { UseCustomMutationParams } from '@/types/hooks';
+import { MutationFunction, useMutation } from '@tanstack/react-query';
+
+export type UseCustomMutationParams<T, V> = {
+  mutationFn: MutationFunction<T, V>;
+  handleSuccess?(data: T, variables?: V): void;
+  handleError?(error: Error, variables?: V): void;
+};
 
 export const useCustomMutation = <T, V>({
   mutationFn,

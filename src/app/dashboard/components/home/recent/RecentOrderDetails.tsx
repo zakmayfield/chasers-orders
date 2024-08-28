@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { UserData } from '@/types/user';
 import { useQueryClient } from '@tanstack/react-query';
 import { getRecentOrders } from '@/services/queries/getRecentOrders';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 
 interface RecentOrderDetailsProps {
   userData: UserData;

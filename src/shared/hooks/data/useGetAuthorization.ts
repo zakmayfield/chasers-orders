@@ -1,5 +1,5 @@
 import { getAuthorization } from '@/services/queries/getAuthorization';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomQuery } from '@/shared/hooks/custom';
 
 export const useGetAuthorization = () => {

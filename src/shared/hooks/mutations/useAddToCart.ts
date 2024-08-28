@@ -3,7 +3,7 @@ import { addToCart } from '@/services/mutations/addToCart';
 import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { CartCache, CartItem } from '@/types/cart';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 
 export const useAddToCart = ({
   customSuccessHandling,

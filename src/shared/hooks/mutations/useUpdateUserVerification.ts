@@ -3,7 +3,7 @@ import { useToast } from '../utils';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCustomMutation } from '../custom';
 import { updateUserVerification } from '@/services/mutations/updateUserVerification';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 import { TUserAuthorization } from '@/shared/types/User';
 
 export const useUpdateUserVerification = ({

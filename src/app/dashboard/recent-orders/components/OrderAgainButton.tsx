@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useToast } from '@/shared/hooks/utils';
 import { orderAgain } from '@/services/mutations/orderAgain';
 import { useCustomMutation } from '@/shared/hooks/custom';
-import { QueryKeys } from '@/types/hooks';
+import { QueryKeys } from '@/shared/types/Cache';
 
 interface OrderAgainButtonProps {
   order: OrderType;
