@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useCustomForm, useCustomMutation } from '@/shared/hooks/custom';
-import { deliveryInstructionsResolver } from '@/shared/validators/resolvers';
+import { instructionsResolver } from '@/shared/validators/resolvers';
 import { UseMutateFunction, useQueryClient } from '@tanstack/react-query';
 import { DeliveryInstructionsResponse } from '@/types/cart';
-import { DeliveryInstructionsData } from '@/types/user';
+import { InstructionsFormData } from '@/shared/types/Forms';
 import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
 import { useToast } from './useToast';
 import { QueryKeys } from '@/shared/types/Cache';
@@ -15,7 +15,7 @@ export const useDeliveryInstructionsForm = ({
   mutation?: UseMutateFunction<
     DeliveryInstructionsResponse,
     Error,
-    DeliveryInstructionsData,
+    InstructionsFormData,
     unknown
   >;
 }) => {
@@ -55,7 +55,7 @@ export const useDeliveryInstructionsForm = ({
     methods: { register, handleSubmit, getValues, reset, formState },
   } = useCustomForm({
     defaultValues: { deliveryInstructions: defaultValues },
-    resolver: deliveryInstructionsResolver,
+    resolver: instructionsResolver,
   });
 
   const toggleEdit = () => setIsEdit(!isEdit);

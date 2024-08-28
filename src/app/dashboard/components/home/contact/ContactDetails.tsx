@@ -4,7 +4,8 @@ import { ContactEdit } from './ContactEdit';
 import { DetailBody } from './DetailBody';
 import { contactResolver } from '@/shared/validators/resolvers';
 import { useCustomForm } from '@/shared/hooks/custom';
-import { ContactFormData, UserData } from '@/types/user';
+import { UserData } from '@/types/user';
+import { ContactFormData } from '@/shared/types/Forms';
 
 interface ContactDetailsProps {
   userData: UserData;

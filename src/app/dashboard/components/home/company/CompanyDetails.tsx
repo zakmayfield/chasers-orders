@@ -1,10 +1,11 @@
 'use client';
 import { FC, useState } from 'react';
-import { CompanyFormData, UserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import DetailBody from './DetailBody';
 import { CompanyEdit } from './CompanyEdit';
 import { companyResolver } from '@/shared/validators/resolvers';
 import { useCustomForm } from '@/shared/hooks/custom';
+import { CompanyFormData } from '@/shared/types/Forms';
 
 interface CompanyDetailsProps {
   userData: UserData;

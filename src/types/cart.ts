@@ -10,7 +10,7 @@ import type {
   Order,
   OrderLineItem,
 } from '@prisma/client';
-import { DeliveryInstructionsData } from '@/types/user';
+import { InstructionsFormData } from '@/shared/types/Forms';
 
 export type QuantityData = z.infer<typeof QuantityValidator>;
 
@@ -28,7 +28,7 @@ export type CartWithItems = Cart & {
   items: UnitsOnCart[];
 };
 
-export type DeliveryInstructionsRequest = DeliveryInstructionsData;
+export type DeliveryInstructionsRequest = InstructionsFormData;
 export type DeliveryInstructionsResponse = {
   companyName: string;
   shippingAddress: ShippingAddress;

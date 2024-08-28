@@ -1,13 +1,12 @@
 import { z } from 'zod';
 import { AuthSignInValidator, AuthSignUpValidator } from '../validators/auth';
+import { InstructionsValidator } from '../validators/cart/DeliveryInstructionsValidator';
+import { CompanyValidator } from '../validators/user/CompanyValidator';
 
 // TODO: Convert to T types and rename
 export type SignInFormData = z.infer<typeof AuthSignInValidator>;
 export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;
-
-export type DeliveryInstructionsData = z.infer<
-  typeof DeliveryInstructionsValidator
->;
+export type InstructionsFormData = z.infer<typeof InstructionsValidator>;
 export type CompanyFormData = z.infer<typeof CompanyValidator>;
 type AdjustedContactFormData = z.ZodObject<
   {
@@ -31,3 +30,26 @@ type AdjustedContactFormData = z.ZodObject<
 export type ContactFormData = z.infer<AdjustedContactFormData>;
 
 export type SignUpFormSteps = '1' | '2' | '3' | '4';
+
+interface ISignUpFormFields {
+  [step: string]: Field[];
+}
+
+type Field =
+  | 'email'
+  | 'password'
+  | 'contactName'
+  | 'contactPhoneNumber'
+  | 'companyName'
+  | 'accountPayableEmail'
+  | 'paymentMethod'
+  | 'shippingStreetAddress'
+  | 'shippingUnit'
+  | 'shippingCity'
+  | 'shippingState'
+  | 'shippingPostalCode'
+  | 'billingStreetAddress'
+  | 'billingUnit'
+  | 'billingCity'
+  | 'billingState'
+  | 'billingPostalCode';

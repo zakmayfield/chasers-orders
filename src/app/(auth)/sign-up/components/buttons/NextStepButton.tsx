@@ -1,10 +1,29 @@
 import { FC } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks/utils';
-import { requiredSignUpFormValues } from '@/utils/constants';
 import type { UseFormGetValues } from 'react-hook-form';
-import { SignUpFormData, SignUpFormSteps } from '@/shared/types/Forms';
+import {
+  ISignUpFormFields,
+  SignUpFormData,
+  SignUpFormSteps,
+} from '@/shared/types/Forms';
 import { ArrowRight } from '@/shared/utils/ui';
+
+const requiredSignUpFormValues: ISignUpFormFields = {
+  '1': ['email', 'password'],
+  '2': ['contactName', 'contactPhoneNumber'],
+  '3': ['companyName', 'paymentMethod'],
+  '4': [
+    'shippingStreetAddress',
+    'shippingCity',
+    'shippingState',
+    'shippingPostalCode',
+    'billingStreetAddress',
+    'billingCity',
+    'billingState',
+    'billingPostalCode',
+  ],
+};
 
 interface NextStepProps {
   getValues: UseFormGetValues<SignUpFormData>;

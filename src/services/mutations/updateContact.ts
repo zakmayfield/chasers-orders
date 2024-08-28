@@ -1,4 +1,4 @@
-import { ContactFormData } from '@/types/user';
+import { ContactFormData } from '@/shared/types/Forms';
 import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Contact } from '@prisma/client';
 

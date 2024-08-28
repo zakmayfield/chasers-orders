@@ -4,13 +4,34 @@ import { StepOne, StepTwo, StepThree, StepFour } from './steps';
 import { SignUpFormData, SignUpFormSteps } from '@/shared/types/Forms';
 import { handleSignUp } from '@/shared/utils/helpers';
 import { useCustomForm } from '@/shared/hooks/custom';
-import { defaultSignUpFormValues } from '@/utils/constants';
 import { signUpResolver } from '@/shared/validators/resolvers';
 import {
   FieldErrors,
   UseFormGetValues,
   UseFormRegister,
 } from 'react-hook-form';
+
+export const defaultSignUpFormValues = {
+  email: '',
+  password: '',
+  contactName: '',
+  contactPosition: '',
+  contactPhoneNumber: '',
+  companyName: '',
+  accountPayableEmail: '',
+  paymentMethod: '',
+  shippingStreetAddress: '',
+  shippingUnit: '',
+  shippingCity: '',
+  shippingState: '',
+  shippingPostalCode: '',
+  deliveryInstructions: '',
+  billingStreetAddress: '',
+  billingUnit: '',
+  billingCity: '',
+  billingState: '',
+  billingPostalCode: '',
+};
 
 export interface StepProps {
   register: UseFormRegister<SignUpFormData>;

@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-import { Key } from '@/utils/constants';
+import { Field } from '@/shared/types/Forms';
 import { SignUpFormData } from '@/shared/types/Forms';
 
 type UseSyncBillingAddressProps = {
@@ -20,7 +20,7 @@ export const useSyncBillingAddress = ({
 
     setIsChecked(checked);
 
-    const fields: { shipping: string; billing: Key }[] = [
+    const fields: { shipping: string; billing: Field }[] = [
       {
         shipping: formValues.shippingStreetAddress,
         billing: 'billingStreetAddress',

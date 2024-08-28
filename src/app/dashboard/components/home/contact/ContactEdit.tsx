@@ -6,10 +6,11 @@ import { ContactValidator } from '@/shared/validators/user/ContactValidator';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { useToast } from '@/shared/hooks/utils';
 import { updateContact } from '@/services/mutations/updateContact';
-import { ContactFormData, UserData } from '@/types/user';
+import { UserData } from '@/types/user';
 import { QueryKeys } from '@/shared/types/Cache';
 import { Contact } from '@prisma/client';
 import { WarningCircleIcon, XBoldIcon } from '@/shared/utils/ui';
+import { ContactFormData } from '@/shared/types/Forms';
 
 interface ContactEditProps {
   userData: UserData;

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const DeliveryInstructionsValidator = z
+export const InstructionsValidator = z
   .object({
     deliveryInstructions: z
       .string()
