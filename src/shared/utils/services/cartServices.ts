@@ -2,7 +2,6 @@ import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints } from '@/shared/types/API';
 import {
   TCartItem,
-  TCartItemWithProductVariant,
   TCartWithItemsAndProductVariants,
 } from '@/shared/types/Cart';
 

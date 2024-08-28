@@ -1,6 +1,7 @@
 export enum Endpoints {
-  products = '/products',
   cart = '/cart',
+  user = '/user',
+  products = '/products',
 }
 
 export type TBatchPayload = {
