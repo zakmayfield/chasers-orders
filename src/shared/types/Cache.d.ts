@@ -1,5 +1,7 @@
 export enum QueryKeys {
   CART = 'cart',
+  CART_ITEM = 'cart-item',
+  CART_ITEMS = 'cart-items',
   DASHBOARD = 'dashboard',
   FAVORITES = 'favorites',
   ORDER = 'order',
