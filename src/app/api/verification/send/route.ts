@@ -1,6 +1,6 @@
 import { db } from '@/lib/prisma';
 import { TransporterResponse, sendEmail } from '@/shared/utils/email/sendEmail';
-import { SendVerificationEmailResponse } from '@/types/email';
+import { TSendVerificationEmailResponse } from '@/shared/types/API';
 import { authenticateSession } from '@/shared/utils/api/authenticateSession';
 
 async function handler() {
@@ -32,7 +32,7 @@ async function handler() {
       );
     }
 
-    const verificationEmailResponse: SendVerificationEmailResponse = {
+    const verificationEmailResponse: TSendVerificationEmailResponse = {
       accepted: !!sendEmailResponse.accepted,
       transporterMessageId: sendEmailResponse.messageId,
       responseMessage: `Verification email successfully sent`,

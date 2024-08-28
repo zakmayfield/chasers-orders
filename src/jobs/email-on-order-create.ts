@@ -1,7 +1,7 @@
 import { eventTrigger } from '@trigger.dev/sdk';
 import { client } from '@/lib/trigger';
 import { sendOrderEmail } from '@/utils/email';
-import { SendOrderEmailPayload } from '@/types/email';
+import { SendOrderEmailPayload } from '@/utils/email';
 
 client.defineJob({
   id: 'send-order-confirmation-email',

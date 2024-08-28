@@ -2,6 +2,12 @@ export type TBatchPayload = {
   count: number;
 };
 
+export type TSendVerificationEmailResponse = {
+  accepted: boolean;
+  transporterMessageId: string;
+  responseMessage: string;
+};
+
 export type TUpdateUserVerificationRequest = {
   token?: string;
 };

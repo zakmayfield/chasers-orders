@@ -1,6 +1,18 @@
 import transporter from '@/lib/nodemailer';
 import { GMAIL_USERNAME } from '@/shared/utils/constants';
-import { SendOrderEmailPayload } from '@/types/email';
+
+export type SendOrderEmailPayload = {
+  order: Order & {
+    lineItems: OrderLineItem[];
+  };
+  userData: {
+    id: string;
+    email: string;
+    company: {
+      name: string;
+    };
+  };
+};
 
 export const sendOrderEmail = async (payload: SendOrderEmailPayload) => {
   const mailOptions = orderEmailOptions(payload);

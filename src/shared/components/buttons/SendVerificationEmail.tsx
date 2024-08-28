@@ -4,7 +4,7 @@ import { FC } from 'react';
 import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation } from '@/shared/hooks/custom';
 import { sendVerificationEmail } from '@/services/queries/sendVerificationEmail';
-import { SendVerificationEmailResponse } from '@/types/email';
+import { TSendVerificationEmailResponse } from '@/shared/types/API';
 
 interface SendVerificationEmailProps {
   className?: string;
@@ -15,7 +15,7 @@ export const SendVerificationEmail: FC<SendVerificationEmailProps> = ({
 }) => {
   const { notify } = useToast();
   const { mutate: sendEmail } = useCustomMutation<
-    SendVerificationEmailResponse,
+    TSendVerificationEmailResponse,
     void
   >({
     mutationFn: sendVerificationEmail,

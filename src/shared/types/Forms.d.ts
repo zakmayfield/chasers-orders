@@ -3,7 +3,6 @@ import { AuthSignInValidator, AuthSignUpValidator } from '../validators/auth';
 import { InstructionsValidator } from '../validators/cart/DeliveryInstructionsValidator';
 import { CompanyValidator } from '../validators/user/CompanyValidator';
 
-// TODO: Convert to T types and rename
 export type SignInFormData = z.infer<typeof AuthSignInValidator>;
 export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;
 export type InstructionsFormData = z.infer<typeof InstructionsValidator>;

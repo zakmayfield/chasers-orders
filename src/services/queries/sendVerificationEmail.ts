@@ -1,8 +1,8 @@
-import { SendVerificationEmailResponse } from '@/types/email';
+import { TSendVerificationEmailResponse } from '@/shared/types/API';
 import { fetchHandler } from '@/shared/utils/api/fetch';
 
 export const sendVerificationEmail =
-  async (): Promise<SendVerificationEmailResponse> =>
+  async (): Promise<TSendVerificationEmailResponse> =>
     await fetchHandler({
       route: '/verification/send',
     });
