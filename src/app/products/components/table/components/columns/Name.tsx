@@ -1,7 +1,8 @@
 import { HeartDuotoneIcon, HeartOutlineIcon } from '@/shared/utils/ui';
 import { useToggleFavorite } from '@/shared/hooks/mutations';
 import { useGetFavorites } from '@/shared/hooks/data';
-import { NameColumnInfo, ToggleFavoriteAction } from '@/types/products';
+import { ToggleFavoriteAction } from '@/types/products';
+import { NameColumnInfo } from '@/shared/types/Product';
 
 export const NameColumn = ({
   info,

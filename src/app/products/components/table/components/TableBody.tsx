@@ -1,5 +1,5 @@
 import { flexRender } from '@tanstack/react-table';
-import { TableRow } from '@/types/products';
+import { TableRow } from '@/shared/types/Product';
 
 export const TableBody = ({ row }: { row: TableRow }) => {
   return (

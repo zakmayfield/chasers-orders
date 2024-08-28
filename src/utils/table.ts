@@ -6,14 +6,14 @@ import {
   getPaginationRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { ProductWithUnits } from '@/types/products';
+import { TProductWithVariants } from '@/shared/types/Product';
 
-export const getColumnHelper = () => createColumnHelper<ProductWithUnits>();
+export const getColumnHelper = () => createColumnHelper<TProductWithVariants>();
 
 export const useTableConstructor = (
-  data: ProductWithUnits[] | undefined,
+  data: TProductWithVariants[] | undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  columns: ColumnDef<ProductWithUnits, any>[]
+  columns: ColumnDef<TProductWithVariants, any>[]
 ) => {
   const options = {
     enableFilters: true,

@@ -1,14 +1,14 @@
 'use client';
-import { useGetProducts } from '@/shared/hooks/data';
 import { useTableConfig } from './config';
 import { ReactTable } from './components';
 import { TableLoading } from './components/TableLoading';
 import { Pagination } from './components/pagination';
 import { TableProvider } from '@/lib/providers/TableProvider';
+import { useGetAllProductsWithVariants } from '@/shared/hooks/data/products/useProducts';
 
 export const Table = () => {
-  const { data: products, isLoading } = useGetProducts();
-  const { tableConfig } = useTableConfig(products);
+  const { data, isLoading } = useGetAllProductsWithVariants();
+  const { tableConfig } = useTableConfig(data);
 
   return (
     <div className='mx-12'>

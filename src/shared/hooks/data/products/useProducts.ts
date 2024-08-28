@@ -12,6 +12,16 @@ export const useGetAllProducts = () => {
   return { data, isLoading, error };
 };
 
+export const useGetAllProductsWithVariants = () => {
+  const { data, isLoading, error } = useCustomQuery({
+    queryKey: [QueryKeys.PRODUCTS],
+    queryFn: productServices.getAllProductsWithVariants,
+    staleTime: Infinity,
+  });
+
+  return { data, isLoading, error };
+};
+
 export const useGetProductById = ({ product_id }: { product_id: string }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.PRODUCT, product_id],

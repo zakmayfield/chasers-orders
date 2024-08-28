@@ -2,7 +2,7 @@
 import { flexRender } from '@tanstack/react-table';
 import { Filter } from './filter';
 import { useTableContext } from '@/lib/providers/TableProvider';
-import { TableHeadersGroup } from '@/types/products';
+import { TableHeadersGroup } from '@/shared/types/Product';
 
 export const TableHeaders = ({ group }: { group: TableHeadersGroup }) => {
   const { tableConfig } = useTableContext();

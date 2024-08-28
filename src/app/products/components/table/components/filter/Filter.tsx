@@ -1,5 +1,5 @@
 import { Column } from '@tanstack/react-table';
-import { TableConfig } from '@/types/products';
+import { TableConfig } from '@/shared/types/Product';
 import { categories } from '@/shared/utils/constants';
 
 export const Filter = ({
@@ -14,9 +14,16 @@ export const Filter = ({
     .getPreFilteredRowModel()
     .flatRows[0]?.getValue(column.id);
 
+  console.log({
+    configData: tableConfig
+      .getPreFilteredRowModel()
+      .flatRows[0].getValue(column.id),
+  });
+
   const columnFilterValue = column.getFilterValue();
 
-  return firstValue === 'BLENDS' ? (
+  // TODO: rework this logic
+  return firstValue === 'blends' ? (
     <div className='w-full'>
       <select
         name='category'

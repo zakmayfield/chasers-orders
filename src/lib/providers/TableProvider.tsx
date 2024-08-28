@@ -1,5 +1,5 @@
 'use client';
-import { TableConfig } from '@/types/products';
+import { TableConfig } from '@/shared/types/Product';
 import { ReactNode, createContext, useContext } from 'react';
 
 type TableContextType = {

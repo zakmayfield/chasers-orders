@@ -1,7 +1,7 @@
 import { useAddToCart } from '@/shared/hooks/mutations';
 import { CartIcon } from '@/shared/utils/ui';
 
-import { UnitsColumnInfo } from '@/types/products';
+import { UnitsColumnInfo } from '@/shared/types/Product';
 
 export const UnitsColumn = ({ info }: { info: UnitsColumnInfo }) => {
   const product = info.row.original;

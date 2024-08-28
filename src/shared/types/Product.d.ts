@@ -16,3 +16,18 @@ export type TProductVariantWithProduct = TProductVariant & {
 export type TCategoryWithProducts = TCategory & {
   products: TProduct[];
 };
+
+//^ TABLE
+export type TableConfig = Table<TProductWithVariants>;
+
+export interface TableConfigParams {
+  tableConfig: TableConfig;
+}
+
+export type TableHeadersGroup = HeaderGroup<TProductWithVariants>;
+export type TableRow = Row<TProductWithVariants>;
+
+export type TableRowInfo<T> = CellContext<TProductWithVariants, T>;
+export type NameColumnInfo = TableRowInfo<string>;
+export type CategoryColumnInfo = TableRowInfo<string>;
+export type UnitsColumnInfo = TableRowInfo<Unit[]>;

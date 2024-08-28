@@ -15,6 +15,14 @@ export const getAllProducts: TGetAllProducts = async () => {
   });
   return products;
 };
+type TGetAllProductsWithVariants = () => Promise<TProductWithVariants[]>;
+export const getAllProductsWithVariants: TGetAllProductsWithVariants =
+  async () => {
+    const products = await db.product.findMany({
+      include: { category: true, variants: true },
+    });
+    return products;
+  };
 
 type TGetProductById = (props: {
   product_id: string;
