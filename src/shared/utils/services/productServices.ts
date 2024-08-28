@@ -1,15 +1,11 @@
 import { fetchHandler } from '@/shared/utils/api/fetch';
-import {
-  TProductVariant,
-  TProductWithCategory,
-  TProductWithVariants,
-} from '@/shared/types/Product';
+import { TProductVariant, TProductWithCategory } from '@/shared/types/Product';
 import { Endpoints } from '@/shared/types/API';
 
 const endpoint = Endpoints.products;
 
 export const productServices = {
-  getAllProducts: async (): Promise<TProductWithVariants[]> =>
+  getAllProducts: async (): Promise<TProductWithCategory[]> =>
     await fetchHandler({
       route: endpoint,
     }),
