@@ -1,3 +1,8 @@
+export enum Endpoints {
+  products = '/products',
+  cart = '/cart',
+}
+
 export type TBatchPayload = {
   count: number;
 };
