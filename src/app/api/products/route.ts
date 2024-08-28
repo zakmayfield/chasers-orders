@@ -1,37 +1,13 @@
-import { getAuthSession } from '@/lib/auth/auth.options';
-import { db } from '@/lib/prisma';
-import { ProductWithUnits } from '@/types/products';
+import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
+import { errorResponse } from '@/shared/utils/api/errorResponse';
+import { getAllProducts } from '@/shared/utils/db/product';
 
 export async function GET() {
-  const session = await getAuthSession();
-
-  if (!session?.user) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
   try {
-    const products: ProductWithUnits[] = await db.product
-      .findMany({
-        select: {
-          id: true,
-          name: true,
-          category: true,
-          units: true,
-        },
-      })
-      .then((data) => {
-        const formattedProducts: ProductWithUnits[] = data.map((item) => ({
-          ...item,
-          name: item.name.replace(/-/g, ' '),
-        }));
-
-        return formattedProducts;
-      });
-
-    return new Response(JSON.stringify(products), { status: 200 });
+    await checkAuthentication();
+    const data = await getAllProducts();
+    return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
-    if (error instanceof Error) {
-      return new Response(error.message, { status: 500 });
-    }
+    return errorResponse(error);
   }
 }
