@@ -7,5 +7,5 @@ export const checkAuthentication = async () => {
     throw new Error('Unauthenticated: Please log in to continue');
   }
 
-  return null;
+  return { user_id: session.user.id, email: session.user.email };
 };

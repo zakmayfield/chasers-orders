@@ -5,7 +5,7 @@ import { cartServices } from '@/shared/utils/services/cartServices';
 export const useGetCart = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.CART],
-    queryFn: async () => await cartServices.getCartWithItemsAndVariants(),
+    queryFn: cartServices.getCartWithItemsAndVariants,
     staleTime: Infinity,
   });
   return { data, isLoading, error };
@@ -14,7 +14,7 @@ export const useGetCart = () => {
 export const useGetCartItems = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.CART_ITEMS],
-    queryFn: async () => await cartServices.getCartItems(),
+    queryFn: cartServices.getCartItems,
     staleTime: Infinity,
   });
   return { data, isLoading, error };
