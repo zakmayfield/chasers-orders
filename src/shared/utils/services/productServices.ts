@@ -41,7 +41,7 @@ export const productServices = {
   }): Promise<TProductVariant | TProductVariantWithProduct> =>
     await fetchHandler({
       route:
-        product +
+        products +
         `/variant/${product_variant_id}` +
         `${hasProduct ? '?product=true' : ''}`,
     }),
