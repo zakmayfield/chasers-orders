@@ -1,6 +1,9 @@
 export enum Endpoints {
   cart = '/cart',
   user = '/user',
+  order = '/order',
+  orders = '/orders',
+  product = '/product',
   products = '/products',
 }
 

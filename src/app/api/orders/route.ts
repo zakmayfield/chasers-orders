@@ -1,28 +1,13 @@
-import { getAuthSession } from '@/lib/auth/auth.options';
-import { db } from '@/lib/prisma';
+import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
+import { errorResponse } from '@/shared/utils/api/errorResponse';
+import { getOrdersByUserId } from '@/shared/utils/db/order';
 
 export async function GET() {
-  const session = await getAuthSession();
-
-  if (!session?.user) {
-    return new Response('Unauthorized', { status: 401 });
-  }
-
   try {
-    const orders = await db.order.findMany({
-      where: { userId: session.user.id },
-      orderBy: {
-        createdAt: 'desc',
-      },
-      include: {
-        lineItems: true,
-      },
-    });
-
-    return new Response(JSON.stringify(orders), { status: 200 });
+    const { user_id } = await checkAuthentication();
+    const data = await getOrdersByUserId({ user_id });
+    return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
-    if (error instanceof Error) {
-      return new Response(error.message, { status: 500 });
-    }
+    return errorResponse(error);
   }
 }
