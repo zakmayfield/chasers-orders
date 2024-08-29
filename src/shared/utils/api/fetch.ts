@@ -21,9 +21,15 @@ export function getUrl({ route, options }: FetchService) {
 export const fetchHandler = async ({ route, options }: FetchService) => {
   try {
     const url = getUrl({ route, options });
+    const optionsConfig: RequestInit = {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      ...options?.config,
+    };
 
     const response = await fetch(url, {
-      ...options?.config,
+      ...optionsConfig,
     });
 
     if (!response.ok) {

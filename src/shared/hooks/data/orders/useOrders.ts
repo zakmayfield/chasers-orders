@@ -1,4 +1,4 @@
-import { useCustomQuery } from '@/shared/hooks/custom';
+import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { QueryKeys } from '@/shared/types/Cache';
 import { orderServices } from '@/shared/utils/services/orderServices';
 
@@ -25,4 +25,12 @@ export const useGetOrder = ({
     staleTime: Infinity,
   });
   return { data, isLoading, error };
+};
+
+export const useCreateOrder = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: orderServices.createOrder,
+  });
+
+  return { mutate, data, isLoading, error };
 };

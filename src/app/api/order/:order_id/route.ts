@@ -14,8 +14,11 @@ export async function GET(req: NextRequest) {
       req.nextUrl.searchParams,
       'order_id'
     );
-    const line_items = getSearchParams(req.nextUrl.searchParams, 'line-items');
-    const args = { order_id, line_items: !!line_items };
+    const hasLineItems = getSearchParams(
+      req.nextUrl.searchParams,
+      'line-items'
+    );
+    const args = { order_id, line_items: !!hasLineItems };
 
     const data = await getOrderById({ ...args });
     return new Response(JSON.stringify(data), { status: 200 });

@@ -1,6 +1,10 @@
 import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomQuery } from '../../custom';
 import { productServices } from '@/shared/utils/services/productServices';
+import {
+  TProductWithCategory,
+  TProductWithVariants,
+} from '@/shared/types/Product';
 
 export const useGetProducts = ({ hasVariants }: { hasVariants?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
@@ -11,7 +15,13 @@ export const useGetProducts = ({ hasVariants }: { hasVariants?: boolean }) => {
     staleTime: Infinity,
   });
 
-  return { data, isLoading, error };
+  // TODO: do this all over
+  const dataMap = {
+    withVariants: (hasVariants && (data as TProductWithVariants[])) || [],
+    withoutVariants: (!hasVariants && (data as TProductWithCategory[])) || [],
+  };
+
+  return { data: dataMap, isLoading, error };
 };
 
 export const useGetProduct = ({

@@ -13,7 +13,7 @@ import { NextRequest } from 'next/server';
 async function handler(req: NextRequest) {
   try {
     const { cart_id } = await checkAuthentication();
-    let body = await resolveRequestBody(req);
+    let body = await resolveRequestBody<string>(req);
 
     const args = {
       cart_id,

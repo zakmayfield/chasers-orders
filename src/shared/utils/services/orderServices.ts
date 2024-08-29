@@ -1,6 +1,6 @@
 import { Endpoints } from '@/shared/types/API';
 import { fetchHandler } from '../api/fetch';
-import { TOrder, TOrderWithLineItems } from '@/shared/types/Order';
+import { TLineItem, TOrder, TOrderWithLineItems } from '@/shared/types/Order';
 
 const order = Endpoints.order;
 const orders = Endpoints.orders;
@@ -25,5 +25,20 @@ export const orderServices = {
     await fetchHandler({
       route:
         order + `/${order_id}` + `${hasLineItems ? '?line-items=true' : ''}`,
+    }),
+
+  createOrder: async ({
+    line_items,
+  }: {
+    line_items: TLineItem[];
+  }): Promise<TOrder | TOrderWithLineItems> =>
+    await fetchHandler({
+      route: orders,
+      options: {
+        config: {
+          method: 'POST',
+          body: JSON.stringify(line_items),
+        },
+      },
     }),
 };

@@ -8,7 +8,7 @@ import {
 import { useGetFavorites } from '@/shared/hooks/data';
 import { TProductWithVariants } from '@/shared/types/Product';
 
-export const useTableConfig = (data: TProductWithVariants[] | undefined) => {
+export const useTableConfig = (data: TProductWithVariants[]) => {
   // const { data: favorites } = useGetFavorites();
   const columnHelper = getColumnHelper();
 
