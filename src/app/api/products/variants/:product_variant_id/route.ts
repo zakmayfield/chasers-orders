@@ -5,12 +5,11 @@ import { getProductVariantById } from '@/shared/utils/db/product';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
-  const product_variant_id = getSearchParams(
-    req.nextUrl.searchParams,
-    'product_variant_id'
-  );
-
   try {
+    const product_variant_id = getSearchParams(
+      req.nextUrl.searchParams,
+      'product_variant_id'
+    );
     await checkAuthentication();
     const data = await getProductVariantById({ product_variant_id });
     return new Response(JSON.stringify(data), { status: 200 });

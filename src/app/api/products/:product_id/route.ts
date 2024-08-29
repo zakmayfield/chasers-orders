@@ -5,9 +5,8 @@ import { getProductById } from '@/shared/utils/db/product';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
-  const product_id = getSearchParams(req.nextUrl.searchParams, 'product_id');
-
   try {
+    const product_id = getSearchParams(req.nextUrl.searchParams, 'product_id');
     await checkAuthentication();
     const data = await getProductById({ product_id });
     return new Response(JSON.stringify(data), { status: 200 });
