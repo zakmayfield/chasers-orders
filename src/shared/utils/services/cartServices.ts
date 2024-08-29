@@ -18,6 +18,24 @@ export const cartServices = {
       route: endpoint + `/items`,
     }),
 
+  createCartItem: async ({
+    product_variant_id,
+  }: {
+    product_variant_id: string;
+  }): Promise<TCartItem> =>
+    await fetchHandler({
+      route: endpoint + `/items`,
+      options: {
+        config: {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(product_variant_id),
+        },
+      },
+    }),
+
   getCartItem: async ({
     product_variant_id,
   }: {

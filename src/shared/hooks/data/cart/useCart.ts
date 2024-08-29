@@ -1,5 +1,5 @@
 import { QueryKeys } from '@/shared/types/Cache';
-import { useCustomQuery } from '../../custom';
+import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { cartServices } from '@/shared/utils/services/cartServices';
 
 export const useGetCart = () => {
@@ -18,6 +18,13 @@ export const useGetCartItems = () => {
     staleTime: Infinity,
   });
   return { data, isLoading, error };
+};
+
+export const useCreateCartItem = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: cartServices.createCartItem,
+  });
+  return { mutate, data, isLoading, error };
 };
 
 export const useGetCartItem = ({
