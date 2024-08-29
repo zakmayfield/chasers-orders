@@ -2,11 +2,7 @@ import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomQuery } from '../../custom';
 import { productServices } from '@/shared/utils/services/productServices';
 
-export const useGetAllProducts = ({
-  hasVariants,
-}: {
-  hasVariants?: boolean;
-}) => {
+export const useGetProducts = ({ hasVariants }: { hasVariants?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [
       hasVariants ? QueryKeys.PRODUCTS_WITH_VARIANTS : QueryKeys.PRODUCTS,

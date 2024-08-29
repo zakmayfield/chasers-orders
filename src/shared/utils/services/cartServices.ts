@@ -29,7 +29,7 @@ export const cartServices = {
 
   createCart: async (): Promise<TCartItem> =>
     await fetchHandler({
-      route: endpoint + `/items`,
+      route: endpoint,
       options: {
         config: {
           method: 'POST',
