@@ -23,51 +23,39 @@ import { TLineItem, TOrder, TOrderWithLineItems } from '@/shared/types/Order';
 // };
 
 //^ GET
-type TGetOrdersByUserId = (props: { user_id: string }) => Promise<TOrder[]>;
-export const getOrdersByUserId: TGetOrdersByUserId = async ({ user_id }) => {
+type TGetOrdersByUserId = (props: {
+  user_id: string;
+  line_items?: boolean;
+}) => Promise<TOrder[] | TOrderWithLineItems[]>;
+export const getOrdersByUserId: TGetOrdersByUserId = async ({
+  user_id,
+  line_items = false,
+}) => {
   const orders = await db.order.findMany({
     where: { user_id },
     orderBy: {
       created_at: 'desc',
     },
+    include: {
+      line_items,
+    },
   });
   return orders;
 };
 
-type TGetOrderById = (props: { order_id: string }) => Promise<TOrder | null>;
-export const getOrderById: TGetOrderById = async ({ order_id }) => {
+type TGetOrderById = (props: {
+  order_id: string;
+  line_items?: boolean;
+}) => Promise<TOrder | TOrderWithLineItems | null>;
+export const getOrderById: TGetOrderById = async ({
+  order_id,
+  line_items = false,
+}) => {
   const order = await db.order.findUnique({
     where: { order_id },
+    include: {
+      line_items,
+    },
   });
   return order;
 };
-
-// type TGetOrdersWithLineItemsByUserId = (props: {
-//   user_id: string;
-//   take?: number;
-// }) => Promise<TOrderWithLineItems[]>;
-// export const getOrdersWithLineItemsByUserId: TGetOrdersWithLineItemsByUserId =
-//   async ({ user_id, take }) => {
-//     const orders = await db.order.findMany({
-//       take,
-//       where: { user_id },
-//       orderBy: {
-//         created_at: 'desc',
-//       },
-//       include: { line_items: true },
-//     });
-//     return orders;
-//   };
-
-// type TGetOrderWithLineItemsById = (props: {
-//   order_id: string;
-// }) => Promise<TOrderWithLineItems | null>;
-// export const getOrderWithLineItemsById: TGetOrderWithLineItemsById = async ({
-//   order_id,
-// }) => {
-//   const order = await db.order.findUnique({
-//     where: { order_id },
-//     include: { line_items: true },
-//   });
-//   return order;
-// };
