@@ -5,7 +5,7 @@ import { cartServices } from '@/shared/utils/services/cartServices';
 export const useGetCart = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.CART],
-    queryFn: cartServices.getCartWithItemsAndVariants,
+    queryFn: cartServices.getCart,
     staleTime: Infinity,
   });
   return { data, isLoading, error };

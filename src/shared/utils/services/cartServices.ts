@@ -8,15 +8,14 @@ import {
 const endpoint = Endpoints.cart;
 
 export const cartServices = {
-  getCartWithItemsAndVariants:
-    async (): Promise<TCartWithItemsAndProductVariants> =>
-      await fetchHandler({
-        route: endpoint,
-      }),
+  getCart: async (): Promise<TCartWithItemsAndProductVariants> =>
+    await fetchHandler({
+      route: endpoint,
+    }),
 
   getCartItems: async (): Promise<TCartItem[]> =>
     await fetchHandler({
-      route: `${endpoint}/items`,
+      route: endpoint + `/items`,
     }),
 
   getCartItem: async ({
@@ -25,6 +24,6 @@ export const cartServices = {
     product_variant_id: string;
   }): Promise<TCartItem> =>
     await fetchHandler({
-      route: `${endpoint}/items/${product_variant_id}`,
+      route: endpoint + `/item/${product_variant_id}`,
     }),
 };
