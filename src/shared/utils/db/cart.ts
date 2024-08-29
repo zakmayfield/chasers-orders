@@ -4,7 +4,6 @@ import { TBatchPayload } from '@/shared/types/API';
 import {
   TCart,
   TCartItem,
-  TCartItemWithProductVariant,
   TCartWithItemsAndProductVariants,
 } from '@/shared/types/Cart';
 

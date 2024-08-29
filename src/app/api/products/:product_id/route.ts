@@ -1,12 +1,15 @@
 import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
 import { errorResponse } from '@/shared/utils/api/errorResponse';
-import { getSearchParams } from '@/shared/utils/api/getSearchParams';
+import { getSearchParamsOrThrow } from '@/shared/utils/api/getSearchParams';
 import { getProductById } from '@/shared/utils/db/product';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
   try {
-    const product_id = getSearchParams(req.nextUrl.searchParams, 'product_id');
+    const product_id = getSearchParamsOrThrow(
+      req.nextUrl.searchParams,
+      'product_id'
+    );
     await checkAuthentication();
     const data = await getProductById({ product_id });
     return new Response(JSON.stringify(data), { status: 200 });

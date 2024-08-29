@@ -20,13 +20,6 @@ export const useGetCartItems = () => {
   return { data, isLoading, error };
 };
 
-export const useCreateCartItem = () => {
-  const { mutate, data, isLoading, error } = useCustomMutation({
-    mutationFn: cartServices.createCartItem,
-  });
-  return { mutate, data, isLoading, error };
-};
-
 export const useGetCartItem = ({
   product_variant_id,
 }: {
@@ -38,4 +31,32 @@ export const useGetCartItem = ({
     staleTime: Infinity,
   });
   return { data, isLoading, error };
+};
+
+export const useCreateCart = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: cartServices.createCartItem,
+  });
+  return { mutate, data, isLoading, error };
+};
+
+export const useCreateCartItem = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: cartServices.createCartItem,
+  });
+  return { mutate, data, isLoading, error };
+};
+
+export const useDeleteCartItem = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: cartServices.deleteCartItem,
+  });
+  return { mutate, data, isLoading, error };
+};
+
+export const useEmptyCart = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: cartServices.emptyCart,
+  });
+  return { mutate, data, isLoading, error };
 };
