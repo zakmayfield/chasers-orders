@@ -8,88 +8,49 @@ import {
   TProductWithVariants,
 } from '@/shared/types/Product';
 
-type TGetAllProducts = () => Promise<TProductWithCategory[]>;
-export const getAllProducts: TGetAllProducts = async () => {
+type TGetAllProducts = (props: {
+  variants?: boolean;
+}) => Promise<TProductWithCategory[] | TProductWithVariants[]>;
+export const getAllProducts: TGetAllProducts = async ({ variants }) => {
   const products = await db.product.findMany({
-    include: { category: true },
+    include: { category: true, variants },
   });
   return products;
 };
-type TGetAllProductsWithVariants = () => Promise<TProductWithVariants[]>;
-export const getAllProductsWithVariants: TGetAllProductsWithVariants =
-  async () => {
-    const products = await db.product.findMany({
-      include: { category: true, variants: true },
-    });
-    return products;
-  };
 
 type TGetProductById = (props: {
   product_id: string;
-}) => Promise<TProductWithCategory | null>;
-export const getProductById: TGetProductById = async ({ product_id }) => {
+  hasVariants?: boolean;
+}) => Promise<TProductWithCategory | TProductWithVariants | null>;
+export const getProductById: TGetProductById = async ({
+  product_id,
+  hasVariants,
+}) => {
   const product = await db.product.findUnique({
     where: { product_id },
-    include: { category: true },
+    include: { category: true, variants: hasVariants },
   });
   return product;
 };
 
-type TGetProductVariants = (props: {
-  product_id: string;
-}) => Promise<TProductVariant[]>;
-export const getProductVariants: TGetProductVariants = async ({
-  product_id,
-}) => {
-  const productVariants = await db.productVariant.findMany({
-    where: { product_id },
-  });
-  return productVariants;
-};
-
 type TGetProductVariantById = (props: {
   product_variant_id: string;
-}) => Promise<TProductVariant | null>;
+  hasProduct?: boolean;
+}) => Promise<TProductVariant | TProductVariantWithProduct | null>;
 export const getProductVariantById: TGetProductVariantById = async ({
   product_variant_id,
+  hasProduct = false,
 }) => {
   const productVariant = await db.productVariant.findUnique({
     where: { product_variant_id },
+    include: { product: hasProduct },
   });
   return productVariant;
 };
 
-type TGetProductWithVariants = (props: {
-  product_id: string;
-}) => Promise<TProductWithVariants | null>;
-
-export const getProductWithVariants: TGetProductWithVariants = async ({
-  product_id,
-}) => {
-  const productWithVariants = await db.product.findUnique({
-    where: { product_id },
-    include: { category: true, variants: true },
-  });
-  return productWithVariants;
-};
-
-type TGetProductVariantWithProduct = (props: {
-  product_variant_id: string;
-}) => Promise<TProductVariantWithProduct | null>;
-
-export const getProductVariantWithProduct: TGetProductVariantWithProduct =
-  async ({ product_variant_id }) => {
-    const productVariantWithProduct = await db.productVariant.findUnique({
-      where: { product_variant_id },
-      include: { product: true },
-    });
-    return productVariantWithProduct;
-  };
-
 type TGetFirstVariantId = (props: {
   product_id: string;
 }) => Promise<string | undefined>;
-
 export const getFirstVariantId: TGetFirstVariantId = async ({ product_id }) => {
   const product = await db.product.findUnique({
     where: { product_id },
@@ -102,7 +63,6 @@ export const getFirstVariantId: TGetFirstVariantId = async ({ product_id }) => {
 type TGetCategoryWithProducts = (props: {
   category_id: string;
 }) => Promise<TCategoryWithProducts | null>;
-
 export const getCategoryWithProducts: TGetCategoryWithProducts = async ({
   category_id,
 }) => {

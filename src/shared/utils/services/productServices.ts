@@ -1,48 +1,48 @@
 import { fetchHandler } from '@/shared/utils/api/fetch';
 import {
   TProductVariant,
+  TProductVariantWithProduct,
   TProductWithCategory,
   TProductWithVariants,
 } from '@/shared/types/Product';
 import { Endpoints } from '@/shared/types/API';
 
-const endpoint = Endpoints.products;
+const product = Endpoints.product;
+const products = Endpoints.products;
 
 export const productServices = {
-  getAllProducts: async (): Promise<TProductWithCategory[]> =>
+  getProducts: async ({
+    hasVariants,
+  }: {
+    hasVariants?: boolean;
+  }): Promise<TProductWithCategory[] | TProductWithVariants[]> =>
     await fetchHandler({
-      route: endpoint,
+      route: products + `${hasVariants ? '?variants=true' : ''}`,
     }),
 
-  getAllProductsWithVariants: async (): Promise<TProductWithVariants[]> =>
-    await fetchHandler({
-      route: `${endpoint}/variants`,
-    }),
-
-  getProductById: async ({
+  getProduct: async ({
     product_id,
+    hasVariants,
   }: {
     product_id: string;
-  }): Promise<TProductWithCategory> =>
+    hasVariants?: boolean;
+  }): Promise<TProductWithCategory | TProductWithVariants> =>
     await fetchHandler({
-      route: `${endpoint}/${product_id}`,
+      route:
+        product + `/${product_id}` + `${hasVariants ? '?variants=true' : ''}`,
     }),
 
-  getProductVariants: async ({
-    product_id,
-  }: {
-    product_id: string;
-  }): Promise<TProductVariant[]> =>
-    await fetchHandler({
-      route: `${endpoint}/variants/${product_id}`,
-    }),
-
-  getProductVariantById: async ({
+  getProductVariant: async ({
     product_variant_id,
+    hasProduct,
   }: {
     product_variant_id: string;
-  }): Promise<TProductVariant> =>
+    hasProduct?: boolean;
+  }): Promise<TProductVariant | TProductVariantWithProduct> =>
     await fetchHandler({
-      route: `${endpoint}/variants/${product_variant_id}`,
+      route:
+        product +
+        `/variant/${product_variant_id}` +
+        `${hasProduct ? '?product=true' : ''}`,
     }),
 };

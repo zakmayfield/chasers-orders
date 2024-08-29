@@ -13,6 +13,7 @@ export enum QueryKeys {
   ORDERS = 'orders',
   PRODUCT = 'product',
   PRODUCTS = 'products',
+  PRODUCTS_WITH_VARIANTS = 'products-with-variants',
   SHIPPING = 'shipping',
   SIZE = 'size',
   USER = 'user',
