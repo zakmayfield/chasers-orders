@@ -13,6 +13,20 @@ export const cartServices = {
       route: endpoint,
     }),
 
+  getCartItems: async (): Promise<TCartItem[]> =>
+    await fetchHandler({
+      route: endpoint + `/items`,
+    }),
+
+  getCartItem: async ({
+    product_variant_id,
+  }: {
+    product_variant_id: string;
+  }): Promise<TCartItem> =>
+    await fetchHandler({
+      route: endpoint + `/item/${product_variant_id}`,
+    }),
+
   createCart: async (): Promise<TCartItem> =>
     await fetchHandler({
       route: endpoint + `/items`,
@@ -24,11 +38,6 @@ export const cartServices = {
           },
         },
       },
-    }),
-
-  getCartItems: async (): Promise<TCartItem[]> =>
-    await fetchHandler({
-      route: endpoint + `/items`,
     }),
 
   createCartItem: async ({
@@ -79,14 +88,5 @@ export const cartServices = {
           body: JSON.stringify(null),
         },
       },
-    }),
-
-  getCartItem: async ({
-    product_variant_id,
-  }: {
-    product_variant_id: string;
-  }): Promise<TCartItem> =>
-    await fetchHandler({
-      route: endpoint + `/item/${product_variant_id}`,
     }),
 };
