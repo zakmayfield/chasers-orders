@@ -13,11 +13,12 @@ import {
 } from '@/shared/utils/helpers';
 import { db } from '@/lib/prisma';
 import { createCart } from '@/shared/utils/db/cart';
-import { getUserByEmail, registerUser } from '@/shared/utils/db/user';
+import { registerUser } from '@/shared/utils/db/user';
 import { sendEmail } from '@/shared/utils/email/sendEmail';
 
 //^ adapter
 type NextAuthAdapter = NextAuthOptions['adapter'];
+// TODO: Type error from omitting password globally
 const adapter: NextAuthAdapter = PrismaAdapter(db);
 
 //^ strategy
@@ -64,6 +65,9 @@ const providers: NextAuthProviders = [
 
       // query user record
       const user = await db.user.findUnique({
+        omit: {
+          password: false,
+        },
         where: { email },
       });
 
@@ -160,6 +164,7 @@ const callbacks: NextAuthCallbacks = {
     if (token) {
       session.user.id = token.id;
       session.user.email = token.email;
+      session.user.cart_id = token.cart_id;
       session.user.is_approved = token.is_approved;
       session.user.email_verified_on = token.email_verified_on;
     }
@@ -168,7 +173,20 @@ const callbacks: NextAuthCallbacks = {
   },
 
   async jwt({ token, user }) {
-    const dbUser = await getUserByEmail({ email: token.email! });
+    const dbUser = await db.user.findUnique({
+      where: { email: token.email! },
+      select: {
+        id: true,
+        email: true,
+        is_approved: true,
+        email_verified_on: true,
+        cart: {
+          select: {
+            cart_id: true,
+          },
+        },
+      },
+    });
 
     if (!dbUser) {
       token.id = user!.id;
@@ -178,6 +196,7 @@ const callbacks: NextAuthCallbacks = {
     return {
       id: dbUser.id,
       email: dbUser.email,
+      cart_id: dbUser.cart?.cart_id!,
       is_approved: dbUser.is_approved,
       email_verified_on: dbUser.email_verified_on,
     };
