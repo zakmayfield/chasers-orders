@@ -158,10 +158,20 @@ export const getContactByUserId: TGetContactByUserId = async ({ user_id }) => {
 
 type TGetCompanyByUserId = (props: {
   user_id: string;
-}) => Promise<TCompany | null>;
-export const getCompanyByUserId: TGetCompanyByUserId = async ({ user_id }) => {
+  hasAddress?: boolean;
+}) => Promise<TCompany | TCompanyWithAddress | null>;
+export const getCompanyByUserId: TGetCompanyByUserId = async ({
+  user_id,
+  hasAddress,
+}) => {
   const company = await db.company.findUnique({
     where: { user_id },
+    include: hasAddress
+      ? {
+          shipping: true,
+          billing: true,
+        }
+      : {},
   });
   return company;
 };
@@ -188,22 +198,6 @@ export const getBillingByCompanyId: TGetBillingByCompanyId = async ({
     where: { company_id },
   });
   return billing;
-};
-
-type TGetCompanyWithAddress = (props: {
-  user_id: string;
-}) => Promise<TCompanyWithAddress | null>;
-export const getCompanyWithAddressByUserId: TGetCompanyWithAddress = async ({
-  user_id,
-}) => {
-  const companyWithAddress = await db.company.findUnique({
-    where: { user_id },
-    include: {
-      shipping: true,
-      billing: true,
-    },
-  });
-  return companyWithAddress;
 };
 
 type TGetUserAuthorizationByEmail = (props: {

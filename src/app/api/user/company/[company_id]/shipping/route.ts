@@ -1,16 +1,12 @@
 import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
 import { errorResponse } from '@/shared/utils/api/errorResponse';
-import { getSearchParamsOrThrow } from '@/shared/utils/api/getSearchParams';
 import { getShippingByCompanyId } from '@/shared/utils/db/user';
-import { NextRequest } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET({ params }: { params: { company_id: string } }) {
   try {
     await checkAuthentication();
-    const company_id = getSearchParamsOrThrow(
-      req.nextUrl.searchParams,
-      'company_id'
-    );
+    const company_id = params.company_id;
+
     const data = await getShippingByCompanyId({
       company_id,
     });

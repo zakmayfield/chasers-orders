@@ -28,14 +28,13 @@ export const userServices = {
       route: `${endpoint}/contact`,
     }),
 
-  getCompanyByUserId: async (): Promise<TCompany> =>
+  getCompanyByUserId: async ({
+    hasAddress,
+  }: {
+    hasAddress?: boolean;
+  }): Promise<TCompany | TCompanyWithAddress> =>
     await fetchHandler({
-      route: `${endpoint}/company`,
-    }),
-
-  getCompanyWithAddressByUserId: async (): Promise<TCompanyWithAddress> =>
-    await fetchHandler({
-      route: `${endpoint}/company/address`,
+      route: `${endpoint}/company` + `${hasAddress ? '?address=true' : ''}`,
     }),
 
   getShippingByCompanyId: async ({
