@@ -15,7 +15,6 @@ export const useGetProducts = ({ hasVariants }: { hasVariants?: boolean }) => {
     staleTime: Infinity,
   });
 
-  // TODO: do this all over
   const dataMap = {
     withVariants: (hasVariants && (data as TProductWithVariants[])) || [],
     withoutVariants: (!hasVariants && (data as TProductWithCategory[])) || [],

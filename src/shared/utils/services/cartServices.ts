@@ -33,9 +33,6 @@ export const cartServices = {
       options: {
         config: {
           method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
         },
       },
     }),
@@ -50,9 +47,6 @@ export const cartServices = {
       options: {
         config: {
           method: 'POST',
-          headers: {
-            'Content-type': 'application/json',
-          },
           body: JSON.stringify(product_variant_id),
         },
       },
@@ -68,9 +62,6 @@ export const cartServices = {
       options: {
         config: {
           method: 'DELETE',
-          headers: {
-            'Content-type': 'application/json',
-          },
           body: JSON.stringify(product_variant_id),
         },
       },
@@ -82,9 +73,6 @@ export const cartServices = {
       options: {
         config: {
           method: 'DELETE',
-          headers: {
-            'Content-type': 'application/json',
-          },
           body: JSON.stringify(null),
         },
       },
