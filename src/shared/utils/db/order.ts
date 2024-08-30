@@ -1,11 +1,15 @@
 'use server';
 import { db } from '@/lib/prisma';
-import { TOrder, TOrderWithLineItems } from '@/shared/types/Order';
+import {
+  TOrder,
+  TOrderWithLineItems,
+  TCreateOrderRequestPayload,
+} from '@/shared/types/Order';
 
 //^ POST
 type TCreateOrder = (props: {
   user_id: string;
-  line_items: { product_variant_id: string; quantity: number }[];
+  line_items: TCreateOrderRequestPayload;
 }) => Promise<TOrderWithLineItems>;
 export const createOrder: TCreateOrder = async ({ user_id, line_items }) => {
   const order = await db.order.create({

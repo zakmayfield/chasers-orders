@@ -1,6 +1,7 @@
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
-import { QueryKeys } from '@/shared/types/Cache';
 import { orderServices } from '@/shared/utils/services/orderServices';
+import { QueryKeys } from '@/shared/types/Cache';
+import { TOrder, TOrderWithLineItems } from '@/shared/types/Order';
 
 export const useGetOrders = ({ hasLineItems }: { hasLineItems: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
@@ -8,7 +9,15 @@ export const useGetOrders = ({ hasLineItems }: { hasLineItems: boolean }) => {
     queryFn: async () => await orderServices.getOrders({ hasLineItems }),
     staleTime: Infinity,
   });
-  return { data, isLoading, error };
+
+  const dataMap = {
+    withLineItems:
+      (hasLineItems && data && (data as TOrderWithLineItems[])) || [],
+    withoutLineItems:
+      (!hasLineItems && data && (data as TOrderWithLineItems[])) || [],
+  };
+
+  return { data: dataMap, isLoading, error };
 };
 
 export const useGetOrder = ({
@@ -24,7 +33,14 @@ export const useGetOrder = ({
       await orderServices.getOrder({ order_id, hasLineItems }),
     staleTime: Infinity,
   });
-  return { data, isLoading, error };
+
+  const dataMap = {
+    withLineItems:
+      (hasLineItems && data && (data as TOrderWithLineItems)) || {},
+    withoutLineItems: (!hasLineItems && data && (data as TOrder)) || {},
+  };
+
+  return { data: dataMap, isLoading, error };
 };
 
 export const useCreateOrder = () => {

@@ -1,9 +1,10 @@
+import { NextRequest } from 'next/server';
 import { resolveRequestBody } from '@/shared/utils/api/resolveRequestBody';
 import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
 import { errorResponse } from '@/shared/utils/api/errorResponse';
 import { getSearchParams } from '@/shared/utils/api/getSearchParams';
 import { createOrder, getOrdersByUserId } from '@/shared/utils/db/order';
-import { NextRequest } from 'next/server';
+import { TCreateOrderRequestPayload } from '@/shared/types/Order';
 
 export async function GET(req: NextRequest) {
   try {
@@ -14,9 +15,7 @@ export async function GET(req: NextRequest) {
     );
 
     const line_items =
-      await resolveRequestBody<
-        { product_variant_id: string; quantity: number }[]
-      >(req);
+      await resolveRequestBody<TCreateOrderRequestPayload>(req);
 
     const args = { user_id, hasLineItems: !!hasLineItems, line_items };
 
@@ -27,7 +26,7 @@ export async function GET(req: NextRequest) {
 
       case 'POST':
         const order = await createOrder({ ...args });
-        return new Response(JSON.stringify(order), { status: 200 });
+        return new Response(JSON.stringify(order), { status: 201 });
     }
   } catch (error) {
     return errorResponse(error);

@@ -1,6 +1,10 @@
 import { Endpoints } from '@/shared/types/API';
 import { fetchHandler } from '../api/fetch';
-import { TLineItem, TOrder, TOrderWithLineItems } from '@/shared/types/Order';
+import {
+  TOrder,
+  TOrderWithLineItems,
+  TCreateOrderRequestPayload,
+} from '@/shared/types/Order';
 
 const order = Endpoints.order;
 const orders = Endpoints.orders;
@@ -30,8 +34,8 @@ export const orderServices = {
   createOrder: async ({
     line_items,
   }: {
-    line_items: TLineItem[];
-  }): Promise<TOrder | TOrderWithLineItems> =>
+    line_items: TCreateOrderRequestPayload;
+  }): Promise<TOrderWithLineItems> =>
     await fetchHandler({
       route: orders,
       options: {
