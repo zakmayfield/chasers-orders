@@ -14,14 +14,13 @@ import {
 const endpoint = Endpoints.user;
 
 export const userServices = {
-  getUser: async (): Promise<TUser> =>
+  getUser: async ({
+    fullUser,
+  }: {
+    fullUser?: boolean;
+  }): Promise<TUser | TFullUser> =>
     await fetchHandler({
-      route: endpoint,
-    }),
-
-  getFullUser: async (): Promise<TFullUser> =>
-    await fetchHandler({
-      route: `${endpoint}/full`,
+      route: endpoint + `${fullUser ? '?full=true' : ''}`,
     }),
 
   getContactByUserId: async (): Promise<TContact> =>

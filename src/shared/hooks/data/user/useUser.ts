@@ -1,21 +1,20 @@
 import { QueryKeys } from '@/shared/types/Cache';
-import { useCustomQuery } from '../../custom';
+import { useCustomQuery } from '@/shared/hooks/custom';
 import { userServices } from '@/shared/utils/services/userServices';
+import { TFullUser, TUser } from '@/shared/types/User';
 
-export const useGetUser = () => {
+export const useGetUser = ({ fullUser }: { fullUser?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.USER],
-    queryFn: async () => await userServices.getUser(),
+    queryFn: async () => await userServices.getUser({ fullUser }),
   });
-  return { data, isLoading, error };
-};
 
-export const useGetFullUser = () => {
-  const { data, isLoading, error } = useCustomQuery({
-    queryKey: [QueryKeys.USER_FULL],
-    queryFn: async () => await userServices.getFullUser(),
-  });
-  return { data, isLoading, error };
+  const dataMap = {
+    full: (fullUser && data && (data as TFullUser)) || undefined,
+    compact: (!fullUser && data && (data as TUser)) || undefined,
+  };
+
+  return { data: dataMap, isLoading, error };
 };
 
 export const useGetContact = () => {

@@ -125,29 +125,25 @@ export const verifyUserEmail: TVerifyUserEmail = async ({
 //^ GET
 type TGetUserByEmail = (props: {
   email: TUser['email'];
-}) => Promise<TUser | null>;
-export const getUserByEmail: TGetUserByEmail = async ({ email }) => {
+  fullUser?: boolean;
+}) => Promise<TUser | TFullUser | null>;
+export const getUserByEmail: TGetUserByEmail = async ({
+  email,
+  fullUser = false,
+}) => {
   const user = await db.user.findUnique({
     where: { email },
+    include: fullUser
+      ? {
+          contact: true,
+          company: true,
+          cart: true,
+          favorites: true,
+          orders: true,
+        }
+      : {},
   });
   return user;
-};
-
-type TGetFullUserByEmail = (props: {
-  email: TUser['email'];
-}) => Promise<TFullUser | null>;
-export const getFullUserByEmail: TGetFullUserByEmail = async ({ email }) => {
-  const fullUser = await db.user.findUnique({
-    where: { email },
-    include: {
-      contact: true,
-      company: true,
-      cart: true,
-      favorites: true,
-      orders: true,
-    },
-  });
-  return fullUser;
 };
 
 type TGetContactByUserId = (props: {
