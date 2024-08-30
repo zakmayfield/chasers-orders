@@ -1,5 +1,5 @@
 'use client';
-import { getColumnHelper, useTableConstructor } from '@/utils/table';
+import { getColumnHelper, useTableConstructor } from '@/shared/utils/helpers';
 import {
   CategoryColumn,
   NameColumn,

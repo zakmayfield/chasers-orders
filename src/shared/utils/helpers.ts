@@ -1,8 +1,16 @@
-import { verify, sign, JwtPayload } from 'jsonwebtoken';
-import { JsonWebTokenError } from 'jsonwebtoken';
-import { NEXTAUTH_SECRET } from '@/shared/utils/constants';
 import { signIn } from 'next-auth/react';
+import { verify, sign, JwtPayload, JsonWebTokenError } from 'jsonwebtoken';
+import {
+  ColumnDef,
+  createColumnHelper,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { NEXTAUTH_SECRET } from '@/shared/utils/constants';
 import { SignInFormData, SignUpFormData } from '@/shared/types/Forms';
+import { TProductWithVariants } from '@/shared/types/Product';
 
 //^ AUTH
 export const handleSignIn = async (data: SignInFormData) =>
@@ -24,6 +32,31 @@ export const handleSignUp = async (data: SignUpFormData) => {
       isSuccess: false,
     };
   }
+};
+
+//^ PRODUCT TABLE
+export const getColumnHelper = () => createColumnHelper<TProductWithVariants>();
+
+export const useTableConstructor = (
+  data: TProductWithVariants[] | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  columns: ColumnDef<TProductWithVariants, any>[]
+) => {
+  const options = {
+    enableFilters: true,
+    enableColumnFilters: true,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+  };
+
+  const tableConfig = useReactTable({
+    data: data ? data : [],
+    columns,
+    ...options,
+  });
+
+  return { tableConfig };
 };
 
 //^ TOKEN

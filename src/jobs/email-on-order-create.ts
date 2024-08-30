@@ -1,7 +1,6 @@
 import { eventTrigger } from '@trigger.dev/sdk';
 import { client } from '@/lib/trigger';
-import { sendOrderEmail } from '@/utils/email';
-import { SendOrderEmailPayload } from '@/utils/email';
+import { TSendEmailProps, sendEmail } from '@/shared/utils/email/sendEmail';
 
 client.defineJob({
   id: 'send-order-confirmation-email',
@@ -10,13 +9,13 @@ client.defineJob({
   trigger: eventTrigger({
     name: 'order.created',
   }),
-  run: async (payload: SendOrderEmailPayload, io) => {
+  run: async (payload: TSendEmailProps, io) => {
     await io.logger.info('Running send-email task...');
 
     await io.runTask('send-email', async () => {
       try {
-        const response = await sendOrderEmail(payload);
-        return response;
+        const response = await sendEmail(payload);
+        return response ? 'success' : undefined;
       } catch (error) {
         if (error instanceof Error) {
           return error.message;
