@@ -10,15 +10,19 @@ async function handler(req: NextRequest) {
   try {
     const { user_id } = await checkAuthentication();
 
+    const args = {
+      user_id,
+    };
+
     switch (req.method) {
       case 'GET':
         const cart = await getCartWithItemsAndProductVariants({
-          user_id,
+          ...args,
         });
         return new Response(JSON.stringify(cart), { status: 200 });
 
       case 'POST':
-        const createdCart = await createCart({ user_id });
+        const createdCart = await createCart({ ...args });
         return new Response(JSON.stringify(createdCart), { status: 200 });
     }
   } catch (error) {

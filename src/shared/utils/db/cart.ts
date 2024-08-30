@@ -4,6 +4,7 @@ import { TBatchPayload } from '@/shared/types/API';
 import {
   TCart,
   TCartItem,
+  TCartItemWithProductVariant,
   TCartWithItemsAndProductVariants,
 } from '@/shared/types/Cart';
 
@@ -157,10 +158,17 @@ export const getCartWithItemsAndProductVariants: TGetCartWithItemsAndProductVari
     return cart;
   };
 
-type TGetCartItems = (props: { cart_id: string }) => Promise<TCartItem[]>;
-export const getCartItems: TGetCartItems = async ({ cart_id }) => {
+type TGetCartItems = (props: {
+  cart_id: string;
+  product_variant?: boolean;
+}) => Promise<TCartItem[] | TCartItemWithProductVariant[]>;
+export const getCartItems: TGetCartItems = async ({
+  cart_id,
+  product_variant,
+}) => {
   const cartItems = await db.cartItem.findMany({
     where: { cart_id },
+    include: { product_variant },
   });
   return cartItems;
 };
@@ -168,13 +176,16 @@ export const getCartItems: TGetCartItems = async ({ cart_id }) => {
 type TGetCartItem = (props: {
   cart_id: string;
   product_variant_id: string;
-}) => Promise<TCartItem | null>;
+  product_variant?: boolean;
+}) => Promise<TCartItem | TCartItemWithProductVariant | null>;
 export const getCartItem: TGetCartItem = async ({
   cart_id,
   product_variant_id,
+  product_variant,
 }) => {
   const cartItem = await db.cartItem.findUnique({
     where: { cart_id, product_variant_id },
+    include: { product_variant },
   });
   return cartItem;
 };

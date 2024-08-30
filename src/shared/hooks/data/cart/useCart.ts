@@ -1,6 +1,7 @@
 import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { cartServices } from '@/shared/utils/services/cartServices';
+import { TCartItem, TCartItemWithProductVariant } from '@/shared/types/Cart';
 
 export const useGetCart = () => {
   const { data, isLoading, error } = useCustomQuery({
@@ -11,26 +12,60 @@ export const useGetCart = () => {
   return { data, isLoading, error };
 };
 
-export const useGetCartItems = () => {
+export const useGetCartItems = ({
+  hasProductVariant,
+}: {
+  hasProductVariant?: boolean;
+}) => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [QueryKeys.CART_ITEMS],
-    queryFn: cartServices.getCartItems,
+    queryKey: [
+      hasProductVariant
+        ? QueryKeys.CART_ITEMS_WITH_PRODUCT_VARIANT
+        : QueryKeys.CART_ITEMS,
+    ],
+    queryFn: async () => await cartServices.getCartItems({ hasProductVariant }),
     staleTime: Infinity,
   });
-  return { data, isLoading, error };
+
+  const dataMap = {
+    withProductVariant:
+      (hasProductVariant && data && (data as TCartItemWithProductVariant[])) ||
+      [],
+    withoutProductVariant:
+      (!hasProductVariant && data && (data as TCartItem[])) || [],
+  };
+
+  return { data: dataMap, isLoading, error };
 };
 
 export const useGetCartItem = ({
   product_variant_id,
+  hasProductVariant,
 }: {
   product_variant_id: string;
+  hasProductVariant?: boolean;
 }) => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [QueryKeys.CART_ITEM, product_variant_id],
-    queryFn: async () => await cartServices.getCartItem({ product_variant_id }),
+    queryKey: [
+      hasProductVariant
+        ? QueryKeys.CART_ITEM_WITH_PRODUCT_VARIANT
+        : QueryKeys.CART_ITEM,
+      product_variant_id,
+    ],
+    queryFn: async () =>
+      await cartServices.getCartItem({ product_variant_id, hasProductVariant }),
     staleTime: Infinity,
   });
-  return { data, isLoading, error };
+
+  const dataMap = {
+    withProductVariant:
+      (hasProductVariant && data && (data as TCartItemWithProductVariant)) ||
+      undefined,
+    withoutProductVariant:
+      (!hasProductVariant && data && (data as TCartItem)) || undefined,
+  };
+
+  return { data: dataMap, isLoading, error };
 };
 
 export const useCreateCart = () => {

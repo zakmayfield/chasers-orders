@@ -15,14 +15,20 @@ async function handler(req: NextRequest) {
     const { cart_id } = await checkAuthentication();
     let body = await resolveRequestBody<string>(req);
 
+    const hasProductVariant = getSearchParams(
+      req.nextUrl.searchParams,
+      'product_variant'
+    );
+
     const args = {
       cart_id,
       product_variant_id: body,
+      product_variant: !!hasProductVariant,
     };
 
     switch (req.method) {
       case 'GET':
-        const cartItems = await getCartItems({ cart_id });
+        const cartItems = await getCartItems({ ...args });
         return new Response(JSON.stringify(cartItems), { status: 200 });
 
       case 'POST':

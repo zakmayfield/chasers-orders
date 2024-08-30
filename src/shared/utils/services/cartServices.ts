@@ -2,6 +2,7 @@ import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints, TBatchPayload } from '@/shared/types/API';
 import {
   TCartItem,
+  TCartItemWithProductVariant,
   TCartWithItemsAndProductVariants,
 } from '@/shared/types/Cart';
 
@@ -13,18 +14,30 @@ export const cartServices = {
       route: endpoint,
     }),
 
-  getCartItems: async (): Promise<TCartItem[]> =>
+  getCartItems: async ({
+    hasProductVariant,
+  }: {
+    hasProductVariant?: boolean;
+  }): Promise<TCartItem[] | TCartItemWithProductVariant[]> =>
     await fetchHandler({
-      route: endpoint + `/items`,
+      route:
+        endpoint +
+        `/items` +
+        `${hasProductVariant ? '?product_variant=true' : ''}`,
     }),
 
   getCartItem: async ({
     product_variant_id,
+    hasProductVariant,
   }: {
     product_variant_id: string;
-  }): Promise<TCartItem> =>
+    hasProductVariant?: boolean;
+  }): Promise<TCartItem | TCartItemWithProductVariant> =>
     await fetchHandler({
-      route: endpoint + `/item/${product_variant_id}`,
+      route:
+        endpoint +
+        `/item/${product_variant_id}` +
+        `${hasProductVariant ? '?product_variant=true' : ''}`,
     }),
 
   createCart: async (): Promise<TCartItem> =>
