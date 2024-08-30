@@ -20,30 +20,30 @@ export const getAllProducts: TGetAllProducts = async ({ variants }) => {
 
 type TGetProductById = (props: {
   product_id: string;
-  hasVariants?: boolean;
+  variants?: boolean;
 }) => Promise<TProductWithCategory | TProductWithVariants | null>;
 export const getProductById: TGetProductById = async ({
   product_id,
-  hasVariants,
+  variants,
 }) => {
   const product = await db.product.findUnique({
     where: { product_id },
-    include: { category: true, variants: hasVariants },
+    include: { category: true, variants },
   });
   return product;
 };
 
 type TGetProductVariantById = (props: {
   product_variant_id: string;
-  hasProduct?: boolean;
+  product?: boolean;
 }) => Promise<TProductVariant | TProductVariantWithProduct | null>;
 export const getProductVariantById: TGetProductVariantById = async ({
   product_variant_id,
-  hasProduct = false,
+  product,
 }) => {
   const productVariant = await db.productVariant.findUnique({
     where: { product_variant_id },
-    include: { product: hasProduct },
+    include: { product },
   });
   return productVariant;
 };

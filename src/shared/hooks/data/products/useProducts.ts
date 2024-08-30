@@ -2,6 +2,8 @@ import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomQuery } from '../../custom';
 import { productServices } from '@/shared/utils/services/productServices';
 import {
+  TProductVariant,
+  TProductVariantWithProduct,
   TProductWithCategory,
   TProductWithVariants,
 } from '@/shared/types/Product';
@@ -31,13 +33,23 @@ export const useGetProduct = ({
   hasVariants?: boolean;
 }) => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [QueryKeys.PRODUCT, product_id],
+    queryKey: [
+      hasVariants ? QueryKeys.PRODUCT_WITH_VARIANTS : QueryKeys.PRODUCT,
+      product_id,
+    ],
     queryFn: async () =>
       await productServices.getProduct({ product_id, hasVariants }),
     staleTime: Infinity,
   });
 
-  return { data, isLoading, error };
+  const dataMap = {
+    withVariants:
+      data && hasVariants ? (data as TProductWithVariants) : undefined,
+    withoutVariants:
+      data && !hasVariants ? (data as TProductWithCategory) : undefined,
+  };
+
+  return { data: dataMap, isLoading, error };
 };
 
 export const useGetProductVariant = ({
@@ -48,7 +60,10 @@ export const useGetProductVariant = ({
   hasProduct?: boolean;
 }) => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [QueryKeys.VARIANT, product_variant_id],
+    queryKey: [
+      hasProduct ? QueryKeys.VARIANT_WITH_PRODUCT : QueryKeys.VARIANT,
+      product_variant_id,
+    ],
     queryFn: async () =>
       await productServices.getProductVariant({
         product_variant_id,
@@ -57,5 +72,11 @@ export const useGetProductVariant = ({
     staleTime: Infinity,
   });
 
-  return { data, isLoading, error };
+  const dataMap = {
+    withProduct:
+      data && hasProduct ? (data as TProductVariantWithProduct) : undefined,
+    withoutProduct: data && !hasProduct ? (data as TProductVariant) : undefined,
+  };
+
+  return { data: dataMap, isLoading, error };
 };

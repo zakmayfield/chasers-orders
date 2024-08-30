@@ -12,6 +12,7 @@ export enum QueryKeys {
   ORDER = 'order',
   ORDERS = 'orders',
   PRODUCT = 'product',
+  PRODUCT_WITH_VARIANTS = 'product-with-variants',
   PRODUCTS = 'products',
   PRODUCTS_WITH_VARIANTS = 'products-with-variants',
   SHIPPING = 'shipping',
@@ -20,5 +21,6 @@ export enum QueryKeys {
   USER_FULL = 'user-full',
   USER_STATUS = 'user-status',
   VARIANT = 'variant',
+  VARIANT_WITH_PRODUCT = 'variant-with-product',
   VARIANTS = 'variants',
 }
