@@ -2,11 +2,9 @@ import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { userServices } from '@/shared/utils/services/userServices';
 import {
-  TBilling,
   TCompany,
   TCompanyWithAddress,
   TFullUser,
-  TShipping,
   TUser,
 } from '@/shared/types/User';
 
@@ -34,7 +32,7 @@ export const useGetContact = () => {
 
 export const useGetCompany = ({ hasAddress }: { hasAddress?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [QueryKeys.COMPANY],
+    queryKey: [hasAddress ? QueryKeys.COMPANY_FULL : QueryKeys.COMPANY],
     queryFn: async () => await userServices.getCompanyByUserId({ hasAddress }),
   });
 
