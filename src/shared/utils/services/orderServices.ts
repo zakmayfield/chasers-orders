@@ -1,5 +1,5 @@
+import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints } from '@/shared/types/API';
-import { fetchHandler } from '../api/fetch';
 import {
   TOrder,
   TOrderWithLineItems,

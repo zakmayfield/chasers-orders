@@ -51,10 +51,7 @@ type TGetOrderById = (props: {
   order_id: string;
   line_items?: boolean;
 }) => Promise<TOrder | TOrderWithLineItems | null>;
-export const getOrderById: TGetOrderById = async ({
-  order_id,
-  line_items = false,
-}) => {
+export const getOrderById: TGetOrderById = async ({ order_id, line_items }) => {
   const order = await db.order.findUnique({
     where: { order_id },
     include: {

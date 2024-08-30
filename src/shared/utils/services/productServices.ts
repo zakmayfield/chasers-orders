@@ -1,11 +1,11 @@
 import { fetchHandler } from '@/shared/utils/api/fetch';
+import { Endpoints } from '@/shared/types/API';
 import {
   TProductVariant,
   TProductVariantWithProduct,
   TProductWithCategory,
   TProductWithVariants,
 } from '@/shared/types/Product';
-import { Endpoints } from '@/shared/types/API';
 
 const product = Endpoints.product;
 const products = Endpoints.products;

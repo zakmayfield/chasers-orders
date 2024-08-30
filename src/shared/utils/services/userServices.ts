@@ -1,3 +1,4 @@
+import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints } from '@/shared/types/API';
 import {
   TBilling,
@@ -9,7 +10,6 @@ import {
   TUser,
   TUserExtendedAuthorization,
 } from '@/shared/types/User';
-import { fetchHandler } from '@/shared/utils/api/fetch';
 
 const endpoint = Endpoints.user;
 

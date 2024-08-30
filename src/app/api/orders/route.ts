@@ -6,9 +6,10 @@ import { getSearchParams } from '@/shared/utils/api/getSearchParams';
 import { createOrder, getOrdersByUserId } from '@/shared/utils/db/order';
 import { TCreateOrderRequestPayload } from '@/shared/types/Order';
 
-export async function GET(req: NextRequest) {
+export async function handler(req: NextRequest) {
   try {
     const { user_id } = await checkAuthentication();
+
     const hasLineItems = getSearchParams(
       req.nextUrl.searchParams,
       'line-items'
@@ -32,3 +33,4 @@ export async function GET(req: NextRequest) {
     return errorResponse(error);
   }
 }
+export { handler as GET, handler as POST };
