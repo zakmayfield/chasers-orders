@@ -26,4 +26,51 @@ export const favoriteServices = {
       route:
         favorite + `/${favorite_id}` + `${hasProduct ? '?product=true' : ''}`,
     }),
+
+  addFavorite: async ({
+    product_id,
+  }: {
+    product_id: string;
+  }): Promise<TFavorite> =>
+    await fetchHandler({
+      route: favorites,
+      options: {
+        config: {
+          method: 'POST',
+          body: JSON.stringify({ product_id }),
+        },
+      },
+    }),
+
+  deleteFavorite: async ({
+    favorite_id,
+  }: {
+    favorite_id: string;
+  }): Promise<TFavorite> =>
+    await fetchHandler({
+      route: favorites,
+      options: {
+        config: {
+          method: 'DELETE',
+          body: JSON.stringify({ favorite_id }),
+        },
+      },
+    }),
+
+  toggleFavorite: async (props: {
+    action: 'add' | 'remove';
+    product_id?: string;
+    favorite_id?: string;
+    hasProduct?: boolean;
+  }): Promise<TFavorite> =>
+    await fetchHandler({
+      route:
+        favorites + '/toggle' + `${props.hasProduct ? '?product=true' : ''}`,
+      options: {
+        config: {
+          method: props.action === 'add' ? 'POST' : 'DELETE',
+          body: JSON.stringify({ ...props }),
+        },
+      },
+    }),
 };

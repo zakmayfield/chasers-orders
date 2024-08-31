@@ -33,31 +33,6 @@ export const deleteFromFavorites: TDeleteFromFavorites = async ({
   return favorite;
 };
 
-//^ MISC
-type TToggleFavorite = (props: {
-  isFavorited: boolean;
-  user_id?: string;
-  product_id?: string;
-  favorite_id?: string;
-}) => Promise<TFavorite>;
-export const toggleFavorite: TToggleFavorite = async ({
-  isFavorited,
-  user_id,
-  product_id,
-  favorite_id,
-}) => {
-  if (isFavorited) {
-    const del = await deleteFromFavorites({ favorite_id: favorite_id! });
-    return del;
-  } else {
-    const add = await addToFavorites({
-      user_id: user_id!,
-      product_id: product_id!,
-    });
-    return add;
-  }
-};
-
 //^ GET
 type TGetFavoritesByUserId = (props: {
   user_id: string;

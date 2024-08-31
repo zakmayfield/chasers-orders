@@ -1,4 +1,4 @@
-import { useCustomQuery } from '@/shared/hooks/custom';
+import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { favoriteServices } from '@/shared/utils/services/favoriteServices';
 import { QueryKeys } from '@/shared/types/Cache';
 import { TFavorite, TFavoriteWithProduct } from '@/shared/types/Favorite';
@@ -40,4 +40,28 @@ export const useGetFavorite = ({
   };
 
   return { data: dataMap, isLoading, error };
+};
+
+export const useAddFavorite = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: favoriteServices.addFavorite,
+  });
+
+  return { mutate, data, isLoading, error };
+};
+
+export const useDeleteFavorite = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: favoriteServices.deleteFavorite,
+  });
+
+  return { mutate, data, isLoading, error };
+};
+
+export const useToggleFavorite = () => {
+  const { mutate, data, isLoading, error } = useCustomMutation({
+    mutationFn: favoriteServices.toggleFavorite,
+  });
+
+  return { mutate, data, isLoading, error };
 };
