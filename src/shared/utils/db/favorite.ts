@@ -61,55 +61,33 @@ export const toggleFavorite: TToggleFavorite = async ({
 //^ GET
 type TGetFavoritesByUserId = (props: {
   user_id: string;
-}) => Promise<TFavorite[]>;
+  product?: boolean;
+}) => Promise<TFavorite[] | TFavoriteWithProduct[]>;
 export const getFavoritesByUserId: TGetFavoritesByUserId = async ({
   user_id,
+  product,
 }) => {
   const favorites = await db.favorite.findMany({
     where: { user_id },
     orderBy: {
       created_at: 'desc',
     },
+    include: { product },
   });
   return favorites;
 };
 
 type TGetFavoriteById = (props: {
   favorite_id: string;
-}) => Promise<TFavorite | null>;
-
-export const getFavoriteById: TGetFavoriteById = async ({ favorite_id }) => {
-  const favorite = await db.favorite.findUnique({ where: { favorite_id } });
-  return favorite;
-};
-
-type TGetFavoriteWithProductById = (props: {
-  favorite_id: string;
-}) => Promise<TFavoriteWithProduct | null>;
-
-export const getFavoriteWithProductById: TGetFavoriteWithProductById = async ({
+  product?: boolean;
+}) => Promise<TFavorite | TFavoriteWithProduct | null>;
+export const getFavoriteById: TGetFavoriteById = async ({
   favorite_id,
+  product,
 }) => {
   const favorite = await db.favorite.findUnique({
     where: { favorite_id },
-    include: {
-      product: true,
-    },
+    include: { product },
   });
   return favorite;
 };
-
-type TGetFavoritesWithProductByUserId = (props: {
-  user_id: string;
-}) => Promise<TFavoriteWithProduct[] | null>;
-
-export const getFavoritesWithProductByUserId: TGetFavoritesWithProductByUserId =
-  async ({ user_id }) => {
-    const favorite = await db.favorite.findMany({
-      where: { user_id },
-      include: {
-        product: true,
-      },
-    });
-    return favorite;
-  };

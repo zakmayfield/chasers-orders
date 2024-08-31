@@ -1,5 +1,6 @@
 export enum QueryKeys {
   AUTHORIZATION = 'authorization',
+  BILLING = 'billing',
   CART = 'cart',
   CART_ITEM = 'cart-item',
   CART_ITEM_WITH_PRODUCT_VARIANT = 'cart-item-with-product-variant',
@@ -9,8 +10,10 @@ export enum QueryKeys {
   COMPANY = 'company',
   COMPANY_FULL = 'company-full',
   DASHBOARD = 'dashboard',
-  BILLING = 'billing',
+  FAVORITE = 'favorite',
+  FAVORITE_WITH_PRODUCT = 'favorite-with-product',
   FAVORITES = 'favorites',
+  FAVORITES_WITH_PRODUCT = 'favorites-with-product',
   ORDER = 'order',
   ORDER_WITH_LINE_ITEMS = 'order-with-line-items',
   ORDERS = 'orders',

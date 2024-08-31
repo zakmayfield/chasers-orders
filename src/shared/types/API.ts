@@ -1,5 +1,7 @@
 export enum Endpoints {
   cart = '/cart',
+  favorite = '/favorite',
+  favorites = '/favorites',
   user = '/user',
   order = '/order',
   orders = '/orders',
