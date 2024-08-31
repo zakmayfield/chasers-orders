@@ -61,11 +61,9 @@ export const favoriteServices = {
     action: 'add' | 'remove';
     product_id?: string;
     favorite_id?: string;
-    hasProduct?: boolean;
   }): Promise<TFavorite> =>
     await fetchHandler({
-      route:
-        favorites + '/toggle' + `${props.hasProduct ? '?product=true' : ''}`,
+      route: favorites + '/toggle',
       options: {
         config: {
           method: props.action === 'add' ? 'POST' : 'DELETE',
