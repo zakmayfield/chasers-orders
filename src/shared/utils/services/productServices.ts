@@ -22,7 +22,7 @@ export const productServices = {
       route:
         products +
         `${hasVariants ? '?variants=true' : ''}` +
-        `${take ? `?take=${take}` : ''}`,
+        `${take ? `&take=${take}` : ''}`,
     }),
 
   getProduct: async ({

@@ -54,7 +54,7 @@ export const cartServices = {
     product_variant_id,
   }: {
     product_variant_id: string;
-  }): Promise<TCartItem> =>
+  }): Promise<TCartItemWithProductVariant> =>
     await fetchHandler({
       route: endpoint + `/items`,
       options: {

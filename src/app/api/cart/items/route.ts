@@ -38,7 +38,6 @@ async function handler(req: NextRequest) {
       case 'DELETE':
         const empty = getSearchParams(req.nextUrl.searchParams, 'empty');
         if (empty) {
-          console.log('empty ran');
           const batchPayload = await emptyCart({ cart_id });
           return new Response(JSON.stringify(batchPayload), {
             status: 200,

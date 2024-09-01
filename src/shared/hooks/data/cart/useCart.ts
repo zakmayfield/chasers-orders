@@ -1,7 +1,12 @@
 import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { cartServices } from '@/shared/utils/services/cartServices';
-import { TCartItem, TCartItemWithProductVariant } from '@/shared/types/Cart';
+import {
+  TCartItem,
+  TCartItemWithProductVariant,
+  TCartWithItemsAndProductVariants,
+} from '@/shared/types/Cart';
+import { Query, useQueryClient } from '@tanstack/react-query';
 
 export const useGetCart = () => {
   const { data, isLoading, error } = useCustomQuery({
@@ -9,7 +14,7 @@ export const useGetCart = () => {
     queryFn: cartServices.getCart,
     staleTime: Infinity,
   });
-  return { data, isLoading, error };
+  return { cart: data, isLoading, error };
 };
 
 export const useGetCartItems = ({
@@ -75,23 +80,70 @@ export const useCreateCart = () => {
   return { mutate, data, isLoading, error };
 };
 
-export const useCreateCartItem = () => {
+export const useAddToCart = () => {
+  const queryClient = useQueryClient();
+
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: cartServices.createCartItem,
+    handleSuccess(data) {
+      queryClient.setQueryData<TCartWithItemsAndProductVariants>(
+        [QueryKeys.CART],
+        (oldData) => {
+          return oldData && { ...oldData, items: [data, ...oldData.items] };
+        }
+      );
+    },
   });
+
   return { mutate, data, isLoading, error };
 };
 
 export const useDeleteCartItem = () => {
+  const queryClient = useQueryClient();
+
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: cartServices.deleteCartItem,
+    handleSuccess(variables) {
+      queryClient.setQueryData<TCartWithItemsAndProductVariants>(
+        [QueryKeys.CART],
+        (oldData) => {
+          return (
+            oldData && {
+              ...oldData,
+              items: oldData.items.filter(
+                (cartItem) =>
+                  cartItem.product_variant_id !== variables?.product_variant_id
+              ),
+            }
+          );
+        }
+      );
+    },
   });
+
   return { mutate, data, isLoading, error };
 };
 
 export const useEmptyCart = () => {
+  const queryClient = useQueryClient();
+
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: cartServices.emptyCart,
+
+    handleSuccess() {
+      queryClient.setQueryData<TCartWithItemsAndProductVariants>(
+        [QueryKeys.CART],
+        (oldData) => {
+          return (
+            oldData && {
+              ...oldData,
+              items: [],
+            }
+          );
+        }
+      );
+    },
   });
+
   return { mutate, data, isLoading, error };
 };

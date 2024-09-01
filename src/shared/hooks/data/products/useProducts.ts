@@ -29,7 +29,7 @@ export const useGetProducts = ({
     withoutVariants: (!hasVariants && (data as TProductWithCategory[])) || [],
   };
 
-  return { data: dataMap, isLoading, error };
+  return { products: dataMap, isLoading, error };
 };
 
 export const useGetProduct = ({

@@ -23,7 +23,7 @@ type TAddItemToCart = (props: {
   cart_id: string;
   product_variant_id: string;
   quantity: number;
-}) => Promise<TCartItem>;
+}) => Promise<TCartItemWithProductVariant>;
 export const addItemToCart: TAddItemToCart = async ({
   cart_id,
   product_variant_id,
@@ -31,6 +31,7 @@ export const addItemToCart: TAddItemToCart = async ({
 }) => {
   const cartItem = await db.cartItem.create({
     data: { cart_id, product_variant_id, quantity },
+    include: { product_variant: true },
   });
   return cartItem;
 };

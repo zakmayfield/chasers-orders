@@ -82,7 +82,7 @@ export const useToggleFavorite = () => {
 
           switch (action) {
             case 'add':
-              return [data, ...oldData!];
+              return oldData && [data, ...oldData];
             case 'remove':
               return oldData?.filter(
                 (favorite) => favorite.favorite_id !== data.favorite_id
