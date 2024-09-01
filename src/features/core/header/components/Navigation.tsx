@@ -1,7 +1,12 @@
 'use client';
-import { signOut } from 'next-auth/react';
+import { FC } from 'react';
 import { usePathname } from 'next/navigation';
-import { AuthNavItem } from './AuthNavItem';
+import { signOut } from 'next-auth/react';
+import { NavigationItem } from './NavigationItem';
+
+interface NavigationProps {
+  isAuth: boolean;
+}
 
 export type NavItem = {
   path: string;
@@ -23,18 +28,18 @@ const navData: NavItem[] = [
   },
 ];
 
-export default function AuthNavigation() {
+export const Navigation: FC<NavigationProps> = ({ isAuth }) => {
   const pathname = usePathname();
 
   return (
-    <div className='flex items-center gap-3'>
+    <nav className='flex items-center gap-6'>
       {navData.map((item) => (
-        <AuthNavItem key={item.path} navItem={item} pathname={pathname} />
+        <NavigationItem key={item.path} navItem={item} pathname={pathname} />
       ))}
 
       <button onClick={() => signOut()} className='rounded px-1 hover:ring-2'>
         Logout
       </button>
-    </div>
+    </nav>
   );
-}
+};

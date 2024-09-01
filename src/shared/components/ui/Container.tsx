@@ -28,7 +28,7 @@ export type ContainerProps = {
   margin?: 'sm' | 'md' | 'lg';
   center?: boolean;
   rounded?: 'sm' | 'md' | 'lg';
-  width?: 'sm' | 'md' | 'lg' | 'full';
+  width?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
   animateColor?: 'dark' | 'darker' | 'darkest';
   border?: boolean;
 };
@@ -57,7 +57,7 @@ export const Container = ({
             ${padding === 'sm' ? 'p-2' : padding === 'md' ? 'p-4' : padding === 'lg' ? 'p-6' : 'p-0'}
             ${margin === 'sm' ? 'm-2' : margin === 'md' ? 'm-4' : margin === 'lg' ? 'm-6' : 'm-0'}
             ${center && 'mx-auto'}
-            ${width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
+            ${width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'xl' ? 'max-w-6xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
             ${rounded === 'sm' ? 'rounded-md' : rounded === 'md' ? 'rounded-xl' : rounded === 'lg' ? 'rounded-3xl' : 'rounded-none'}
             ${border && 'border'}
             ${className}

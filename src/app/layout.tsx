@@ -4,12 +4,12 @@ import type { Metadata } from 'next';
 
 import { ToastContainer } from 'react-toastify';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-
 import { Header } from '@/features/core/header';
 import { Footer } from '@/features/core/footer';
 import { CoreProvider } from '@/lib/providers/CoreProvider';
 import { getAuthSession } from '@/lib/auth/auth.options';
 import { quicksand } from '@/shared/utils/ui';
+import { Container } from '@/shared/components/ui';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -30,7 +30,16 @@ export default async function RootLayout({
           {isAuth && <Header />}
 
           {/* Pages Container */}
-          <div className='py-6 min-h-screen'>{children}</div>
+          <Container
+            as='div'
+            padding='lg'
+            width='xl'
+            center={true}
+            border={true}
+            className='min-h-screen'
+          >
+            {children}
+          </Container>
           <ToastContainer limit={4} autoClose={3000} position='bottom-right' />
 
           {/* Dev Tools */}

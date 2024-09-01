@@ -8,12 +8,16 @@ import {
 } from '@/shared/components/ui';
 import {
   useAddToCart,
+  useDeleteCartItem,
   useEmptyCart,
   useGetCart,
 } from '@/shared/hooks/data/cart/useCart';
-import { useGetProducts } from '@/shared/hooks/data/products/useProducts';
+import {
+  useGetProduct,
+  useGetProducts,
+} from '@/shared/hooks/data/products/useProducts';
 import { CartIcon, EmptyCartIcon, XIcon } from '@/shared/utils/ui';
-import { CartItem } from './CartItem';
+import { TCartItemWithProductVariant } from '@/shared/types/Cart';
 
 export const TestingCart = () => {
   const { products, isLoading } = useGetProducts({
@@ -89,6 +93,33 @@ export const TestingCart = () => {
         {productsData}
         {cartData}
       </Container>
+    </Container>
+  );
+};
+
+const CartItem = ({ cartItem }: { cartItem: TCartItemWithProductVariant }) => {
+  const { data: product, isLoading } = useGetProduct({
+    product_id: cartItem.product_variant.product_id,
+  });
+  const { mutate: deleteCartItem } = useDeleteCartItem();
+
+  return (
+    <Container as='div'>
+      {isLoading ? (
+        <PulseLoader width='full' />
+      ) : (
+        <Container as='div' flex='row' className='justify-between'>
+          <Container as='p'>{product.withoutVariants?.name}</Container>
+          <Btn
+            Icon={XIcon}
+            handleClick={() =>
+              deleteCartItem({
+                product_variant_id: cartItem.product_variant_id,
+              })
+            }
+          />
+        </Container>
+      )}
     </Container>
   );
 };
