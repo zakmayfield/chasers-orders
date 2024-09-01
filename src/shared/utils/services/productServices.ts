@@ -21,8 +21,7 @@ export const productServices = {
     await fetchHandler({
       route:
         products +
-        `${hasVariants ? '?variants=true' : ''}` +
-        `${take ? `&take=${take}` : ''}`,
+        `${`?variants=${hasVariants ? 'true' : 'false'}&take=${take ? take : 'false'}`}`,
     }),
 
   getProduct: async ({

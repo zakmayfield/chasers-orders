@@ -1,22 +1,25 @@
 import { NextRequest } from 'next/server';
 import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
 import { errorResponse } from '@/shared/utils/api/errorResponse';
-import { getSearchParams } from '@/shared/utils/api/getSearchParams';
+import { getSearchParamsArray } from '@/shared/utils/api/getSearchParams';
 import { getAllProducts } from '@/shared/utils/db/product';
 
 export async function GET(req: NextRequest) {
   try {
     await checkAuthentication();
-    const hasVariants = getSearchParams(req.nextUrl.searchParams, 'variants');
+    const [hasVariants, hasTake] = getSearchParamsArray(
+      req.nextUrl.searchParams,
+      ['variants', 'take']
+    );
+
+    const variants = hasVariants && hasVariants === 'true' ? true : false;
     const take =
-      Number(getSearchParams(req.nextUrl.searchParams, 'take')) || undefined;
+      (hasTake && hasTake !== 'false' && Number(hasTake)) || undefined;
 
     const args = {
-      variants: !!hasVariants,
+      variants,
       take,
     };
-
-    console.log({ args });
 
     const data = await getAllProducts({ ...args });
     return new Response(JSON.stringify(data), { status: 200 });

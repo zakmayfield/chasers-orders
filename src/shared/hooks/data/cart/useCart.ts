@@ -6,7 +6,7 @@ import {
   TCartItemWithProductVariant,
   TCartWithItemsAndProductVariants,
 } from '@/shared/types/Cart';
-import { Query, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const useGetCart = () => {
   const { data, isLoading, error } = useCustomQuery({

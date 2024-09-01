@@ -9,6 +9,14 @@ export const getSearchParams = (
   return value;
 };
 
+export const getSearchParamsArray = (
+  searchParams: URLSearchParams,
+  params: string[]
+) => {
+  const values = params.map((param) => searchParams.get(param)) || [];
+  return values;
+};
+
 export const getSearchParamsOrThrow = (
   searchParams: URLSearchParams,
   param: string
