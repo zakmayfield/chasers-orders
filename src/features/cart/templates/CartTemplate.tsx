@@ -7,8 +7,9 @@ import { PlaceOrder } from '../organisms/PlaceOrder';
 
 export const CartTemplate = () => {
   return (
-    <PageTemplate width='full'>
-      <Container
+    <PageTemplate title='Cart' width='full' className='border'>
+      <Container as='div'>content</Container>
+      {/* <Container
         as='div'
         flex='row'
         padding='md'
@@ -43,8 +44,10 @@ export const CartTemplate = () => {
           <Container as='div' width='full'>
             <PlaceOrder />
           </Container>
-        </Container>
-      </Container>
+
+          </Container>
+          
+      </Container> */}
     </PageTemplate>
   );
 };

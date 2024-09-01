@@ -18,7 +18,6 @@ export const PageTemplate = ({
     <Container
       as='div'
       flex='col'
-      padding='lg'
       width={width}
       center={center}
       className={className}

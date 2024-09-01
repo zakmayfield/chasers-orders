@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { ToastContainer } from 'react-toastify';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Header } from '@/features/core/header';
+import { Nav } from '@/features/core/nav';
 import { Footer } from '@/features/core/footer';
 import { CoreProvider } from '@/lib/providers/CoreProvider';
 import { getAuthSession } from '@/lib/auth/auth.options';
@@ -35,9 +36,11 @@ export default async function RootLayout({
             padding='lg'
             width='xl'
             center={true}
+            flex='col'
             border={true}
             className='min-h-screen'
           >
+            {isAuth && <Nav />}
             {children}
           </Container>
           <ToastContainer limit={4} autoClose={3000} position='bottom-right' />

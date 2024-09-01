@@ -8,15 +8,15 @@ export default async function DashboardLayout({
 }) {
   return (
     <div className='w-3/4 mx-auto grid grid-cols-12'>
-      <Heading
+      {/* <Heading
         as='h1'
         content='Dashboard'
         className='col-span-12 border-b px-6 pb-6'
-      />
+      /> */}
 
       <div className='m-6 col-span-11 2xl:col-span-9'>{children}</div>
 
-      <DashboardNav />
+      {/* <DashboardNav /> */}
     </div>
   );
 }

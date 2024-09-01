@@ -13,11 +13,11 @@ export const Header = async ({}) => {
         width='xl'
         center={true}
         flex='row'
-        className='items-center justify-between'
+        className='items-center justify-center'
       >
         <LogoLink />
 
-        <Navigation isAuth={!!session?.user} />
+        {/* <Navigation isAuth={!!session?.user} /> */}
       </Container>
     </header>
   );
