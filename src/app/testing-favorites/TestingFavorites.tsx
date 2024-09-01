@@ -10,7 +10,7 @@ import { HeartDuotoneIcon, HeartOutlineIcon } from '@/shared/utils/ui';
 
 export const TestingFavorites = () => {
   const { data: products, isLoading } = useGetProducts({ take: 5 });
-  const { data: favorites } = useGetFavorites();
+  const { favorites } = useGetFavorites();
   const { mutate } = useToggleFavorite();
 
   return (

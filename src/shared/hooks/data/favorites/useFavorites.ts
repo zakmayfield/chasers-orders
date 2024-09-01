@@ -1,13 +1,13 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { favoriteServices } from '@/shared/utils/services/favoriteServices';
-import { QueryKeys } from '@/shared/types/Cache';
 import { TFavoriteWithProduct } from '@/shared/types/Favorite';
-import { Query, useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@/shared/types/Cache';
 
 export const useGetFavorites = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.FAVORITES_WITH_PRODUCT],
-    queryFn: async () => await favoriteServices.getFavorites(),
+    queryFn: favoriteServices.getFavorites,
     staleTime: Infinity,
   });
 
@@ -18,7 +18,7 @@ export const useGetFavorites = () => {
     product_ids_array,
   };
 
-  return { data: dataMap, isLoading, error };
+  return { favorites: dataMap, isLoading, error };
 };
 
 export const useGetFavorite = ({ favorite_id }: { favorite_id: string }) => {
