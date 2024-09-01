@@ -10,10 +10,12 @@ import {
 
 type TGetAllProducts = (props: {
   variants?: boolean;
+  take?: number;
 }) => Promise<TProductWithCategory[] | TProductWithVariants[]>;
-export const getAllProducts: TGetAllProducts = async ({ variants }) => {
+export const getAllProducts: TGetAllProducts = async ({ variants, take }) => {
   const products = await db.product.findMany({
     include: { category: true, variants },
+    take,
   });
   return products;
 };

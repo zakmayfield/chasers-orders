@@ -8,12 +8,19 @@ import {
   TProductWithVariants,
 } from '@/shared/types/Product';
 
-export const useGetProducts = ({ hasVariants }: { hasVariants?: boolean }) => {
+export const useGetProducts = ({
+  hasVariants,
+  take,
+}: {
+  hasVariants?: boolean;
+  take?: number;
+}) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [
       hasVariants ? QueryKeys.PRODUCTS_WITH_VARIANTS : QueryKeys.PRODUCTS,
     ],
-    queryFn: async () => await productServices.getProducts({ hasVariants }),
+    queryFn: async () =>
+      await productServices.getProducts({ hasVariants, take }),
     staleTime: Infinity,
   });
 

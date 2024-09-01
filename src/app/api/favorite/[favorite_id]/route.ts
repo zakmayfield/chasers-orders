@@ -4,17 +4,12 @@ import { errorResponse } from '@/shared/utils/api/errorResponse';
 import { getFavoriteById } from '@/shared/utils/db/favorite';
 import { getSearchParams } from '@/shared/utils/api/getSearchParams';
 
-async function handler(
-  req: NextRequest,
-  { params }: { params: { favorite_id: string } }
-) {
+async function handler({ params }: { params: { favorite_id: string } }) {
   try {
     await checkAuthentication();
     const favorite_id = params.favorite_id;
-    const hasProduct = getSearchParams(req.nextUrl.searchParams, 'product');
     const args = {
       favorite_id,
-      product: !!hasProduct,
     };
 
     const favorite = await getFavoriteById({ ...args });

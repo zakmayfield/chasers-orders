@@ -13,11 +13,16 @@ const products = Endpoints.products;
 export const productServices = {
   getProducts: async ({
     hasVariants,
+    take,
   }: {
     hasVariants?: boolean;
+    take?: number;
   }): Promise<TProductWithCategory[] | TProductWithVariants[]> =>
     await fetchHandler({
-      route: products + `${hasVariants ? '?variants=true' : ''}`,
+      route:
+        products +
+        `${hasVariants ? '?variants=true' : ''}` +
+        `${take ? `?take=${take}` : ''}`,
     }),
 
   getProduct: async ({

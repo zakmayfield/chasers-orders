@@ -6,32 +6,25 @@ const favorite = Endpoints.favorite;
 const favorites = Endpoints.favorites;
 
 export const favoriteServices = {
-  getFavorites: async ({
-    hasProduct,
-  }: {
-    hasProduct?: boolean;
-  }): Promise<TFavorite[] | TFavoriteWithProduct[]> =>
+  getFavorites: async (): Promise<TFavoriteWithProduct[]> =>
     await fetchHandler({
-      route: favorites + `${hasProduct ? '?product=true' : ''}`,
+      route: favorites,
     }),
 
   getFavorite: async ({
     favorite_id,
-    hasProduct,
   }: {
     favorite_id: string;
-    hasProduct?: boolean;
-  }): Promise<TFavorite | TFavoriteWithProduct> =>
+  }): Promise<TFavoriteWithProduct> =>
     await fetchHandler({
-      route:
-        favorite + `/${favorite_id}` + `${hasProduct ? '?product=true' : ''}`,
+      route: favorite + `/${favorite_id}`,
     }),
 
   addFavorite: async ({
     product_id,
   }: {
     product_id: string;
-  }): Promise<TFavorite> =>
+  }): Promise<TFavoriteWithProduct> =>
     await fetchHandler({
       route: favorites,
       options: {
@@ -43,25 +36,24 @@ export const favoriteServices = {
     }),
 
   deleteFavorite: async ({
-    favorite_id,
+    product_id,
   }: {
-    favorite_id: string;
+    product_id: string;
   }): Promise<TFavorite> =>
     await fetchHandler({
       route: favorites,
       options: {
         config: {
           method: 'DELETE',
-          body: JSON.stringify({ favorite_id }),
+          body: JSON.stringify({ product_id }),
         },
       },
     }),
 
   toggleFavorite: async (props: {
     action: 'add' | 'remove';
-    product_id?: string;
-    favorite_id?: string;
-  }): Promise<TFavorite> =>
+    product_id: string;
+  }): Promise<TFavoriteWithProduct> =>
     await fetchHandler({
       route: favorites + '/toggle',
       options: {

@@ -6,7 +6,7 @@ import { TFavorite, TFavoriteWithProduct } from '@/shared/types/Favorite';
 type TAddToFavorites = (props: {
   user_id: string;
   product_id: string;
-}) => Promise<TFavorite>;
+}) => Promise<TFavoriteWithProduct>;
 export const addToFavorites: TAddToFavorites = async ({
   user_id,
   product_id,
@@ -16,19 +16,26 @@ export const addToFavorites: TAddToFavorites = async ({
       user_id,
       product_id,
     },
+    include: { product: true },
   });
   return favorite;
 };
 
 //^ DELETE
 type TDeleteFromFavorites = (props: {
-  favorite_id: string;
+  user_id: string;
+  product_id: string;
 }) => Promise<TFavorite>;
 export const deleteFromFavorites: TDeleteFromFavorites = async ({
-  favorite_id,
+  user_id,
+  product_id,
 }) => {
+  const user_id_product_id = {
+    user_id,
+    product_id,
+  };
   const favorite = await db.favorite.delete({
-    where: { favorite_id },
+    where: { user_id_product_id },
   });
   return favorite;
 };
@@ -37,17 +44,16 @@ export const deleteFromFavorites: TDeleteFromFavorites = async ({
 type TGetFavoritesByUserId = (props: {
   user_id: string;
   product?: boolean;
-}) => Promise<TFavorite[] | TFavoriteWithProduct[]>;
+}) => Promise<TFavoriteWithProduct[]>;
 export const getFavoritesByUserId: TGetFavoritesByUserId = async ({
   user_id,
-  product,
 }) => {
   const favorites = await db.favorite.findMany({
     where: { user_id },
     orderBy: {
       created_at: 'desc',
     },
-    include: { product },
+    include: { product: true },
   });
   return favorites;
 };
@@ -55,14 +61,11 @@ export const getFavoritesByUserId: TGetFavoritesByUserId = async ({
 type TGetFavoriteById = (props: {
   favorite_id: string;
   product?: boolean;
-}) => Promise<TFavorite | TFavoriteWithProduct | null>;
-export const getFavoriteById: TGetFavoriteById = async ({
-  favorite_id,
-  product,
-}) => {
+}) => Promise<TFavoriteWithProduct | null>;
+export const getFavoriteById: TGetFavoriteById = async ({ favorite_id }) => {
   const favorite = await db.favorite.findUnique({
     where: { favorite_id },
-    include: { product },
+    include: { product: true },
   });
   return favorite;
 };

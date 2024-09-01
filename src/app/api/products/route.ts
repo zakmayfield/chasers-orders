@@ -8,9 +8,11 @@ export async function GET(req: NextRequest) {
   try {
     await checkAuthentication();
     const hasVariants = getSearchParams(req.nextUrl.searchParams, 'variants');
+    const take = getSearchParams(req.nextUrl.searchParams, 'take') || undefined;
 
     const args = {
       variants: !!hasVariants,
+      take: Number(take),
     };
 
     const data = await getAllProducts({ ...args });

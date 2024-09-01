@@ -1,66 +1,98 @@
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { favoriteServices } from '@/shared/utils/services/favoriteServices';
 import { QueryKeys } from '@/shared/types/Cache';
-import { TFavorite, TFavoriteWithProduct } from '@/shared/types/Favorite';
+import { TFavoriteWithProduct } from '@/shared/types/Favorite';
+import { Query, useQueryClient } from '@tanstack/react-query';
 
-export const useGetFavorites = ({ hasProduct }: { hasProduct?: boolean }) => {
+export const useGetFavorites = () => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [
-      hasProduct ? QueryKeys.FAVORITES_WITH_PRODUCT : QueryKeys.FAVORITES,
-    ],
-    queryFn: async () => await favoriteServices.getFavorites({ hasProduct }),
+    queryKey: [QueryKeys.FAVORITES_WITH_PRODUCT],
+    queryFn: async () => await favoriteServices.getFavorites(),
+    staleTime: Infinity,
   });
 
+  const product_ids_array = data?.map((favorite) => favorite.product_id) || [];
+
   const dataMap = {
-    withProduct: (hasProduct && data && (data as TFavoriteWithProduct[])) || [],
-    withoutProduct: (!hasProduct && data && (data as TFavorite[])) || [],
+    data: data || [],
+    product_ids_array,
   };
 
   return { data: dataMap, isLoading, error };
 };
 
-export const useGetFavorite = ({
-  favorite_id,
-  hasProduct,
-}: {
-  favorite_id: string;
-  hasProduct?: boolean;
-}) => {
+export const useGetFavorite = ({ favorite_id }: { favorite_id: string }) => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [
-      hasProduct ? QueryKeys.FAVORITE_WITH_PRODUCT : QueryKeys.FAVORITE,
-    ],
-    queryFn: async () =>
-      await favoriteServices.getFavorite({ favorite_id, hasProduct }),
+    queryKey: [QueryKeys.FAVORITE_WITH_PRODUCT],
+    queryFn: async () => await favoriteServices.getFavorite({ favorite_id }),
+    staleTime: Infinity,
   });
 
-  const dataMap = {
-    withProduct: (hasProduct && data && (data as TFavoriteWithProduct)) || [],
-    withoutProduct: (!hasProduct && data && (data as TFavorite)) || [],
-  };
-
-  return { data: dataMap, isLoading, error };
+  return { data, isLoading, error };
 };
 
 export const useAddFavorite = () => {
+  const queryClient = useQueryClient();
+
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: favoriteServices.addFavorite,
+    handleSuccess(data) {
+      queryClient.setQueryData<TFavoriteWithProduct[]>(
+        [QueryKeys.FAVORITES_WITH_PRODUCT],
+        (oldData) => {
+          return [data, ...oldData!];
+        }
+      );
+    },
   });
 
   return { mutate, data, isLoading, error };
 };
 
 export const useDeleteFavorite = () => {
+  const queryClient = useQueryClient();
+
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: favoriteServices.deleteFavorite,
+    handleSuccess(data) {
+      queryClient.setQueryData<TFavoriteWithProduct[]>(
+        [QueryKeys.FAVORITES_WITH_PRODUCT],
+        (oldData) => {
+          return oldData?.filter(
+            (favorite) => favorite.favorite_id !== data.favorite_id
+          );
+        }
+      );
+    },
   });
 
   return { mutate, data, isLoading, error };
 };
 
 export const useToggleFavorite = () => {
+  const queryClient = useQueryClient();
+
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: favoriteServices.toggleFavorite,
+    handleSuccess(data, variables) {
+      queryClient.setQueryData<TFavoriteWithProduct[]>(
+        [QueryKeys.FAVORITES_WITH_PRODUCT],
+        (oldData) => {
+          const action = variables?.action;
+
+          switch (action) {
+            case 'add':
+              return [data, ...oldData!];
+            case 'remove':
+              return oldData?.filter(
+                (favorite) => favorite.favorite_id !== data.favorite_id
+              );
+            default:
+              return oldData;
+          }
+        }
+      );
+    },
   });
 
   return { mutate, data, isLoading, error };
