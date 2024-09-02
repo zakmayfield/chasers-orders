@@ -1,4 +1,4 @@
-import { ProductsTemplate } from '@/features/templates/ProductsTemplate';
+import { ProductsTemplate } from '@/features/products/templates/ProductsTemplate';
 import { Table } from './components/table';
 
 export default async function Page() {

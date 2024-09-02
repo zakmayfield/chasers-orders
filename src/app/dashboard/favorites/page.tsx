@@ -1,5 +1,5 @@
-import { FavoritesContainer } from './components/favorites';
+import { FavoritesTemplate } from '@/features/dashboard/templates/FavoritesTemplate';
 
-export default function Page() {
-  return <FavoritesContainer />;
+export default async function Page() {
+  return <FavoritesTemplate />;
 }

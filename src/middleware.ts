@@ -20,20 +20,18 @@ export async function middleware(req: NextRequest) {
     !req.nextUrl.pathname.includes('/dashboard') &&
     (!authorization?.is_approved || !authorization.email_verified_on)
   ) {
-    return NextResponse.redirect(
-      new URL('/dashboard/account-pending', req.nextUrl)
-    );
+    return NextResponse.redirect(new URL('/dashboard/account', req.nextUrl));
   }
 }
 
 export const config = {
   matcher: [
-    '/products',
-    '/cart/:path*',
-    '/dashboard/:path*',
+    '/cart',
     '/api/cart/:path*',
-    '/api/orders/:path*',
+    '/products',
     '/api/products/:path*',
+    '/dashboard/:path*',
+    '/api/orders/:path*',
     '/api/trigger/:path*',
   ],
 };
