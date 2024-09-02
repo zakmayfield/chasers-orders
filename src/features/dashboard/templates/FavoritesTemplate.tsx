@@ -1,6 +1,10 @@
 'use client';
-import { Container } from '@/shared/components/ui';
+import { ContentTemplate } from '@/shared/components/ui';
 
 export const FavoritesTemplate = () => {
-  return <Container as='div'>Favorites Template</Container>;
+  return (
+    <ContentTemplate title='Favorites' headingClassname='mb-3'>
+      Favorites Template
+    </ContentTemplate>
+  );
 };

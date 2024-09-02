@@ -7,12 +7,14 @@ export const PageTemplate = ({
   className,
   width,
   center,
+  headingAs = 'h1',
 }: {
   title?: string;
   children: React.ReactNode;
   className?: string;
   width?: ContainerProps['width'];
   center?: ContainerProps['center'];
+  headingAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 }) => {
   return (
     <Container
@@ -22,7 +24,7 @@ export const PageTemplate = ({
       center={center}
       className={className}
     >
-      {title && <Heading as='h1' content={title} />}
+      {title && <Heading as={headingAs} content={title} />}
       {children}
     </Container>
   );

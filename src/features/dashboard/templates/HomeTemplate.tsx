@@ -1,6 +1,10 @@
 'use client';
-import { Container } from '@/shared/components/ui';
+import { ContentTemplate } from '@/shared/components/ui';
 
 export const HomeTemplate = () => {
-  return <Container as='div'>Home Template</Container>;
+  return (
+    <ContentTemplate title='Home' headingClassname='mb-3'>
+      Home Template
+    </ContentTemplate>
+  );
 };
