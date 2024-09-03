@@ -8,15 +8,19 @@ export const StatusApproval = ({
   status: TUserExtendedAuthorization;
 }) => {
   return (
-    <Container as='div' flex='col' className='gap-1'>
-      <Heading as='h6' content='Account approval:' />
-      <Container as='div' flex='row'>
+    <Container as='div' flex='col' gap='sm' className='border-b'>
+      <Heading as='h5' content='Account approval:' />
+      <Container as='div' flex='row' paddingX='lg'>
         {status.is_approved ? (
-          <Icon IconData={CheckCircleDuotone} iconClass='text-green-500' />
+          <Icon
+            IconData={CheckCircleDuotone}
+            iconClass='text-green-500'
+            width='xs'
+          />
         ) : (
-          <Icon IconData={XCircleDuotone} iconClass='text-red-500' />
+          <Icon IconData={XCircleDuotone} iconClass='text-red-500' width='xs' />
         )}
-        <Container as='p'>
+        <Container as='p' className='italic text-gray-600'>
           {status.is_approved ? 'Approved' : 'Pending approval'}
         </Container>
       </Container>

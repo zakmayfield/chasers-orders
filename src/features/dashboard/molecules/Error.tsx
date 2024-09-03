@@ -1,7 +1,7 @@
 import { Container, Icon } from '@/shared/components/ui';
 import { WarningTriangleDuotone } from '@/shared/utils/ui';
 
-export const StatusError = ({ message }: { message: string }) => {
+export const Error = ({ message }: { message: string }) => {
   return (
     <Container
       as='div'

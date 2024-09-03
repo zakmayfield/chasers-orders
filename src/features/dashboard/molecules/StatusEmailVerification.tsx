@@ -8,15 +8,21 @@ export const StatusEmailVerification = ({
   status: TUserExtendedAuthorization;
 }) => {
   return (
-    <Container as='div' flex='col' className='gap-1'>
-      <Heading as='h6' content='Email verification:' />
-      <Container as='div' flex='row'>
+    <Container as='div' flex='col' gap='sm' className='border-b'>
+      <Heading as='h5' content='Email verification:' />
+      <Container as='div' flex='row' paddingX='lg'>
         {status.email_verified_on ? (
-          <Icon IconData={CheckCircleDuotone} iconClass='text-green-500' />
+          <Icon
+            IconData={CheckCircleDuotone}
+            iconClass='text-green-500'
+            width='xs'
+          />
         ) : (
-          <Icon IconData={XCircleDuotone} iconClass='text-red-500' />
+          <Icon IconData={XCircleDuotone} iconClass='text-red-500' width='xs' />
         )}
-        <Container as='p'>{status.email}</Container>
+        <Container as='p' className='italic text-gray-600'>
+          {status.email}
+        </Container>
       </Container>
     </Container>
   );

@@ -30,7 +30,7 @@ export type ContainerProps = {
   margin?: 'sm' | 'md' | 'lg';
   center?: boolean;
   rounded?: 'sm' | 'md' | 'lg';
-  width?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  width?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'full';
   animateColor?: 'dark' | 'darker' | 'darkest';
   border?: boolean;
 };
@@ -63,7 +63,7 @@ export const Container = ({
             ${paddingX === 'sm' ? 'px-2' : paddingX === 'md' ? 'px-4' : paddingX === 'lg' ? 'px-6' : ''}
             ${margin === 'sm' ? 'm-2' : margin === 'md' ? 'm-4' : margin === 'lg' ? 'm-6' : 'm-0'}
             ${center && 'mx-auto'}
-            ${width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'xl' ? 'max-w-6xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
+            ${width === 'xs' ? 'max-w-xs w-full' : width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'xl' ? 'max-w-6xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
             ${rounded === 'sm' ? 'rounded-md' : rounded === 'md' ? 'rounded-xl' : rounded === 'lg' ? 'rounded-3xl' : 'rounded-none'}
             ${border && 'border'}
             ${className}
@@ -82,7 +82,7 @@ export const Container = ({
             ${padding === 'sm' ? 'p-2' : padding === 'md' ? 'p-4' : padding === 'lg' ? 'p-6' : 'p-0'}
             ${margin === 'sm' ? 'm-2' : margin === 'md' ? 'm-4' : margin === 'lg' ? 'm-6' : 'm-0'}
             ${center && 'mx-auto'}
-            ${width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
+            ${width === 'xs' ? 'max-w-xs w-full' : width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
             ${rounded === 'sm' ? 'rounded-md' : rounded === 'md' ? 'rounded-xl' : rounded === 'lg' ? 'rounded-3xl' : 'rounded-none'}
             ${border && 'border'}
             ${className}
@@ -101,7 +101,7 @@ export const Container = ({
             ${padding === 'sm' ? 'p-2' : padding === 'md' ? 'p-4' : padding === 'lg' ? 'p-6' : 'p-0'}
             ${margin === 'sm' ? 'm-2' : margin === 'md' ? 'm-4' : margin === 'lg' ? 'm-6' : 'm-0'}
             ${center && 'mx-auto'}
-            ${width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
+            ${width === 'xs' ? 'max-w-xs w-full' : width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
             ${rounded === 'sm' ? 'rounded-md' : rounded === 'md' ? 'rounded-xl' : rounded === 'lg' ? 'rounded-3xl' : 'rounded-none'}
             ${border && 'border'}
             ${className}
@@ -121,7 +121,7 @@ export const Container = ({
             ${padding === 'sm' ? 'p-2' : padding === 'md' ? 'p-4' : padding === 'lg' ? 'p-6' : 'p-0'}
             ${margin === 'sm' ? 'm-2' : margin === 'md' ? 'm-4' : margin === 'lg' ? 'm-6' : 'm-0'}
             ${center && 'mx-auto'}
-            ${width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
+            ${width === 'xs' ? 'max-w-xs w-full' : width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
             ${animateColor === 'dark' ? 'bg-slate-100' : animateColor === 'darker' ? 'bg-slate-200' : animateColor === 'darkest' ? 'bg-slate-300' : 'bg-slate-100'}
             ${rounded === 'sm' ? 'rounded-md' : rounded === 'md' ? 'rounded-xl' : rounded === 'lg' ? 'rounded-3xl' : 'rounded-md'}
             ${border && 'border'}

@@ -6,15 +6,13 @@ import {
 import { useGetUserAuthorization } from '@/shared/hooks/data/user/useUser';
 import { StatusEmailVerification } from '../molecules/StatusEmailVerification';
 import { StatusApproval } from '../molecules/StatusApproval';
-import { StatusError } from '../molecules/StatusError';
+import { Error } from '../molecules/Error';
 
 export const AccountStatus = () => {
   const { data: status, isLoading, error } = useGetUserAuthorization();
 
   const loading = isLoading && <PulseLoader rows='multi' />;
-  const errorData = error && error.message && (
-    <StatusError message={error.message} />
-  );
+  const errorData = error && error.message && <Error message={error.message} />;
   const data = status && !isLoading && (
     <Container as='div' flex='col'>
       <StatusEmailVerification status={status} />
