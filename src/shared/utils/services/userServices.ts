@@ -10,6 +10,7 @@ import {
   TUser,
   TUserExtendedAuthorization,
 } from '@/shared/types/User';
+import { PasswordFormData } from '@/shared/types/Forms';
 
 const endpoint = Endpoints.user;
 
@@ -58,5 +59,16 @@ export const userServices = {
   getUserAuthorizationByEmail: async (): Promise<TUserExtendedAuthorization> =>
     await fetchHandler({
       route: `${endpoint}/authorization`,
+    }),
+
+  changePassword: async (values: PasswordFormData): Promise<string> =>
+    await fetchHandler({
+      route: endpoint + '/password',
+      options: {
+        config: {
+          method: 'PUT',
+          body: JSON.stringify(values),
+        },
+      },
     }),
 };

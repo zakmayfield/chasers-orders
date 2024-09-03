@@ -21,6 +21,8 @@ import {
   PiSpinnerGap,
   PiTrashDuotone,
   PiXCircleDuotone,
+  PiEyeDuotone,
+  PiEyeClosedDuotone,
 } from 'react-icons/pi';
 import { CiShop } from 'react-icons/ci';
 import { FaChevronDown } from 'react-icons/fa';
@@ -65,6 +67,8 @@ export const XIcon = PiXCircleThin;
 //^ NEW ICONS - duotone
 export const ArrowCircleRightDuotone = PiArrowCircleRightDuotone;
 export const CheckCircleDuotone = PiCheckCircleDuotone;
+export const EyeDuotone = PiEyeDuotone;
+export const EyeClosedDuotone = PiEyeClosedDuotone;
 export const FacebookDuotone = PiFacebookLogoDuotone;
 export const HeartDuotone = PiHeartDuotone;
 export const HouseDuotone = PiHouseDuotone;

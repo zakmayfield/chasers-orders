@@ -11,7 +11,7 @@ import { Error } from '../molecules/Error';
 export const AccountStatus = () => {
   const { data: status, isLoading, error } = useGetUserAuthorization();
 
-  const loading = isLoading && <PulseLoader rows='multi' />;
+  const loading = isLoading && <PulseLoader rows='multi' width='full' />;
   const errorData = error && error.message && <Error message={error.message} />;
   const data = status && !isLoading && (
     <Container as='div' flex='col'>

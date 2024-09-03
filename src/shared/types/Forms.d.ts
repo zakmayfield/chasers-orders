@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { AuthSignInValidator, AuthSignUpValidator } from '../validators/auth';
 import { InstructionsValidator } from '../validators/cart/DeliveryInstructionsValidator';
 import { CompanyValidator } from '../validators/user/CompanyValidator';
+import { PasswordValidator } from '../validators/user/PasswordValidator';
 
 export type SignInFormData = z.infer<typeof AuthSignInValidator>;
 export type SignUpFormData = z.infer<typeof AuthSignUpValidator>;
@@ -27,6 +28,7 @@ type AdjustedContactFormData = z.ZodObject<
   }
 >;
 export type ContactFormData = z.infer<AdjustedContactFormData>;
+export type PasswordFormData = z.infer<typeof PasswordValidator>;
 
 export type SignUpFormSteps = '1' | '2' | '3' | '4';
 

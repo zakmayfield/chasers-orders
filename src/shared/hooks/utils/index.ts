@@ -1,4 +1,5 @@
 export * from './useButtonClasses';
+export * from './useChangePasswordForm';
 export * from './useDeliveryInstructionsForm';
 export * from './useStepTracker';
 export * from './useSyncBillingAddress';

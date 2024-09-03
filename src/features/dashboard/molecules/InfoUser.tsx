@@ -5,7 +5,7 @@ export const InfoUser = ({ email }: { email: string }) => {
     <Container as='div' flex='col'>
       <Heading as='h5' content='User' />
       <Container as='div' flex='col' paddingX='lg'>
-        <Container as='p' flex='row' className='border-b'>
+        <Container as='div' flex='row' className='border-b'>
           <Container as='p' width='xs'>
             Email:
           </Container>{' '}

@@ -13,7 +13,7 @@ import { InfoCompany } from '../molecules/InfoCompany';
 export const AccountInformation = () => {
   const { data: user, isLoading, error } = useGetUser({ fullUser: true });
 
-  const loading = isLoading && <PulseLoader rows='multi' />;
+  const loading = isLoading && <PulseLoader rows='multi' width='full' />;
   const errorData = error && error.message && <Error message={error.message} />;
   const data = user && user.full && !isLoading && (
     <Container as='div' flex='col'>

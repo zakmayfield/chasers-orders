@@ -7,6 +7,7 @@ import { InstructionsValidator } from '@/shared/validators/cart/DeliveryInstruct
 import { QuantityValidator } from '@/shared/validators/cart/QuantityValidator';
 import { ContactValidator } from '@/shared/validators/user/ContactValidator';
 import { CompanyValidator } from './user/CompanyValidator';
+import { PasswordValidator } from './user/PasswordValidator';
 
 export const signInResolver = zodResolver(AuthSignInValidator);
 export const signUpResolver = zodResolver(AuthSignUpValidator);
@@ -14,3 +15,4 @@ export const quantityResolver = zodResolver(QuantityValidator);
 export const contactResolver = zodResolver(ContactValidator);
 export const companyResolver = zodResolver(CompanyValidator);
 export const instructionsResolver = zodResolver(InstructionsValidator);
+export const passwordResolver = zodResolver(PasswordValidator);
