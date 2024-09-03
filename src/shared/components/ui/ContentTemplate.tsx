@@ -9,6 +9,7 @@ export const ContentTemplate = ({
   center,
   className,
   headingClassname,
+  headingUnderline,
 }: {
   children: React.ReactNode;
   title?: string;
@@ -18,6 +19,7 @@ export const ContentTemplate = ({
   center?: boolean;
   className?: string;
   headingClassname?: string;
+  headingUnderline?: boolean;
 }) => {
   return (
     <Container
@@ -29,7 +31,11 @@ export const ContentTemplate = ({
       className={className}
     >
       {title && (
-        <Heading as={headingAs} content={title} className={headingClassname} />
+        <Heading
+          as={headingAs}
+          content={title}
+          className={`${headingClassname || ''} ${headingUnderline ? 'border-b' : ''}`}
+        />
       )}
       {children}
     </Container>
