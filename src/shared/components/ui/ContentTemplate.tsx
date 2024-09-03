@@ -5,6 +5,7 @@ export const ContentTemplate = ({
   title,
   headingAs = 'h2',
   width,
+  padding,
   center,
   className,
   headingClassname,
@@ -13,6 +14,7 @@ export const ContentTemplate = ({
   title?: string;
   headingAs?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   width?: ContainerProps['width'];
+  padding?: ContainerProps['padding'];
   center?: boolean;
   className?: string;
   headingClassname?: string;
@@ -22,6 +24,7 @@ export const ContentTemplate = ({
       as='div'
       flex='col'
       width={width}
+      padding={padding}
       center={center}
       className={className}
     >

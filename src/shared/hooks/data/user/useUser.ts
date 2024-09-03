@@ -12,6 +12,7 @@ export const useGetUser = ({ fullUser }: { fullUser?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.USER],
     queryFn: async () => await userServices.getUser({ fullUser }),
+    staleTime: Infinity,
   });
 
   const dataMap = {
@@ -26,6 +27,7 @@ export const useGetContact = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.CONTACT],
     queryFn: async () => await userServices.getContactByUserId(),
+    staleTime: Infinity,
   });
   return { data, isLoading, error };
 };
@@ -34,6 +36,7 @@ export const useGetCompany = ({ hasAddress }: { hasAddress?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [hasAddress ? QueryKeys.COMPANY_FULL : QueryKeys.COMPANY],
     queryFn: async () => await userServices.getCompanyByUserId({ hasAddress }),
+    staleTime: Infinity,
   });
 
   const dataMap = {
@@ -50,6 +53,7 @@ export const useGetShipping = ({ company_id }: { company_id: string }) => {
     queryKey: [QueryKeys.SHIPPING],
     queryFn: async () =>
       await userServices.getShippingByCompanyId({ company_id }),
+    staleTime: Infinity,
   });
   return { data, isLoading, error };
 };
@@ -59,6 +63,7 @@ export const useGetBilling = ({ company_id }: { company_id: string }) => {
     queryKey: [QueryKeys.BILLING],
     queryFn: async () =>
       await userServices.getBillingByCompanyId({ company_id }),
+    staleTime: Infinity,
   });
   return { data, isLoading, error };
 };
@@ -67,6 +72,7 @@ export const useGetUserAuthorization = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.AUTHORIZATION],
     queryFn: async () => await userServices.getUserAuthorizationByEmail(),
+    staleTime: Infinity,
   });
   return { data, isLoading, error };
 };

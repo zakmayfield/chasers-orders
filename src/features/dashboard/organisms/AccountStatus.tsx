@@ -1,9 +1,34 @@
-import { ContentTemplate } from '@/shared/components/ui';
+import {
+  Container,
+  ContentTemplate,
+  PulseLoader,
+} from '@/shared/components/ui';
+import { useGetUserAuthorization } from '@/shared/hooks/data/user/useUser';
+import { StatusEmailVerification } from '../molecules/StatusEmailVerification';
+import { StatusApproval } from '../molecules/StatusApproval';
+import { StatusError } from '../molecules/StatusError';
 
 export const AccountStatus = () => {
+  const { data: status, isLoading, error } = useGetUserAuthorization();
+
+  const loading = isLoading && <PulseLoader rows='multi' />;
+  const errorData = error && error.message && (
+    <StatusError message={error.message} />
+  );
+  const data = status && !isLoading && (
+    <Container as='div' flex='col'>
+      <StatusEmailVerification status={status} />
+      <StatusApproval status={status} />
+    </Container>
+  );
+
   return (
-    <ContentTemplate title='Status' headingAs='h5'>
-      content
+    <ContentTemplate title='Status' headingAs='h4'>
+      <Container as='div' flex='col' paddingX='lg'>
+        {loading}
+        {errorData}
+        {data}
+      </Container>
     </ContentTemplate>
   );
 };

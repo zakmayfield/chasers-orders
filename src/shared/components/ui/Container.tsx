@@ -23,8 +23,10 @@ export type ContainerProps = {
   children?: React.ReactNode;
   className?: string;
   flex?: 'row' | 'col';
+  gap?: 'sm' | 'md' | 'lg';
   flexCenter?: boolean;
   padding?: 'sm' | 'md' | 'lg';
+  paddingX?: 'sm' | 'md' | 'lg';
   margin?: 'sm' | 'md' | 'lg';
   center?: boolean;
   rounded?: 'sm' | 'md' | 'lg';
@@ -38,8 +40,10 @@ export const Container = ({
   children,
   className,
   flex,
+  gap,
   flexCenter,
   padding,
+  paddingX,
   margin,
   center,
   width,
@@ -53,8 +57,10 @@ export const Container = ({
         <Div
           className={`
             ${flex === 'row' ? 'flex items-center gap-3' : flex === 'col' ? 'flex flex-col gap-3' : 'block'} 
+            ${gap === 'sm' ? 'gap-1' : gap === 'md' ? 'gap-3' : gap === 'lg' ? 'gap-6' : ''}
             ${flexCenter && 'items-center justify-center'} 
             ${padding === 'sm' ? 'p-2' : padding === 'md' ? 'p-4' : padding === 'lg' ? 'p-6' : 'p-0'}
+            ${paddingX === 'sm' ? 'px-2' : paddingX === 'md' ? 'px-4' : paddingX === 'lg' ? 'px-6' : ''}
             ${margin === 'sm' ? 'm-2' : margin === 'md' ? 'm-4' : margin === 'lg' ? 'm-6' : 'm-0'}
             ${center && 'mx-auto'}
             ${width === 'sm' ? 'max-w-sm w-full' : width === 'md' ? 'max-w-xl w-full' : width === 'lg' ? 'max-w-4xl w-full' : width === 'xl' ? 'max-w-6xl w-full' : width === 'full' ? 'max-w-full w-full' : ''}
