@@ -50,15 +50,13 @@ export const getProductVariantById: TGetProductVariantById = async ({
   return productVariant;
 };
 
-type TGetFirstVariantId = (props: {
-  product_id: string;
-}) => Promise<string | undefined>;
+type TGetFirstVariantId = (props: { product_id: string }) => Promise<string>;
 export const getFirstVariantId: TGetFirstVariantId = async ({ product_id }) => {
   const product = await db.product.findUnique({
     where: { product_id },
     include: { variants: true },
   });
-  const firstVariantId = product?.variants[0].product_variant_id;
+  const firstVariantId = product?.variants[0].product_variant_id!;
   return firstVariantId;
 };
 

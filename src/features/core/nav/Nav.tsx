@@ -5,7 +5,7 @@ import { Container } from '@/shared/components/ui';
 
 export const Nav = () => {
   return (
-    <Container as='div' width='lg' center={true} border={true}>
+    <Container as='div' width='lg' center={true}>
       <Container as='div' flex='row' flexCenter={true}>
         <Link href='/products' className='rounded px-2 hover:ring-2'>
           Shop

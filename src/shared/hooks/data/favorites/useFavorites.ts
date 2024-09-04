@@ -1,4 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { favoriteServices } from '@/shared/utils/services/favoriteServices';
 import { TFavoriteWithProduct } from '@/shared/types/Favorite';
@@ -50,6 +51,7 @@ export const useAddFavorite = () => {
 };
 
 export const useDeleteFavorite = () => {
+  const { notify } = useToast();
   const queryClient = useQueryClient();
 
   const { mutate, data, isLoading, error } = useCustomMutation({
@@ -63,6 +65,8 @@ export const useDeleteFavorite = () => {
           );
         }
       );
+
+      notify('Removed favorite');
     },
   });
 

@@ -12,6 +12,7 @@ export type BtnStyleProps = {
   height?: 'sm' | 'md' | 'lg';
   padding?: 'sm' | 'md' | 'lg';
   bgColor?: 'green' | 'red';
+  textColor?: string;
   fontWeight?: 'normal' | 'bold';
   fontSize?: 'sm' | 'md' | 'lg';
   className?: string;
@@ -23,10 +24,22 @@ type BtnProps = BtnStyleProps & {
   isLoading?: boolean;
   Icon?: IconType;
   handleClick?(): void;
+  mouseActions?: {
+    onMouseEnter?(): void;
+    onMouseLeave?(): void;
+  };
 };
 
 export const Btn = (props: BtnProps) => {
-  const { text, isDisabled, isLoading, width, Icon, handleClick } = props;
+  const {
+    text,
+    isDisabled,
+    isLoading,
+    width,
+    Icon,
+    handleClick,
+    mouseActions,
+  } = props;
   const { buttonClasses, contentClasses } = useButtonClasses({ ...props });
 
   return (
@@ -36,10 +49,13 @@ export const Btn = (props: BtnProps) => {
         disabled={isDisabled}
         aria-disabled={isDisabled}
         className={merge(buttonClasses)}
+        {...mouseActions}
       >
         {isLoading && width ? (
           <SpinLoader
-            className={merge(`${contentClasses} text-opacity-100 text-xl`)}
+            className={merge(
+              `${contentClasses} ${props.bgColor ? 'text-white' : 'text-black'} text-opacity-100 text-xl`
+            )}
           />
         ) : (
           <Container as='div' flex='row'>

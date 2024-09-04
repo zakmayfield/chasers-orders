@@ -4,6 +4,7 @@ import {
   TCartItem,
   TCartItemWithProductVariant,
   TCartWithItemsAndProductVariants,
+  TCreateCartItemRequestPayload,
 } from '@/shared/types/Cart';
 
 const endpoint = Endpoints.cart;
@@ -50,17 +51,15 @@ export const cartServices = {
       },
     }),
 
-  createCartItem: async ({
-    product_variant_id,
-  }: {
-    product_variant_id: string;
-  }): Promise<TCartItemWithProductVariant> =>
+  createCartItem: async (
+    props: TCreateCartItemRequestPayload
+  ): Promise<TCartItemWithProductVariant> =>
     await fetchHandler({
       route: endpoint + `/items`,
       options: {
         config: {
           method: 'POST',
-          body: JSON.stringify(product_variant_id),
+          body: JSON.stringify({ ...props }),
         },
       },
     }),

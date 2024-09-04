@@ -1,12 +1,16 @@
 import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints } from '@/shared/types/API';
-import { TFavorite, TFavoriteWithProduct } from '@/shared/types/Favorite';
+import {
+  TFavorite,
+  TFavoriteWithProduct,
+  TFavoriteWithProductAndCategory,
+} from '@/shared/types/Favorite';
 
 const favorite = Endpoints.favorite;
 const favorites = Endpoints.favorites;
 
 export const favoriteServices = {
-  getFavorites: async (): Promise<TFavoriteWithProduct[]> =>
+  getFavorites: async (): Promise<TFavoriteWithProductAndCategory[]> =>
     await fetchHandler({
       route: favorites,
     }),

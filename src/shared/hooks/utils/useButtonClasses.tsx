@@ -7,6 +7,7 @@ export const useButtonClasses = ({
   padding,
   border,
   bgColor,
+  textColor,
   isDisabled,
   fontWeight,
   fontSize,
@@ -67,7 +68,12 @@ export const useButtonClasses = ({
 
     // Content
     const textDisabled = isDisabled && 'text-opacity-60';
-    const textColor = bgColor ? 'text-white' : 'text-black';
+    const color =
+      !textColor && bgColor
+        ? 'text-white'
+        : textColor
+          ? textColor
+          : 'text-black';
     const textWeight =
       (fontWeight && fontWeightMap[fontWeight]) || fontWeightMap.default;
     const textSize = (fontSize && fontSizeMap[fontSize]) || fontSizeMap.default;
@@ -75,7 +81,7 @@ export const useButtonClasses = ({
     return {
       contentClasses: `
         ${textDisabled}
-        ${textColor}
+        ${color}
         ${textWeight}
         ${textSize}
       `,

@@ -1,3 +1,4 @@
+import { TCreateCartItemRequestPayload } from '@/shared/types/Cart';
 import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
 import { errorResponse } from '@/shared/utils/api/errorResponse';
 import { getSearchParams } from '@/shared/utils/api/getSearchParams';
@@ -8,12 +9,14 @@ import {
   emptyCart,
   getCartItems,
 } from '@/shared/utils/db/cart';
+import { getFirstVariantId } from '@/shared/utils/db/product';
 import { NextRequest } from 'next/server';
 
 async function handler(req: NextRequest) {
   try {
     const { cart_id } = await checkAuthentication();
-    let body = await resolveRequestBody<string>(req);
+    let { product_variant_id, product_id } =
+      await resolveRequestBody<TCreateCartItemRequestPayload>(req);
 
     const hasProductVariant = getSearchParams(
       req.nextUrl.searchParams,
@@ -22,7 +25,7 @@ async function handler(req: NextRequest) {
 
     const args = {
       cart_id,
-      product_variant_id: body,
+      product_variant_id,
       product_variant: !!hasProductVariant,
     };
 
@@ -32,7 +35,21 @@ async function handler(req: NextRequest) {
         return new Response(JSON.stringify(cartItems), { status: 200 });
 
       case 'POST':
-        const addItem = await addItemToCart({ ...args, quantity: 1 });
+        if (product_id) {
+          const firstVariantId = await getFirstVariantId({ product_id });
+          const addItem = await addItemToCart({
+            cart_id,
+            product_variant_id: firstVariantId,
+            quantity: 1,
+          });
+          return new Response(JSON.stringify(addItem), { status: 201 });
+        }
+
+        const addItem = await addItemToCart({
+          cart_id,
+          product_variant_id: product_variant_id!,
+          quantity: 1,
+        });
         return new Response(JSON.stringify(addItem), { status: 201 });
 
       case 'DELETE':
@@ -43,7 +60,10 @@ async function handler(req: NextRequest) {
             status: 200,
           });
         } else {
-          const deleteItem = await deleteCartItem({ ...args });
+          const deleteItem = await deleteCartItem({
+            cart_id,
+            product_variant_id: product_variant_id!,
+          });
           return new Response(JSON.stringify(deleteItem), { status: 200 });
         }
     }

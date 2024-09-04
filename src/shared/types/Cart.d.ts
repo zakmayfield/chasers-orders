@@ -15,3 +15,8 @@ export type TCartItemWithProductVariant = TCartItem & {
 export type TCartWithItemsAndProductVariants = TCart & {
   items: TCartItemWithProductVariant[];
 };
+
+export type TCreateCartItemRequestPayload = {
+  product_variant_id?: string;
+  product_id?: string;
+};

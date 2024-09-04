@@ -8,7 +8,7 @@ export const DashboardTemplate = ({
   children: React.ReactNode;
 }) => {
   return (
-    <PageTemplate title='Dashboard' width='full' className='border'>
+    <PageTemplate title='Dashboard' width='full'>
       <Container as='div' flex='row'>
         <Link href='/dashboard'>Home</Link>
         <Link href='/dashboard/favorites'>Favorites</Link>

@@ -1,6 +1,10 @@
 'use server';
 import { db } from '@/lib/prisma';
-import { TFavorite, TFavoriteWithProduct } from '@/shared/types/Favorite';
+import {
+  TFavorite,
+  TFavoriteWithProduct,
+  TFavoriteWithProductAndCategory,
+} from '@/shared/types/Favorite';
 
 //^ POST
 type TAddToFavorites = (props: {
@@ -44,7 +48,7 @@ export const deleteFromFavorites: TDeleteFromFavorites = async ({
 type TGetFavoritesByUserId = (props: {
   user_id: string;
   product?: boolean;
-}) => Promise<TFavoriteWithProduct[]>;
+}) => Promise<TFavoriteWithProductAndCategory[]>;
 export const getFavoritesByUserId: TGetFavoritesByUserId = async ({
   user_id,
 }) => {
@@ -53,7 +57,7 @@ export const getFavoritesByUserId: TGetFavoritesByUserId = async ({
     orderBy: {
       created_at: 'desc',
     },
-    include: { product: true },
+    include: { product: { include: { category: true } } },
   });
   return favorites;
 };

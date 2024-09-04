@@ -23,6 +23,8 @@ import {
   PiXCircleDuotone,
   PiEyeDuotone,
   PiEyeClosedDuotone,
+  PiShoppingCartDuotone,
+  PiHeartBreakDuotone,
 } from 'react-icons/pi';
 import { CiShop } from 'react-icons/ci';
 import { FaChevronDown } from 'react-icons/fa';
@@ -71,9 +73,11 @@ export const EyeDuotone = PiEyeDuotone;
 export const EyeClosedDuotone = PiEyeClosedDuotone;
 export const FacebookDuotone = PiFacebookLogoDuotone;
 export const HeartDuotone = PiHeartDuotone;
+export const HeartBreakDuotone = PiHeartBreakDuotone;
 export const HouseDuotone = PiHouseDuotone;
 export const InfoDuotone = PiInfoDuotone;
 export const InstagramDuotone = PiInstagramLogoDuotone;
+export const ShoppingCartDuotone = PiShoppingCartDuotone;
 export const TrashDuotone = PiTrashDuotone;
 export const WarningCircleDuotone = PiWarningCircleDuotone;
 export const WarningTriangleDuotone = PiWarningDuotone;

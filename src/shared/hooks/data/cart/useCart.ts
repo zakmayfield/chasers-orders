@@ -1,4 +1,5 @@
-import { QueryKeys } from '@/shared/types/Cache';
+import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { cartServices } from '@/shared/utils/services/cartServices';
 import {
@@ -6,7 +7,7 @@ import {
   TCartItemWithProductVariant,
   TCartWithItemsAndProductVariants,
 } from '@/shared/types/Cart';
-import { useQueryClient } from '@tanstack/react-query';
+import { QueryKeys } from '@/shared/types/Cache';
 
 export const useGetCart = () => {
   const { data, isLoading, error } = useCustomQuery({
@@ -81,6 +82,7 @@ export const useCreateCart = () => {
 };
 
 export const useAddToCart = () => {
+  const { notify } = useToast();
   const queryClient = useQueryClient();
 
   const { mutate, data, isLoading, error } = useCustomMutation({
@@ -92,6 +94,8 @@ export const useAddToCart = () => {
           return oldData && { ...oldData, items: [data, ...oldData.items] };
         }
       );
+
+      notify('Added to cart');
     },
   });
 
