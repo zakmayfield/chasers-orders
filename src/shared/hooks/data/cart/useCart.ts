@@ -67,6 +67,7 @@ export const useAddToCart = () => {
 };
 
 export const useDeleteCartItem = () => {
+  const { notify } = useToast();
   const queryClient = useQueryClient();
 
   const { mutate, data, isLoading, error } = useCustomMutation({
@@ -86,6 +87,8 @@ export const useDeleteCartItem = () => {
           );
         }
       );
+
+      notify('Removed from cart');
     },
   });
 
@@ -93,12 +96,13 @@ export const useDeleteCartItem = () => {
 };
 
 export const useEmptyCart = () => {
+  const { notify } = useToast();
   const queryClient = useQueryClient();
 
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: cartServices.emptyCart,
 
-    handleSuccess() {
+    handleSuccess(data) {
       queryClient.setQueryData<TCartWithItemsAndProductVariants>(
         [QueryKeys.CART],
         (oldData) => {
@@ -110,6 +114,8 @@ export const useEmptyCart = () => {
           );
         }
       );
+
+      notify(`Removed ${data.count} item(s) from cart`);
     },
   });
 
