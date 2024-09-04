@@ -77,7 +77,7 @@ type TIncrementCartItemQuantity = (props: {
   cart_id: string;
   product_variant_id: string;
   currentQuantity: number;
-}) => Promise<TCartItem>;
+}) => Promise<TCartItemWithProductVariant>;
 export const incrementCartItemQuantity: TIncrementCartItemQuantity = async ({
   cart_id,
   product_variant_id,
@@ -88,6 +88,7 @@ export const incrementCartItemQuantity: TIncrementCartItemQuantity = async ({
     data: {
       quantity: currentQuantity + 1,
     },
+    include: { product_variant: true },
   });
   return cartItem;
 };
@@ -176,4 +177,20 @@ export const getCartItem: TGetCartItem = async (props) => {
     include: { product_variant: true },
   });
   return cartItem;
+};
+
+export const checkIsItemInCart = async (props: {
+  cart_id: string;
+  product_variant_id: string;
+}) => {
+  const cartItem = await db.cartItem.findUnique({
+    where: { ...props },
+    select: { quantity: true },
+  });
+
+  if (cartItem && cartItem.quantity) {
+    return { quantity: cartItem.quantity };
+  }
+
+  return { quantity: 0 };
 };
