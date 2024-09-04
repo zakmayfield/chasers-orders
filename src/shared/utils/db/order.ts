@@ -19,7 +19,13 @@ export const createOrder: TCreateOrder = async ({ user_id, line_items }) => {
       },
     },
     include: {
-      line_items: true,
+      line_items: {
+        include: {
+          product_variant: {
+            include: { product: { include: { category: true } } },
+          },
+        },
+      },
     },
   });
   return order;
@@ -36,7 +42,13 @@ export const getOrdersByUserId: TGetOrdersByUserId = async ({ user_id }) => {
       created_at: 'desc',
     },
     include: {
-      line_items: true,
+      line_items: {
+        include: {
+          product_variant: {
+            include: { product: { include: { category: true } } },
+          },
+        },
+      },
     },
   });
   return orders;
@@ -49,7 +61,13 @@ export const getOrderById: TGetOrderById = async ({ order_id }) => {
   const order = await db.order.findUnique({
     where: { order_id },
     include: {
-      line_items: true,
+      line_items: {
+        include: {
+          product_variant: {
+            include: { product: { include: { category: true } } },
+          },
+        },
+      },
     },
   });
   return order;

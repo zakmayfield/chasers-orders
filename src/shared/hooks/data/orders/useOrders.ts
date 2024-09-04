@@ -1,6 +1,9 @@
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { orderServices } from '@/shared/utils/services/orderServices';
 import { QueryKeys } from '@/shared/types/Cache';
+import { useQueryClient } from '@tanstack/react-query';
+import { useToast } from '@/shared/hooks/utils';
+import { TOrderWithLineItems } from '@/shared/types/Order';
 
 export const useGetOrders = () => {
   const { data, isLoading, error } = useCustomQuery({
@@ -23,8 +26,20 @@ export const useGetOrder = ({ order_id }: { order_id: string }) => {
 };
 
 export const useCreateOrder = () => {
+  const { notify } = useToast();
+  const queryClient = useQueryClient();
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: orderServices.createOrder,
+    handleSuccess(data) {
+      queryClient.setQueryData<TOrderWithLineItems[]>(
+        [QueryKeys.ORDERS_WITH_LINE_ITEMS],
+        (oldData) => {
+          return oldData && [data, ...oldData];
+        }
+      );
+
+      notify('Order successfully placed');
+    },
   });
 
   return { mutate, data, isLoading, error };

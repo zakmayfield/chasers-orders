@@ -2,7 +2,7 @@ import { Container, PulseLoader } from '@/shared/components/ui';
 import { useGetFavorites } from '@/shared/hooks/data/favorites/useFavorites';
 import { Error } from '../molecules/Error';
 import { FavoritesItem } from '../molecules/FavoritesItem';
-import { FavoritesEmpty } from '../molecules/FavoritesEmpty';
+import { EmptyData } from '../molecules/EmptyData';
 
 export const FavoritesList = () => {
   const { favorites, isLoading, error } = useGetFavorites();
@@ -15,10 +15,10 @@ export const FavoritesList = () => {
     </Container>
   );
   const errorData = error && <Error message={error.message} />;
-  const emptyFavorites = !favorites.data.length && !isLoading && (
-    <FavoritesEmpty />
+  const emptyFavorites = !error && !favorites.data.length && !isLoading && (
+    <EmptyData text='No favorites' />
   );
-  const data = favorites.data && favorites.data.length > 0 && (
+  const data = !error && favorites.data && favorites.data.length > 0 && (
     <Container as='div' flex='col'>
       {favorites.data.map((favorite) => (
         <FavoritesItem key={favorite.favorite_id} favorite={favorite} />

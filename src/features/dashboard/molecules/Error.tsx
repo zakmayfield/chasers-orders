@@ -11,7 +11,10 @@ export const Error = ({ message }: { message: string }) => {
       width='sm'
       className='bg-red-50'
     >
-      <Icon IconData={WarningTriangleDuotone} iconClass='text-yellow-500' />
+      <Icon
+        IconData={WarningTriangleDuotone}
+        iconClass='text-yellow-500 text-xl'
+      />
       <Container as='p'>{message}</Container>
     </Container>
   );

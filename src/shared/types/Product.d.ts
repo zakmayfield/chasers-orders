@@ -13,6 +13,9 @@ export type TProductWithVariants = TProductWithCategory & {
 export type TProductVariantWithProduct = TProductVariant & {
   product: TProduct;
 };
+export type TProductVariantWithProductAndCategory = TProductVariant & {
+  product: TProductWithCategory;
+};
 export type TCategoryWithProducts = TCategory & {
   products: TProduct[];
 };
