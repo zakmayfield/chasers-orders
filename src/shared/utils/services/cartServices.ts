@@ -15,30 +15,18 @@ export const cartServices = {
       route: endpoint,
     }),
 
-  getCartItems: async ({
-    hasProductVariant,
-  }: {
-    hasProductVariant?: boolean;
-  }): Promise<TCartItem[] | TCartItemWithProductVariant[]> =>
+  getCartItems: async (): Promise<TCartItemWithProductVariant[]> =>
     await fetchHandler({
-      route:
-        endpoint +
-        `/items` +
-        `${hasProductVariant ? '?product_variant=true' : ''}`,
+      route: endpoint + `/items`,
     }),
 
   getCartItem: async ({
     product_variant_id,
-    hasProductVariant,
   }: {
     product_variant_id: string;
-    hasProductVariant?: boolean;
-  }): Promise<TCartItem | TCartItemWithProductVariant> =>
+  }): Promise<TCartItemWithProductVariant> =>
     await fetchHandler({
-      route:
-        endpoint +
-        `/item/${product_variant_id}` +
-        `${hasProductVariant ? '?product_variant=true' : ''}`,
+      route: endpoint + `/item/${product_variant_id}`,
     }),
 
   createCart: async (): Promise<TCartItem> =>

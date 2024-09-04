@@ -18,15 +18,9 @@ async function handler(req: NextRequest) {
     let { product_variant_id, product_id } =
       await resolveRequestBody<TCreateCartItemRequestPayload>(req);
 
-    const hasProductVariant = getSearchParams(
-      req.nextUrl.searchParams,
-      'product_variant'
-    );
-
     const args = {
       cart_id,
       product_variant_id,
-      product_variant: !!hasProductVariant,
     };
 
     switch (req.method) {

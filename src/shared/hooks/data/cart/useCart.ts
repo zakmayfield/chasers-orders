@@ -2,11 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { cartServices } from '@/shared/utils/services/cartServices';
-import {
-  TCartItem,
-  TCartItemWithProductVariant,
-  TCartWithItemsAndProductVariants,
-} from '@/shared/types/Cart';
+import { TCartWithItemsAndProductVariants } from '@/shared/types/Cart';
 import { QueryKeys } from '@/shared/types/Cache';
 
 export const useGetCart = () => {
@@ -18,60 +14,28 @@ export const useGetCart = () => {
   return { cart: data, isLoading, error };
 };
 
-export const useGetCartItems = ({
-  hasProductVariant,
-}: {
-  hasProductVariant?: boolean;
-}) => {
+export const useGetCartItems = () => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [
-      hasProductVariant
-        ? QueryKeys.CART_ITEMS_WITH_PRODUCT_VARIANT
-        : QueryKeys.CART_ITEMS,
-    ],
-    queryFn: async () => await cartServices.getCartItems({ hasProductVariant }),
+    queryKey: [QueryKeys.CART_ITEMS_WITH_PRODUCT_VARIANT],
+    queryFn: async () => await cartServices.getCartItems(),
     staleTime: Infinity,
   });
 
-  const dataMap = {
-    withProductVariant:
-      (hasProductVariant && data && (data as TCartItemWithProductVariant[])) ||
-      [],
-    withoutProductVariant:
-      (!hasProductVariant && data && (data as TCartItem[])) || [],
-  };
-
-  return { data: dataMap, isLoading, error };
+  return { data, isLoading, error };
 };
 
 export const useGetCartItem = ({
   product_variant_id,
-  hasProductVariant,
 }: {
   product_variant_id: string;
-  hasProductVariant?: boolean;
 }) => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [
-      hasProductVariant
-        ? QueryKeys.CART_ITEM_WITH_PRODUCT_VARIANT
-        : QueryKeys.CART_ITEM,
-      product_variant_id,
-    ],
-    queryFn: async () =>
-      await cartServices.getCartItem({ product_variant_id, hasProductVariant }),
+    queryKey: [QueryKeys.CART_ITEM_WITH_PRODUCT_VARIANT, product_variant_id],
+    queryFn: async () => await cartServices.getCartItem({ product_variant_id }),
     staleTime: Infinity,
   });
 
-  const dataMap = {
-    withProductVariant:
-      (hasProductVariant && data && (data as TCartItemWithProductVariant)) ||
-      undefined,
-    withoutProductVariant:
-      (!hasProductVariant && data && (data as TCartItem)) || undefined,
-  };
-
-  return { data: dataMap, isLoading, error };
+  return { data, isLoading, error };
 };
 
 export const useCreateCart = () => {
