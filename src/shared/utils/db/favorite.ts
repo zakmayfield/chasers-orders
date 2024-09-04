@@ -10,7 +10,7 @@ import {
 type TAddToFavorites = (props: {
   user_id: string;
   product_id: string;
-}) => Promise<TFavoriteWithProduct>;
+}) => Promise<TFavoriteWithProductAndCategory>;
 export const addToFavorites: TAddToFavorites = async ({
   user_id,
   product_id,
@@ -20,7 +20,7 @@ export const addToFavorites: TAddToFavorites = async ({
       user_id,
       product_id,
     },
-    include: { product: true },
+    include: { product: { include: { category: true } } },
   });
   return favorite;
 };
@@ -65,11 +65,11 @@ export const getFavoritesByUserId: TGetFavoritesByUserId = async ({
 type TGetFavoriteById = (props: {
   favorite_id: string;
   product?: boolean;
-}) => Promise<TFavoriteWithProduct | null>;
+}) => Promise<TFavoriteWithProductAndCategory | null>;
 export const getFavoriteById: TGetFavoriteById = async ({ favorite_id }) => {
   const favorite = await db.favorite.findUnique({
     where: { favorite_id },
-    include: { product: true },
+    include: { product: { include: { category: true } } },
   });
   return favorite;
 };

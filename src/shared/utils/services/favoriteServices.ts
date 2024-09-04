@@ -2,7 +2,6 @@ import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints } from '@/shared/types/API';
 import {
   TFavorite,
-  TFavoriteWithProduct,
   TFavoriteWithProductAndCategory,
 } from '@/shared/types/Favorite';
 
@@ -19,7 +18,7 @@ export const favoriteServices = {
     favorite_id,
   }: {
     favorite_id: string;
-  }): Promise<TFavoriteWithProduct> =>
+  }): Promise<TFavoriteWithProductAndCategory> =>
     await fetchHandler({
       route: favorite + `/${favorite_id}`,
     }),
@@ -28,7 +27,7 @@ export const favoriteServices = {
     product_id,
   }: {
     product_id: string;
-  }): Promise<TFavoriteWithProduct> =>
+  }): Promise<TFavoriteWithProductAndCategory> =>
     await fetchHandler({
       route: favorites,
       options: {
@@ -57,7 +56,7 @@ export const favoriteServices = {
   toggleFavorite: async (props: {
     action: 'add' | 'remove';
     product_id: string;
-  }): Promise<TFavoriteWithProduct> =>
+  }): Promise<TFavoriteWithProductAndCategory> =>
     await fetchHandler({
       route: favorites + '/toggle',
       options: {
