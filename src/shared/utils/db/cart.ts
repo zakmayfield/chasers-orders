@@ -97,7 +97,7 @@ type TDecrementCartItemQuantity = (props: {
   cart_id: string;
   product_variant_id: string;
   currentQuantity: number;
-}) => Promise<TCartItem>;
+}) => Promise<TCartItemWithProductVariant>;
 export const decrementCartItemQuantity: TDecrementCartItemQuantity = async ({
   cart_id,
   product_variant_id,
@@ -106,6 +106,7 @@ export const decrementCartItemQuantity: TDecrementCartItemQuantity = async ({
   if (currentQuantity === 1) {
     const deleteCartItem = await db.cartItem.delete({
       where: { cart_id, product_variant_id },
+      include: { product_variant: true },
     });
     return deleteCartItem;
   } else {
@@ -114,6 +115,7 @@ export const decrementCartItemQuantity: TDecrementCartItemQuantity = async ({
       data: {
         quantity: currentQuantity + 1,
       },
+      include: { product_variant: true },
     });
     return updateCartItem;
   }
@@ -123,7 +125,7 @@ type TUpdateCartItemSize = (props: {
   cart_id: string;
   product_variant_id: string;
   new_variant_id: string;
-}) => Promise<TCartItem>;
+}) => Promise<TCartItemWithProductVariant>;
 export const updateCartItemSize: TUpdateCartItemSize = async ({
   cart_id,
   product_variant_id,
@@ -132,6 +134,7 @@ export const updateCartItemSize: TUpdateCartItemSize = async ({
   const cartItem = await db.cartItem.update({
     where: { cart_id, product_variant_id },
     data: { product_variant_id: new_variant_id },
+    include: { product_variant: true },
   });
   return cartItem;
 };
@@ -182,7 +185,7 @@ export const getCartItem: TGetCartItem = async (props) => {
 export const checkIsItemInCart = async (props: {
   cart_id: string;
   product_variant_id: string;
-}) => {
+}): Promise<{ quantity: number }> => {
   const cartItem = await db.cartItem.findUnique({
     where: { ...props },
     select: { quantity: true },
