@@ -2,7 +2,6 @@ import { NextRequest } from 'next/server';
 import { resolveRequestBody } from '@/shared/utils/api/resolveRequestBody';
 import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
 import { errorResponse } from '@/shared/utils/api/errorResponse';
-import { getSearchParams } from '@/shared/utils/api/getSearchParams';
 import { createOrder, getOrdersByUserId } from '@/shared/utils/db/order';
 import { TCreateOrderRequestPayload } from '@/shared/types/Order';
 
@@ -10,15 +9,10 @@ export async function handler(req: NextRequest) {
   try {
     const { user_id } = await checkAuthentication();
 
-    const hasLineItems = getSearchParams(
-      req.nextUrl.searchParams,
-      'line-items'
-    );
-
     const line_items =
       await resolveRequestBody<TCreateOrderRequestPayload>(req);
 
-    const args = { user_id, hasLineItems: !!hasLineItems, line_items };
+    const args = { user_id, line_items };
 
     switch (req.method) {
       case 'GET':

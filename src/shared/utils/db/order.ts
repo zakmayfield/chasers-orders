@@ -1,7 +1,6 @@
 'use server';
 import { db } from '@/lib/prisma';
 import {
-  TOrder,
   TOrderWithLineItems,
   TCreateOrderRequestPayload,
 } from '@/shared/types/Order';
@@ -29,19 +28,15 @@ export const createOrder: TCreateOrder = async ({ user_id, line_items }) => {
 //^ GET
 type TGetOrdersByUserId = (props: {
   user_id: string;
-  hasLineItems?: boolean;
-}) => Promise<TOrder[] | TOrderWithLineItems[]>;
-export const getOrdersByUserId: TGetOrdersByUserId = async ({
-  user_id,
-  hasLineItems = false,
-}) => {
+}) => Promise<TOrderWithLineItems[]>;
+export const getOrdersByUserId: TGetOrdersByUserId = async ({ user_id }) => {
   const orders = await db.order.findMany({
     where: { user_id },
     orderBy: {
       created_at: 'desc',
     },
     include: {
-      line_items: hasLineItems,
+      line_items: true,
     },
   });
   return orders;
@@ -49,13 +44,12 @@ export const getOrdersByUserId: TGetOrdersByUserId = async ({
 
 type TGetOrderById = (props: {
   order_id: string;
-  line_items?: boolean;
-}) => Promise<TOrder | TOrderWithLineItems | null>;
-export const getOrderById: TGetOrderById = async ({ order_id, line_items }) => {
+}) => Promise<TOrderWithLineItems | null>;
+export const getOrderById: TGetOrderById = async ({ order_id }) => {
   const order = await db.order.findUnique({
     where: { order_id },
     include: {
-      line_items,
+      line_items: true,
     },
   });
   return order;
