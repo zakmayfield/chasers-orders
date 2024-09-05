@@ -1,5 +1,9 @@
 'use client';
-import { Container, PageTemplate } from '@/shared/components/ui';
+import {
+  Container,
+  ContentTemplate,
+  PageTemplate,
+} from '@/shared/components/ui';
 import { CartItems } from '../organisms/CartItems';
 import { OrderSummary } from '../organisms/OrderSummary';
 import { Shipping } from '../organisms/Shipping';
@@ -7,8 +11,37 @@ import { PlaceOrder } from '../organisms/PlaceOrder';
 
 export const CartTemplate = () => {
   return (
-    <PageTemplate title='Cart' width='full' className='border'>
-      <Container as='div'>content</Container>
+    <PageTemplate title='Cart' width='full'>
+      <Container
+        as='div'
+        rounded='sm'
+        padding='lg'
+        flex='col'
+        className='bg-slate-50'
+      >
+        <CartItems />
+
+        <ContentTemplate title='Summary' headingAs='h3'>
+          <Container
+            as='div'
+            rounded='sm'
+            padding='lg'
+            className='bg-slate-100'
+          >
+            summary
+          </Container>
+        </ContentTemplate>
+        <ContentTemplate title='Shipping' headingAs='h3'>
+          <Container
+            as='div'
+            rounded='sm'
+            padding='lg'
+            className='bg-slate-100'
+          >
+            shipping
+          </Container>
+        </ContentTemplate>
+      </Container>
       {/* <Container
         as='div'
         flex='row'

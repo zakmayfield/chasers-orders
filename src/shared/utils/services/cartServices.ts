@@ -1,21 +1,20 @@
 import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints, TBatchPayload } from '@/shared/types/API';
 import {
+  TCart,
   TCartItem,
-  TCartItemWithProductVariant,
-  TCartWithItemsAndProductVariants,
   TCreateCartItemRequestPayload,
 } from '@/shared/types/Cart';
 
 const endpoint = Endpoints.cart;
 
 export const cartServices = {
-  getCart: async (): Promise<TCartWithItemsAndProductVariants> =>
+  getCart: async (): Promise<TCart> =>
     await fetchHandler({
       route: endpoint,
     }),
 
-  getCartItems: async (): Promise<TCartItemWithProductVariant[]> =>
+  getCartItems: async (): Promise<TCartItem[]> =>
     await fetchHandler({
       route: endpoint + `/items`,
     }),
@@ -24,12 +23,12 @@ export const cartServices = {
     product_variant_id,
   }: {
     product_variant_id: string;
-  }): Promise<TCartItemWithProductVariant> =>
+  }): Promise<TCartItem> =>
     await fetchHandler({
       route: endpoint + `/item/${product_variant_id}`,
     }),
 
-  createCart: async (): Promise<TCartItem> =>
+  createCart: async (): Promise<string> =>
     await fetchHandler({
       route: endpoint,
       options: {
@@ -41,7 +40,7 @@ export const cartServices = {
 
   createCartItem: async (
     props: TCreateCartItemRequestPayload
-  ): Promise<TCartItemWithProductVariant> =>
+  ): Promise<TCartItem> =>
     await fetchHandler({
       route: endpoint + `/items`,
       options: {
@@ -56,13 +55,13 @@ export const cartServices = {
     product_variant_id,
   }: {
     product_variant_id: string;
-  }): Promise<TCartItem> =>
+  }): Promise<{ product_variant_id: string }> =>
     await fetchHandler({
       route: endpoint + `/items`,
       options: {
         config: {
           method: 'DELETE',
-          body: JSON.stringify(product_variant_id),
+          body: JSON.stringify({ product_variant_id }),
         },
       },
     }),

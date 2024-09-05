@@ -8,6 +8,7 @@ export const AccountTemplate = () => {
   return (
     <ContentTemplate title='Account' headingClassname='mb-3'>
       <Container as='div' flex='col' paddingX='lg' gap='lg'>
+        {/* TODO: set media queries for data - base: col md: row */}
         <AccountStatus />
         <AccountInformation />
         <PasswordChange />

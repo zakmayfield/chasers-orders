@@ -1,19 +1,36 @@
 import { Cart, CartItem } from '@prisma/client';
-import { TProductVariant } from './Product';
+import { TCategory, TProduct, TProductVariant } from './Product';
 
-export type TCart = Cart;
-export type TCartItem = CartItem;
+// export type TCart = Cart;
+// export type TCartItem = CartItem;
 
-export type TCartWithItems = TCart & {
-  items: CartItem[];
+// export type TCartWithItems = TCart & {
+//   items: CartItem[];
+// };
+
+// export type TCartItemWithProductVariant = TCartItem & {
+//   product_variant: TProductVariant;
+// };
+
+// export type TCartWithItemsAndProductVariants = TCart & {
+//   items: TCartItemWithProductVariant[];
+// };
+
+// UPDATED TYPES
+export type TCart = Cart & {
+  items: TCartItem[];
 };
 
-export type TCartItemWithProductVariant = TCartItem & {
-  product_variant: TProductVariant;
-};
-
-export type TCartWithItemsAndProductVariants = TCart & {
-  items: TCartItemWithProductVariant[];
+export type TCartItem = CartItem & {
+  product_variant:
+    | (TProductVariant & {
+        product:
+          | (TProduct & {
+              category: TCategory | null;
+            })
+          | null;
+      })
+    | null;
 };
 
 export type TCreateCartItemRequestPayload = {

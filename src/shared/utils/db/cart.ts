@@ -1,33 +1,32 @@
 'use server';
 import { db } from '@/lib/prisma';
 import { TBatchPayload } from '@/shared/types/API';
-import {
-  TCart,
-  TCartItem,
-  TCartItemWithProductVariant,
-  TCartWithItemsAndProductVariants,
-} from '@/shared/types/Cart';
+import { TCart, TCartItem } from '@/shared/types/Cart';
 
 //^ POST
-type TCreateCart = (props: { user_id: string }) => Promise<TCart>;
+type TCreateCart = (props: { user_id: string }) => Promise<string>;
 export const createCart: TCreateCart = async ({ user_id }) => {
   const cart = await db.cart.create({
     data: {
       user_id,
     },
   });
-  return cart;
+  return cart.cart_id;
 };
 
 type TAddItemToCart = (props: {
   cart_id: string;
   product_variant_id: string;
   quantity: number;
-}) => Promise<TCartItemWithProductVariant>;
+}) => Promise<TCartItem>;
 export const addItemToCart: TAddItemToCart = async (props) => {
   const cartItem = await db.cartItem.create({
     data: { ...props },
-    include: { product_variant: true },
+    include: {
+      product_variant: {
+        include: { product: { include: { category: true } } },
+      },
+    },
   });
   return cartItem;
 };
@@ -44,7 +43,7 @@ export const emptyCart: TEmptyCart = async ({ cart_id }) => {
 type TDeleteCartItem = (props: {
   cart_id: string;
   product_variant_id: string;
-}) => Promise<TCartItem>;
+}) => Promise<{ product_variant_id: string }>;
 export const deleteCartItem: TDeleteCartItem = async ({
   cart_id,
   product_variant_id,
@@ -52,7 +51,9 @@ export const deleteCartItem: TDeleteCartItem = async ({
   const cartItem = await db.cartItem.delete({
     where: { cart_id, product_variant_id },
   });
-  return cartItem;
+  return {
+    product_variant_id: cartItem.product_variant_id,
+  };
 };
 
 //^ PUT
@@ -69,6 +70,17 @@ export const updateCartItemQuantity: TUpdateCartItemQuantity = async ({
   const cartItem = await db.cartItem.update({
     where: { cart_id, product_variant_id },
     data: { quantity },
+    include: {
+      product_variant: {
+        include: {
+          product: {
+            include: {
+              category: true,
+            },
+          },
+        },
+      },
+    },
   });
   return cartItem;
 };
@@ -77,7 +89,7 @@ type TIncrementCartItemQuantity = (props: {
   cart_id: string;
   product_variant_id: string;
   currentQuantity: number;
-}) => Promise<TCartItemWithProductVariant>;
+}) => Promise<TCartItem>;
 export const incrementCartItemQuantity: TIncrementCartItemQuantity = async ({
   cart_id,
   product_variant_id,
@@ -88,7 +100,17 @@ export const incrementCartItemQuantity: TIncrementCartItemQuantity = async ({
     data: {
       quantity: currentQuantity + 1,
     },
-    include: { product_variant: true },
+    include: {
+      product_variant: {
+        include: {
+          product: {
+            include: {
+              category: true,
+            },
+          },
+        },
+      },
+    },
   });
   return cartItem;
 };
@@ -97,25 +119,45 @@ type TDecrementCartItemQuantity = (props: {
   cart_id: string;
   product_variant_id: string;
   currentQuantity: number;
-}) => Promise<TCartItemWithProductVariant>;
+}) => Promise<TCartItem | null>;
 export const decrementCartItemQuantity: TDecrementCartItemQuantity = async ({
   cart_id,
   product_variant_id,
   currentQuantity,
 }) => {
   if (currentQuantity === 1) {
-    const deleteCartItem = await db.cartItem.delete({
+    const getItem = await db.cartItem.findUnique({
       where: { cart_id, product_variant_id },
-      include: { product_variant: true },
+      include: {
+        product_variant: {
+          include: {
+            product: {
+              include: {
+                category: true,
+              },
+            },
+          },
+        },
+      },
     });
-    return deleteCartItem;
+    return getItem;
   } else {
     const updateCartItem = await db.cartItem.update({
       where: { cart_id, product_variant_id },
       data: {
         quantity: currentQuantity + 1,
       },
-      include: { product_variant: true },
+      include: {
+        product_variant: {
+          include: {
+            product: {
+              include: {
+                category: true,
+              },
+            },
+          },
+        },
+      },
     });
     return updateCartItem;
   }
@@ -125,7 +167,7 @@ type TUpdateCartItemSize = (props: {
   cart_id: string;
   product_variant_id: string;
   new_variant_id: string;
-}) => Promise<TCartItemWithProductVariant>;
+}) => Promise<TCartItem>;
 export const updateCartItemSize: TUpdateCartItemSize = async ({
   cart_id,
   product_variant_id,
@@ -134,7 +176,11 @@ export const updateCartItemSize: TUpdateCartItemSize = async ({
   const cartItem = await db.cartItem.update({
     where: { cart_id, product_variant_id },
     data: { product_variant_id: new_variant_id },
-    include: { product_variant: true },
+    include: {
+      product_variant: {
+        include: { product: { include: { category: true } } },
+      },
+    },
   });
   return cartItem;
 };
@@ -142,30 +188,33 @@ export const updateCartItemSize: TUpdateCartItemSize = async ({
 //^ GET
 type TGetCartWithItemsAndProductVariants = (props: {
   user_id: string;
-}) => Promise<TCartWithItemsAndProductVariants | null>;
-export const getCartWithItemsAndProductVariants: TGetCartWithItemsAndProductVariants =
-  async (props) => {
-    const cart = await db.cart.findUnique({
-      where: { ...props },
-      include: {
-        items: {
-          include: {
-            product_variant: true,
+}) => Promise<TCart | null>;
+export const getCart: TGetCartWithItemsAndProductVariants = async (props) => {
+  const cart = await db.cart.findUnique({
+    where: { ...props },
+    include: {
+      items: {
+        include: {
+          product_variant: {
+            include: { product: { include: { category: true } } },
           },
         },
       },
-    });
+    },
+  });
 
-    return cart;
-  };
+  return cart;
+};
 
-type TGetCartItems = (props: {
-  cart_id: string;
-}) => Promise<TCartItemWithProductVariant[]>;
+type TGetCartItems = (props: { cart_id: string }) => Promise<TCartItem[]>;
 export const getCartItems: TGetCartItems = async (props) => {
   const cartItems = await db.cartItem.findMany({
     where: { ...props },
-    include: { product_variant: true },
+    include: {
+      product_variant: {
+        include: { product: { include: { category: true } } },
+      },
+    },
   });
   return cartItems;
 };
@@ -173,11 +222,15 @@ export const getCartItems: TGetCartItems = async (props) => {
 type TGetCartItem = (props: {
   cart_id: string;
   product_variant_id: string;
-}) => Promise<TCartItemWithProductVariant | null>;
+}) => Promise<TCartItem | null>;
 export const getCartItem: TGetCartItem = async (props) => {
   const cartItem = await db.cartItem.findUnique({
     where: { ...props },
-    include: { product_variant: true },
+    include: {
+      product_variant: {
+        include: { product: { include: { category: true } } },
+      },
+    },
   });
   return cartItem;
 };

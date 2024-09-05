@@ -2,8 +2,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/shared/hooks/utils';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { cartServices } from '@/shared/utils/services/cartServices';
-import { TCartWithItemsAndProductVariants } from '@/shared/types/Cart';
 import { QueryKeys } from '@/shared/types/Cache';
+import { TCart } from '@/shared/types/Cart';
 
 export const useGetCart = () => {
   const { data, isLoading, error } = useCustomQuery({
@@ -17,7 +17,7 @@ export const useGetCart = () => {
 export const useGetCartItems = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.CART_ITEMS_WITH_PRODUCT_VARIANT],
-    queryFn: async () => await cartServices.getCartItems(),
+    queryFn: cartServices.getCartItems,
     staleTime: Infinity,
   });
 
@@ -40,7 +40,7 @@ export const useGetCartItem = ({
 
 export const useCreateCart = () => {
   const { mutate, data, isLoading, error } = useCustomMutation({
-    mutationFn: cartServices.createCartItem,
+    mutationFn: cartServices.createCart,
   });
   return { mutate, data, isLoading, error };
 };
@@ -52,12 +52,9 @@ export const useAddToCart = () => {
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: cartServices.createCartItem,
     handleSuccess(data) {
-      queryClient.setQueryData<TCartWithItemsAndProductVariants>(
-        [QueryKeys.CART],
-        (oldData) => {
-          return oldData && { ...oldData, items: [data, ...oldData.items] };
-        }
-      );
+      queryClient.setQueryData<TCart>([QueryKeys.CART], (oldData) => {
+        return oldData && { ...oldData, items: [data, ...oldData.items] };
+      });
 
       notify('Added to cart');
     },
@@ -73,20 +70,17 @@ export const useDeleteCartItem = () => {
   const { mutate, data, isLoading, error } = useCustomMutation({
     mutationFn: cartServices.deleteCartItem,
     handleSuccess(variables) {
-      queryClient.setQueryData<TCartWithItemsAndProductVariants>(
-        [QueryKeys.CART],
-        (oldData) => {
-          return (
-            oldData && {
-              ...oldData,
-              items: oldData.items.filter(
-                (cartItem) =>
-                  cartItem.product_variant_id !== variables?.product_variant_id
-              ),
-            }
-          );
-        }
-      );
+      queryClient.setQueryData<TCart>([QueryKeys.CART], (oldData) => {
+        return (
+          oldData && {
+            ...oldData,
+            items: oldData.items.filter(
+              (cartItem) =>
+                cartItem.product_variant_id !== variables.product_variant_id
+            ),
+          }
+        );
+      });
 
       notify('Removed from cart');
     },
@@ -103,17 +97,14 @@ export const useEmptyCart = () => {
     mutationFn: cartServices.emptyCart,
 
     handleSuccess(data) {
-      queryClient.setQueryData<TCartWithItemsAndProductVariants>(
-        [QueryKeys.CART],
-        (oldData) => {
-          return (
-            oldData && {
-              ...oldData,
-              items: [],
-            }
-          );
-        }
-      );
+      queryClient.setQueryData<TCart>([QueryKeys.CART], (oldData) => {
+        return (
+          oldData && {
+            ...oldData,
+            items: [],
+          }
+        );
+      });
 
       notify(`Removed ${data.count} item(s) from cart`);
     },
