@@ -19,7 +19,7 @@ export const ChangePasswordForm = () => {
   return (
     <form onSubmit={submit}>
       <Container as='div' flex='col' paddingX='lg'>
-        <Container as='div' flex='row'>
+        <Container as='div' flex='col' className='lg:flex lg:flex-row'>
           <label className='max-w-xs w-full' htmlFor='old_password'>
             Old Password:
           </label>
@@ -28,7 +28,7 @@ export const ChangePasswordForm = () => {
             as='div'
             flex='row'
             rounded='sm'
-            className='bg-white border-2 pr-2'
+            className='bg-white border-2 pr-2 max-w-min'
           >
             <input
               {...register('old_password')}
@@ -55,7 +55,7 @@ export const ChangePasswordForm = () => {
           </Container>
         </Container>
 
-        <Container as='div' flex='row'>
+        <Container as='div' flex='col' className='lg:flex lg:flex-row'>
           <label className='max-w-xs w-full' htmlFor='old_password'>
             New Password:
           </label>
@@ -64,7 +64,7 @@ export const ChangePasswordForm = () => {
             as='div'
             flex='row'
             rounded='sm'
-            className='bg-white border-2 pr-2'
+            className='bg-white border-2 pr-2 max-w-min'
           >
             <input
               {...register('new_password')}
@@ -90,17 +90,19 @@ export const ChangePasswordForm = () => {
             )}
           </Container>
 
-          <Btn
-            type='submit'
-            text='save'
-            bgColor='green'
-            height='sm'
-            isDisabled={!formState.isValid}
-          />
+          <Container as='div' flex='row'>
+            <Btn
+              type='submit'
+              text='save'
+              bgColor='green'
+              height='sm'
+              isDisabled={!formState.isValid}
+            />
 
-          {formState.isDirty && (
-            <Btn Icon={XCircleDuotone} height='sm' handleClick={cancel} />
-          )}
+            {formState.isDirty && (
+              <Btn Icon={XCircleDuotone} height='sm' handleClick={cancel} />
+            )}
+          </Container>
         </Container>
       </Container>
     </form>
