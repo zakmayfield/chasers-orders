@@ -1,3 +1,4 @@
+export * from './useAccordion';
 export * from './useButtonClasses';
 export * from './useChangePasswordForm';
 export * from './useDeliveryInstructionsForm';

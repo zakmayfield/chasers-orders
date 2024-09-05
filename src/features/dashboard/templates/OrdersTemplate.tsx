@@ -5,7 +5,7 @@ import { OrdersList } from '../organisms/OrdersList';
 export const OrdersTemplate = () => {
   return (
     <ContentTemplate title='Orders' headingClassname='mb-3'>
-      <Container as='div' flex='col' paddingX='lg'>
+      <Container as='div' flex='col' className='md:px-6'>
         <OrdersList />
       </Container>
     </ContentTemplate>
