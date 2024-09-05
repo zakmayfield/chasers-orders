@@ -23,10 +23,16 @@ export const FavoritesItem = ({
     <Container
       as='div'
       flex='row'
-      className='border-b last-of-type:border-none'
+      className='border-b last-of-type:border-none items-start'
       padding='sm'
     >
-      <Container as='div' flex='row' width='sm' gap='lg'>
+      <Container
+        as='div'
+        flex='row'
+        width='sm'
+        gap='lg'
+        className='items-start'
+      >
         <Btn
           Icon={isHover ? HeartBreakDuotone : HeartDuotone}
           fontSize='lg'

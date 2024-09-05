@@ -25,7 +25,7 @@ export const AccountInformation = () => {
 
   return (
     <ContentTemplate title='Information' headingAs='h4'>
-      <Container as='div' flex='col' paddingX='lg'>
+      <Container as='div' flex='col' className='md:px-6'>
         {loading}
         {errorData}
         {data}

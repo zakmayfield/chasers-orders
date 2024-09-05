@@ -22,7 +22,7 @@ export const AccountStatus = () => {
 
   return (
     <ContentTemplate title='Status' headingAs='h4'>
-      <Container as='div' flex='col' paddingX='lg'>
+      <Container as='div' flex='col' className='md:px-6'>
         {loading}
         {errorData}
         {data}
