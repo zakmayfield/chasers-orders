@@ -5,7 +5,7 @@ import { CartItemsEmpty } from '../molecules/CartItemsEmpty';
 import { CartItem } from '../molecules/CartItem';
 import { useGetCart } from '@/shared/hooks/data/cart/useCart';
 
-export const CartItems = () => {
+export const CartItemsList = () => {
   const { cart, isLoading, error } = useGetCart();
 
   const loading = isLoading && <CartItemsLoading />;

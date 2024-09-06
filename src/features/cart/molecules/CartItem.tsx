@@ -14,7 +14,7 @@ export const CartItem = ({ cartItem }: { cartItem: TCartItem }) => {
       padding='md'
       flex='row'
       rounded='sm'
-      className='gap-3 bg-slate-50'
+      className='gap-3 bg-slate-50 max-w-sm lg:max-w-lg'
     >
       <Btn
         Icon={TrashDuotone}
@@ -24,30 +24,6 @@ export const CartItem = ({ cartItem }: { cartItem: TCartItem }) => {
         }
         isDisabled={isLoading}
       />
-
-      <Container as='div' flex='row' className=''>
-        <Container as='div' flex='col' className='gap-1'>
-          <Container as='p'>
-            {cartItem.product_variant?.product?.name}
-          </Container>
-          <Container as='p' className='italic text-gray-600'>
-            {cartItem.product_variant?.product?.category?.name}
-          </Container>
-        </Container>
-
-        {/* <Container as='div' flex='row' className='items-center gap-6'>
-          <SelectSize
-            cartId={cartItem.cart_id}
-            unitId={cartItem.product_variant_id}
-            currentSize={cartItem.product_variant!.size}
-          />
-          <SelectQuantity
-            cartId={cartItem.cart_id}
-            unitId={cartItem.product_variant_id}
-            quantity={cartItem.quantity}
-          />
-        </Container> */}
-      </Container>
     </Container>
   );
 };

@@ -4,7 +4,7 @@ import {
   ContentTemplate,
   PageTemplate,
 } from '@/shared/components/ui';
-import { CartItems } from '../organisms/CartItems';
+import { CartItemsList } from '../organisms/CartItemsList';
 import { OrderSummary } from '../organisms/OrderSummary';
 import { Shipping } from '../organisms/Shipping';
 import { PlaceOrder } from '../organisms/PlaceOrder';
@@ -19,7 +19,7 @@ export const CartTemplate = () => {
         flex='col'
         className='bg-slate-50'
       >
-        <CartItems />
+        <CartItemsList />
 
         <ContentTemplate title='Summary' headingAs='h3'>
           <Container
