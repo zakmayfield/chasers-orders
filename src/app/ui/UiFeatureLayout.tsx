@@ -11,7 +11,7 @@ export const UiFeatureLayout = ({
 }) => {
   return (
     <Container as='div' flex={flex}>
-      <Heading as='h1' content={title} className='border-b' />
+      <Heading as='h1' content={title} className='border-b mb-3' />
 
       <Container as='div' flex='col'>
         {children}

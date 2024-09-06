@@ -1,21 +1,18 @@
-import { Btns, Containers, Headings, Loading, Logos } from './components';
-import { Icons } from './components/Icons';
+import { Btns, Containers, Headings, Icons, Loaders } from './components';
 
 export default async function Page() {
   return (
     <div className='w-3/4 mx-auto flex flex-col gap-12'>
       {/* Headings */}
       <Headings />
+      {/* Loaders */}
+      <Loaders />
       {/* Containers */}
       <Containers />
-      {/* Loading */}
-      <Loading />
       {/* Buttons */}
       <Btns />
       {/* Icons */}
       <Icons />
-      {/* Logos */}
-      <Logos />
     </div>
   );
 }
