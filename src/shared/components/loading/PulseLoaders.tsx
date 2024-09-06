@@ -78,10 +78,10 @@ const Lg = (props: LoaderProps) => {
 };
 
 type PulseLoaderProps = LoaderProps & {
-  size: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg';
 };
 export const PulseLoader = (props: PulseLoaderProps) => {
-  const { size, ...rest } = props;
+  const { size = 'sm', ...rest } = props;
 
   switch (size) {
     case 'sm':
@@ -91,4 +91,9 @@ export const PulseLoader = (props: PulseLoaderProps) => {
     case 'lg':
       return <Lg {...rest} />;
   }
+};
+
+export const usePulseLoader = (props: PulseLoaderProps) => {
+  const Loader = () => <PulseLoader {...props} />;
+  return { PulseLoader: Loader };
 };
