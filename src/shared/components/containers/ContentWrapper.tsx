@@ -1,0 +1,81 @@
+import { merge } from '@/shared/utils/ui';
+
+type TContentWrapperProps = {
+  children: React.ReactNode;
+  className?: string;
+  width?: 'sm' | 'md' | 'lg' | 'content';
+  padding?: 'sm' | 'md' | 'lg';
+  margin?: 'sm' | 'md' | 'lg';
+  flex?: 'row' | 'col';
+  gap?: 'sm' | 'md' | 'lg';
+};
+
+export const ContentWrapper = (props: TContentWrapperProps) => {
+  const { children, className } = props;
+  const { width, padding, margin, flex, gap } = useContentWrapperClasses({
+    ...props,
+  });
+
+  return (
+    <div
+      className={merge(
+        `${width} ${padding} ${margin} ${flex} ${gap} ${className}`
+      )}
+    >
+      {children}
+    </div>
+  );
+};
+
+export const useContentWrapperClasses = (props: TContentWrapperProps) => {
+  const {
+    width = 'full',
+    padding = 'none',
+    margin = 'none',
+    flex = 'col',
+    gap = 'md',
+  } = props;
+
+  const widthMap = {
+    content: 'max-w-min w-full',
+    sm: 'max-w-sm w-full',
+    md: 'max-w-lg w-full',
+    lg: 'max-w-2xl w-full',
+    full: 'w-full',
+  };
+
+  const paddingMap = {
+    none: 'p-0',
+    sm: 'p-2',
+    md: 'p-4',
+    lg: 'p-6',
+  };
+
+  const marginMap = {
+    none: 'm-0',
+    sm: 'm-2',
+    md: 'm-4',
+    lg: 'm-6',
+  };
+
+  const flexMap = {
+    row: 'flex gap-3',
+    col: 'flex flex-col gap-3',
+  };
+
+  const gapMap = {
+    sm: 'gap-1',
+    md: 'gap-3',
+    lg: 'gap-6',
+  };
+
+  const classMap = {
+    width: widthMap[width],
+    padding: paddingMap[padding],
+    margin: marginMap[margin],
+    flex: flexMap[flex],
+    gap: gapMap[gap],
+  };
+
+  return classMap;
+};
