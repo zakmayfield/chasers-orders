@@ -1,7 +1,7 @@
 import { ContentWrapper } from '@/shared/components/containers';
-import { Btn } from '@/shared/components/ui';
 import { useGetCart } from '@/shared/hooks/data/cart/useCart';
 import { useCreateOrder } from '@/shared/hooks/data/orders/useOrders';
+import { PlaceOrderButton } from '@/features/cart/atoms/place_order/PlaceOrderButton';
 
 export const PlaceOrder = () => {
   const { cart } = useGetCart();
@@ -9,7 +9,7 @@ export const PlaceOrder = () => {
 
   return (
     <ContentWrapper>
-      <Btn text='Place Order' bgColor='green' width='full' />
+      <PlaceOrderButton />
     </ContentWrapper>
   );
   // <Container as='div'>
