@@ -5,6 +5,7 @@ type TContentWrapperProps = {
   className?: string;
   width?: 'sm' | 'md' | 'lg' | 'content';
   padding?: 'sm' | 'md' | 'lg';
+  paddingX?: 'sm' | 'md' | 'lg';
   margin?: 'sm' | 'md' | 'lg';
   position?: 'left' | 'center' | 'right';
   flex?: 'row' | 'col';
@@ -14,7 +15,7 @@ type TContentWrapperProps = {
 
 export const ContentWrapper = (props: TContentWrapperProps) => {
   const { children, className } = props;
-  const { width, padding, margin, position, flex, gap, flexCenter } =
+  const { width, padding, paddingX, margin, position, flex, gap, flexCenter } =
     useContentWrapperClasses({
       ...props,
     });
@@ -22,7 +23,15 @@ export const ContentWrapper = (props: TContentWrapperProps) => {
   return (
     <div
       className={merge(
-        `${width} ${padding} ${margin} ${position} ${flex} ${gap} ${flexCenter} ${className}`
+        `${width} 
+        ${padding} 
+        ${paddingX} 
+        ${margin} 
+        ${position} 
+        ${flex} 
+        ${gap} 
+        ${flexCenter} 
+        ${className}`
       )}
     >
       {children}
@@ -34,6 +43,7 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
   const {
     width = 'full',
     padding = 'none',
+    paddingX = 'none',
     margin = 'none',
     flex = 'col',
     gap = 'md',
@@ -54,6 +64,13 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-6',
+  };
+
+  const paddingXMap = {
+    none: '',
+    sm: 'px-2',
+    md: 'px-4',
+    lg: 'px-6',
   };
 
   const marginMap = {
@@ -85,6 +102,7 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
   const classMap = {
     width: widthMap[width],
     padding: paddingMap[padding],
+    paddingX: paddingXMap[paddingX],
     margin: marginMap[margin],
     position: positionMap[position],
     flex: flexMap[flex],
