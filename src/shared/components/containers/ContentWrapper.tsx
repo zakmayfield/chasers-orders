@@ -6,20 +6,23 @@ type TContentWrapperProps = {
   width?: 'sm' | 'md' | 'lg' | 'content';
   padding?: 'sm' | 'md' | 'lg';
   margin?: 'sm' | 'md' | 'lg';
+  position?: 'left' | 'center' | 'right';
   flex?: 'row' | 'col';
   gap?: 'sm' | 'md' | 'lg';
+  flexCenter?: boolean;
 };
 
 export const ContentWrapper = (props: TContentWrapperProps) => {
   const { children, className } = props;
-  const { width, padding, margin, flex, gap } = useContentWrapperClasses({
-    ...props,
-  });
+  const { width, padding, margin, position, flex, gap, flexCenter } =
+    useContentWrapperClasses({
+      ...props,
+    });
 
   return (
     <div
       className={merge(
-        `${width} ${padding} ${margin} ${flex} ${gap} ${className}`
+        `${width} ${padding} ${margin} ${position} ${flex} ${gap} ${flexCenter} ${className}`
       )}
     >
       {children}
@@ -34,6 +37,8 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
     margin = 'none',
     flex = 'col',
     gap = 'md',
+    position = 'left',
+    flexCenter = false,
   } = props;
 
   const widthMap = {
@@ -58,6 +63,12 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
     lg: 'm-6',
   };
 
+  const positionMap = {
+    left: 'mr-auto',
+    center: 'm-auto',
+    right: 'ml-auto',
+  };
+
   const flexMap = {
     row: 'flex gap-3',
     col: 'flex flex-col gap-3',
@@ -69,12 +80,16 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
     lg: 'gap-6',
   };
 
+  const flexCenterMap = flexCenter ? 'items-center justify-center' : '';
+
   const classMap = {
     width: widthMap[width],
     padding: paddingMap[padding],
     margin: marginMap[margin],
+    position: positionMap[position],
     flex: flexMap[flex],
     gap: gapMap[gap],
+    flexCenter: flexCenterMap,
   };
 
   return classMap;
