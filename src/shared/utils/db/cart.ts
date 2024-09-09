@@ -30,6 +30,7 @@ export const addItemToCart: TAddItemToCart = async (props) => {
   });
   return cartItem;
 };
+//^ END POST
 
 //^ DELETE
 type TEmptyCart = (props: { cart_id: string }) => Promise<TBatchPayload>;
@@ -55,6 +56,7 @@ export const deleteCartItem: TDeleteCartItem = async ({
     product_variant_id: cartItem.product_variant_id,
   };
 };
+//^ END DELETE
 
 //^ PUT
 type TUpdateCartItemQuantity = (props: {
@@ -184,6 +186,7 @@ export const updateCartItemSize: TUpdateCartItemSize = async ({
   });
   return cartItem;
 };
+//^ END PUT
 
 //^ GET
 type TGetCartWithItemsAndProductVariants = (props: {
@@ -250,3 +253,4 @@ export const checkIsItemInCart = async (props: {
 
   return { quantity: 0 };
 };
+//^ END GET

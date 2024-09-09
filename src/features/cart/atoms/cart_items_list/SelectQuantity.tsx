@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useCustomForm, useCustomMutation } from '@/shared/hooks/custom';
 import { quantityResolver } from '@/shared/validators/resolvers';
@@ -53,6 +53,12 @@ export const SelectQuantity: React.FC<UpdateCartItemQuantityRequest> = ({
       notify('Could not update quantity', 'error');
     },
   });
+
+  useEffect(() => {
+    console.log({
+      isValid: methods.formState.isValid,
+    });
+  }, [methods.formState.isValid]);
 
   function submitHandler(event: FormEvent) {
     event.preventDefault();

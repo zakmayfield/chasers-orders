@@ -112,3 +112,33 @@ export const useEmptyCart = () => {
 
   return { mutate, data, isLoading, error };
 };
+
+export const useUpdateQuantity = () => {
+  const queryClient = useQueryClient();
+  const { notify } = useToast();
+
+  const { mutate, isLoading, error } = useCustomMutation({
+    mutationFn: cartServices.updateQuantity,
+    handleError(error) {
+      notify(error.message, 'error');
+    },
+    handleSuccess(variables) {
+      notify(`Updated quantity to ${variables?.quantity}`);
+
+      queryClient.setQueryData<TCart>([QueryKeys.CART], (oldData) => {
+        return oldData
+          ? {
+              ...oldData,
+              items: oldData.items.map((item) =>
+                item.product_variant_id === variables?.product_variant_id
+                  ? { ...item, quantity: variables.quantity }
+                  : item
+              ),
+            }
+          : oldData;
+      });
+    },
+  });
+
+  return { mutate, isLoading, error };
+};

@@ -76,4 +76,21 @@ export const cartServices = {
         },
       },
     }),
+
+  updateQuantity: async ({
+    product_variant_id,
+    quantity,
+  }: {
+    product_variant_id: string;
+    quantity: number;
+  }): Promise<TCartItem> =>
+    await fetchHandler({
+      route: endpoint + '/item' + `/${product_variant_id}`,
+      options: {
+        config: {
+          method: 'PUT',
+          body: JSON.stringify({ quantity }),
+        },
+      },
+    }),
 };
