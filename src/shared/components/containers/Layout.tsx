@@ -7,7 +7,7 @@ type TLayoutProps = {
   heading?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   title?: string;
   headingClassName?: string;
-  width?: 'sm' | 'md' | 'lg' | 'content';
+  width?: 'sm' | 'md' | 'lg';
   padding?: 'sm' | 'md' | 'lg';
   contentClassname?: string;
   contentPadding?: 'sm' | 'md' | 'lg';
@@ -18,11 +18,11 @@ type TLayoutProps = {
 export const Layout = (props: TLayoutProps) => {
   const {
     children,
-    className,
-    contentClassname,
+    className = '',
+    contentClassname = '',
     heading,
-    title,
-    headingClassName,
+    title = '',
+    headingClassName = '',
   } = props;
 
   const { width, padding, contentPadding, contentFlex, contentRounded } =
@@ -35,11 +35,7 @@ export const Layout = (props: TLayoutProps) => {
       className={merge(`flex flex-col gap-3 ${width} ${padding} ${className}`)}
     >
       {heading && (
-        <Heading
-          as={heading}
-          content={title || ''}
-          className={headingClassName}
-        />
+        <Heading as={heading} content={title} className={headingClassName} />
       )}
       <div
         className={merge(
@@ -57,12 +53,11 @@ export const useLayoutClasses = (props: TLayoutProps) => {
     width = 'full',
     padding = 'none',
     contentPadding = 'none',
-    contentFlex = 'col',
+    contentFlex = 'none',
     contentRounded = 'none',
   } = props;
 
   const widthMap = {
-    content: 'max-w-min w-full',
     sm: 'max-w-sm w-full',
     md: 'max-w-lg w-full',
     lg: 'max-w-2xl w-full',
@@ -70,20 +65,21 @@ export const useLayoutClasses = (props: TLayoutProps) => {
   };
 
   const paddingMap = {
-    none: 'p-0',
+    none: '',
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-6',
   };
 
   const contentPaddingMap = {
-    none: 'p-0',
+    none: '',
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-6',
   };
 
   const contentFlexMap = {
+    none: '',
     row: 'flex gap-3',
     col: 'flex flex-col gap-3',
   };

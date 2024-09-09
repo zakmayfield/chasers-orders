@@ -4,14 +4,14 @@ type TTextProps = {
   children: React.ReactNode;
   className?: string;
   as?: 'p' | 'span';
-  width?: 'content' | 'sm' | 'md' | 'lg' | 'full';
+  width?: 'auto' | 'sm' | 'md' | 'lg' | 'full';
   padding?: 'sm' | 'md' | 'lg';
   margin?: 'sm' | 'md' | 'lg';
   position?: 'left' | 'center' | 'right';
 };
 
 export const Text = (props: TTextProps) => {
-  const { children, as = 'p', className } = props;
+  const { children, as = 'p', className = '' } = props;
   const { width, padding, margin, position } = useTextClasses({ ...props });
 
   switch (as) {
@@ -40,14 +40,15 @@ export const Text = (props: TTextProps) => {
 
 export const useTextClasses = (props: TTextProps) => {
   const {
-    width = 'full',
+    width = 'none',
     padding = 'none',
     margin = 'none',
-    position = 'left',
+    position = 'none',
   } = props;
 
   const widthMap = {
-    content: 'max-w-min w-full',
+    none: '',
+    auto: 'w-auto',
     sm: 'max-w-sm w-full',
     md: 'max-w-lg w-full',
     lg: 'max-w-2xl w-full',
@@ -55,22 +56,23 @@ export const useTextClasses = (props: TTextProps) => {
   };
 
   const paddingMap = {
-    none: 'p-0',
+    none: '',
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-6',
   };
 
   const marginMap = {
-    none: 'm-0',
+    none: '',
     sm: 'm-2',
     md: 'm-4',
     lg: 'm-6',
   };
 
   const positionMap = {
+    none: '',
     left: 'mr-auto',
-    center: 'm-auto',
+    center: 'mx-auto',
     right: 'ml-auto',
   };
 

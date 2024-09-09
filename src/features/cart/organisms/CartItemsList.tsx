@@ -1,22 +1,25 @@
-import { CartItemsLoading } from '../molecules/cart_items_list/CartItemsLoading';
-import { CartItemsError } from '../molecules/cart_items_list/CartItemsError';
-import { CartItemsEmpty } from '../molecules/cart_items_list/CartItemsEmpty';
-import { CartItem } from '../molecules/cart_items_list/CartItem';
+import { CartItemsLoading } from '@/features/cart/molecules/cart_items_list/CartItemsLoading';
+import { CartItemsEmpty } from '@/features/cart/molecules/cart_items_list/CartItemsEmpty';
+import { CartItem } from '@/features/cart/molecules/cart_items_list/CartItem';
 import { useGetCart } from '@/shared/hooks/data/cart/useCart';
-import { Layout } from '@/shared/components/containers';
+import { ContentWrapper, Layout } from '@/shared/components/containers';
+import { Error } from '@/features/cart/atoms/Error';
 
 export const CartItemsList = () => {
   const { cart, isLoading, error } = useGetCart();
 
   const loading = isLoading && <CartItemsLoading />;
-  const errorData = error && <CartItemsError />;
+  const errorData = error && (
+    <Error message='There was an issue getting your cart' />
+  );
   const emptyCart = cart && !cart.items.length && <CartItemsEmpty />;
-  const data =
-    cart &&
-    cart.items.length !== 0 &&
-    cart.items.map((item) => (
-      <CartItem key={item.product_variant_id} cartItem={item} />
-    ));
+  const data = cart && cart.items.length !== 0 && (
+    <ContentWrapper flex='col'>
+      {cart.items.map((item) => (
+        <CartItem key={item.product_variant_id} cartItem={item} />
+      ))}
+    </ContentWrapper>
+  );
 
   return (
     <Layout
@@ -26,16 +29,10 @@ export const CartItemsList = () => {
       contentRounded='lg'
       contentClassname='bg-slate-50'
     >
-      items
+      {loading}
+      {errorData}
+      {emptyCart}
+      {data}
     </Layout>
   );
 };
-
-// <ContentTemplate title='Cart Items' headingAs='h3'>
-//   <Container as='div' rounded='sm' padding='lg' className='bg-slate-100'>
-//     {loading}
-//     {errorData}
-//     {emptyCart}
-//     {data}
-//   </Container>
-// </ContentTemplate>

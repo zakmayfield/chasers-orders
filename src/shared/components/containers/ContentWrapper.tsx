@@ -3,7 +3,7 @@ import { merge } from '@/shared/utils/ui';
 type TContentWrapperProps = {
   children: React.ReactNode;
   className?: string;
-  width?: 'sm' | 'md' | 'lg' | 'content';
+  width?: 'auto' | 'sm' | 'md' | 'lg';
   padding?: 'sm' | 'md' | 'lg';
   paddingX?: 'sm' | 'md' | 'lg';
   margin?: 'sm' | 'md' | 'lg';
@@ -11,26 +11,38 @@ type TContentWrapperProps = {
   flex?: 'row' | 'col';
   gap?: 'sm' | 'md' | 'lg';
   flexCenter?: boolean;
+  rounded?: 'sm' | 'md' | 'lg';
 };
 
 export const ContentWrapper = (props: TContentWrapperProps) => {
-  const { children, className } = props;
-  const { width, padding, paddingX, margin, position, flex, gap, flexCenter } =
-    useContentWrapperClasses({
-      ...props,
-    });
+  const { children, className = '' } = props;
+
+  const {
+    width,
+    padding,
+    paddingX,
+    margin,
+    position,
+    flex,
+    gap,
+    flexCenter,
+    rounded,
+  } = useContentWrapperClasses({
+    ...props,
+  });
 
   return (
     <div
       className={merge(
-        `${width} 
-        ${padding} 
+        `${padding} 
         ${paddingX} 
         ${margin} 
         ${position} 
         ${flex} 
         ${gap} 
         ${flexCenter} 
+        ${rounded}
+        ${width} 
         ${className}`
       )}
     >
@@ -41,18 +53,20 @@ export const ContentWrapper = (props: TContentWrapperProps) => {
 
 export const useContentWrapperClasses = (props: TContentWrapperProps) => {
   const {
-    width = 'full',
+    width = 'none',
     padding = 'none',
     paddingX = 'none',
     margin = 'none',
-    flex = 'col',
+    flex = 'none',
     gap = 'md',
-    position = 'left',
+    position = 'none',
     flexCenter = false,
+    rounded = 'none',
   } = props;
 
   const widthMap = {
-    content: 'max-w-min w-full',
+    none: '',
+    auto: 'w-auto',
     sm: 'max-w-sm w-full',
     md: 'max-w-lg w-full',
     lg: 'max-w-2xl w-full',
@@ -60,7 +74,7 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
   };
 
   const paddingMap = {
-    none: 'p-0',
+    none: '',
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-6',
@@ -74,20 +88,22 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
   };
 
   const marginMap = {
-    none: 'm-0',
+    none: '',
     sm: 'm-2',
     md: 'm-4',
     lg: 'm-6',
   };
 
   const positionMap = {
+    none: '',
     left: 'mr-auto',
-    center: 'm-auto',
+    center: 'mx-auto',
     right: 'ml-auto',
   };
 
   const flexMap = {
-    row: 'flex gap-3',
+    none: '',
+    row: 'flex gap-3 items-center',
     col: 'flex flex-col gap-3',
   };
 
@@ -95,6 +111,13 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
     sm: 'gap-1',
     md: 'gap-3',
     lg: 'gap-6',
+  };
+
+  const roundedMap = {
+    none: 'rounded-none',
+    sm: 'rounded',
+    md: 'rounded-md',
+    lg: 'rounded-lg',
   };
 
   const flexCenterMap = flexCenter ? 'items-center justify-center' : '';
@@ -108,6 +131,7 @@ export const useContentWrapperClasses = (props: TContentWrapperProps) => {
     flex: flexMap[flex],
     gap: gapMap[gap],
     flexCenter: flexCenterMap,
+    rounded: roundedMap[rounded],
   };
 
   return classMap;

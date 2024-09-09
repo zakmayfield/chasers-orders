@@ -1,25 +1,24 @@
-import { Container } from '@/shared/components/ui';
 import { EmptyCartIcon } from '@/shared/utils/ui';
 import { GoToShopButton } from '@/features/cart/atoms/cart_items_list/GoToShopButton';
+import { ContentWrapper, Text } from '@/shared/components/containers';
 
 export const CartItemsEmpty = () => {
   return (
-    <Container
-      as='div'
-      flex='row'
+    <ContentWrapper
       padding='lg'
-      rounded='sm'
-      flexCenter={true}
-      className='bg-slate-50'
+      rounded='lg'
+      width='sm'
+      position='center'
+      className='bg-slate-100'
     >
-      <Container as='div' flex='col'>
-        <Container as='div' flex='row' className='items-center'>
+      <ContentWrapper flex='col'>
+        <ContentWrapper flex='row' position='center'>
           <EmptyCartIcon />
-          <Container as='span'>Your cart is empty</Container>
-        </Container>
+          <Text as='span'>Your cart is empty</Text>
+        </ContentWrapper>
 
         <GoToShopButton />
-      </Container>
-    </Container>
+      </ContentWrapper>
+    </ContentWrapper>
   );
 };

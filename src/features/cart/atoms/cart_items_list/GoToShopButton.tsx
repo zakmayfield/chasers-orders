@@ -7,9 +7,8 @@ export const GoToShopButton = () => {
     <Btn
       text='Go to shop'
       handleClick={() => router.push('/products')}
-      border={true}
-      width='full'
       bgColor='green'
+      width='full'
     />
   );
 };

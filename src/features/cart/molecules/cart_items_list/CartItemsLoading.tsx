@@ -1,10 +1,15 @@
-import { Container, PulseLoader } from '@/shared/components/ui';
+import { ContentWrapper } from '@/shared/components/containers';
+import { usePulseLoader } from '@/shared/components/loading';
 
 export const CartItemsLoading = () => {
+  const { PulseLoader } = usePulseLoader({
+    size: 'md',
+    width: 'full',
+  });
+
   return (
-    <Container as='div' flex='col'>
-      <PulseLoader width='full' />
-      <PulseLoader width='full' />
-    </Container>
+    <ContentWrapper>
+      <PulseLoader />
+    </ContentWrapper>
   );
 };
