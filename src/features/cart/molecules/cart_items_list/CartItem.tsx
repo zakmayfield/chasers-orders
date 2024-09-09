@@ -1,6 +1,6 @@
 import { Btn, Container } from '@/shared/components/ui';
-import { SelectSize } from '../atoms/SelectSize';
-import { SelectQuantity } from '../atoms/SelectQuantity';
+import { SelectSize } from '@/features/cart/atoms/cart_items_list/SelectSize';
+import { SelectQuantity } from '@/features/cart/atoms/cart_items_list/SelectQuantity';
 import { useDeleteCartItem } from '@/shared/hooks/data/cart/useCart';
 import { TrashDuotone } from '@/shared/utils/ui';
 import { TCartItem } from '@/shared/types/Cart';

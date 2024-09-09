@@ -1,6 +1,6 @@
 import { Container } from '@/shared/components/ui';
 import { EmptyCartIcon } from '@/shared/utils/ui';
-import { GoToShopButton } from '../atoms/GoToShopButton';
+import { GoToShopButton } from '@/features/cart/atoms/cart_items_list/GoToShopButton';
 
 export const CartItemsEmpty = () => {
   return (

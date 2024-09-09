@@ -1,6 +1,6 @@
 import { Container, Heading, SpinLoader } from '@/shared/components/ui';
 import { useGetShippingAddress } from '@/shared/hooks/data';
-import { ShippingDropDownArrow } from '../atoms/ShippingDropDownArrow';
+import { ShippingDropDownArrow } from '../../atoms/shipping/ShippingDropDownArrow';
 
 export const ShippingHeading = ({
   toggleOpen,

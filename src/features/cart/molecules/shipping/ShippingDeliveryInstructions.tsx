@@ -1,8 +1,8 @@
 import { Container } from '@/shared/components/ui';
-import { ShippingDeliveryInstructionsHeading } from '../atoms/ShippingDeliveryInstructionsHeading';
-import { ShippingDeliveryInstructionsForm } from '../atoms/ShippingDeliveryInstructionsForm';
 import { useDeliveryInstructionsForm } from '@/shared/hooks/utils';
-import { ShippingDeliveryInstructionsContent } from '../atoms/ShippingDeliveryInstructionsContent';
+import { ShippingDeliveryInstructionsHeading } from '@/features/cart/atoms/shipping/ShippingDeliveryInstructionsHeading';
+import { ShippingDeliveryInstructionsForm } from '@/features/cart/atoms/shipping/ShippingDeliveryInstructionsForm';
+import { ShippingDeliveryInstructionsContent } from '@/features/cart/atoms/shipping/ShippingDeliveryInstructionsContent';
 
 export const ShippingDeliveryInstructions = ({
   deliveryInstructions,

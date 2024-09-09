@@ -1,7 +1,7 @@
-import { CartItemsLoading } from '../molecules/CartItemsLoading';
-import { CartItemsError } from '../molecules/CartItemsError';
-import { CartItemsEmpty } from '../molecules/CartItemsEmpty';
-import { CartItem } from '../molecules/CartItem';
+import { CartItemsLoading } from '../molecules/cart_items_list/CartItemsLoading';
+import { CartItemsError } from '../molecules/cart_items_list/CartItemsError';
+import { CartItemsEmpty } from '../molecules/cart_items_list/CartItemsEmpty';
+import { CartItem } from '../molecules/cart_items_list/CartItem';
 import { useGetCart } from '@/shared/hooks/data/cart/useCart';
 import { Layout } from '@/shared/components/containers';
 

@@ -1,5 +1,5 @@
 import { Container, Heading, SpinLoader } from '@/shared/components/ui';
-import { CartCount } from '../atoms/CartCount';
+import { CartCount } from '@/features/cart/atoms/cart_items_list/CartCount';
 import { useGetCart } from '@/shared/hooks/data';
 
 export const CartHeading = () => {

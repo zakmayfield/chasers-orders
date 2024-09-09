@@ -1,8 +1,8 @@
-import { ShippingHeading } from '../molecules/ShippingHeading';
 import { useState } from 'react';
-import { ShippingError } from '../molecules/ShippingError';
-import { ShippingData } from '../molecules/ShippingData';
-import { ShippingDeliveryInstructions } from '../molecules/ShippingDeliveryInstructions';
+import { ShippingHeading } from '../molecules/shipping/ShippingHeading';
+import { ShippingError } from '../molecules/shipping/ShippingError';
+import { ShippingData } from '../molecules/shipping/ShippingData';
+import { ShippingDeliveryInstructions } from '../molecules/shipping/ShippingDeliveryInstructions';
 import { Layout } from '@/shared/components/containers';
 import { useGetCompany } from '@/shared/hooks/data/user/useUser';
 

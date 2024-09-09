@@ -1,7 +1,7 @@
-import { OrderSummaryLoading } from '../molecules/OrderSummaryLoading';
-import { OrderSummaryError } from '../molecules/OrderSummaryError';
-import { OrderSummaryItem } from '../molecules/OrderSummaryItem';
-import { OrderSummaryEmpty } from '../molecules/OrderSummaryEmpty';
+import { OrderSummaryLoading } from '../molecules/order_summary/OrderSummaryLoading';
+import { OrderSummaryError } from '../molecules/order_summary/OrderSummaryError';
+import { OrderSummaryItem } from '../molecules/order_summary/OrderSummaryItem';
+import { OrderSummaryEmpty } from '../molecules/order_summary/OrderSummaryEmpty';
 import { Layout } from '@/shared/components/containers';
 import { useGetCart } from '@/shared/hooks/data/cart/useCart';
 
