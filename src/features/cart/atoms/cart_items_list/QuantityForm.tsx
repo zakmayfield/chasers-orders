@@ -44,13 +44,17 @@ export const QuantityForm = (props: TQuantityFormProps) => {
           {...methods.register('quantity', { valueAsNumber: true })}
           className='h-8 rounded w-16 border px-3'
         />
-        <Btn
-          type='submit'
-          text='save'
-          bgColor='green'
-          height='sm'
-          isDisabled={!methods.formState.isDirty || !methods.formState.isValid}
-        />
+        {methods.formState.isDirty && (
+          <Btn
+            type='submit'
+            text='save'
+            bgColor='green'
+            height='sm'
+            isDisabled={
+              !methods.formState.isDirty || !methods.formState.isValid
+            }
+          />
+        )}
         {methods.formState.isDirty && (
           <Btn
             Icon={XCircleDuotone}
