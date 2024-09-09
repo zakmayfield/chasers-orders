@@ -1,33 +1,40 @@
-import { Container, Heading } from '@/shared/components/ui';
-import { useGetCart } from '@/shared/hooks/data';
 import { OrderSummaryLoading } from '../molecules/OrderSummaryLoading';
 import { OrderSummaryError } from '../molecules/OrderSummaryError';
 import { OrderSummaryItem } from '../molecules/OrderSummaryItem';
 import { OrderSummaryEmpty } from '../molecules/OrderSummaryEmpty';
+import { Layout } from '@/shared/components/containers';
+import { useGetCart } from '@/shared/hooks/data/cart/useCart';
 
 export const OrderSummary = () => {
-  const cart = useGetCart();
+  const { cart, isLoading, error } = useGetCart();
 
-  const loading = cart.isLoading && <OrderSummaryLoading />;
-  const error = cart.error && <OrderSummaryError />;
-  const emptyCart = cart.data && !cart.data.items.length && (
-    <OrderSummaryEmpty />
-  );
+  const loading = isLoading && <OrderSummaryLoading />;
+  const errorData = error && <OrderSummaryError />;
+  const emptyCart = cart && !cart.items.length && <OrderSummaryEmpty />;
   const data =
-    cart.data &&
-    cart.data.items.length !== 0 &&
-    cart.data.items.map((cartItem) => (
-      <OrderSummaryItem key={cartItem.unitId} cartItem={cartItem} />
+    cart &&
+    cart.items.length !== 0 &&
+    cart.items.map((cartItem) => (
+      <OrderSummaryItem key={cartItem.product_variant_id} cartItem={cartItem} />
     ));
 
   return (
-    <Container as='div' flex='col'>
-      <Heading as='h5' content='Order Summary' className='mb-3' />
-
-      {loading}
-      {error}
-      {emptyCart}
-      {data}
-    </Container>
+    <Layout
+      heading='h3'
+      title='Order Summary'
+      contentPadding='lg'
+      contentRounded='lg'
+      contentClassname='bg-slate-50'
+    >
+      summary
+    </Layout>
   );
 };
+// <Container as='div' flex='col'>
+//   <Heading as='h5' content='Order Summary' className='mb-3' />
+
+//   {loading}
+//   {error}
+//   {emptyCart}
+//   {data}
+// </Container>

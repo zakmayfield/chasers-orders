@@ -1,12 +1,7 @@
 import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomQuery } from '@/shared/hooks/custom';
 import { userServices } from '@/shared/utils/services/userServices';
-import {
-  TCompany,
-  TCompanyWithAddress,
-  TFullUser,
-  TUser,
-} from '@/shared/types/User';
+import { TFullUser, TUser } from '@/shared/types/User';
 
 export const useGetUser = ({ fullUser }: { fullUser?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
@@ -32,20 +27,14 @@ export const useGetContact = () => {
   return { data, isLoading, error };
 };
 
-export const useGetCompany = ({ hasAddress }: { hasAddress?: boolean }) => {
+export const useGetCompany = () => {
   const { data, isLoading, error } = useCustomQuery({
-    queryKey: [hasAddress ? QueryKeys.COMPANY_FULL : QueryKeys.COMPANY],
-    queryFn: async () => await userServices.getCompanyByUserId({ hasAddress }),
+    queryKey: [QueryKeys.COMPANY],
+    queryFn: userServices.getCompanyByUserId,
     staleTime: Infinity,
   });
 
-  const dataMap = {
-    withAddress:
-      (hasAddress && data && (data as TCompanyWithAddress)) || undefined,
-    withoutAddress: (!hasAddress && data && (data as TCompany)) || undefined,
-  };
-
-  return { data: dataMap, isLoading, error };
+  return { company: data, isLoading, error };
 };
 
 export const useGetShipping = ({ company_id }: { company_id: string }) => {

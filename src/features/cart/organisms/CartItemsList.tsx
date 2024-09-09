@@ -1,9 +1,9 @@
-import { Container, ContentTemplate } from '@/shared/components/ui';
 import { CartItemsLoading } from '../molecules/CartItemsLoading';
 import { CartItemsError } from '../molecules/CartItemsError';
 import { CartItemsEmpty } from '../molecules/CartItemsEmpty';
 import { CartItem } from '../molecules/CartItem';
 import { useGetCart } from '@/shared/hooks/data/cart/useCart';
+import { Layout } from '@/shared/components/containers';
 
 export const CartItemsList = () => {
   const { cart, isLoading, error } = useGetCart();
@@ -19,13 +19,23 @@ export const CartItemsList = () => {
     ));
 
   return (
-    <ContentTemplate title='Cart Items' headingAs='h3'>
-      <Container as='div' rounded='sm' padding='lg' className='bg-slate-100'>
-        {loading}
-        {errorData}
-        {emptyCart}
-        {data}
-      </Container>
-    </ContentTemplate>
+    <Layout
+      heading='h3'
+      title='Cart Items'
+      contentPadding='lg'
+      contentRounded='lg'
+      contentClassname='bg-slate-50'
+    >
+      items
+    </Layout>
   );
 };
+
+// <ContentTemplate title='Cart Items' headingAs='h3'>
+//   <Container as='div' rounded='sm' padding='lg' className='bg-slate-100'>
+//     {loading}
+//     {errorData}
+//     {emptyCart}
+//     {data}
+//   </Container>
+// </ContentTemplate>

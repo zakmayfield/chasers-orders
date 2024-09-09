@@ -29,13 +29,9 @@ export const userServices = {
       route: `${endpoint}/contact`,
     }),
 
-  getCompanyByUserId: async ({
-    hasAddress,
-  }: {
-    hasAddress?: boolean;
-  }): Promise<TCompany | TCompanyWithAddress> =>
+  getCompanyByUserId: async (): Promise<TCompanyWithAddress> =>
     await fetchHandler({
-      route: `${endpoint}/company` + `${hasAddress ? '?address=true' : ''}`,
+      route: `${endpoint}/company`,
     }),
 
   getShippingByCompanyId: async ({

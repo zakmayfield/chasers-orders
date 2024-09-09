@@ -1,42 +1,48 @@
-import { Container } from '@/shared/components/ui';
-import { useGetShippingAddress } from '@/shared/hooks/data';
 import { ShippingHeading } from '../molecules/ShippingHeading';
 import { useState } from 'react';
 import { ShippingError } from '../molecules/ShippingError';
 import { ShippingData } from '../molecules/ShippingData';
 import { ShippingDeliveryInstructions } from '../molecules/ShippingDeliveryInstructions';
+import { Layout } from '@/shared/components/containers';
+import { useGetCompany } from '@/shared/hooks/data/user/useUser';
 
 export const Shipping = () => {
-  const shipping = useGetShippingAddress();
+  const { company, error, isLoading } = useGetCompany();
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => setIsOpen(!isOpen);
 
-  const error = shipping.error && <ShippingError />;
+  const errorData = error && <ShippingError />;
 
-  const shippingData = shipping.data &&
-    shipping.data.shippingAddress &&
-    isOpen && <ShippingData shippingData={shipping.data} />;
+  const shippingData = company && company.shipping && isOpen && (
+    <ShippingData company={company} />
+  );
 
-  const deliveryInstructions = shipping.data &&
-    shipping.data.shippingAddress &&
-    isOpen && (
-      <ShippingDeliveryInstructions
-        deliveryInstructions={
-          shipping.data.shippingAddress.deliveryInstructions || ''
-        }
-      />
-    );
+  const deliveryInstructions = company && company.shipping && isOpen && (
+    <ShippingDeliveryInstructions
+      deliveryInstructions={company.shipping.deliveryInstructions || ''}
+    />
+  );
 
   return (
-    <Container as='div'>
-      <ShippingHeading toggleOpen={toggleOpen} isOpen={isOpen} />
-
-      {error}
-
-      <Container as='div' flex='col'>
-        {shippingData}
-        {deliveryInstructions}
-      </Container>
-    </Container>
+    <Layout
+      heading='h3'
+      title='Shipping'
+      contentPadding='lg'
+      contentRounded='lg'
+      contentClassname='bg-slate-50'
+    >
+      shipping
+    </Layout>
   );
 };
+
+// <Container as='div'>
+//   <ShippingHeading toggleOpen={toggleOpen} isOpen={isOpen} />
+
+//   {error}
+
+//   <Container as='div' flex='col'>
+//     {shippingData}
+//     {deliveryInstructions}
+//   </Container>
+// </Container>

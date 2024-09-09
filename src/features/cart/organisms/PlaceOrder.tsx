@@ -1,23 +1,28 @@
-import { Btn, Container } from '@/shared/components/ui';
-import { useGetCart } from '@/shared/hooks/data';
-import { useCreateOrder } from '@/shared/hooks/mutations';
+import { ContentWrapper } from '@/shared/components/containers';
+import { Btn } from '@/shared/components/ui';
+import { useGetCart } from '@/shared/hooks/data/cart/useCart';
+import { useCreateOrder } from '@/shared/hooks/data/orders/useOrders';
 
 export const PlaceOrder = () => {
-  const cart = useGetCart();
-  const { order, createOrderLoading } = useCreateOrder({ cartData: cart.data });
+  const { cart } = useGetCart();
+  const { mutate: createOrder } = useCreateOrder();
+
   return (
-    <Container as='div'>
-      <Btn
-        text='Place Order'
-        bgColor='green'
-        width='full'
-        height='lg'
-        isDisabled={
-          cart.isLoading || cart.data?.items.length === 0 || createOrderLoading
-        }
-        isLoading={createOrderLoading}
-        handleClick={order}
-      />
-    </Container>
+    <ContentWrapper>
+      <Btn text='Place Order' bgColor='green' width='full' />
+    </ContentWrapper>
   );
+  // <Container as='div'>
+  //   <Btn
+  //     text='Place Order'
+  //     bgColor='green'
+  //     width='full'
+  //     height='lg'
+  //     isDisabled={
+  //       cart.isLoading || cart.data?.items.length === 0 || createOrderLoading
+  //     }
+  //     isLoading={createOrderLoading}
+  //     handleClick={order}
+  //   />
+  // </Container>
 };
