@@ -2,7 +2,6 @@ import { fetchHandler } from '@/shared/utils/api/fetch';
 import { Endpoints } from '@/shared/types/API';
 import {
   TBilling,
-  TCompany,
   TCompanyWithAddress,
   TContact,
   TFullUser,

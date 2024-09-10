@@ -1,5 +1,6 @@
-import { PulseLoader } from '@/shared/components/ui';
+import { usePulseLoader } from '@/shared/components/loading';
 
 export const OrderSummaryLoading = () => {
-  return <PulseLoader rows='multi' width='full' />;
+  const { PulseLoader } = usePulseLoader({ size: 'md', width: 'full' });
+  return <PulseLoader />;
 };

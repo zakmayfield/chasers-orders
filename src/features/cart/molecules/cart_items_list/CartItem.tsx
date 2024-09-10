@@ -6,7 +6,7 @@ import { SizeForm } from '@/features/cart/atoms/cart_items_list/SizeForm';
 
 export const CartItem = ({ cartItem }: { cartItem: TCartItem }) => {
   return (
-    <ContentWrapper flex='row' rounded='lg' className='border'>
+    <ContentWrapper flex='row' padding='sm' className='border'>
       <RemoveItemButton product_variant_id={cartItem.product_variant_id} />
 
       <ContentWrapper flex='col'>

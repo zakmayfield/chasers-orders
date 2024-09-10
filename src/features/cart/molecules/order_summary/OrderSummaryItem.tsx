@@ -1,36 +1,26 @@
-import { Container } from '@/shared/components/ui';
-import { CartItem } from '@/types/cart';
+import { ContentWrapper, Text } from '@/shared/components/containers';
+import { TCartItem } from '@/shared/types/Cart';
 
-export const OrderSummaryItem = ({ cartItem }: { cartItem: CartItem }) => {
-  const {
-    quantity,
-    unit: {
-      size,
-      product: { name, category },
-    },
-  } = cartItem;
+export const OrderSummaryItem = ({ cartItem }: { cartItem: TCartItem }) => {
+  const { quantity, product_variant } = cartItem;
 
   return (
-    <Container
-      as='div'
-      padding='md'
-      rounded='sm'
-      flex='col'
-      className='bg-slate-50 gap-1'
+    <ContentWrapper
+      padding='sm'
+      flex='row'
+      className='border items-start justify-between'
     >
-      <Container as='div' flex='row' className='justify-between'>
-        <Container as='p'>{name}</Container>
-        <Container as='p'>x{quantity}</Container>
-      </Container>
+      <ContentWrapper flex='col' className='items-start'>
+        <Text>{product_variant?.product?.name}</Text>
+        <Text className=''>
+          {product_variant?.product?.category?.name.toLowerCase()}
+        </Text>
+      </ContentWrapper>
 
-      <Container as='div' flex='row' className='justify-between'>
-        <Container as='p' className='italic text-gray-600'>
-          {category.toLowerCase()}
-        </Container>
-        <Container as='p' className='italic text-gray-600'>
-          {size}
-        </Container>
-      </Container>
-    </Container>
+      <ContentWrapper flex='col' className='items-end'>
+        <Text>x{quantity}</Text>
+        <Text className=''>{product_variant?.size}</Text>
+      </ContentWrapper>
+    </ContentWrapper>
   );
 };

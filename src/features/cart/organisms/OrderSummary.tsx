@@ -1,22 +1,28 @@
 import { OrderSummaryLoading } from '../molecules/order_summary/OrderSummaryLoading';
-import { OrderSummaryError } from '../molecules/order_summary/OrderSummaryError';
 import { OrderSummaryItem } from '../molecules/order_summary/OrderSummaryItem';
 import { OrderSummaryEmpty } from '../molecules/order_summary/OrderSummaryEmpty';
-import { Layout } from '@/shared/components/containers';
+import { ContentWrapper, Layout } from '@/shared/components/containers';
 import { useGetCart } from '@/shared/hooks/data/cart/useCart';
+import { Error } from '../atoms/Error';
 
 export const OrderSummary = () => {
   const { cart, isLoading, error } = useGetCart();
 
   const loading = isLoading && <OrderSummaryLoading />;
-  const errorData = error && <OrderSummaryError />;
+  const errorData = error && (
+    <Error message='There was an issue getting your order summary' />
+  );
   const emptyCart = cart && !cart.items.length && <OrderSummaryEmpty />;
-  const data =
-    cart &&
-    cart.items.length !== 0 &&
-    cart.items.map((cartItem) => (
-      <OrderSummaryItem key={cartItem.product_variant_id} cartItem={cartItem} />
-    ));
+  const data = cart && cart.items.length !== 0 && (
+    <ContentWrapper flex='col'>
+      {cart.items.map((cartItem) => (
+        <OrderSummaryItem
+          key={cartItem.product_variant_id}
+          cartItem={cartItem}
+        />
+      ))}
+    </ContentWrapper>
+  );
 
   return (
     <Layout
@@ -26,15 +32,10 @@ export const OrderSummary = () => {
       contentRounded='lg'
       contentClassname='bg-slate-50'
     >
-      summary
+      {loading}
+      {errorData}
+      {emptyCart}
+      {data}
     </Layout>
   );
 };
-// <Container as='div' flex='col'>
-//   <Heading as='h5' content='Order Summary' className='mb-3' />
-
-//   {loading}
-//   {error}
-//   {emptyCart}
-//   {data}
-// </Container>
