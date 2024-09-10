@@ -85,7 +85,7 @@ export const cartServices = {
     quantity: number;
   }): Promise<TCartItem> =>
     await fetchHandler({
-      route: endpoint + '/item' + `/${product_variant_id}`,
+      route: endpoint + '/item' + `/${product_variant_id}` + `?quantity=true`,
       options: {
         config: {
           method: 'PUT',
@@ -96,17 +96,17 @@ export const cartServices = {
 
   updateSize: async ({
     product_variant_id,
-    size,
+    new_variant_id,
   }: {
     product_variant_id: string;
-    size: string;
+    new_variant_id: string;
   }): Promise<TCartItem> =>
     await fetchHandler({
-      route: endpoint + '/item' + `/${product_variant_id}`,
+      route: endpoint + '/item' + `/${product_variant_id}` + `?size=true`,
       options: {
         config: {
           method: 'PUT',
-          body: JSON.stringify({ size }),
+          body: JSON.stringify({ new_variant_id }),
         },
       },
     }),

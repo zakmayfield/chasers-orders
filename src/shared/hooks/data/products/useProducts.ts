@@ -5,7 +5,7 @@ import { productServices } from '@/shared/utils/services/productServices';
 export const useGetProducts = ({ take }: { take?: number }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.PRODUCTS],
-    queryFn: async () => await productServices.getProducts({ take }),
+    queryFn: () => productServices.getProducts({ take }),
     staleTime: Infinity,
   });
 
@@ -29,8 +29,8 @@ export const useGetProductVariant = ({
 }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.VARIANT, product_variant_id],
-    queryFn: async () =>
-      await productServices.getProductVariant({
+    queryFn: () =>
+      productServices.getProductVariant({
         product_variant_id,
       }),
     staleTime: Infinity,

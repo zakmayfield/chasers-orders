@@ -18,7 +18,7 @@ export const useGetOrders = () => {
 export const useGetOrder = ({ order_id }: { order_id: string }) => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.ORDER_WITH_LINE_ITEMS, order_id],
-    queryFn: async () => await orderServices.getOrder({ order_id }),
+    queryFn: () => orderServices.getOrder({ order_id }),
     staleTime: Infinity,
   });
 

@@ -1,8 +1,12 @@
 import { checkAuthentication } from '@/shared/utils/api/checkAuthentication';
 import { errorResponse } from '@/shared/utils/api/errorResponse';
 import { getOrderById } from '@/shared/utils/db/order';
+import { NextRequest } from 'next/server';
 
-export async function GET({ params }: { params: { order_id: string } }) {
+async function handler(
+  req: NextRequest,
+  { params }: { params: { order_id: string } }
+) {
   try {
     await checkAuthentication();
 
@@ -15,3 +19,4 @@ export async function GET({ params }: { params: { order_id: string } }) {
     return errorResponse(error);
   }
 }
+export { handler as GET };

@@ -197,6 +197,9 @@ export const getCart: TGetCartWithItemsAndProductVariants = async (props) => {
     where: { ...props },
     include: {
       items: {
+        orderBy: {
+          created_at: 'desc',
+        },
         include: {
           product_variant: {
             include: { product: { include: { category: true } } },

@@ -144,8 +144,30 @@ export const useUpdateQuantity = () => {
 };
 
 export const useUpdateSize = () => {
+  const queryClient = useQueryClient();
+  const { notify } = useToast();
+
   const { mutate, isLoading, error } = useCustomMutation({
     mutationFn: cartServices.updateSize,
+    handleError() {
+      notify('Unable to update size', 'error');
+    },
+    handleSuccess(data, variables) {
+      notify('Updated size');
+
+      queryClient.setQueryData<TCart>([QueryKeys.CART], (oldData) => {
+        return oldData
+          ? {
+              ...oldData,
+              items: oldData.items.map((item) =>
+                item.product_variant_id === variables?.product_variant_id
+                  ? data
+                  : item
+              ),
+            }
+          : oldData;
+      });
+    },
   });
 
   return { mutate, isLoading, error };

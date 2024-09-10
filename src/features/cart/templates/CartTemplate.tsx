@@ -12,7 +12,7 @@ export const CartTemplate = () => {
 
       <ContentWrapper flex='col'>
         <OrderSummary />
-        <Shipping />
+        {/* <Shipping /> */}
         <PlaceOrder />
       </ContentWrapper>
     </Layout>

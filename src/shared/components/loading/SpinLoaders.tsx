@@ -1,4 +1,4 @@
-import { SpinnerGap } from '@/shared/utils/ui';
+import { merge, SpinnerGap } from '@/shared/utils/ui';
 
 type SpinLoaderProps = {
   size?: 'sm' | 'md' | 'lg';
@@ -6,15 +6,21 @@ type SpinLoaderProps = {
   position?: 'left' | 'center' | 'right';
   padding?: 'sm' | 'md' | 'lg';
   theme?: 'light' | 'dark';
+  containerClassName?: string;
+  spinnerClassName?: string;
 };
 export const SpinLoader = (props: SpinLoaderProps) => {
+  const { containerClassName, spinnerClassName, ...rest } = props;
+
   const { width, padding, size, position, theme } = useSpinLoaderClasses({
-    ...props,
+    ...rest,
   });
 
   return (
-    <div className={`${width} ${padding}`}>
-      <SpinnerGap className={`animate-spin ${size} ${position} ${theme}`} />
+    <div className={merge(`${width} ${padding} ${containerClassName}`)}>
+      <SpinnerGap
+        className={`animate-spin ${size} ${position} ${theme} ${spinnerClassName}`}
+      />
     </div>
   );
 };
@@ -22,7 +28,7 @@ export const SpinLoader = (props: SpinLoaderProps) => {
 function useSpinLoaderClasses(props: SpinLoaderProps) {
   const {
     size = 'md',
-    width = 'content',
+    width = 'none',
     position = 'center',
     padding = 'none',
     theme = 'light',
@@ -35,6 +41,7 @@ function useSpinLoaderClasses(props: SpinLoaderProps) {
   };
 
   const widthMap = {
+    none: '',
     content: 'max-w-min',
     full: 'w-full',
   };

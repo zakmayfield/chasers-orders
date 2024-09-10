@@ -22,8 +22,6 @@ export const fetchHandler = async ({ route, options }: FetchService) => {
   try {
     const url = getUrl({ route, options });
 
-    console.log('fetchHandler', { url });
-
     const optionsConfig: RequestInit = {
       headers: {
         'Content-type': 'application/json',
