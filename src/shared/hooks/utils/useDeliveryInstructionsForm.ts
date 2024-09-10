@@ -1,75 +1,51 @@
-import { useState } from 'react';
-import { useCustomForm, useCustomMutation } from '@/shared/hooks/custom';
+import { useEffect, useState } from 'react';
+import { useCustomForm } from '@/shared/hooks/custom';
 import { instructionsResolver } from '@/shared/validators/resolvers';
-import { UseMutateFunction, useQueryClient } from '@tanstack/react-query';
-import { DeliveryInstructionsResponse } from '@/types/cart';
-import { InstructionsFormData } from '@/shared/types/Forms';
-import { updateDeliveryInstructions } from '@/services/mutations/updateDeliveryInstructions';
-import { useToast } from './useToast';
-import { QueryKeys } from '@/shared/types/Cache';
+import { useUpdateInstructions } from '../data/user/useUser';
 
 export const useDeliveryInstructionsForm = ({
   defaultValues,
+  company_id,
 }: {
   defaultValues: string;
-  mutation?: UseMutateFunction<
-    DeliveryInstructionsResponse,
-    Error,
-    InstructionsFormData,
-    unknown
-  >;
+  company_id: string;
 }) => {
-  const queryClient = useQueryClient();
-  const { notify } = useToast();
   const [isEdit, setIsEdit] = useState(false);
-
-  const { mutate } = useCustomMutation({
-    mutationFn: updateDeliveryInstructions,
-    handleSuccess(data) {
-      notify('Updated delivery instructions');
-
-      queryClient.setQueryData(
-        [QueryKeys.SHIPPING],
-        (oldData: DeliveryInstructionsResponse | undefined) =>
-          oldData
-            ? {
-                ...oldData,
-                shippingAddress: {
-                  ...data.shippingAddress,
-                  deliveryInstructions:
-                    data.shippingAddress.deliveryInstructions,
-                },
-              }
-            : oldData
-      );
-
-      cancel();
-    },
-    handleError(error) {
-      notify(error.message, 'error');
-    },
-  });
+  const { mutate, isSuccess } = useUpdateInstructions();
 
   const {
     methods,
-    methods: { register, handleSubmit, getValues, reset, formState },
+    methods: { handleSubmit, getValues, reset },
   } = useCustomForm({
     defaultValues: { deliveryInstructions: defaultValues },
     resolver: instructionsResolver,
   });
 
   const toggleEdit = () => setIsEdit(!isEdit);
-  // const submit = () => handleSubmit(() => mutation?.(getValues()))();
-  const submit = () => handleSubmit(() => mutate(getValues()))();
+
+  const submit = () => {
+    const args = {
+      company_id,
+      deliveryInstructions: getValues().deliveryInstructions,
+    };
+
+    handleSubmit(() => mutate(args))();
+  };
+
   const cancel = () => {
     toggleEdit();
     reset({ deliveryInstructions: defaultValues });
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      reset(getValues());
+      toggleEdit();
+    }
+  }, [isSuccess]);
+
   return {
     methods,
-    register,
-    formState,
     isEdit,
     toggleEdit,
     submit,

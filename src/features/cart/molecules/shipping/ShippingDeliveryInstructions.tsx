@@ -1,13 +1,14 @@
-import { Container } from '@/shared/components/ui';
 import { useDeliveryInstructionsForm } from '@/shared/hooks/utils';
 import { ShippingDeliveryInstructionsHeading } from '@/features/cart/atoms/shipping/ShippingDeliveryInstructionsHeading';
 import { ShippingDeliveryInstructionsForm } from '@/features/cart/atoms/shipping/ShippingDeliveryInstructionsForm';
 import { ShippingDeliveryInstructionsContent } from '@/features/cart/atoms/shipping/ShippingDeliveryInstructionsContent';
+import { ContentWrapper } from '@/shared/components/containers';
+import { TCompanyWithAddress } from '@/shared/types/User';
 
 export const ShippingDeliveryInstructions = ({
-  deliveryInstructions,
+  company,
 }: {
-  deliveryInstructions: string;
+  company: TCompanyWithAddress;
 }) => {
   const {
     methods: { register, formState },
@@ -16,23 +17,24 @@ export const ShippingDeliveryInstructions = ({
     toggleEdit,
     isEdit,
   } = useDeliveryInstructionsForm({
-    defaultValues: '',
+    defaultValues: company.shipping!.deliveryInstructions || '',
+    company_id: company.company_id,
   });
 
   const data = isEdit ? (
     <ShippingDeliveryInstructionsForm
-      instructions={deliveryInstructions}
+      instructions={company.shipping?.deliveryInstructions || ''}
       register={register}
     />
   ) : (
     <ShippingDeliveryInstructionsContent
-      instructions={deliveryInstructions}
+      instructions={company.shipping?.deliveryInstructions || ''}
       toggleEdit={toggleEdit}
     />
   );
 
   return (
-    <Container as='div' flex='col'>
+    <ContentWrapper flex='col'>
       <ShippingDeliveryInstructionsHeading
         submit={submit}
         cancel={cancel}
@@ -42,6 +44,6 @@ export const ShippingDeliveryInstructions = ({
       />
 
       {data}
-    </Container>
+    </ContentWrapper>
   );
 };

@@ -122,6 +122,24 @@ export const verifyUserEmail: TVerifyUserEmail = async ({
   return user;
 };
 
+type TUpdateDeliveryInstructions = (props: {
+  company_id: string;
+  deliveryInstructions: string;
+}) => Promise<TShipping>;
+export const updateDeliveryInstructions: TUpdateDeliveryInstructions = async ({
+  company_id,
+  deliveryInstructions,
+}) => {
+  const updateInstructions = await db.shipping.update({
+    where: { company_id },
+    data: {
+      deliveryInstructions,
+    },
+  });
+
+  return updateInstructions;
+};
+
 //^ GET
 type TGetUserByEmail = (props: {
   email: TUser['email'];

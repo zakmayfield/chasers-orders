@@ -1,4 +1,5 @@
-import { Btn, Container, Heading } from '@/shared/components/ui';
+import { ContentWrapper } from '@/shared/components/containers';
+import { Btn, Heading } from '@/shared/components/ui';
 import { FormState } from 'react-hook-form';
 
 export const ShippingDeliveryInstructionsHeading = ({
@@ -8,7 +9,7 @@ export const ShippingDeliveryInstructionsHeading = ({
   isEdit,
   formState,
 }: {
-  submit: () => Promise<void>;
+  submit: () => void;
   cancel: () => void;
   toggleEdit: () => void;
   isEdit: boolean;
@@ -29,14 +30,14 @@ export const ShippingDeliveryInstructionsHeading = ({
   );
 
   return (
-    <Container as='div' flex='row' className='justify-between'>
+    <ContentWrapper flex='row' className='justify-between'>
       <Heading as='h6' content='Special Instructions' />
 
-      <Container as='div' flex='row'>
+      <ContentWrapper flex='row'>
         {toRead}
         {toSave}
         {toCancel}
-      </Container>
-    </Container>
+      </ContentWrapper>
+    </ContentWrapper>
   );
 };

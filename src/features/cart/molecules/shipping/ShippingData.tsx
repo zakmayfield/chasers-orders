@@ -1,29 +1,29 @@
-import { Container, Heading } from '@/shared/components/ui';
+import { ContentWrapper, Text } from '@/shared/components/containers';
+import { Heading } from '@/shared/components/ui';
 import { TCompanyWithAddress } from '@/shared/types/User';
 
 export const ShippingData = ({ company }: { company: TCompanyWithAddress }) => {
   const { name, shipping } = company;
 
   return (
-    <Container
-      as='div'
+    <ContentWrapper
       flex='col'
-      rounded='sm'
+      rounded='lg'
       padding='md'
-      className='items-start bg-slate-50'
+      className='items-start bg-slate-100'
     >
       <Heading as='h6' content={name} />
 
-      <Container as='div' flex='col' className='gap-1'>
-        <Container as='p'>{shipping?.streetAddress}</Container>
+      <ContentWrapper flex='col' gap='sm'>
+        <Text>{shipping?.streetAddress}</Text>
 
-        <Container as='div' flex='row' className='gap-1'>
-          <Container as='p'>{shipping?.city},</Container>
-          <Container as='p'>{shipping?.state}</Container>
-        </Container>
+        <ContentWrapper flex='row' gap='sm'>
+          <Text>{shipping?.city},</Text>
+          <Text>{shipping?.state}</Text>
+        </ContentWrapper>
 
-        <Container as='p'>{shipping?.postalCode}</Container>
-      </Container>
-    </Container>
+        <Text>{shipping?.postalCode}</Text>
+      </ContentWrapper>
+    </ContentWrapper>
   );
 };

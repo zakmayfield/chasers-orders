@@ -1,4 +1,4 @@
-import { Container } from '@/shared/components/ui';
+import { ContentWrapper, Text } from '@/shared/components/containers';
 
 export const ShippingDeliveryInstructionsContent = ({
   instructions,
@@ -8,19 +8,20 @@ export const ShippingDeliveryInstructionsContent = ({
   toggleEdit: () => void;
 }) => {
   const hasInstructions = !!instructions;
+
   const content = hasInstructions ? (
-    <Container as='p'>{instructions}</Container>
+    <Text>{instructions}</Text>
   ) : (
-    <Container as='p' flex='row' flexCenter={true} padding='sm'>
+    <Text padding='sm' className='flex items-center justify-center'>
       <button onClick={toggleEdit} className='underline text-blue-800'>
         Add special instructions
       </button>
-    </Container>
+    </Text>
   );
 
   return (
-    <Container as='div' padding='md' className='bg-slate-50'>
+    <ContentWrapper padding='md' rounded='lg' className='bg-slate-100'>
       {content}
-    </Container>
+    </ContentWrapper>
   );
 };

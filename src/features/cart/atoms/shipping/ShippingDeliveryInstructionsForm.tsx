@@ -1,4 +1,4 @@
-import { Container } from '@/shared/components/ui';
+import { ContentWrapper } from '@/shared/components/containers';
 import { UseFormRegister } from 'react-hook-form';
 
 export const ShippingDeliveryInstructionsForm = ({
@@ -11,14 +11,17 @@ export const ShippingDeliveryInstructionsForm = ({
   }>;
 }) => {
   return (
-    <Container as='div'>
+    <ContentWrapper>
       <form>
+        <label htmlFor='deliveryInstructions' className='hidden'>
+          Delivery Instructions:
+        </label>
         <textarea
           placeholder={instructions || 'Deliver to the back door...'}
           {...register('deliveryInstructions')}
-          className='w-full border rounded-md p-4 bg-slate-50'
+          className='w-full border rounded-md p-4 bg-white'
         />
       </form>
-    </Container>
+    </ContentWrapper>
   );
 };

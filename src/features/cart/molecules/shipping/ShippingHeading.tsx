@@ -1,6 +1,8 @@
-import { Container, Heading, SpinLoader } from '@/shared/components/ui';
-import { useGetShippingAddress } from '@/shared/hooks/data';
-import { ShippingDropDownArrow } from '../../atoms/shipping/ShippingDropDownArrow';
+import { Heading } from '@/shared/components/ui';
+import { useGetCompany } from '@/shared/hooks/data/user/useUser';
+import { useSpinLoader } from '@/shared/components/loading';
+import { ContentWrapper } from '@/shared/components/containers';
+import { DownArrow } from '@/shared/utils/ui';
 
 export const ShippingHeading = ({
   toggleOpen,
@@ -9,28 +11,26 @@ export const ShippingHeading = ({
   toggleOpen(): void;
   isOpen: boolean;
 }) => {
-  const shipping = useGetShippingAddress();
+  const { company, isLoading, error } = useGetCompany();
+  const { SpinLoader } = useSpinLoader({});
 
-  const canOpen = shipping.data && !shipping.error && !shipping.isLoading;
+  const canOpen = company && !error && !isLoading;
   const handleOpen = () => canOpen && toggleOpen();
 
-  const loading = shipping.isLoading && <SpinLoader />;
-  const dropDownArrow = shipping.data &&
-    !shipping.error &&
-    !shipping.isLoading && (
-      <ShippingDropDownArrow
-        handleOpen={handleOpen}
-        canOpen={canOpen}
-        isOpen={isOpen}
-      />
-    );
+  const loading = isLoading && <SpinLoader />;
+  const dropDownArrow = company && !error && !isLoading && (
+    <DownArrow
+      onClick={handleOpen}
+      className={`${!canOpen ? 'text-gray-300' : 'cursor-pointer'} ${isOpen && 'rotate-180'}`}
+    />
+  );
 
   return (
-    <Container as='div' flex='row' className='mb-3 justify-between'>
-      <Heading as='h5' content='Shipping' />
+    <ContentWrapper flex='row' className='justify-between'>
+      <Heading as='h5' content='Address' />
 
       {loading}
       {dropDownArrow}
-    </Container>
+    </ContentWrapper>
   );
 };

@@ -66,4 +66,21 @@ export const userServices = {
         },
       },
     }),
+
+  updateInstructions: async ({
+    company_id,
+    deliveryInstructions,
+  }: {
+    company_id: string;
+    deliveryInstructions: string;
+  }): Promise<TShipping> =>
+    await fetchHandler({
+      route: endpoint + '/company' + `/${company_id}` + '/shipping',
+      options: {
+        config: {
+          method: 'PUT',
+          body: JSON.stringify({ deliveryInstructions }),
+        },
+      },
+    }),
 };

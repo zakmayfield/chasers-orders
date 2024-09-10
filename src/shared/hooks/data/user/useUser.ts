@@ -1,7 +1,9 @@
 import { QueryKeys } from '@/shared/types/Cache';
-import { useCustomQuery } from '@/shared/hooks/custom';
+import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { userServices } from '@/shared/utils/services/userServices';
-import { TFullUser, TUser } from '@/shared/types/User';
+import { TCompanyWithAddress, TFullUser, TUser } from '@/shared/types/User';
+import { useToast } from '../../utils';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const useGetUser = ({ fullUser }: { fullUser?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
@@ -64,4 +66,36 @@ export const useGetUserAuthorization = () => {
     staleTime: Infinity,
   });
   return { data, isLoading, error };
+};
+
+export const useUpdateInstructions = () => {
+  const queryClient = useQueryClient();
+  const { notify } = useToast();
+
+  const { mutate, isLoading, error, isSuccess } = useCustomMutation({
+    mutationFn: userServices.updateInstructions,
+    handleError(error) {
+      notify(error.message, 'error');
+    },
+    handleSuccess(data) {
+      notify('Updated delivery instructions');
+
+      queryClient.setQueryData<TCompanyWithAddress>(
+        [QueryKeys.COMPANY],
+        (oldData) => {
+          return oldData
+            ? {
+                ...oldData,
+                shipping: {
+                  ...oldData.shipping!,
+                  deliveryInstructions: data.deliveryInstructions,
+                },
+              }
+            : oldData;
+        }
+      );
+    },
+  });
+
+  return { mutate, isLoading, error, isSuccess };
 };
