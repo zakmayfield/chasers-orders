@@ -1,20 +1,17 @@
 'use server';
 import { db } from '@/lib/prisma';
 import {
-  TProductVariant,
-  TProductWithCategory,
   TProductVariantWithProduct,
   TCategoryWithProducts,
   TProductWithVariants,
 } from '@/shared/types/Product';
 
 type TGetAllProducts = (props: {
-  variants?: boolean;
   take?: number;
-}) => Promise<TProductWithCategory[] | TProductWithVariants[]>;
-export const getAllProducts: TGetAllProducts = async ({ variants, take }) => {
+}) => Promise<TProductWithVariants[]>;
+export const getAllProducts: TGetAllProducts = async ({ take }) => {
   const products = await db.product.findMany({
-    include: { category: true, variants },
+    include: { category: true, variants: true },
     take,
   });
   return products;
@@ -22,30 +19,24 @@ export const getAllProducts: TGetAllProducts = async ({ variants, take }) => {
 
 type TGetProductById = (props: {
   product_id: string;
-  variants?: boolean;
-}) => Promise<TProductWithCategory | TProductWithVariants | null>;
-export const getProductById: TGetProductById = async ({
-  product_id,
-  variants,
-}) => {
+}) => Promise<TProductWithVariants | null>;
+export const getProductById: TGetProductById = async ({ product_id }) => {
   const product = await db.product.findUnique({
     where: { product_id },
-    include: { category: true, variants },
+    include: { category: true, variants: true },
   });
   return product;
 };
 
 type TGetProductVariantById = (props: {
   product_variant_id: string;
-  product?: boolean;
-}) => Promise<TProductVariant | TProductVariantWithProduct | null>;
+}) => Promise<TProductVariantWithProduct | null>;
 export const getProductVariantById: TGetProductVariantById = async ({
   product_variant_id,
-  product,
 }) => {
   const productVariant = await db.productVariant.findUnique({
     where: { product_variant_id },
-    include: { product },
+    include: { product: true },
   });
   return productVariant;
 };

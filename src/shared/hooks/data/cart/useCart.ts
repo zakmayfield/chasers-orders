@@ -142,3 +142,11 @@ export const useUpdateQuantity = () => {
 
   return { mutate, isLoading, error };
 };
+
+export const useUpdateSize = () => {
+  const { mutate, isLoading, error } = useCustomMutation({
+    mutationFn: cartServices.updateSize,
+  });
+
+  return { mutate, isLoading, error };
+};

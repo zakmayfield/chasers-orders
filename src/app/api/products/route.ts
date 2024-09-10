@@ -7,17 +7,12 @@ import { getAllProducts } from '@/shared/utils/db/product';
 export async function GET(req: NextRequest) {
   try {
     await checkAuthentication();
-    const [hasVariants, hasTake] = getSearchParamsArray(
-      req.nextUrl.searchParams,
-      ['variants', 'take']
-    );
+    const [hasTake] = getSearchParamsArray(req.nextUrl.searchParams, ['take']);
 
-    const variants = hasVariants && hasVariants === 'true' ? true : false;
     const take =
       (hasTake && hasTake !== 'false' && Number(hasTake)) || undefined;
 
     const args = {
-      variants,
       take,
     };
 
