@@ -1,5 +1,5 @@
 import { ContentWrapper } from '@/shared/components/containers';
-import { SpinLoader, useSpinLoader } from '@/shared/components/loading';
+import { SpinLoader } from '@/shared/components/loading';
 import { useUpdateSize } from '@/shared/hooks/data/cart/useCart';
 import { useGetProduct } from '@/shared/hooks/data/products/useProducts';
 import { ChangeEvent } from 'react';
