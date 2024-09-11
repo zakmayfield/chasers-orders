@@ -1,13 +1,11 @@
 'use client';
-import { PageTemplate, Container } from '@/shared/components/ui';
 import { Verification } from '../organisms/Verification';
+import { Layout } from '@/shared/components/containers';
 
 export const VerificationTemplate = () => {
   return (
-    <PageTemplate title='Verification' width='md' center={true}>
-      <Container as='div'>
-        <Verification />
-      </Container>
-    </PageTemplate>
+    <Layout heading='h1' title='Verification' width='md'>
+      <Verification />
+    </Layout>
   );
 };

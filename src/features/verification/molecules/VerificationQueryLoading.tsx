@@ -1,5 +1,6 @@
-import { PulseLoader } from '@/shared/components/ui';
+import { usePulseLoader } from '@/shared/components/loading';
 
 export const VerificationQueryLoading = () => {
-  return <PulseLoader width='full' rows='multi' />;
+  const { PulseLoader } = usePulseLoader({ width: 'full', size: 'md' });
+  return <PulseLoader />;
 };

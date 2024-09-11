@@ -6,6 +6,7 @@ import {
   TContact,
   TFullUser,
   TShipping,
+  TUpdateVerificationResponse,
   TUser,
   TUserExtendedAuthorization,
 } from '@/shared/types/User';
@@ -80,6 +81,21 @@ export const userServices = {
         config: {
           method: 'PUT',
           body: JSON.stringify({ deliveryInstructions }),
+        },
+      },
+    }),
+
+  updateVerification: async ({
+    token,
+  }: {
+    token?: string;
+  }): Promise<TUpdateVerificationResponse> =>
+    await fetchHandler({
+      route: '/verification',
+      options: {
+        config: {
+          method: 'PUT',
+          body: JSON.stringify({ token }),
         },
       },
     }),

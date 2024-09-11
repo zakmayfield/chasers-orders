@@ -3,7 +3,6 @@ import { db } from '@/lib/prisma';
 import { SignUpFormData } from '@/shared/types/Forms';
 import {
   TBilling,
-  TCompany,
   TCompanyWithAddress,
   TContact,
   TFullUser,
@@ -230,7 +229,7 @@ export const getUserAuthorizationByEmail: TGetUserAuthorizationByEmail =
     return userAuthorization;
   };
 
-//^ AUTHORIZATION
+//^ MIDDLEWARE AUTHORIZATION
 type TGetUserAuth = (props: {
   token: JWT;
 }) => Promise<TUserAuthorization | null>;

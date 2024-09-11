@@ -9,6 +9,7 @@ type TLayoutProps = {
   headingClassName?: string;
   width?: 'sm' | 'md' | 'lg';
   padding?: 'sm' | 'md' | 'lg';
+  position?: 'left' | 'center' | 'right';
   contentClassname?: string;
   contentPadding?: 'sm' | 'md' | 'lg';
   contentFlex?: 'row' | 'col';
@@ -25,14 +26,22 @@ export const Layout = (props: TLayoutProps) => {
     headingClassName = '',
   } = props;
 
-  const { width, padding, contentPadding, contentFlex, contentRounded } =
-    useLayoutClasses({
-      ...props,
-    });
+  const {
+    width,
+    padding,
+    position,
+    contentPadding,
+    contentFlex,
+    contentRounded,
+  } = useLayoutClasses({
+    ...props,
+  });
 
   return (
     <div
-      className={merge(`flex flex-col gap-3 ${width} ${padding} ${className}`)}
+      className={merge(
+        `flex flex-col gap-3 ${width} ${padding} ${position} ${className}`
+      )}
     >
       {heading && (
         <Heading as={heading} content={title} className={headingClassName} />
@@ -52,6 +61,7 @@ export const useLayoutClasses = (props: TLayoutProps) => {
   const {
     width = 'full',
     padding = 'none',
+    position = 'center',
     contentPadding = 'none',
     contentFlex = 'none',
     contentRounded = 'none',
@@ -69,6 +79,12 @@ export const useLayoutClasses = (props: TLayoutProps) => {
     sm: 'p-2',
     md: 'p-4',
     lg: 'p-6',
+  };
+
+  const positionMap = {
+    left: 'mr-auto',
+    center: 'mx-auto',
+    right: 'ml-auto',
   };
 
   const contentPaddingMap = {
@@ -94,6 +110,7 @@ export const useLayoutClasses = (props: TLayoutProps) => {
   const classMap = {
     width: widthMap[width],
     padding: paddingMap[padding],
+    position: positionMap[position],
     contentPadding: contentPaddingMap[contentPadding],
     contentFlex: contentFlexMap[contentFlex],
     contentRounded: contentRoundedMap[contentRounded],

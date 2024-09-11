@@ -1,10 +1,11 @@
-import { Container, SpinLoader } from '@/shared/components/ui';
+import { ContentWrapper, Text } from '@/shared/components/containers';
+import { SpinLoader } from '@/shared/components/ui';
 
 export const VerificationMutationLoading = () => {
   return (
-    <Container as='div' flex='row'>
+    <ContentWrapper flex='row'>
       <SpinLoader />
-      <Container as='p'>verifying email...</Container>
-    </Container>
+      <Text as='p'>verifying email...</Text>
+    </ContentWrapper>
   );
 };

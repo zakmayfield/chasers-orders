@@ -1,9 +1,15 @@
 import { QueryKeys } from '@/shared/types/Cache';
 import { useCustomMutation, useCustomQuery } from '@/shared/hooks/custom';
 import { userServices } from '@/shared/utils/services/userServices';
-import { TCompanyWithAddress, TFullUser, TUser } from '@/shared/types/User';
+import {
+  TCompanyWithAddress,
+  TFullUser,
+  TUser,
+  TUserExtendedAuthorization,
+} from '@/shared/types/User';
 import { useToast } from '../../utils';
 import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 
 export const useGetUser = ({ fullUser }: { fullUser?: boolean }) => {
   const { data, isLoading, error } = useCustomQuery({
@@ -62,10 +68,44 @@ export const useGetBilling = ({ company_id }: { company_id: string }) => {
 export const useGetUserAuthorization = () => {
   const { data, isLoading, error } = useCustomQuery({
     queryKey: [QueryKeys.AUTHORIZATION],
-    queryFn: async () => await userServices.getUserAuthorizationByEmail(),
+    queryFn: userServices.getUserAuthorizationByEmail,
     staleTime: Infinity,
   });
   return { data, isLoading, error };
+};
+
+export const useUpdateVerification = (props: {
+  token?: string;
+  authz: TUserExtendedAuthorization | undefined;
+}) => {
+  const { token, authz } = props;
+
+  const queryClient = useQueryClient();
+  const { notify } = useToast();
+
+  const { mutate, isLoading, error, data } = useCustomMutation({
+    mutationFn: userServices.updateVerification,
+    handleError(error) {
+      notify(error.message, 'error');
+    },
+    handleSuccess(data) {
+      notify(`Email verification successful: ${data.email}`);
+
+      queryClient.invalidateQueries([QueryKeys.USER_STATUS]);
+    },
+  });
+
+  const hasRun = useRef(false);
+
+  useEffect(() => {
+    if (!hasRun.current && authz && !authz.email_verified_on) {
+      mutate({ token });
+
+      hasRun.current = true;
+    }
+  }, [token, mutate, authz]);
+
+  return { isLoading, error, data };
 };
 
 export const useUpdateInstructions = () => {

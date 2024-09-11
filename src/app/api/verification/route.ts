@@ -6,10 +6,8 @@ import {
   extractExpiration,
   generateVerificationToken,
 } from '@/shared/utils/helpers';
-import {
-  TUpdateUserVerificationRequest,
-  TUpdateUserVerificationResponse,
-} from '@/shared/types/API';
+import { resolveRequestBody } from '@/shared/utils/api/resolveRequestBody';
+import { TUpdateVerificationResponse } from '@/shared/types/User';
 
 const dateNow = () => new Date().toISOString();
 
@@ -32,15 +30,13 @@ async function handler(req: NextRequest) {
 
   const { id, email } = session;
 
-  const body: TUpdateUserVerificationRequest = await req.json();
+  const { token } = await resolveRequestBody<{ token: string }>(req);
 
-  if (!body.token) {
+  if (token) {
     return new Response(`Token required`, {
       status: 400,
     });
   }
-
-  const { token } = body;
 
   try {
     const verificationToken = await db.verificationToken.findUnique({
@@ -125,7 +121,7 @@ async function handler(req: NextRequest) {
     });
 
     // TODO: Update these prop names
-    const updateVerificationResponse: TUpdateUserVerificationResponse = {
+    const updateVerificationResponse: TUpdateVerificationResponse = {
       id,
       email,
       is_approved: user.is_approved,

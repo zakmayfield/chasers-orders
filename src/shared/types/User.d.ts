@@ -51,3 +51,10 @@ export type TUserExtendedAuthorization = Pick<
 
 //^ VERIFICATION
 export type TVerificationToken = VerificationToken;
+
+export type TUpdateVerificationResponse = {
+  id: string;
+  email: string;
+  is_approved: boolean;
+  email_verified_on: Date | null;
+};
