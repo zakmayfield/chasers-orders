@@ -24,10 +24,6 @@ export type CartItem = UnitsOnCart & {
   };
 };
 
-export type CartWithItems = Cart & {
-  items: UnitsOnCart[];
-};
-
 export type DeliveryInstructionsRequest = InstructionsFormData;
 export type DeliveryInstructionsResponse = {
   companyName: string;
