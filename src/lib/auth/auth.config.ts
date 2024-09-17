@@ -117,13 +117,9 @@ const providers: NextAuthProviders = [
         );
       }
 
-      // generate email verification token
-      const verificationToken = generateVerificationToken(email);
-
-      // extract expiration
-      const tokenExpiration = extractExpiration(verificationToken);
-
-      const expires = new Date(tokenExpiration * 1000);
+      const jwt = generateVerificationToken(email);
+      const jwt_exp_ms = extractExpiration(jwt) * 1000;
+      const expires = new Date(jwt_exp_ms);
 
       // salt/hash password
       const salt = await genSalt(12);
@@ -132,7 +128,7 @@ const providers: NextAuthProviders = [
       const user = await registerUser({
         credentials: parsedCreds.data,
         hashedPassword,
-        verificationToken,
+        verificationToken: jwt,
         expires,
       });
 
@@ -147,7 +143,7 @@ const providers: NextAuthProviders = [
       await sendEmail({
         type: 'verification',
         to: email,
-        verificationToken,
+        token: jwt,
       })
         .then((response) => response)
         .catch((error) => error);
@@ -203,7 +199,7 @@ const callbacks: NextAuthCallbacks = {
   },
 
   redirect() {
-    return '/';
+    return '/dashboard/account';
   },
 };
 

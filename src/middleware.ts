@@ -13,9 +13,9 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/', req.nextUrl));
   }
 
+  //^ All routes except /dashboard will redirect conditionally based on authorization
   const authorization = await getUserAuth({ token });
 
-  //^ All routes except /dashboard will redirect conditionally
   if (
     !req.nextUrl.pathname.includes('/dashboard') &&
     (!authorization?.is_approved || !authorization.email_verified_on)
@@ -26,12 +26,13 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
-    '/cart',
-    '/api/cart/:path*',
-    '/products',
-    '/api/products/:path*',
     '/dashboard/:path*',
-    '/api/orders/:path*',
-    '/api/trigger/:path*',
+    '/verification',
+    '/cart',
+    '/products',
+    // '/api/cart/:path*',
+    // '/api/products/:path*',
+    // '/api/orders/:path*',
+    // '/api/trigger/:path*',
   ],
 };

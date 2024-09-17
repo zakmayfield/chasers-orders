@@ -11,7 +11,7 @@ type TSendEmail = (
 export type TSendEmailProps = {
   type: 'verification' | 'order' | 'order_confirmation';
   to: string;
-  verificationToken?: string;
+  token?: string;
   companyName?: string;
 };
 
@@ -56,7 +56,7 @@ const send = async (
 export const sendEmail: TSendEmail = async ({
   type,
   to,
-  verificationToken,
+  token,
   companyName,
 }) => {
   const emailMap = {
@@ -110,7 +110,7 @@ export const sendEmail: TSendEmail = async ({
       <p>We're excited to have you on board. To get started, please confirm your email address by clicking the button below:</p>
 
       <div class="cta-container">
-        <a href="${BASE_URL}/verification?token=${verificationToken}" class="button" style="color: #fff;">Confirm Email</a>
+        <a href="${BASE_URL}/verification?token=${token}" class="button" style="color: #fff;">Confirm Email</a>
         <p style="font-size: 12; font-style: italic; color: #999;">This link expires in 48 hours.</p>
       </div>
       
